@@ -1,8 +1,8 @@
 namespace Shabon.Score
 {
-    public interface IScoreValue
+    public interface IDirtValue
     {
-        int ScoreNum { get; }
+        int DirtNum { get; }
         void Increase(int value);
         void Decrease(int value);
         void Set(int value);
