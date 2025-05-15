@@ -7,14 +7,17 @@ namespace Shabon.Score
     /// <summary>
     /// スコアの値を扱うクラス、正の数のみ扱う
     /// </summary>
-    public class Score : IScore
+    public class ScoreValue : IScoreValue
     {
-        public int ScoreNum { get; private set; }
+        public int ScoreNum
+        {
+            get { return _scoreNum; }
+        }
 
         private int _scoreNum;
 
         // 引数は正の数
-        public Score(int value = 0)
+        public ScoreValue(int value = 0)
         {
             if (IsAssertMinusNum(value))
             {

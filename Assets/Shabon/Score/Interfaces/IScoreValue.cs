@@ -1,6 +1,6 @@
 namespace Shabon.Score
 {
-    public interface IScore
+    public interface IScoreValue
     {
         int ScoreNum { get; }
         void Increase(int value);
