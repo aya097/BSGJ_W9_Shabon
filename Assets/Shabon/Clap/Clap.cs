@@ -13,7 +13,7 @@ namespace Shabon.Clap
         {
             if (transform.position.x >= -20f && transform.position.x <= 20f)
             {
-                if (Input.GetKeyDown(KeyCode.C))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.C))
                 {
                     Destroy(this.gameObject);
 
