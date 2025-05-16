@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameRuleParam : ScriptableObject
 {
     [Header("フェーズに関するパラメータ（上から1,2,3...）")]
-    public List<GamePhaseData> gamePhaseDataList;
+    public List<GamePhaseData> gamePhaseDataList = new();
 }
 
 [Serializable]
