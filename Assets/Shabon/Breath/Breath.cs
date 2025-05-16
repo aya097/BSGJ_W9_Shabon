@@ -3,11 +3,13 @@ using Shabon.Bubble;
 
 namespace Shabon.Breath
 {
+    // todo MonoBehaviourをなくす
     public class Breath : MonoBehaviour
     {
+        // private BubbleCluster _bubbleCluster;
+        // private BubbleMover _bubbleMover;
 
-        private BubbleMover bubbleMover;
-
+        // todo IBubbleHandlerのBreathを呼ぶ
 
 
 

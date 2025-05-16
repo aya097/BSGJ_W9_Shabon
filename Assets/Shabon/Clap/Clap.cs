@@ -2,9 +2,11 @@ using UnityEngine;
 
 namespace Shabon.Clap
 {
+    // todo monoなくす
     public class Clap : MonoBehaviour
     {
 
+        // todo IBubbleHandlerのClapを呼ぶ
 
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Shabon.Bubble
 {
+    // todo monoなくす
     public class BubbleMover : MonoBehaviour
     {
 

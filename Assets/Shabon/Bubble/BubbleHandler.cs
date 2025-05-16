@@ -15,6 +15,14 @@ namespace Shabon.Bubble
         public float clapRangeMin = -20f;
         public float clapRangeMax = 20f;
 
+
+        public void ApplyBreath(float amount, Vector2 direction)
+        {
+            // todo 実装
+            // 範囲に入っているバブルを動かす
+            // bubbles.Move(amount);
+        }
+        // ↓↓↓↓↓これのこと
         public void Breath(Vector2 direction, float amount)
         {
             // X軸方向の移動のみを考慮
@@ -30,6 +38,7 @@ namespace Shabon.Bubble
         public void Clap(float amount)
         {
             Debug.Log("Clap called with amount: " + amount);
+            // todo clapされたときに、範囲内のBubbleMonoのOnClapを呼ぶ関数
         }
 
     }
