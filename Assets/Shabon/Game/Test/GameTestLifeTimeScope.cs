@@ -18,9 +18,7 @@ namespace Shabon.Game
 
 
             // Param
-            builder.RegisterInstance(GameRuleParam);
-            builder.Register<GameRuleParamServer>(Lifetime.Scoped).AsImplementedInterfaces();
-
+            builder.RegisterInstance(GameRuleParam).AsImplementedInterfaces();
         }
     }
 }

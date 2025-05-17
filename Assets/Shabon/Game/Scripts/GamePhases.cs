@@ -14,18 +14,18 @@ namespace Shabon.Game
         public int CurrentPhaseNum => _currentPhaseNum; // 現在のフェーズ番号
         private int _currentPhaseNum;
 
-        readonly IGamePhaseDataServer _gamePhaseDataServer;
+        readonly IGameRuleParam _gameRuleParam;
 
         [Inject]
-        public GamePhases(IGamePhaseDataServer gamePhaseDataServer)
+        public GamePhases(IGameRuleParam gameRuleParam)
         {
-            _gamePhaseDataServer = gamePhaseDataServer;
+            _gameRuleParam = gameRuleParam;
             _currentPhaseNum = 0;
         }
 
-        public GamePhaseData GetCurrentPhaseData()
+        public IGamePhaseData GetCurrentPhaseData()
         {
-            return _gamePhaseDataServer.GetGamePhaseData().ElementAt(_currentPhaseNum); // 現在のフェーズ番号に適したデータを返す
+            return _gameRuleParam.GetGamePhaseDataList().ElementAt(_currentPhaseNum); // 現在のフェーズ番号に適したデータを返す
         }
 
         public void Proceed()
