@@ -47,9 +47,18 @@ namespace Shabon.Param
         [SerializeField] int maxBabbleOnField;
 
         // Getter
-        public int BubblesPerSpawn { get; }
-        public float SpawnBubbleInterval { get; }
-        public int MaxBabbleOnField { get; }
+        public int BubblesPerSpawn
+        {
+            get { return bubblesPerSpawn; }
+        }
+        public float SpawnBubbleInterval
+        {
+            get { return spawnBubbleInterval; }
+        }
+        public int MaxBabbleOnField
+        {
+            get { return maxBabbleOnField; }
+        }
 
     }
 
