@@ -13,5 +13,5 @@ public class BubbleDataBase : ScriptableObject
         public GameObject bubblePrefab;
     }
 
-    public List<BubbleData> bubblePrefabSet;
+    public List<BubbleData> bubbleData;
 }
