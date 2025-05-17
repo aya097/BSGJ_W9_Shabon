@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GameRule
   m_EditorClassIdentifier: 
   gamePhaseDataList:
-  - BubblesPerSpawn: 0
-    SpawnBubbleInterval: 0
-    MaxBabbleOnField: 0
-  - BubblesPerSpawn: 0
-    SpawnBubbleInterval: 0
-    MaxBabbleOnField: 0
+  - bubblesPerSpawn: 2
+    spawnBubbleInterval: 4
+    maxBabbleOnField: 4
+  - bubblesPerSpawn: 1
+    spawnBubbleInterval: 2
+    maxBabbleOnField: 2

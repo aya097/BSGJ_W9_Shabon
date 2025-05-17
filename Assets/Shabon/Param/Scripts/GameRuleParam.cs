@@ -5,26 +5,67 @@ using UnityEngine;
 
 namespace Shabon.Param
 {
+    /// <summary>
+    /// ゲームのルールに関するパラメータを管理するスクリプタブルオブジェクト
+    /// </summary>
     [CreateAssetMenu(fileName = "GameRule", menuName = "ScriptableObjects/CreateGameRule")]
-    public class GameRuleParam : ScriptableObject
+    public class GameRuleParam : ScriptableObject, IGameRuleParam
     {
         [Header("フェーズに関するパラメータ（上から1,2,3...）")]
-        public List<GamePhaseData> gamePhaseDataList = new();
+        [SerializeField] List<GamePhaseData> gamePhaseDataList = new();
+
+
+        // Getter
+        public IEnumerable<IGamePhaseData> GetGamePhaseDataList()
+        {
+            return gamePhaseDataList;
+        }
+
     }
 
+    public interface IGameRuleParam
+    {
+        IEnumerable<IGamePhaseData> GetGamePhaseDataList();
+    }
+
+    /// <summary>
+    /// ゲームのフェーズに関するクラス
+    /// </summary>
     [Serializable]
-    public class GamePhaseData
+    public class GamePhaseData : IGamePhaseData
     {
         [Header("一度に生成されるバブルの数")]
         [Min(0)]
-        public int BubblesPerSpawn;
+        [SerializeField] int bubblesPerSpawn;
 
         [Header("バブルの生成間隔")]
         [Min(0)]
-        public float SpawnBubbleInterval;
+        [SerializeField] float spawnBubbleInterval;
 
         [Header("バブルのステージ上の最大数")]
         [Min(0)]
-        public int MaxBabbleOnField;
+        [SerializeField] int maxBabbleOnField;
+
+        // Getter
+        public int BubblesPerSpawn
+        {
+            get { return bubblesPerSpawn; }
+        }
+        public float SpawnBubbleInterval
+        {
+            get { return spawnBubbleInterval; }
+        }
+        public int MaxBabbleOnField
+        {
+            get { return maxBabbleOnField; }
+        }
+
+    }
+
+    public interface IGamePhaseData
+    {
+        int BubblesPerSpawn { get; }
+        float SpawnBubbleInterval { get; }
+        int MaxBabbleOnField { get; }
     }
 }
