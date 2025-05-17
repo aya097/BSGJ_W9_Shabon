@@ -11,7 +11,7 @@ namespace Shabon.Bubble
         public class BubbleData
         {
             public BubbleType bubbleType;
-            public BubbleMono bubbleMono;
+            public GameObject bubblePrefab;
             public Vector3 initBubblePosition;
         }
 
