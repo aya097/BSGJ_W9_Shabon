@@ -1,26 +1,46 @@
+using System;
 using UnityEngine;
+using Shabon.Bubble;
 
 namespace Shabon.Clap
 {
-    public class Clap : MonoBehaviour
+    public class Clap
     {
+        public static event Action OnClap; // Clapイベントを通知するためのデリゲート
 
+        private IBubbleHandler _bubbleHandler; // バブル操作を管理するハンドラー
 
-
-
-        void Update()
-        //Objectのx座標が２０から−２０の間の時にキーボードのcを押すとObjectが消滅する
+        public Clap(IBubbleHandler bubbleHandler)
         {
-            if (transform.position.x >= -20f && transform.position.x <= 20f)
+            // コンストラクタでバブルハンドラーを受け取る
+            _bubbleHandler = bubbleHandler;
+        }
+
+        public void CheckForClap(float xPosition, bool isClapKeyPressed)
+        {
+            // 指定された位置がClap範囲内で、Clapキーが押されている場合にClapアクションを実行
+            if (xPosition >= -20f && xPosition <= 20f)
             {
-                if (UnityEngine.Input.GetKeyDown(KeyCode.C))
+                if (isClapKeyPressed)
                 {
-                    Destroy(this.gameObject);
-
+                    ClapAction();
                 }
-
             }
+        }
 
+        private void ClapAction()
+        {
+            // Clapイベントを発火し、バブルハンドラーのClapメソッドを呼び出す
+            OnClap?.Invoke();
+            _bubbleHandler.Clap();
+
+            // バブルがClapされた場合、OnClapイベントを発火
+            _bubbleHandler.TriggerOnClap(); // BubbleHandler経由でOnClapイベントを発火
+        }
+
+        public void Update()
+        {
+            _bubbleHandler.HandleInput();
         }
     }
 }
