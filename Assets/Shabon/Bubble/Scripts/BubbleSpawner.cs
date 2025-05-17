@@ -1,72 +1,75 @@
-using System;
-using System.Collections.Generic;
+#nullable enable
+
 using UnityEngine;
+using VContainer;
+using BubbleData = Shabon.Bubble.BubbleDataBase.BubbleData;
 
 namespace Shabon.Bubble
 {
     /// <summary>
-    /// バブルを生成を管理するクラス
+    /// バブルを生成するクラス
     /// </summary>
     /// 
-    /// バブルの種類が増えたときの変更に優しくないかも...要修正
+    /// memo: 44行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
     public class BubbleSpawner: MonoBehaviour, IBubbleSpawner
     {
-        [SerializeField]
-        List<BubbleMono> bubblePrefabs;
+        private BubbleDataBase _bubbleDataBase = new BubbleDataBase();
 
-        Dictionary<BubbleType, BubbleMono> _bubblePrefabDict;
 
-        private void Awake()
+        GameObject _bubblePrefab;
+        Vector3 _initBubblePosition;
+
+
+        [Inject]
+        public void Construct(BubbleDataBase bubbleDataBase)
         {
-            // バブルのPrefabをDictionaryに格納
-            _bubblePrefabDict = new Dictionary<BubbleType, BubbleMono>();
-            foreach (var bubblePrefab in bubblePrefabs)
-            {
-                // stringをBubbleTypeに変換
-                BubbleType bubbleType = (BubbleType)Enum.Parse(typeof(BubbleType),bubblePrefab.tag);
-                if (!_bubblePrefabDict.ContainsKey(bubbleType))
-                {
-                    _bubblePrefabDict.Add(bubbleType, bubblePrefab);
-                }
-            }
+            _bubbleDataBase = bubbleDataBase;
         }
 
+        /// <summary>
+        /// BubbleType別に生成するメソッド
+        /// </summary>
         public void Spawn(BubbleType bubbleType)
         {
-            if (!_bubblePrefabDict.TryGetValue(bubbleType, out BubbleMono bubblePrefab) || bubblePrefab == null)
+            // bubbleType別にdataを取得する
+            BubbleData bubbleData = _bubbleDataBase.bubbleData.Find(x => x.bubbleType == bubbleType);
+            if (bubbleData is null)
             {
-                Debug.LogError($"bubblePrefabDictに指定したKeyが存在しない: {bubbleType}");
+                Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
                 return;
             }
-
-            // バブルの生成位置を決定
-            Vector3 bubbleSpawnPos = GetSpawnPosition(bubbleType);
-
-            // バブルを生成
-            IBubbleMono bubble = Instantiate(bubblePrefab, bubbleSpawnPos, Quaternion.identity);
+            SetBubbleDataInfo(bubbleData);
 
             // バブルビルダーを取得
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
-            bubbleBuilder.Build(bubble);
+
+            // バブルを生成
+            GameObject bubble = Instantiate(_bubblePrefab, _initBubblePosition, Quaternion.identity);
+            IBubbleMono bubbleMono = bubble.GetComponent<BubbleMono>();
+            bubbleBuilder.Build(bubbleMono);
         }
 
-        // バブルタイプごとの生成位置を返す
-        private Vector3 GetSpawnPosition(BubbleType bubbleType)
+        /// <summary>
+        /// BubbleDataを内部の変数にセットするメソッド
+        /// </summary>
+        private void SetBubbleDataInfo(BubbleData bubbleData)
         {
-            return bubbleType switch
-            {
-                BubbleType.Normal => new Vector3(0, 0, 0),
-                // バブルの種類が増えたらここに追加
-
-            };
+            _bubblePrefab = bubbleData.bubblePrefab;
+            _initBubblePosition = bubbleData.initBubblePosition;
         }
 
-        // バブルタイプごとのビルダーを返す
+
+        /// <summary>
+        /// BubbleType別にBuilderを取得
+        /// </summary>
+        /// memo: Builder分けずに１つにまとめた方がスマートかも...?(ひとまずこれで)
+        /// memo: あまり良くない実装かも...すみません
         private IBubbleBuilder GetBubbleBuilder(BubbleType bubbleType)
         {
             return bubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleBuilder(),
+                BubbleType.Boss => new BossBubbleBuilder()
                 // バブルの種類が増えたらここに追加
 
             };

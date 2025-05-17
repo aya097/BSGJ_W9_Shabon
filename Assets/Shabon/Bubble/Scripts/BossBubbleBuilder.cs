@@ -3,9 +3,9 @@ using UnityEngine;
 namespace Shabon.Bubble
 {
     /// <summary>
-    /// NormalBubbleの個性を付与するクラス
+    /// BossBubbleの個性を付与するクラス
     /// </summary>
-    public class NormalBubbleBuilder : IBubbleBuilder
+    public class BossBubbleBuilder : IBubbleBuilder
     {
         /// <summary>
         /// 個性を付与するメソッド
@@ -16,7 +16,6 @@ namespace Shabon.Bubble
             Debug.Log("個性を付与します");
             
         }
-
 
     }
 }
