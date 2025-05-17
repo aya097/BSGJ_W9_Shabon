@@ -10,7 +10,8 @@ public class BubbleDataBase : ScriptableObject
     public class BubbleData
     {
         public BubbleType bubbleType;
-        public GameObject bubblePrefab;
+        public BubbleMono bubbleMono;
+        public Vector3 initBubblePosition;
     }
 
     public List<BubbleData> bubbleData;
