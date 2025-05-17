@@ -1,18 +1,21 @@
 using UnityEngine;
-using Shabon.Bubble;
 using System.Collections.Generic;
 using System;
 
-[CreateAssetMenu(fileName = "BubbleDataBase", menuName = "Scriptable Objects/BubbleDataBase")]
-public class BubbleDataBase : ScriptableObject
+namespace Shabon.Bubble
 {
-    [Serializable]
-    public class BubbleData
+    [CreateAssetMenu(fileName = "BubbleDataBase", menuName = "Scriptable Objects/BubbleDataBase")]
+    public class BubbleDataBase : ScriptableObject
     {
-        public BubbleType bubbleType;
-        public BubbleMono bubbleMono;
-        public Vector3 initBubblePosition;
-    }
+        [Serializable]
+        public class BubbleData
+        {
+            public BubbleType bubbleType;
+            public BubbleMono bubbleMono;
+            public Vector3 initBubblePosition;
+        }
 
-    public List<BubbleData> bubbleData;
+        public List<BubbleData> bubbleData;
+    }
 }
+
