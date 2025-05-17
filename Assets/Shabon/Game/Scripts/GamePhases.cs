@@ -6,6 +6,9 @@ using VContainer;
 
 namespace Shabon.Game
 {
+    /// <summary>
+    /// ゲームのフェーズを管理するクラス
+    /// </summary>
     public class GamePhases : IGamePhases
     {
         public int CurrentPhaseNum => _currentPhaseNum; // 現在のフェーズ番号
