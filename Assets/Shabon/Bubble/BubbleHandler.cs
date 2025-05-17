@@ -28,6 +28,14 @@ namespace Shabon.Bubble
             targetBubble = bubble;
         }
 
+
+        public void ApplyBreath(float amount, Vector2 direction)
+        {
+            // todo 実装
+            // 範囲に入っているバブルを動かす
+            // bubbles.Move(amount);
+        }
+        // ↓↓↓↓↓これのこと
         public void Breath(Vector2 direction, float amount)
         {
             // バブルを指定された方向と力で動かす
@@ -90,7 +98,12 @@ namespace Shabon.Bubble
 
         public void TriggerOnClap()
         {
+
             targetBubble?.InvokeOnClap(); // 専用メソッドを呼び出してイベントを発火
+
+            Debug.Log("Clap called with amount: " + amount);
+            // todo clapされたときに、範囲内のBubbleMonoのOnClapを呼ぶ関数
+
         }
 
         public void TriggerOnDead()

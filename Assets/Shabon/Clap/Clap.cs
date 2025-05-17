@@ -4,11 +4,20 @@ using Shabon.Bubble;
 
 namespace Shabon.Clap
 {
+
     public class Clap
+
+    // todo monoなくす
+    public class Clap : MonoBehaviour
+
     {
         public static event Action OnClap; // Clapイベントを通知するためのデリゲート
 
+
         private IBubbleHandler _bubbleHandler; // バブル操作を管理するハンドラー
+
+        // todo IBubbleHandlerのClapを呼ぶ
+
 
         public Clap(IBubbleHandler bubbleHandler)
         {

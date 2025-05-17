@@ -3,6 +3,7 @@ using Shabon.Bubble;
 
 namespace Shabon.Breath
 {
+
     public class Breath
     {
         public static event System.Action<Vector2, float> OnBreath; // Breathイベントを通知するためのデリゲート
@@ -13,6 +14,18 @@ namespace Shabon.Breath
             // コンストラクタでバブルハンドラーを受け取る
             _bubbleHandler = bubbleHandler;
         }
+
+    // todo MonoBehaviourをなくす
+    public class Breath : MonoBehaviour
+    {
+        // private BubbleCluster _bubbleCluster;
+        // private BubbleMover _bubbleMover;
+
+        // todo IBubbleHandlerのBreathを呼ぶ
+
+
+
+      
 
         public void TryBreath(Vector2 direction, float amount)
         {
