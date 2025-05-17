@@ -1,3 +1,5 @@
+using Shabon.Param;
+
 namespace Shabon.Game
 {
     public interface IGamePhases
