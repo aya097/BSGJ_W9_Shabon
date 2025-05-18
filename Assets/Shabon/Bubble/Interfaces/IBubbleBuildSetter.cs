@@ -5,8 +5,8 @@ namespace Shabon.Bubble
     public interface IBubbleBuildSetter
     {
         event Action OnReach;
-        event Action OnClap;
-        event Action OnDead;
+        event Action<OnClapArg> OnClap;
+        event Action<OnBreathArg> OnDead;
         void SetBuildParam(IBubbleMover bubbleMover);
     }
 }

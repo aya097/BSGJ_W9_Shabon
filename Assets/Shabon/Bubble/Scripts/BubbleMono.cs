@@ -11,8 +11,8 @@ namespace Shabon.Bubble
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
         public event Action? OnReach;
-        public event Action? OnClap;
-        public event Action? OnDead;
+        public event Action<OnClapArg>? OnClap;
+        public event Action<OnBreathArg>? OnDead;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
 
@@ -31,5 +31,38 @@ namespace Shabon.Bubble
             _bubbleMover = bubbleMover;
         }
     }
+
+
+    /// <summary>
+    /// OnClapの引数
+    /// </summary>
+    public class OnClapArg
+    {
+        public float Strength { get; }  // Clapの強さ
+
+        public OnClapArg(float strength)
+        {
+            Strength = strength;
+        }
+    }
+
+    /// <summary>
+    /// OnBreathの引数
+    /// </summary>
+    public class OnBreathArg
+    {
+        public float Strength { get; }  // 息の強さ
+        public Vector3 Direction { get; }   // 息の向き
+        public Vector3 Position { get; }    // 息の原点
+
+        public OnBreathArg(float strength, Vector3 direction, Vector3 position)
+        {
+            Strength = strength;
+            Direction = direction;
+            Position = position;
+        }
+    }
+
+
 }
 
