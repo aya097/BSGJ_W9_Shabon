@@ -7,6 +7,6 @@ namespace Shabon.Bubble
         event Action OnReach;
         event Action OnClap;
         event Action OnDead;
-        void SetBuildParam();
+        void SetBuildParam(IBubbleMover bubbleMover);
     }
 }

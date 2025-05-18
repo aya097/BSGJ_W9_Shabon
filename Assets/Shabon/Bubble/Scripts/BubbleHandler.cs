@@ -42,7 +42,7 @@ namespace Shabon.Bubble
             if (canControlBubble && targetBubble != null)
             {
                 Vector3 moveDirection = new Vector3(direction.x, 0f, 0f).normalized; // 水平方向の移動ベクトルを計算
-                targetBubble.Move(moveDirection * amount * breathForce); // バブルを移動
+                // targetBubble.Move(moveDirection * amount * breathForce); // バブルを移動
             }
         }
 
@@ -108,7 +108,7 @@ namespace Shabon.Bubble
 
         public void TriggerOnDead()
         {
-           // targetBubble?.InvokeOnDead(); // 専用メソッドを呼び出してイベントを発火
+            // targetBubble?.InvokeOnDead(); // 専用メソッドを呼び出してイベントを発火
         }
 
         public void HandleInput()
@@ -119,7 +119,7 @@ namespace Shabon.Bubble
             float horizontal = UnityEngine.Input.GetAxis("Horizontal"); // UnityEngine.Input を明示的に使用
             float vertical = UnityEngine.Input.GetAxis("Vertical");
             Vector3 direction = new Vector3(horizontal, 0, vertical);
-            targetBubble.Move(direction);
+            // targetBubble.Move(direction);
 
             // Cキーで削除
             if (UnityEngine.Input.GetKeyDown(KeyCode.C))
