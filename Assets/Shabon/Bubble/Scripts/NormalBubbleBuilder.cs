@@ -1,3 +1,4 @@
+using Shabon.Score;
 using UnityEngine;
 
 namespace Shabon.Bubble
@@ -7,10 +8,21 @@ namespace Shabon.Bubble
     /// </summary>
     public class NormalBubbleBuilder : IBubbleBuilder
     {
+        //     private readonly BubbleCluster _bubbleCluster;
+        //     private readonly IDirtValue _dirtValue;
+        //     public NormalBubbleBuilder(
+        //         BubbleCluster bubbleCluster,
+        //         IDirtValue dirtValue)
+        //     {
+        //         _bubbleCluster = bubbleCluster;
+        //         _dirtValue = dirtValue;
+        //     }
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
-        public void Build(IBubbleBuildSetter bubbleMono, IBubbleData bubbleData)
+        public void Build(
+            IBubbleBuildSetter bubbleMono,
+            IBubbleData bubbleData)
         {
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
