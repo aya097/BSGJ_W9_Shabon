@@ -5,8 +5,6 @@ using Shabon.Bubble;
 namespace Shabon.Clap
 {
 
-    public class Clap
-
     // todo monoなくす
     public class Clap : MonoBehaviour
 
