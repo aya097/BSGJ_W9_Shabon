@@ -10,17 +10,13 @@ namespace Shabon.Bubble
     /// バブルを生成するクラス
     /// </summary>
     /// 
-    /// memo: 44行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
+    /// memo: 62行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
     public class BubbleSpawner : MonoBehaviour, IBubbleSpawner
     {
-        private BubbleDataBase _bubbleDataBase = new BubbleDataBase();
-
-
-        GameObject _bubblePrefab;
-        Vector3 _initBubblePosition;
+        private BubbleDataBase _bubbleDataBase = null!;
 
         // ------------------------- テスト用 -------------------------
-        //
+        
         // [SerializeField]
         // private BubbleDataBase _bubbleDataBase;
 
@@ -32,7 +28,7 @@ namespace Shabon.Bubble
         //         Spawn(BubbleType.Normal); // 例：Normalバブルを生成
         //     }
         // }
-        //
+        
         // -------------------------------------------------------------
 
         [Inject]
@@ -53,24 +49,19 @@ namespace Shabon.Bubble
                 Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
                 return;
             }
-            SetBubbleDataInfo(bubbleData);
 
             // バブルビルダーを取得
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
 
             // バブルを生成
-            GameObject bubble = Instantiate(_bubblePrefab, _initBubblePosition, Quaternion.identity);
+            GameObject bubble = Instantiate(bubbleData.bubblePrefab, bubbleData.initBubblePosition, Quaternion.identity);
             IBubbleMono bubbleMono = bubble.GetComponent<BubbleMono>();
-            bubbleBuilder.Build(bubbleMono);
-        }
 
-        /// <summary>
-        /// BubbleDataを内部の変数にセットするメソッド
-        /// </summary>
-        private void SetBubbleDataInfo(BubbleData bubbleData)
-        {
-            _bubblePrefab = bubbleData.bubblePrefab;
-            _initBubblePosition = bubbleData.initBubblePosition;
+            // BubbleMonoがアタッチされていなければアタッチ
+            if (bubbleMono is null) bubbleMono = bubble.AddComponent<BubbleMono>();
+
+            // ビルド
+            bubbleBuilder.Build(bubbleMono);
         }
 
 
@@ -84,8 +75,10 @@ namespace Shabon.Bubble
             return bubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleBuilder(),
-                BubbleType.Boss => new BossBubbleBuilder()
+                BubbleType.Boss => new BossBubbleBuilder(),
                 // バブルの種類が増えたらここに追加
+
+                _ => throw new System.ArgumentOutOfRangeException(nameof(bubbleType), bubbleType, "未対応のBubbleTypeです") // defaultの処理
 
             };
         }
