@@ -15,18 +15,6 @@ namespace Shabon.Breath
             _bubbleHandler = bubbleHandler;
         }
 
-    // todo MonoBehaviourをなくす
-    public class Breath : MonoBehaviour
-    {
-        // private BubbleCluster _bubbleCluster;
-        // private BubbleMover _bubbleMover;
-
-        // todo IBubbleHandlerのBreathを呼ぶ
-
-
-
-      
-
         public void TryBreath(Vector2 direction, float amount)
         {
             // Breathイベントを発火し、バブルハンドラーのBreathメソッドを呼び出す
