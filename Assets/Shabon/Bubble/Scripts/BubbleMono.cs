@@ -14,8 +14,8 @@ namespace Shabon.Bubble
         public event Action? OnClap;
         public event Action? OnDead;
 
-        // 仮の変数
-        private Vector3 _bubbleMoveVelocity = new Vector3(0, 0, 1);
+        // 仮の変数(DataBaseから取得するのがいいかも、ビルドする)
+        private Vector3 _bubbleMoveVelocity = new Vector3(0, 0, -1);
 
 
         void Update()
