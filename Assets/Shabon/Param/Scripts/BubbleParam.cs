@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-namespace Shabon.Param
+namespace Shabon.Bubble
 {
     /// <summary>
     /// バブルに関するパラメータを設定するクラス

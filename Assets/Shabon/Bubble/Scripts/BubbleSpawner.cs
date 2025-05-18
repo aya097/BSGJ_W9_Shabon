@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using VContainer;
-using BubbleData = Shabon.Bubble.BubbleDataBase.BubbleData;
+using BubbleData = Shabon.Bubble.BubbleParam.BubbleData;
 
 namespace Shabon.Bubble
 {
@@ -13,10 +13,10 @@ namespace Shabon.Bubble
     /// memo: 62行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
     public class BubbleSpawner : MonoBehaviour, IBubbleSpawner
     {
-        private BubbleDataBase _bubbleDataBase = null!;
+        private BubbleParam _bubbleDataBase = null!;
 
         // ------------------------- テスト用 -------------------------
-        
+
         // [SerializeField]
         // private BubbleDataBase _bubbleDataBase;
 
@@ -28,11 +28,11 @@ namespace Shabon.Bubble
         //         Spawn(BubbleType.Normal); // 例：Normalバブルを生成
         //     }
         // }
-        
+
         // -------------------------------------------------------------
 
         [Inject]
-        public void Construct(BubbleDataBase bubbleDataBase)
+        public void Construct(BubbleParam bubbleDataBase)
         {
             _bubbleDataBase = bubbleDataBase;
         }
