@@ -2,6 +2,6 @@ namespace Shabon.Bubble
 {
     public interface IBubbleBuilder
     {
-        void Build(IBubbleMono bubbleMono);
+        void Build(IBubbleBuildSetter bubbleMono, IBubbleData bubbleData);
     }
 }
