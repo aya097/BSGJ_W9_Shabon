@@ -7,7 +7,7 @@ namespace Shabon.Bubble
     /// <summary>
     /// バブルに関するパラメータを設定するクラス
     /// </summary>
-    [CreateAssetMenu(fileName = "BubbleDataBase", menuName = "Scriptable Objects/BubbleParam")]
+    [CreateAssetMenu(fileName = "BubbleParam", menuName = "Scriptable Objects/BubbleParam")]
     public class BubbleParam : ScriptableObject, IBubbleParam
     {
         [Header("Bubbleのパラーメータ設定")]
