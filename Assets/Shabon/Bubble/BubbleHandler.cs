@@ -93,22 +93,22 @@ namespace Shabon.Bubble
         // イベントを発火するメソッド
         public void TriggerOnReach()
         {
-            targetBubble?.InvokeOnReach(); // 専用メソッドを呼び出してイベントを発火
+            //targetBubble?.InvokeOnReach(); // 専用メソッドを呼び出してイベントを発火
         }
 
         public void TriggerOnClap()
         {
 
-            targetBubble?.InvokeOnClap(); // 専用メソッドを呼び出してイベントを発火
+            //targetBubble?.InvokeOnClap(); // 専用メソッドを呼び出してイベントを発火
 
-            Debug.Log("Clap called with amount: " + amount);
+            //Debug.Log("Clap called with amount: " + amount);
             // todo clapされたときに、範囲内のBubbleMonoのOnClapを呼ぶ関数
 
         }
 
         public void TriggerOnDead()
         {
-            targetBubble?.InvokeOnDead(); // 専用メソッドを呼び出してイベントを発火
+           // targetBubble?.InvokeOnDead(); // 専用メソッドを呼び出してイベントを発火
         }
 
         public void HandleInput()
