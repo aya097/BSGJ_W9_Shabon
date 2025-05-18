@@ -10,5 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b07beedb3f28824a8d0eb292b2362d4, type: 3}
-  m_Name: BubbleDataBase
+  m_Name: TestBubbleDataBase
   m_EditorClassIdentifier: 
+  bubbleData:
+  - bubbleType: 0
+    bubblePrefab: {fileID: 2501750348594551582, guid: a82478ab5e6be174abf82dd9c5a2bf21, type: 3}
+    initBubblePosition: {x: 0, y: 0, z: 0}

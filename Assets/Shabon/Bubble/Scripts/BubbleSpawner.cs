@@ -11,7 +11,7 @@ namespace Shabon.Bubble
     /// </summary>
     /// 
     /// memo: 44行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
-    public class BubbleSpawner: MonoBehaviour, IBubbleSpawner
+    public class BubbleSpawner : MonoBehaviour, IBubbleSpawner
     {
         private BubbleDataBase _bubbleDataBase = new BubbleDataBase();
 
@@ -19,6 +19,21 @@ namespace Shabon.Bubble
         GameObject _bubblePrefab;
         Vector3 _initBubblePosition;
 
+        // ------------------------- テスト用 -------------------------
+        //
+        // [SerializeField]
+        // private BubbleDataBase _bubbleDataBase;
+
+        // void Update()
+        // {
+        //    // スペースキーが押されたとき
+        //     if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        //     {
+        //         Spawn(BubbleType.Normal); // 例：Normalバブルを生成
+        //     }
+        // }
+        //
+        // -------------------------------------------------------------
 
         [Inject]
         public void Construct(BubbleDataBase bubbleDataBase)
