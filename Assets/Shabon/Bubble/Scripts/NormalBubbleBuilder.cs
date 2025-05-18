@@ -14,9 +14,6 @@ namespace Shabon.Bubble
         {
             // のちのち実装
             Debug.Log("個性を付与します");
-            
         }
-
-
     }
 }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Shabon.Bubble;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,32 +17,27 @@ namespace Shabon.Game
     /// </summary>
     public class PhaseExecutor : ITickable
     {
-        private readonly IGamePhases _gamePhases;
+        private readonly IGamePhases _gamePhases;   // ゲームフェーズに関するデータ用のクラス
+        private readonly IBubbleSpawner _bubbleSpawner; // バブル生成用のクラス
 
         private double _currentTime;    // 現在の時間
         private int _bubbleCount;   // バブルの生成数
 
         private List<PhaseEvent> _eventList = new();
 
-        public PhaseExecutor(IGamePhases gamePhases)
+        public PhaseExecutor(
+            IGamePhases gamePhases,
+            IBubbleSpawner bubbleSpawner)
         {
             _gamePhases = gamePhases;
+            _bubbleSpawner = bubbleSpawner;
 
             // 初期化
             _currentTime = 0;
             _bubbleCount = 0;
 
             // 最初の敵生成
-            _eventList.Add(new PhaseEvent(
-                _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval,
-                () =>
-                {
-                    Debug.Log($"Spawn {_currentTime}");
-
-                    // 次のEventを登録
-                    SubscribeSpawnBubble();
-                }
-            ));
+            SubscribeSpawnBubble();
         }
 
         // 敵を生成するイベントを登録
@@ -52,7 +48,9 @@ namespace Shabon.Game
                 () =>
                 {
                     _bubbleCount++;
-                    Debug.Log($"Spawn {_currentTime}, {_bubbleCount}");
+
+                    // Bubbleスポーン
+                    _bubbleSpawner.Spawn(BubbleType.Normal);
 
                     // 次のEventを登録
                     SubscribeSpawnBubble();
