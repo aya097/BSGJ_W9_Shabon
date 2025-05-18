@@ -40,7 +40,7 @@ namespace Shabon.Bubble
             BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, bubbleData.InitBubblePosition, Quaternion.identity);
 
             // ビルド
-            bubbleBuilder.Build(bubbleMono);
+            bubbleBuilder.Build(bubbleMono, bubbleData);
         }
 
 

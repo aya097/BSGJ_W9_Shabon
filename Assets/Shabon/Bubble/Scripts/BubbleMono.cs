@@ -10,9 +10,11 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
+        public Transform Transform => transform;
         public event Action? OnReach;
+        public event Action? OnDead;
         public event Action<OnClapArg>? OnClap;
-        public event Action<OnBreathArg>? OnDead;
+        public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
 
