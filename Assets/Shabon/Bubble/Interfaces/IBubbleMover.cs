@@ -3,7 +3,7 @@ namespace Shabon.Bubble
 {
     public interface IBubbleMover
     {
-        void MoveForward(float velocity);
+        void MoveForward();
         void MoveByBreath(Vector3 direction);
     }
 }

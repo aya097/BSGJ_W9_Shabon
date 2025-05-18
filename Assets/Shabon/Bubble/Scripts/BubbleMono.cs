@@ -17,13 +17,9 @@ namespace Shabon.Bubble
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
 
 
-
-        // 仮の変数(DataBaseから取得するのがいいかも、ビルドする)
-        private Vector3 _bubbleMoveVelocity = new Vector3(0, 0, -1);
-
         void Update()
         {
-
+            _bubbleMover.MoveForward();
         }
 
 
