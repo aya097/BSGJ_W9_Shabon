@@ -1,8 +1,8 @@
 #nullable enable
 
+using System.Linq;
 using UnityEngine;
 using VContainer;
-using BubbleData = Shabon.Bubble.BubbleDataBase.BubbleData;
 
 namespace Shabon.Bubble
 {
@@ -10,31 +10,14 @@ namespace Shabon.Bubble
     /// バブルを生成するクラス
     /// </summary>
     /// 
-    /// memo: 62行目でInstanciateするのにMonoBehaviour継承せざるを得ない感じです。
-    public class BubbleSpawner : MonoBehaviour, IBubbleSpawner
+    public class BubbleSpawner : IBubbleSpawner
     {
-        private BubbleDataBase _bubbleDataBase = null!;
-
-        // ------------------------- テスト用 -------------------------
-        
-        // [SerializeField]
-        // private BubbleDataBase _bubbleDataBase;
-
-        // void Update()
-        // {
-        //    // スペースキーが押されたとき
-        //     if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-        //     {
-        //         Spawn(BubbleType.Normal); // 例：Normalバブルを生成
-        //     }
-        // }
-        
-        // -------------------------------------------------------------
+        readonly IBubbleParam _bubbleParam = null!;
 
         [Inject]
-        public void Construct(BubbleDataBase bubbleDataBase)
+        public BubbleSpawner(IBubbleParam bubbleParam)
         {
-            _bubbleDataBase = bubbleDataBase;
+            _bubbleParam = bubbleParam;
         }
 
         /// <summary>
@@ -43,7 +26,7 @@ namespace Shabon.Bubble
         public void Spawn(BubbleType bubbleType)
         {
             // bubbleType別にdataを取得する
-            BubbleData bubbleData = _bubbleDataBase.bubbleData.Find(x => x.bubbleType == bubbleType);
+            IBubbleData bubbleData = _bubbleParam.GetBubbleDataList().Where(b => b.BubbleType == bubbleType).FirstOrDefault();
             if (bubbleData is null)
             {
                 Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
@@ -54,11 +37,7 @@ namespace Shabon.Bubble
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
 
             // バブルを生成
-            GameObject bubble = Instantiate(bubbleData.bubblePrefab, bubbleData.initBubblePosition, Quaternion.identity);
-            IBubbleMono bubbleMono = bubble.GetComponent<BubbleMono>();
-
-            // BubbleMonoがアタッチされていなければアタッチ
-            if (bubbleMono is null) bubbleMono = bubble.AddComponent<BubbleMono>();
+            BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, bubbleData.InitBubblePosition, Quaternion.identity);
 
             // ビルド
             bubbleBuilder.Build(bubbleMono);
