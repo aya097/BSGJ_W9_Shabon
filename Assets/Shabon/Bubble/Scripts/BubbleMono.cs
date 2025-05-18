@@ -17,7 +17,6 @@ namespace Shabon.Bubble
         // 仮の変数(DataBaseから取得するのがいいかも、ビルドする)
         private Vector3 _bubbleMoveVelocity = new Vector3(0, 0, -1);
 
-
         void Update()
         {
             // 画面奥からbubbleが近づいてくる

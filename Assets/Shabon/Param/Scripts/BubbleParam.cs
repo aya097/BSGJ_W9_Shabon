@@ -37,8 +37,23 @@ namespace Shabon.Bubble
         [Header("バブルのPrefab")]
         [SerializeField] BubbleMono bubblePrefab;
 
+
+        [Header("以下基本パラメータ")]
+
         [Header("バブルの生成位置")]
         [SerializeField] Vector3 initBubblePosition;
+
+        [Header("前方への移動速度(m/s)")]
+        [Min(0)]
+        [SerializeField] float forwardVelocity;
+
+        [Header("ゾーン待機時間(s)")]
+        [Min(0)]
+        [SerializeField] float zoneWaitingTime;
+
+        [Header("汚れレベル上昇度")]
+        [Min(0)]
+        [SerializeField] int increasingDirtValue;
 
         // Getter
         public BubbleType BubbleType
@@ -53,6 +68,18 @@ namespace Shabon.Bubble
         {
             get { return initBubblePosition; }
         }
+        public float ForwardVelocity
+        {
+            get { return forwardVelocity; }
+        }
+        public float ZoneWaitingTime
+        {
+            get { return zoneWaitingTime; }
+        }
+        public int IncreasingDirtValue
+        {
+            get { return increasingDirtValue; }
+        }
     }
 
     public interface IBubbleData
@@ -60,6 +87,9 @@ namespace Shabon.Bubble
         BubbleType BubbleType { get; }
         BubbleMono BubblePrefab { get; }
         Vector3 InitBubblePosition { get; }
+        float ForwardVelocity { get; }
+        float ZoneWaitingTime { get; }
+        int IncreasingDirtValue { get; }
     }
 }
 
