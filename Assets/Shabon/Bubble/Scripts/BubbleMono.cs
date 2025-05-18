@@ -10,34 +10,61 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
+        public Transform Transform => transform;
         public event Action? OnReach;
-        public event Action? OnClap;
         public event Action? OnDead;
+        public event Action<OnClapArg>? OnClap;
+        public event Action<OnBreathArg>? OnBreath;
 
-        // 仮の変数(DataBaseから取得するのがいいかも、ビルドする)
-        private Vector3 _bubbleMoveVelocity = new Vector3(0, 0, -1);
+        private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
+
 
         void Update()
         {
-            // 画面奥からbubbleが近づいてくる
-            Move(_bubbleMoveVelocity);
+            _bubbleMover.MoveForward();
         }
 
-        /// <summary>
-        /// バブルを指定した速度で移動させるメソッド
-        /// </summary>
-        public void Move(Vector3 velocity)
-        {
-            transform.position += velocity * Time.deltaTime;
-        }
 
         /// <summary>
         /// ビルドの際にパラメータを注ぐ用のクラス
         /// </summary>
-        public void SetBuildParam()
+        public void SetBuildParam(IBubbleMover bubbleMover)
         {
-
+            _bubbleMover = bubbleMover;
         }
     }
+
+
+    /// <summary>
+    /// OnClapの引数
+    /// </summary>
+    public class OnClapArg
+    {
+        public float Strength { get; }  // Clapの強さ
+
+        public OnClapArg(float strength)
+        {
+            Strength = strength;
+        }
+    }
+
+    /// <summary>
+    /// OnBreathの引数
+    /// </summary>
+    public class OnBreathArg
+    {
+        public float Strength { get; }  // 息の強さ
+        public Vector3 Direction { get; }   // 息の向き
+        public Vector3 Position { get; }    // 息の原点
+
+        public OnBreathArg(float strength, Vector3 direction, Vector3 position)
+        {
+            Strength = strength;
+            Direction = direction;
+            Position = position;
+        }
+    }
+
+
 }
 
