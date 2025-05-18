@@ -8,7 +8,7 @@ namespace Shabon.Bubble
     /// <summary>
     /// 通常バブル（ボスバブルではない）の動きやイベントを管理するためのクラス
     /// </summary>
-    public class BubbleMono : MonoBehaviour, IBubbleMono
+    public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
         public event Action? OnReach;
         public event Action? OnClap;
@@ -32,27 +32,11 @@ namespace Shabon.Bubble
         }
 
         /// <summary>
-        /// バブルがプレイヤーに到達したときに呼び出されるメソッド
+        /// ビルドの際にパラメータを注ぐ用のクラス
         /// </summary>
-        public void Reach()
+        public void SetBuildParam()
         {
-            OnReach?.Invoke();
-        }
 
-        /// <summary>
-        /// バブルがクラップされたときに呼び出されるメソッド
-        /// </summary>
-        public void Clap()
-        {
-            OnClap?.Invoke();
-        }
-
-        /// <summary>
-        /// バブルが消えたときに呼び出されるメソッド
-        /// </summary>
-        public void Dead()
-        {
-            OnDead?.Invoke();
         }
     }
 }
