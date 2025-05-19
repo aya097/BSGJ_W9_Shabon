@@ -17,16 +17,9 @@ namespace Shabon.Score
         private int _dirtNum;
 
         // 引数は正の数
-        public DirtValue(int value = 0)
+        public DirtValue()
         {
-            if (IsAssertMinusNum(value))
-            {
-                _dirtNum = 0;
-            }
-            else
-            {
-                _dirtNum = value;
-            }
+            _dirtNum = 0;
         }
 
         // 引数は正の数

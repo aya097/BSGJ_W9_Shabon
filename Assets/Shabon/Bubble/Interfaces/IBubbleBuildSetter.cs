@@ -5,7 +5,6 @@ namespace Shabon.Bubble
 {
     public interface IBubbleBuildSetter
     {
-        Transform Transform { get; }
         event Action OnReach;
         event Action OnDead;
         event Action<OnClapArg> OnClap;

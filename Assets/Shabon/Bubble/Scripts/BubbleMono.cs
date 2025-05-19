@@ -32,6 +32,34 @@ namespace Shabon.Bubble
         {
             _bubbleMover = bubbleMover;
         }
+        /// <summary>
+        /// 前方に到達したとき
+        /// </summary>
+        public void InvokeOnReach()
+        {
+            OnReach?.Invoke();
+        }
+        /// <summary>
+        /// 割れたとき
+        /// </summary>
+        public void InvokeOnDead()
+        {
+            OnDead?.Invoke();
+        }
+        /// <summary>
+        /// Clapされたとき
+        /// </summary>
+        public void InvokeOnClap(OnClapArg arg)
+        {
+            OnClap?.Invoke(arg);
+        }
+        /// <summary>
+        /// Breathされたとき
+        /// </summary>
+        public void InvokeOnBreath(OnBreathArg arg)
+        {
+            OnBreath?.Invoke(arg);
+        }
     }
 
 
