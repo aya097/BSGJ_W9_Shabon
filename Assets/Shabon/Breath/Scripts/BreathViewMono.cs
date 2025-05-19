@@ -32,5 +32,13 @@ namespace Shabon.Breath
                })
                .AddTo(this);
         }
+
+        void OnTriggerStay(Collider other)
+        {
+            var bubbleMono = other.gameObject.GetComponent<IBubbleMono>();
+            if (bubbleMono == null) return;
+
+            Debug.Log($"{bubbleMono}");
+        }
     }
 }
