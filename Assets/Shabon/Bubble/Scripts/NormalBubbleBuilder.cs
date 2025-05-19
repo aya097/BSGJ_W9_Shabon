@@ -74,9 +74,10 @@ namespace Shabon.Bubble
                 float x = breathPosition.x + breathDirection.x / breathDirection.y * y;
 
                 // Bubbleを移動
-                Vector3 direction = new Vector3(x, 0f, 0f);
+                Vector3 direction = new Vector3(bubblePosition.x - x, 0f, 0f);
                 direction = direction.normalized * arg.Strength;
                 bubbleMover.MoveByBreath(direction);
+                Debug.Log(direction);
             };
         }
 
