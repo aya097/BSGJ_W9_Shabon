@@ -72,5 +72,20 @@ namespace Shabon.Bubble
                 bubbleMover.MoveByBreath(direction);
             };
         }
+
+        /// <summary>
+        /// 割られたときの処理
+        /// </summary>
+        private void SetOnDead(IBubbleBuildSetter bubbleMono)
+        {
+            bubbleMono.OnDead += () =>
+            {
+                // Clusterから削除
+                _bubbleCluster.Remove(bubbleMono.Transform.GetComponent<BubbleMono>());
+
+                // Destroy
+                GameObject.Destroy(bubbleMono.Transform.gameObject);
+            };
+        }
     }
 }

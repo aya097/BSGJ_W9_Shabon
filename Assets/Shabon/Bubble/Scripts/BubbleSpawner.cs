@@ -48,6 +48,9 @@ namespace Shabon.Bubble
 
             // ビルド
             bubbleBuilder.Build(bubbleMono, bubbleData);
+
+            // Clusterに登録
+            _bubbleCluster.Add(bubbleMono);
         }
 
 
