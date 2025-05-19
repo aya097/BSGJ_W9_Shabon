@@ -29,6 +29,7 @@ namespace Shabon.Game
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BubbleHandler>(Lifetime.Scoped).As<IBubbleHandler>();
+            builder.RegisterComponentInHierarchy<BreathGetterViewMono>();
 
 
             // Param

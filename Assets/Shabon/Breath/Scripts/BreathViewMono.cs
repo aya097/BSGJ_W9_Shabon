@@ -1,4 +1,6 @@
 #nullable enable
+using System.Collections;
+using System.Collections.Generic;
 using R3;
 using Shabon.Bubble;
 using UnityEngine;
@@ -33,12 +35,5 @@ namespace Shabon.Breath
                .AddTo(this);
         }
 
-        void OnTriggerStay(Collider other)
-        {
-            var bubbleMono = other.gameObject.GetComponent<IBubbleMono>();
-            if (bubbleMono == null) return;
-
-            Debug.Log($"{bubbleMono}");
-        }
     }
 }
