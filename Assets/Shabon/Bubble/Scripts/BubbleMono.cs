@@ -22,7 +22,6 @@ namespace Shabon.Bubble
         void Update()
         {
             _bubbleMover.MoveForward();
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) InvokeOnClap(new OnClapArg(1));
         }
 
 
