@@ -1,12 +1,18 @@
 #nullable enable
 using R3;
+using Shabon.Bubble;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VContainer;
 namespace Shabon.Breath
 {
+    /// <summary>
+    /// Breathオブジェクトを動かしたり、該当するBubbleを取得するクラス
+    /// </summary>
     public class BreathViewMono : MonoBehaviour
     {
-        [SerializeField] Transform originTransform; // 原点の位置 
+        [SerializeField] Transform originTransform = null!; // 原点の位置
+        [Inject]
         public void Initialize(Breath breath)
         {
             originTransform.position = breath.Position;

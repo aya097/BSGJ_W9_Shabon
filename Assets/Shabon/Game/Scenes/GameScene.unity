@@ -580,6 +580,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breath
       objectReference: {fileID: 0}
+    - target: {fileID: 2657826339181375470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657826339181375470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

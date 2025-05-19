@@ -1,5 +1,6 @@
 using UnityEngine;
 using Shabon.Bubble;
+using VContainer;
 
 namespace Shabon.Breath
 {
@@ -14,14 +15,14 @@ namespace Shabon.Breath
         private float _maxDegree = 60f; // 正面を0度として
         private Vector3 _currentDirection;  // 現在の向き
 
-
+        [Inject]
         public Breath(IBubbleHandler bubbleHandler)
         {
             // コンストラクタでバブルハンドラーを受け取る
             _bubbleHandler = bubbleHandler;
 
             _currentDirection = new Vector3(0, 0, 1f);
-            _originPosition = new Vector3(0f, 0.5f, -2.5f);
+            _originPosition = new Vector3(0f, 0.5f, -2f);
         }
 
         /// <summary>
