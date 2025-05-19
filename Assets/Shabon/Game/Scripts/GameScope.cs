@@ -1,6 +1,7 @@
 #nullable enable
 using Shabon.Bubble;
 using Shabon.Param;
+using Shabon.Score;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -22,10 +23,17 @@ namespace Shabon.Game
 
             // Bubble
             builder.Register<BubbleSpawner>(Lifetime.Scoped).As<IBubbleSpawner>();
+            builder.Register<BubbleCluster>(Lifetime.Scoped);
+            builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
+            builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
+
 
             // Param
             builder.RegisterInstance(gameRuleParam).AsImplementedInterfaces();
             builder.RegisterInstance(bubbleParam).AsImplementedInterfaces();
+
+            // Score
+            builder.Register<DirtValue>(Lifetime.Scoped).As<IDirtValue>();
         }
     }
 }

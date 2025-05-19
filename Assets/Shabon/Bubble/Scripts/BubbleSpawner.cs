@@ -12,12 +12,19 @@ namespace Shabon.Bubble
     /// 
     public class BubbleSpawner : IBubbleSpawner
     {
-        readonly IBubbleParam _bubbleParam = null!;
+        private readonly IBubbleParam _bubbleParam;
+        private readonly BubbleCluster _bubbleCluster;
+        private readonly IObjectResolver _objectResolver;   // IBubbleBuilderをnewするために使用する
 
         [Inject]
-        public BubbleSpawner(IBubbleParam bubbleParam)
+        public BubbleSpawner(
+            IBubbleParam bubbleParam,
+            BubbleCluster bubbleCluster,
+            IObjectResolver objectResolver)
         {
             _bubbleParam = bubbleParam;
+            _bubbleCluster = bubbleCluster;
+            _objectResolver = objectResolver;
         }
 
         /// <summary>
@@ -53,8 +60,8 @@ namespace Shabon.Bubble
         {
             return bubbleType switch
             {
-                BubbleType.Normal => new NormalBubbleBuilder(),
-                BubbleType.Boss => new BossBubbleBuilder(),
+                BubbleType.Normal => _objectResolver.Resolve<NormalBubbleBuilder>(),
+                BubbleType.Boss => _objectResolver.Resolve<BossBubbleBuilder>(),
                 // バブルの種類が増えたらここに追加
 
                 _ => throw new System.ArgumentOutOfRangeException(nameof(bubbleType), bubbleType, "未対応のBubbleTypeです") // defaultの処理
