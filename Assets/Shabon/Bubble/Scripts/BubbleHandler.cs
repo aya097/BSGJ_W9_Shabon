@@ -17,6 +17,7 @@ namespace Shabon.Bubble
         }
         public void ApplyBreath(Vector3 direction, Vector3 position, float strength)
         {
+            if (strength == 0) return;
             foreach (var bubbleMono in _breathGetter.GetBubbleMonos())
             {
                 bubbleMono.InvokeOnBreath(new OnBreathArg(strength, direction, position));
