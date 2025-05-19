@@ -5,7 +5,7 @@ using VContainer;
 namespace Shabon.Breath
 {
 
-    public class Breath
+    public class BreathModel
     {
         public Vector3 Direction => _currentDirection;
         public Vector3 Position => _originPosition;
@@ -16,7 +16,7 @@ namespace Shabon.Breath
         private Vector3 _currentDirection;  // 現在の向き
 
         [Inject]
-        public Breath(IBubbleHandler bubbleHandler)
+        public BreathModel(IBubbleHandler bubbleHandler)
         {
             // コンストラクタでバブルハンドラーを受け取る
             _bubbleHandler = bubbleHandler;

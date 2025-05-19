@@ -13,7 +13,7 @@ namespace Shabon.Breath
     {
         [SerializeField] Transform originTransform = null!; // 原点の位置
         [Inject]
-        public void Initialize(Breath breath)
+        public void Initialize(BreathModel breath)
         {
             originTransform.position = breath.Position;
 

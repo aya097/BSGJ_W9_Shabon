@@ -4,11 +4,11 @@ using Shabon.Bubble;
 
 namespace Shabon.Clap
 {
-    public class Clap
+    public class ClapModel
     {
         private readonly IBubbleHandler _bubbleHandler; // バブル操作を管理するハンドラー
 
-        public Clap(IBubbleHandler bubbleHandler)
+        public ClapModel(IBubbleHandler bubbleHandler)
         {
             // コンストラクタでバブルハンドラーを受け取る
             _bubbleHandler = bubbleHandler;
