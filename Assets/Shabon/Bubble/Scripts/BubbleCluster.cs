@@ -16,13 +16,11 @@ namespace Shabon.Bubble
         public void Add(IBubbleMono bubble)
         {
             _bubbles.Add(bubble);
-            UnityEngine.Debug.Log($"{string.Join(",", _bubbles)}");
         }
 
         public void Remove(IBubbleMono bubble)
         {
             _bubbles.Remove(bubble);
-            UnityEngine.Debug.Log($"{string.Join(",", _bubbles)}");
         }
     }
 }

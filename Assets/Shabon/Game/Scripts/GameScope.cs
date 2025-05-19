@@ -2,6 +2,8 @@
 using Shabon.Bubble;
 using Shabon.Param;
 using Shabon.Score;
+using Shabon.Breath;
+using Shabon.Input;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -26,6 +28,8 @@ namespace Shabon.Game
             builder.Register<BubbleCluster>(Lifetime.Scoped);
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
+            builder.Register<BubbleHandler>(Lifetime.Scoped).As<IBubbleHandler>();
+            builder.RegisterComponentInHierarchy<BreathGetterViewMono>();
 
 
             // Param
@@ -34,6 +38,14 @@ namespace Shabon.Game
 
             // Score
             builder.Register<DirtValue>(Lifetime.Scoped).As<IDirtValue>();
+
+            // Breath
+            builder.Register<BreathModel>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<BreathViewMono>();
+
+            // Input
+            builder.Register<InputManager>(Lifetime.Scoped).As<IInputManager>();
+            builder.RegisterEntryPoint<InputPresenter>(Lifetime.Scoped);
         }
     }
 }

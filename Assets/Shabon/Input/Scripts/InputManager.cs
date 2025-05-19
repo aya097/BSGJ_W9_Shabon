@@ -30,11 +30,11 @@ namespace Shabon.Input
         // 左右の移動量を-1~1で返す
         public float GetHorizontalDirection()
         {
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow))
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow))
             {
                 return 1f;
             }
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow))
+            else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftArrow))
             {
                 return -1f;
             }
