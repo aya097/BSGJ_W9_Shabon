@@ -24,8 +24,8 @@ namespace Shabon.Game
             // Bubble
             builder.Register<BubbleSpawner>(Lifetime.Scoped).As<IBubbleSpawner>();
             builder.Register<BubbleCluster>(Lifetime.Scoped);
-            builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
-            builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
+            builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
+            builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
 
 
             // Param
