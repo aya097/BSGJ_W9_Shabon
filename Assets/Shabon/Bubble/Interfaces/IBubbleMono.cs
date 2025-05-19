@@ -6,10 +6,11 @@ namespace Shabon.Bubble
 {
     public interface IBubbleMono
     {
-        event Action OnReach;
-        event Action OnDead;
-        event Action<OnClapArg> OnClap;
-        event Action<OnBreathArg> OnBreath;
+        Transform Transform { get; }
+        void InvokeOnReach();
+        void InvokeOnDead();
+        void InvokeOnClap(OnClapArg arg);
+        void InvokeOnBreath(OnBreathArg arg);
     }
 }
 

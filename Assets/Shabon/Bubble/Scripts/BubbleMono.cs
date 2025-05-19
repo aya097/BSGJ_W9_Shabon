@@ -22,6 +22,7 @@ namespace Shabon.Bubble
         void Update()
         {
             _bubbleMover.MoveForward();
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) InvokeOnClap(new OnClapArg(1));
         }
 
 
@@ -31,6 +32,34 @@ namespace Shabon.Bubble
         public void SetBuildParam(IBubbleMover bubbleMover)
         {
             _bubbleMover = bubbleMover;
+        }
+        /// <summary>
+        /// 前方に到達したとき
+        /// </summary>
+        public void InvokeOnReach()
+        {
+            OnReach?.Invoke();
+        }
+        /// <summary>
+        /// 割れたとき
+        /// </summary>
+        public void InvokeOnDead()
+        {
+            OnDead?.Invoke();
+        }
+        /// <summary>
+        /// Clapされたとき
+        /// </summary>
+        public void InvokeOnClap(OnClapArg arg)
+        {
+            OnClap?.Invoke(arg);
+        }
+        /// <summary>
+        /// Breathされたとき
+        /// </summary>
+        public void InvokeOnBreath(OnBreathArg arg)
+        {
+            OnBreath?.Invoke(arg);
         }
     }
 

@@ -24,16 +24,23 @@ namespace Shabon.Bubble
         /// 個性を付与するメソッド
         /// </summary>
         public void Build(
-            IBubbleBuildSetter bubbleMono,
+            IBubbleBuildSetter bubbleSetter,
+            IBubbleMono bubbleMono,
             IBubbleData bubbleData)
         {
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
-            // Breathの処理
-            SetOnBreath(bubbleMono, bubbleMover);
+            // Deadの処理
+            SetOnDead(bubbleSetter, bubbleMono);
 
-            bubbleMono.SetBuildParam(bubbleMover);
+            // Breathの処理
+            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
+
+            // Clapの処理
+            SetOnClap(bubbleSetter, bubbleMono);
+
+            bubbleSetter.SetBuildParam(bubbleMover);
         }
 
         /// <summary>
@@ -51,12 +58,12 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleBuildSetter bubbleMono, IBubbleMover bubbleMover)
+        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform)
         {
-            bubbleMono.OnBreath += (arg) =>
+            bubbleSetter.OnBreath += (arg) =>
             {
                 // y座標抜きの平面として扱って計算
-                Vector2 bubblePosition = new Vector2(bubbleMono.Transform.position.x, bubbleMono.Transform.position.z); // Bubbleの座標
+                Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
                 Vector2 breathPosition = new Vector2(arg.Position.x, arg.Position.z);   // Breathの原点
                 Vector2 breathDirection = new Vector2(arg.Direction.x, arg.Direction.z);   // Breathの向き 
 
@@ -76,15 +83,27 @@ namespace Shabon.Bubble
         /// <summary>
         /// 割られたときの処理
         /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleMono)
+        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono)
         {
-            bubbleMono.OnDead += () =>
+            bubbleSetter.OnDead += () =>
             {
                 // Clusterから削除
-                _bubbleCluster.Remove(bubbleMono.Transform.GetComponent<BubbleMono>());
+                _bubbleCluster.Remove(bubbleMono);
 
                 // Destroy
                 GameObject.Destroy(bubbleMono.Transform.gameObject);
+            };
+        }
+
+        /// <summary>
+        /// Clapされた時の処理
+        /// </summary>
+        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono)
+        {
+            bubbleSetter.OnClap += _ =>
+            {
+                // Clapされたら割れる
+                bubbleMono.InvokeOnDead();
             };
         }
     }

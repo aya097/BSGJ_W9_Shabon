@@ -47,7 +47,7 @@ namespace Shabon.Bubble
             BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, bubbleData.InitBubblePosition, Quaternion.identity);
 
             // ビルド
-            bubbleBuilder.Build(bubbleMono, bubbleData);
+            bubbleBuilder.Build(bubbleMono, bubbleMono, bubbleData);
 
             // Clusterに登録
             _bubbleCluster.Add(bubbleMono);

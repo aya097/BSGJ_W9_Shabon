@@ -10,7 +10,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
-        public void Build(IBubbleBuildSetter bubbleMono, IBubbleData bubbleData)
+        public void Build(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
         {
             // のちのち実装
             Debug.Log("個性を付与します");
