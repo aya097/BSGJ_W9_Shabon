@@ -32,7 +32,7 @@ jobs:
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
       # Upload
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v4
         with:
           path: build
 
