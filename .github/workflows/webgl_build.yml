@@ -18,7 +18,7 @@ jobs:
     steps:
       # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Build
       - name: Build project
@@ -32,7 +32,7 @@ jobs:
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
       # Upload
       - name: Upload
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: build
 
@@ -48,4 +48,4 @@ jobs:
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
