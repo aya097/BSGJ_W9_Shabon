@@ -30,3 +30,22 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
+      # Upload
+      - name: Upload
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
