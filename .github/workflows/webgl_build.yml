@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  # masterへのPRマージをトリガーとしてワークフローを開始する
+  pull_request:
+    branches:
+      - develop
+      - main
+    types: [closed]
+
+  # 手動実行デバッグ用
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    name: Build my project
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL:   ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
+      # Upload
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
