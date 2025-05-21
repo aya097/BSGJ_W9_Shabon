@@ -56,17 +56,30 @@ jobs:
           name: github-pages
           path: build
           
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
       - name: Notify Discord - Success
         if: success()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d "{\"content\": \"✅ Build Success! 🎉\nView logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+          -d "{\"content\": \"✅ Build & Deploy Success! 🎉\n▶️ Play here: ${{ steps.deployment.outputs.page_url }}\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      # Send a failure notification to Discord  
       - name: Notify Discord - Failure
         if: failure()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content": "Build Failed! 😞 \nThe WebGL build has failed. Please check the logs for more details."}' \
+          -d "{\"content\": \"❌ Build or Deploy Failed! 😞\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
