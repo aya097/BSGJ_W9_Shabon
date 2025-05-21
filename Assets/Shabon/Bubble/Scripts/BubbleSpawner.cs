@@ -1,6 +1,7 @@
 #nullable enable
 
 using System.Linq;
+using Shabon.Param;
 using UnityEngine;
 using VContainer;
 
@@ -14,16 +15,19 @@ namespace Shabon.Bubble
     {
         private readonly IBubbleParam _bubbleParam;
         private readonly BubbleCluster _bubbleCluster;
+        private readonly IBubbleSpawnedArea _bubbleSpawnedArea;
         private readonly IObjectResolver _objectResolver;   // IBubbleBuilderをnewするために使用する
 
         [Inject]
         public BubbleSpawner(
             IBubbleParam bubbleParam,
             BubbleCluster bubbleCluster,
+            IBubbleSpawnedArea bubbleSpawnedArea,
             IObjectResolver objectResolver)
         {
             _bubbleParam = bubbleParam;
             _bubbleCluster = bubbleCluster;
+            _bubbleSpawnedArea = bubbleSpawnedArea;
             _objectResolver = objectResolver;
         }
 
@@ -44,7 +48,7 @@ namespace Shabon.Bubble
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
 
             // スポーン位置を作成
-            Vector3 spawningPosition = DecideSpawningPosition(bubbleData.SpawnedBubbleArea);
+            Vector3 spawningPosition = DecideSpawningPosition(_bubbleSpawnedArea.GetArea(bubbleData.BubbleSpawnedArea));
 
             // バブルを生成
             BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
