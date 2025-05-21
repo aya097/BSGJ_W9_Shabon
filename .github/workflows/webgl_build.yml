@@ -38,7 +38,6 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
-          buildName: "." 
 
       # Remove
       - name: Remove symlinks and macOS hidden files
@@ -55,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: build
+          path: build/WebGL
           
   deploy:
     needs: build
