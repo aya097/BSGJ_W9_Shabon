@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UIElements;
+using System.Drawing;
 
 namespace Shabon.Bubble
 {
@@ -40,8 +42,8 @@ namespace Shabon.Bubble
 
         [Header("以下基本パラメータ")]
 
-        [Header("バブルの生成位置")]
-        [SerializeField] Vector3 initBubblePosition;
+        [Header("バブルの生成エリア")]
+        [SerializeField] BoxCollider spawnedBubbleArea;
 
         [Header("前方への移動速度(m/s)")]
         [Min(0)]
@@ -64,9 +66,13 @@ namespace Shabon.Bubble
         {
             get { return bubblePrefab; }
         }
-        public Vector3 InitBubblePosition
+        public BoxArea SpawnedBubbleArea
         {
-            get { return initBubblePosition; }
+            get
+            {
+                // Colliderの座標とサイズ
+                return new BoxArea(spawnedBubbleArea.gameObject.transform.position, spawnedBubbleArea.size);
+            }
         }
         public float ForwardVelocity
         {
@@ -86,10 +92,25 @@ namespace Shabon.Bubble
     {
         BubbleType BubbleType { get; }
         BubbleMono BubblePrefab { get; }
-        Vector3 InitBubblePosition { get; }
+        BoxArea SpawnedBubbleArea { get; }
         float ForwardVelocity { get; }
         float ZoneWaitingTime { get; }
         int IncreasingDirtValue { get; }
+    }
+
+    /// <summary>
+    /// ボックス状の範囲を表す
+    /// </summary>
+    public struct BoxArea
+    {
+        public Vector3 Position { get; }    // 中心位置
+        public Vector3 Size { get; }
+
+        public BoxArea(Vector3 position, Vector3 size)
+        {
+            Position = position;
+            Size = size;
+        }
     }
 }
 
