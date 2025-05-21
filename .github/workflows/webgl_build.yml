@@ -54,7 +54,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: build/WebGL
+          path: build
+
+      # Show directory
+      - name: Show build folder structure
+        run: |
+          echo "Contents of build directory:"
+          ls -R build
           
   deploy:
     needs: build
