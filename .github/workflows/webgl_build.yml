@@ -60,10 +60,10 @@ jobs:
         if: success()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content": "Build Success! 🎉 \nThe WebGL build has been successfully completed."}' \
+          -d "{\"content\": \"✅ Build Success! 🎉\nView logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      # Send a failure notification to Discord
+      # Send a failure notification to Discord  
       - name: Notify Discord - Failure
         if: failure()
         run: |
