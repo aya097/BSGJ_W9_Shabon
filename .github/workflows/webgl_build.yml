@@ -87,12 +87,12 @@ jobs:
         if: success()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d "{\"content\": \"✅ Build & Deploy Success! 🎉\n▶️ Play here: ${{ steps.deployment.outputs.page_url }}\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+          -d "{\"content\": \"✅ できた！！これが最新のビルドデータだよ！！ \n▶️ Play: ${{ steps.deployment.outputs.page_url }}\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
 
       - name: Notify Discord - Failure
         if: failure()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d "{\"content\": \"❌ Build or Deploy Failed! 😞\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+          -d "{\"content\": \"❌ ビルドエラーだ！修正してやる！！! \n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
