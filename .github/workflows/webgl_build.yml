@@ -55,17 +55,18 @@ jobs:
         with:
           name: github-pages
           path: build
+          
+      - name: Notify Discord - Success
+        if: success()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"content": "Build Success! 🎉 \nThe WebGL build has been successfully completed."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      # Send a failure notification to Discord
+      - name: Notify Discord - Failure
+        if: failure()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"content": "Build Failed! 😞 \nThe WebGL build has failed. Please check the logs for more details."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
