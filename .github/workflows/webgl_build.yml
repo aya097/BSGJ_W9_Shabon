@@ -38,6 +38,17 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
+
+      # Remove
+      - name: Remove symlinks and macOS hidden files
+        run: |
+          find build -type l -delete || true
+          find build -name ".DS_Store" -delete || true
+
+      # Check build size
+      - name: Check build size
+        run: du -sh build
+          
       # Upload
       - name: Upload
         uses: actions/upload-artifact@v4
