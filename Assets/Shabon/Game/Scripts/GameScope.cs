@@ -35,6 +35,7 @@ namespace Shabon.Game
             // Param
             builder.RegisterInstance(gameRuleParam).AsImplementedInterfaces();
             builder.RegisterInstance(bubbleParam).AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<RuntimeObjectServer>().AsImplementedInterfaces();
 
             // Score
             builder.Register<DirtValue>(Lifetime.Scoped).As<IDirtValue>();

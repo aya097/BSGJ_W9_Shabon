@@ -1,6 +1,7 @@
 #nullable enable
 
 using System.Linq;
+using Shabon.Param;
 using UnityEngine;
 using VContainer;
 
@@ -14,16 +15,19 @@ namespace Shabon.Bubble
     {
         private readonly IBubbleParam _bubbleParam;
         private readonly BubbleCluster _bubbleCluster;
+        private readonly IBubbleSpawnedArea _bubbleSpawnedArea;
         private readonly IObjectResolver _objectResolver;   // IBubbleBuilderをnewするために使用する
 
         [Inject]
         public BubbleSpawner(
             IBubbleParam bubbleParam,
             BubbleCluster bubbleCluster,
+            IBubbleSpawnedArea bubbleSpawnedArea,
             IObjectResolver objectResolver)
         {
             _bubbleParam = bubbleParam;
             _bubbleCluster = bubbleCluster;
+            _bubbleSpawnedArea = bubbleSpawnedArea;
             _objectResolver = objectResolver;
         }
 
@@ -43,14 +47,31 @@ namespace Shabon.Bubble
             // バブルビルダーを取得
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
 
+            // スポーン位置を作成
+            Vector3 spawningPosition = DecideSpawningPosition(_bubbleSpawnedArea.GetArea(bubbleData.BubbleSpawnedArea));
+
             // バブルを生成
-            BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, bubbleData.InitBubblePosition, Quaternion.identity);
+            BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
 
             // ビルド
             bubbleBuilder.Build(bubbleMono, bubbleMono, bubbleData);
 
             // Clusterに登録
             _bubbleCluster.Add(bubbleMono);
+        }
+
+        /// <summary>
+        /// BoxAreaからランダムに座標を作成する
+        /// </summary>
+        /// <param name="boxArea"></param>
+        private Vector3 DecideSpawningPosition(BoxArea boxArea)
+        {
+            Vector3 rand = new Vector3(Random.value, Random.value, Random.value);
+            // randの範囲を-0.5~0.5に
+            rand = rand - Vector3.one * 0.5f;
+
+            // 座標 + 範囲 * (-1~1)
+            return boxArea.Position + Vector3.Scale(boxArea.Size, rand);
         }
 
 
