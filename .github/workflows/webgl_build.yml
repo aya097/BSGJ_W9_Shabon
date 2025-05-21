@@ -20,6 +20,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+        
+      - name: Set CompressionFormat to Disabled
+        run: |
+          sed -i -e 's/webGLCompressionFormat: ./webGLCompressionFormat: 2/' ProjectSettings/ProjectSettings.asset
+
+      # Cache
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**','ProjectSettings/**') }}
+          restore-keys: Library-
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4
@@ -29,15 +42,34 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
+          allowDirtyBuild: true
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
+
+      # Remove
+      - name: Remove symlinks and macOS hidden files
+        run: |
+          find build -type l -delete || true
+          find build -name ".DS_Store" -delete || true
+
+      # Check build size
+      - name: Check build size
+        run: du -sh build
+          
       # Upload
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: build
+          path: build/WebGL/WebGL
 
+      # Show directory
+      - name: Show build folder structure
+        run: |
+          echo "Contents of build directory:"
+          ls -R build
+          
   deploy:
+    runs-on: ubuntu-latest
     needs: build
     permissions:
       pages: write
@@ -45,8 +77,22 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+      
     steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Notify Discord - Success
+        if: success()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{\"content\": \"✅ Build & Deploy Success! 🎉\n▶️ Play here: ${{ steps.deployment.outputs.page_url }}\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Notify Discord - Failure
+        if: failure()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{\"content\": \"❌ Build or Deploy Failed! 😞\n📄 View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
