@@ -20,6 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+        
+      - name: Set CompressionFormat to Disabled
+        run: |
+          sed -i -e 's/webGLCompressionFormat: ./webGLCompressionFormat: 2/' ProjectSettings/ProjectSettings.asset
+
       # Cache
       - name: Cache Library
         uses: actions/cache@v3
@@ -37,6 +42,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
+          allowDirtyBuild: true
           unityVersion: 6000.0.47f1 # ここは各自プロジェクトに合わせて設定
 
       # Remove
@@ -54,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: build
+          path: build/WebGL/WebGL
 
       # Show directory
       - name: Show build folder structure
@@ -63,14 +69,15 @@ jobs:
           ls -R build
           
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
     permissions:
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
