@@ -1,6 +1,9 @@
 #nullable enable
 
+using Unity.VisualScripting;
 using UnityEngine;
+using R3;
+using System;
 
 namespace Shabon.Bubble
 {
@@ -18,8 +21,13 @@ namespace Shabon.Bubble
             Collider[] aroudBubbleColliders = Physics.OverlapSphere(targetBubblePosition, chainRadius);
             foreach (Collider aroudBubbleCollider in aroudBubbleColliders)
             {
-                IBubbleMono aroundBubbleMono = aroudBubbleCollider.gameObject.GetComponent<IBubbleMono>();
-                aroundBubbleMono.InvokeOnDead();
+                IBubbleMono aroundBubbleMono = aroudBubbleCollider.transform.parent.gameObject.GetComponent<IBubbleMono>();
+
+                if (aroundBubbleMono is null || targetBubbleMono == aroundBubbleMono) continue;
+                Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                    .Subscribe(_ => aroundBubbleMono.InvokeOnDead());
+
+                //aroundBubbleMono.InvokeOnDead();
             }
         }
     }
