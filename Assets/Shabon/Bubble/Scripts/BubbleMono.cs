@@ -2,6 +2,8 @@
 
 using System;
 using UnityEngine;
+using VContainer;
+using Shabon.Score;
 
 namespace Shabon.Bubble
 {
@@ -17,13 +19,26 @@ namespace Shabon.Bubble
         public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
+        private IDirtValue _dirtValue = null!; // DirtValueを保持
 
+        [Inject]
+        public void Initialize(IDirtValue dirtValue)
+        {
+            _dirtValue = dirtValue;
+        }
 
         void Update()
         {
             _bubbleMover.MoveForward();
-        }
 
+            // z座標が-3.0以下になった場合にDirtValueを増加
+            if (transform.position.z <= -3.0f)
+            {
+                _dirtValue.Increase(1);
+                InvokeOnReach(); // イベントを発火
+                Destroy(gameObject); // バブルを削除
+            }
+        }
 
         /// <summary>
         /// ビルドの際にパラメータを注ぐ用のクラス
