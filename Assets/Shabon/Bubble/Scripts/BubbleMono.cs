@@ -21,8 +21,8 @@ namespace Shabon.Bubble
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
         private IDirtValue _dirtValue = null!; // DirtValueを保持
 
-        [Inject]
-        public void Initialize(IDirtValue dirtValue)
+        // DirtValueを外部から設定するメソッド
+        public void SetDirtValue(IDirtValue dirtValue)
         {
             _dirtValue = dirtValue;
         }
@@ -47,6 +47,7 @@ namespace Shabon.Bubble
         {
             _bubbleMover = bubbleMover;
         }
+
         /// <summary>
         /// 前方に到達したとき
         /// </summary>
@@ -54,6 +55,7 @@ namespace Shabon.Bubble
         {
             OnReach?.Invoke();
         }
+
         /// <summary>
         /// 割れたとき
         /// </summary>
@@ -61,6 +63,7 @@ namespace Shabon.Bubble
         {
             OnDead?.Invoke();
         }
+
         /// <summary>
         /// Clapされたとき
         /// </summary>
@@ -68,6 +71,7 @@ namespace Shabon.Bubble
         {
             OnClap?.Invoke(arg);
         }
+
         /// <summary>
         /// Breathされたとき
         /// </summary>

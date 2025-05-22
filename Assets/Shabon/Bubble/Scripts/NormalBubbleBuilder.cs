@@ -20,6 +20,7 @@ namespace Shabon.Bubble
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
         }
+
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
@@ -30,6 +31,12 @@ namespace Shabon.Bubble
         {
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
+
+            // DirtValueを注入
+            if (bubbleMono is BubbleMono bubbleMonoInstance)
+            {
+                bubbleMonoInstance.SetDirtValue(_dirtValue);
+            }
 
             // Deadの処理
             SetOnDead(bubbleSetter, bubbleMono);
