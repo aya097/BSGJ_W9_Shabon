@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UIElements;
+using System.Drawing;
+using Shabon.Param;
 
 namespace Shabon.Bubble
 {
@@ -40,8 +43,8 @@ namespace Shabon.Bubble
 
         [Header("以下基本パラメータ")]
 
-        [Header("バブルの生成位置")]
-        [SerializeField] Vector3 initBubblePosition;
+        [Header("バブルの生成エリア")]
+        [SerializeField] BubbleSpawnedAreaType bubbleSpawnedArea;
 
         [Header("前方への移動速度(m/s)")]
         [Min(0)]
@@ -64,9 +67,9 @@ namespace Shabon.Bubble
         {
             get { return bubblePrefab; }
         }
-        public Vector3 InitBubblePosition
+        public BubbleSpawnedAreaType BubbleSpawnedArea
         {
-            get { return initBubblePosition; }
+            get { return bubbleSpawnedArea; }
         }
         public float ForwardVelocity
         {
@@ -86,7 +89,7 @@ namespace Shabon.Bubble
     {
         BubbleType BubbleType { get; }
         BubbleMono BubblePrefab { get; }
-        Vector3 InitBubblePosition { get; }
+        BubbleSpawnedAreaType BubbleSpawnedArea { get; }
         float ForwardVelocity { get; }
         float ZoneWaitingTime { get; }
         int IncreasingDirtValue { get; }
