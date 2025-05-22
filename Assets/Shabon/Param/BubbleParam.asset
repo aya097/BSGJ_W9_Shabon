@@ -15,7 +15,7 @@ MonoBehaviour:
   bubbleDataList:
   - bubbleType: 0
     bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
-    spawnedBubbleArea: {fileID: 7355769113737221826, guid: 4d3157f8943ec47f2be64441e99def67, type: 3}
+    bubbleSpawnedArea: 0
     forwardVelocity: 0.5
-    zoneWaitingTime: 0
+    zoneWaitingTime: 1
     increasingDirtValue: 0
