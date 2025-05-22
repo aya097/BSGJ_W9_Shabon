@@ -10,8 +10,12 @@ namespace Shabon.Clap
 
         public ClapModel(IBubbleHandler bubbleHandler)
         {
-            // コンストラクタでバブルハンドラーを受け取る
             _bubbleHandler = bubbleHandler;
+        }
+
+        public void PerformClap(Vector3 position, float strength)
+        {
+            _bubbleHandler.ApplyClap(position, strength); // Clap処理を実行
         }
     }
 }
