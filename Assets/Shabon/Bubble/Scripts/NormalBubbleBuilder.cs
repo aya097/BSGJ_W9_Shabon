@@ -11,14 +11,17 @@ namespace Shabon.Bubble
     {
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
+        private readonly IAreaChecker _waitAreaChecker;
 
         [Inject]
         public NormalBubbleBuilder(
             BubbleCluster bubbleCluster,
-            IDirtValue dirtValue)
+            IDirtValue dirtValue,
+            IAreaChecker waitAreaChecker)
         {
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
+            _waitAreaChecker = waitAreaChecker;
         }
         /// <summary>
         /// 個性を付与するメソッド
@@ -40,7 +43,7 @@ namespace Shabon.Bubble
             // Clapの処理
             SetOnClap(bubbleSetter, bubbleMono);
 
-            bubbleSetter.SetBuildParam(bubbleMover);
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker);
         }
 
         /// <summary>

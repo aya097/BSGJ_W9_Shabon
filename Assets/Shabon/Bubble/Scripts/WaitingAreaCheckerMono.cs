@@ -7,7 +7,7 @@ namespace Shabon.Bubble
     /// <summary>
     /// 範囲内にオブジェクトがいるか判定
     /// </summary>
-    public class WaitingAreaCheckerMono : MonoBehaviour
+    public class WaitingAreaCheckerMono : MonoBehaviour, IAreaChecker
     {
         [SerializeField] BoxCollider judgeArea = null!;
 
@@ -22,5 +22,10 @@ namespace Shabon.Bubble
 
             return inX && inY && inZ;
         }
+    }
+
+    public interface IAreaChecker
+    {
+        bool IsInArea(Vector3 position);
     }
 }
