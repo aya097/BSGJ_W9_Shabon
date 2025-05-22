@@ -58,6 +58,10 @@ namespace Shabon.Bubble
         [Min(0)]
         [SerializeField] int increasingDirtValue;
 
+        [Header("連鎖可能なバブル中心からの距離")]
+        [Min(0)]
+        [SerializeField] float chainRadius;
+
         // Getter
         public BubbleType BubbleType
         {
@@ -83,6 +87,10 @@ namespace Shabon.Bubble
         {
             get { return increasingDirtValue; }
         }
+        public float ChainRadius
+        {
+            get { return chainRadius; }
+        }
     }
 
     public interface IBubbleData
@@ -93,6 +101,7 @@ namespace Shabon.Bubble
         float ForwardVelocity { get; }
         float ZoneWaitingTime { get; }
         int IncreasingDirtValue { get; }
+        float ChainRadius { get; }
     }
 }
 
