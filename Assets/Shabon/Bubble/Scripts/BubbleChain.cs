@@ -12,9 +12,10 @@ namespace Shabon.Bubble
         /// <summary>
         /// 指定したバブルを中心に一定範囲内のバブルも連鎖して割る
         /// </summary>
-        public void ExecuteBubbleChain(Transform bubbleMonoTransform, float chainRadius)
+        public void ExecuteBubbleChain(IBubbleMono targetBubbleMono, float chainRadius)
         {
-            Collider[] aroudBubbleColliders = Physics.OverlapSphere(bubbleMonoTransform.position, chainRadius);
+            Vector3 targetBubblePosition = targetBubbleMono.Transform.position;
+            Collider[] aroudBubbleColliders = Physics.OverlapSphere(targetBubblePosition, chainRadius);
             foreach (Collider aroudBubbleCollider in aroudBubbleColliders)
             {
                 IBubbleMono aroundBubbleMono = aroudBubbleCollider.gameObject.GetComponent<IBubbleMono>();
