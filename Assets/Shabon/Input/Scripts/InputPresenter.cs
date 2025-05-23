@@ -1,6 +1,7 @@
 #nullable enable
 using Shabon.Breath;
 using Shabon.Bubble;
+using Shabon.Clap;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -15,17 +16,20 @@ namespace Shabon.Input
         private readonly IInputManager _inputManager;
         private readonly BreathModel _breath;
         private readonly IBubbleHandler _bubbleHandler;
+        private readonly ClapModel _clapModel;
 
         [Inject]
         public InputPresenter(
             IInputManager inputManager,
             BreathModel breath,
-            IBubbleHandler bubbleHandler
+            IBubbleHandler bubbleHandler,
+            ClapModel clapModel
         )
         {
             _inputManager = inputManager;
             _breath = breath;
             _bubbleHandler = bubbleHandler;
+            _clapModel = clapModel;
         }
 
         float _ratio = 0f;
@@ -42,11 +46,10 @@ namespace Shabon.Input
             _breath.ApplyBreath(amount);
 
             // Clap
-            if (_inputManager.GetClap()) // シフトキーが押されたとき
+            if (_inputManager.GetClap())
             {
-                _bubbleHandler.ApplyClap(Vector3.zero, 1f);
+                _clapModel.ExecuteClap(1f);
             }
         }
-
     }
 }
