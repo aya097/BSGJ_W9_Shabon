@@ -25,7 +25,14 @@ namespace Shabon.Bubble
 
                 if (aroundBubbleMono is null || targetBubbleMono == aroundBubbleMono) continue;
                 Observable.Timer(TimeSpan.FromSeconds(0.5f))
-                    .Subscribe(_ => aroundBubbleMono.InvokeOnDead());
+                    .Subscribe(_ =>
+                    {
+                        if (aroundBubbleMono != null)
+                        {
+                            aroundBubbleMono.InvokeOnDead();
+                        }
+                        
+                    });
             }
         }
     }
