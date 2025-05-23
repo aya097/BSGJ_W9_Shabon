@@ -18,16 +18,33 @@ namespace Shabon.Bubble
         public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
+
         private IDirtValue? _dirtValue; // DirtValueを保持するフィールド
+
+        private IAreaChecker _waitAreaChecker = null!;
+
+        private bool _isReached = false;
+
 
         void Update()
         {
+            // 到達したら移動しない
+            if (_isReached) return;
+
             _bubbleMover.MoveForward();
+
 
             // z座標が-3.0以下になった場合にOnReachを発火
             if (transform.position.z <= -3.0f)
             {
                 InvokeOnReach(); // Reachイベントを発火
+
+            // waitArea
+            if (_waitAreaChecker.IsInArea(transform.position))
+            {
+                _isReached = true;
+                InvokeOnReach();
+
             }
         }
 
@@ -42,9 +59,12 @@ namespace Shabon.Bubble
         /// <summary>
         /// ビルドの際にパラメータを注ぐ用のクラス
         /// </summary>
-        public void SetBuildParam(IBubbleMover bubbleMover)
+        public void SetBuildParam(
+            IBubbleMover bubbleMover,
+            IAreaChecker areaChecker)
         {
             _bubbleMover = bubbleMover;
+            _waitAreaChecker = areaChecker;
         }
 
         /// <summary>

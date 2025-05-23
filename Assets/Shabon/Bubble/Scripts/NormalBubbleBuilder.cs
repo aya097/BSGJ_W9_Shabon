@@ -1,3 +1,5 @@
+using System;
+using R3;
 using Shabon.Score;
 using UnityEngine;
 using VContainer;
@@ -11,14 +13,17 @@ namespace Shabon.Bubble
     {
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
+        private readonly IAreaChecker _waitAreaChecker;
 
         [Inject]
         public NormalBubbleBuilder(
             BubbleCluster bubbleCluster,
-            IDirtValue dirtValue)
+            IDirtValue dirtValue,
+            IAreaChecker waitAreaChecker)
         {
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
+            _waitAreaChecker = waitAreaChecker;
         }
 
         /// <summary>
@@ -49,7 +54,10 @@ namespace Shabon.Bubble
             // Clapの処理
             SetOnClap(bubbleSetter, bubbleMono);
 
-            bubbleSetter.SetBuildParam(bubbleMover);
+            // Reachの処理
+            SetOnReach(bubbleSetter, bubbleMono, bubbleData);
+
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker);
         }
 
         /// <summary>
@@ -115,11 +123,7 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnDead += () =>
             {
-                // Clusterから削除
-                _bubbleCluster.Remove(bubbleMono);
-
-                // Destroy
-                GameObject.Destroy(bubbleMono.Transform.gameObject);
+                DestroyBubble(bubbleMono);
             };
         }
 
@@ -133,6 +137,35 @@ namespace Shabon.Bubble
                 // Clapされたら割れる
                 bubbleMono.InvokeOnDead();
             };
+        }
+
+        /// <summary>
+        /// エリアに到達したときの処理
+        /// </summary>
+        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
+        {
+            bubbleSetter.OnReach += () =>
+            {
+                // DirtValue増やす
+
+                // 待機時間後にdestroy
+                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                    .Subscribe(_ => DestroyBubble(bubbleMono));
+            };
+
+        }
+
+        /// <summary>
+        /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
+        /// </summary>
+        /// <param name="bubbleMono"></param>
+        private void DestroyBubble(IBubbleMono bubbleMono)
+        {
+            // Clusterから削除
+            _bubbleCluster.Remove(bubbleMono);
+
+            // Destroy
+            GameObject.Destroy(bubbleMono.Transform.gameObject);
         }
     }
 }

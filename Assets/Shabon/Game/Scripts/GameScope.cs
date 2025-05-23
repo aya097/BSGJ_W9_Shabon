@@ -31,7 +31,8 @@ namespace Shabon.Game
             builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BubbleHandler>(Lifetime.Scoped).As<IBubbleHandler>();
             builder.RegisterComponentInHierarchy<BreathGetterViewMono>();
-            builder.Register<BubbleMono>(Lifetime.Scoped); // BubbleMonoにIDirtValueを注入
+            builder.Register<BubbleMono>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<WaitingAreaCheckerMono>().As<IAreaChecker>();
 
             // Param
             builder.RegisterInstance(gameRuleParam).AsImplementedInterfaces();
