@@ -13,10 +13,6 @@ namespace Shabon.Bubble
     {
         private readonly BreathGetterViewMono _breathGetter;
 
-        // Clapの範囲
-        public float ClapRangeMinX { get; set; } = -2.0f;
-        public float ClapRangeMaxX { get; set; } = 2.0f;
-
         [Inject]
         public BubbleHandler(BreathGetterViewMono breathGetterViewMono)
         {
@@ -32,17 +28,22 @@ namespace Shabon.Bubble
             }
         }
 
-        public void ApplyClap(Vector3 position, float strength)
+        public async void ApplyClap(Vector3 position, float strength)
         {
-            // Clap範囲内のバブルを取得し、z軸でソート
+            // x座標が -0.2 から 0.2 の範囲にいるバブルを取得
+            //手前にあるBubbleから倒す
             var bubblesInRange = _breathGetter.GetBubbleMonos()
-                .Where(b => b.Transform.position.x >= ClapRangeMinX && b.Transform.position.x <= ClapRangeMaxX)
-                .OrderBy(b => b.Transform.position.z);
+                .Where(b => b.Transform.position.x >= -0.2 && b.Transform.position.x <= 0.2)
+                .OrderBy(b => b.Transform.position.z)
+                .ToList();
 
-            // Clap処理を実行
             foreach (var bubble in bubblesInRange)
             {
-                bubble.InvokeOnClap(new OnClapArg(strength));
+                // バブルを消滅させる
+                bubble.InvokeOnDead();
+
+                // 次のバブルを消すまで少し待機
+                await Task.Delay(200); // 200ms 待機（必要に応じて調整）
             }
         }
     }

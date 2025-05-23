@@ -2,7 +2,8 @@
 
 using System;
 using UnityEngine;
-using Shabon.Score; // DirtValueを扱うため追加
+using VContainer;
+using Shabon.Score;
 
 namespace Shabon.Bubble
 {
@@ -18,13 +19,9 @@ namespace Shabon.Bubble
         public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
-
-        private IDirtValue? _dirtValue; // DirtValueを保持するフィールド
-
         private IAreaChecker _waitAreaChecker = null!;
 
         private bool _isReached = false;
-
 
         void Update()
         {
@@ -33,27 +30,12 @@ namespace Shabon.Bubble
 
             _bubbleMover.MoveForward();
 
-
-            // z座標が-3.0以下になった場合にOnReachを発火
-            if (transform.position.z <= -3.0f)
-            {
-                InvokeOnReach(); // Reachイベントを発火
-
             // waitArea
             if (_waitAreaChecker.IsInArea(transform.position))
             {
                 _isReached = true;
                 InvokeOnReach();
-
             }
-        }
-
-        /// <summary>
-        /// DirtValueを設定するメソッド
-        /// </summary>
-        public void SetDirtValue(IDirtValue dirtValue)
-        {
-            _dirtValue = dirtValue;
         }
 
         /// <summary>
@@ -66,7 +48,6 @@ namespace Shabon.Bubble
             _bubbleMover = bubbleMover;
             _waitAreaChecker = areaChecker;
         }
-
         /// <summary>
         /// 前方に到達したとき
         /// </summary>
@@ -74,7 +55,6 @@ namespace Shabon.Bubble
         {
             OnReach?.Invoke();
         }
-
         /// <summary>
         /// 割れたとき
         /// </summary>
@@ -82,7 +62,6 @@ namespace Shabon.Bubble
         {
             OnDead?.Invoke();
         }
-
         /// <summary>
         /// Clapされたとき
         /// </summary>
@@ -90,7 +69,6 @@ namespace Shabon.Bubble
         {
             OnClap?.Invoke(arg);
         }
-
         /// <summary>
         /// Breathされたとき
         /// </summary>

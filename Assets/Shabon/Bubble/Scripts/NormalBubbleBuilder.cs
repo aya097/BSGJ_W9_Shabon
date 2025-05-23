@@ -25,7 +25,6 @@ namespace Shabon.Bubble
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
         }
-
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
@@ -37,14 +36,6 @@ namespace Shabon.Bubble
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
-            // DirtValueを注入
-            if (bubbleMono is BubbleMono bubbleMonoInstance)
-            {
-                bubbleMonoInstance.SetDirtValue(_dirtValue);
-            }
-
-            // OnReachの処理を設定
-            SetOnReach(bubbleSetter, bubbleMono);
             // Deadの処理
             SetOnDead(bubbleSetter, bubbleMono);
 
@@ -72,24 +63,6 @@ namespace Shabon.Bubble
                 _ => new NormalBubbleMover(transform, forwardVelocity)  // もし該当がなければNormalを返しておく
             };
         }
-        /// <summary>
-        /// 到達時の処理を作成
-        /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono)
-        {
-            bubbleSetter.OnReach += () =>
-            {
-                // DirtValueを増加
-                _dirtValue.Increase(1);
-
-                // Clusterから削除
-                _bubbleCluster.Remove(bubbleMono);
-
-                // Bubbleを削除
-                GameObject.Destroy(bubbleMono.Transform.gameObject);
-            };
-        }
-
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
