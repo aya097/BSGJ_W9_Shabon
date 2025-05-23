@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using R3;
 using Shabon.Score;
@@ -122,20 +124,22 @@ namespace Shabon.Bubble
         /// </summary>
         private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
         {
+            IDisposable? reachDisposable = null;
+
             bubbleSetter.OnReach += () =>
             {
                 // DirtValue増やす
 
                 // 待機時間後にdestroy
-                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
-                    .Subscribe(_ =>
-                    {
-                        if (bubbleMono != null)
-                        {
-                            DestroyBubble(bubbleMono);
-                        }
+                reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                    .Subscribe(_ => DestroyBubble(bubbleMono));
 
-                    });
+            };
+
+            // bubbleがdestroyされたら上記の遅延処理をdiposeする処理登録
+            bubbleSetter.OnDead += () =>
+            {
+                reachDisposable?.Dispose();
             };
 
         }
@@ -151,6 +155,7 @@ namespace Shabon.Bubble
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform.gameObject);
+
         }
     }
 }
