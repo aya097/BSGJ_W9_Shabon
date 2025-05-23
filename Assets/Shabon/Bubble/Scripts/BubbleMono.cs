@@ -2,8 +2,7 @@
 
 using System;
 using UnityEngine;
-using VContainer;
-using Shabon.Score;
+using Shabon.Score; // DirtValueを扱うため追加
 
 namespace Shabon.Bubble
 {
@@ -19,25 +18,25 @@ namespace Shabon.Bubble
         public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
-        private IDirtValue _dirtValue = null!; // DirtValueを保持
-
-        // DirtValueを外部から設定するメソッド
-        public void SetDirtValue(IDirtValue dirtValue)
-        {
-            _dirtValue = dirtValue;
-        }
+        private IDirtValue? _dirtValue; // DirtValueを保持するフィールド
 
         void Update()
         {
             _bubbleMover.MoveForward();
 
-            // z座標が-3.0以下になった場合にDirtValueを増加
+            // z座標が-3.0以下になった場合にOnReachを発火
             if (transform.position.z <= -3.0f)
             {
-                _dirtValue.Increase(1);
-                InvokeOnReach(); // イベントを発火
-                Destroy(gameObject); // バブルを削除
+                InvokeOnReach(); // Reachイベントを発火
             }
+        }
+
+        /// <summary>
+        /// DirtValueを設定するメソッド
+        /// </summary>
+        public void SetDirtValue(IDirtValue dirtValue)
+        {
+            _dirtValue = dirtValue;
         }
 
         /// <summary>
