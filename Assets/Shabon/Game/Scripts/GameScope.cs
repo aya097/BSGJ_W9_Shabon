@@ -4,6 +4,7 @@ using Shabon.Param;
 using Shabon.Score;
 using Shabon.Breath;
 using Shabon.Input;
+using Shabon.Clap;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -48,6 +49,10 @@ namespace Shabon.Game
             // Input
             builder.Register<InputManager>(Lifetime.Scoped).As<IInputManager>();
             builder.RegisterEntryPoint<InputPresenter>(Lifetime.Scoped);
+
+            // Clap
+            builder.RegisterComponentInHierarchy<ClapGetterViewMono>();
+            builder.Register<ClapModel>(Lifetime.Scoped);
         }
     }
 }
