@@ -6,8 +6,8 @@ namespace Shabon.Clap
 {
     public class ClapViewMono : MonoBehaviour
     {
-        private ClapModel _clapModel = null!;
-        private ClapGetterViewMono? clapGetter;
+        [Inject] ClapModel _clapModel = null!;
+        [Inject] ClapGetterViewMono? clapGetter;
 
         [Inject]
         public void Initialize(ClapModel clapModel)
@@ -17,7 +17,7 @@ namespace Shabon.Clap
 
         void Awake()
         {
-            // 自動的にClapGetterViewMonoを取得
+
             if (clapGetter == null)
             {
                 clapGetter = GetComponentInChildren<ClapGetterViewMono>();

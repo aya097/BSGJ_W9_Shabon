@@ -28,7 +28,12 @@ namespace Shabon.Bubble
             }
         }
 
-
-
+        public void ApplyClap(IEnumerable<IBubbleMono> bubbles, float strength)
+        {
+            foreach (var bubble in bubbles)
+            {
+                bubble.InvokeOnClap(new OnClapArg(strength));
+            }
+        }
     }
 }
