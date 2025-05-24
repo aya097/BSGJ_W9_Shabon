@@ -31,15 +31,11 @@ namespace Shabon.Clap
                 .Select(x =>
                 {
                     var parent = x.transform.parent;
-
-
-                    var bubbleMono = parent.GetComponent<IBubbleMono>();
-
-
+                    var bubbleMono = parent?.GetComponent<IBubbleMono>();
                     return bubbleMono;
                 })
                 .Where(x => x != null)
-                .Cast<IBubbleMono>();
+                .Select(x => x!);
         }
     }
 }

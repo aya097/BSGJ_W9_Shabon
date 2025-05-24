@@ -28,22 +28,11 @@ namespace Shabon.Bubble
             }
         }
 
-        public async void ApplyClap(Vector3 position, float strength)
+        public void ApplyClap(IEnumerable<IBubbleMono> bubbles, float strength)
         {
-            // x座標が -0.2 から 0.2 の範囲にいるバブルを取得
-            //手前にあるBubbleから倒す
-            var bubblesInRange = _breathGetter.GetBubbleMonos()
-                .Where(b => b.Transform.position.x >= -0.2 && b.Transform.position.x <= 0.2)
-                .OrderBy(b => b.Transform.position.z)
-                .ToList();
-
-            foreach (var bubble in bubblesInRange)
+            foreach (var bubble in bubbles)
             {
-                // バブルを消滅させる
-                bubble.InvokeOnDead();
-
-                // 次のバブルを消すまで少し待機
-                await Task.Delay(200); // 200ms 待機（必要に応じて調整）
+                bubble.InvokeOnClap(new OnClapArg(strength));
             }
         }
     }

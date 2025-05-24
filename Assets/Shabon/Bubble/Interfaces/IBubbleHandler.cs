@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shabon.Bubble
@@ -7,7 +8,7 @@ namespace Shabon.Bubble
         // バブルを指定された方向と力で動かすメソッド
         void ApplyBreath(Vector3 direction, Vector3 position, float strength);
 
-        // Clapアクションを実行するメソッド
-        void ApplyClap(Vector3 position, float strength);
+        // バブルを叩いて動かすメソッド
+        void ApplyClap(IEnumerable<IBubbleMono> bubbles, float strength);
     }
 }

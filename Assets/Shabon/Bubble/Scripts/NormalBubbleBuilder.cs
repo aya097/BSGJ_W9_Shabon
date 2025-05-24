@@ -128,7 +128,13 @@ namespace Shabon.Bubble
 
             bubbleSetter.OnReach += () =>
             {
-                // DirtValue増やす
+                // DirtValueを増加
+                _dirtValue.Increase(bubbleData.IncreasingDirtValue);
+
+
+                // 待機時間後にOnDeadを呼び出す
+                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                    .Subscribe(_ => bubbleMono.InvokeOnDead());
 
                 // 待機時間後にdestroy
                 reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
@@ -144,8 +150,8 @@ namespace Shabon.Bubble
             bubbleSetter.OnDead += () =>
             {
                 reachDisposable?.Dispose();
-            };
 
+            };
         }
 
         /// <summary>
@@ -154,6 +160,12 @@ namespace Shabon.Bubble
         /// <param name="bubbleMono"></param>
         private void DestroyBubble(IBubbleMono bubbleMono)
         {
+            if (bubbleMono == null || bubbleMono.Transform == null)
+            {
+                Debug.LogWarning("BubbleMono is already destroyed or null.");
+                return;
+            }
+
             // Clusterから削除
             _bubbleCluster.Remove(bubbleMono);
 

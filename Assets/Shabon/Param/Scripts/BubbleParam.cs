@@ -21,6 +21,18 @@ namespace Shabon.Bubble
         {
             return bubbleDataList;
         }
+
+        private void OnValidate()
+        {
+            foreach (var data in bubbleDataList)
+            {
+                if (data.IncreasingDirtValue <= 0)
+                {
+
+                    data.SetIncreasingDirtValue(1);
+                }
+            }
+        }
     }
 
     public interface IBubbleParam
@@ -87,9 +99,17 @@ namespace Shabon.Bubble
         {
             get { return increasingDirtValue; }
         }
+
+
+        // Setter
+        public void SetIncreasingDirtValue(int value)
+        {
+            increasingDirtValue = value;
+
         public float ChainRadius
         {
             get { return chainRadius; }
+
         }
     }
 

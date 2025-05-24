@@ -1,23 +1,33 @@
+#nullable enable
 using UnityEngine;
-using System.Linq;
+using VContainer;
 
 namespace Shabon.Clap
 {
     public class ClapViewMono : MonoBehaviour
     {
-        [SerializeField] ClapGetterViewMono clapGetter = null!;
-        [SerializeField] ClapModel clapModel = null!;
+        [Inject] ClapModel _clapModel = null!;
+        [Inject] ClapGetterViewMono? clapGetter;
 
-        void Update()
+        [Inject]
+        public void Initialize(ClapModel clapModel)
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift)) // シフトキーが押されたとき
+            _clapModel = clapModel;
+        }
+
+        void Awake()
+        {
+
+            if (clapGetter == null)
             {
-                var bubbles = clapGetter.GetBubbleMonos(); // ClapGetterViewMono を使用して範囲内のバブルを取得
-                if (bubbles != null && bubbles.Any()) // Any メソッドを使用
-                {
-                    clapModel.ExecuteClap(1f); // ClapModel を使用して範囲内の Bubble を消滅
-                }
+                clapGetter = GetComponentInChildren<ClapGetterViewMono>();
             }
+        }
+
+        public void ExecuteClap(float strength)
+        {
+            _clapModel.ExecuteClap(strength);
         }
     }
 }
+

@@ -52,8 +52,9 @@ namespace Shabon.Game
             builder.RegisterEntryPoint<InputPresenter>(Lifetime.Scoped);
 
             // Clap
-            builder.RegisterComponentInHierarchy<ClapGetterViewMono>();
             builder.Register<ClapModel>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<ClapViewMono>();
+            builder.RegisterComponentInHierarchy<ClapGetterViewMono>(); // ClapGetterViewMonoを登録
         }
     }
 }
