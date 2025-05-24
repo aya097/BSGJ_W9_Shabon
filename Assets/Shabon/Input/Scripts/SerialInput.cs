@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -16,16 +17,17 @@ namespace Shabon.Input
         private float _value;
         public SerialInput()
         {
-            // ê⁄ë±â¬î\Ç»É|Å[ÉgÇåüçı
+            // Êé•Á∂öÂèØËÉΩ„Å™portÂêç„ÇíÂèñÂæó
             string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports)
+            var availablePorts = ports.Where(s => s.Contains("COM") || s.Contains("usbmodem"));
+            foreach (string port in availablePorts)
             {
                 Debug.Log("Found port: " + port);
             }
 
-            foreach (string port in ports)
+            foreach (string port in availablePorts)
             {
-                _serialPort = new SerialPort(port,115200,Parity.None,8,StopBits.One);
+                _serialPort = new SerialPort(port, 115200, Parity.None, 8, StopBits.One);
                 _serialPort.ReadTimeout = 2000;
                 _serialPort.DtrEnable = true;
                 _serialPort.RtsEnable = true;
@@ -34,21 +36,20 @@ namespace Shabon.Input
                     _serialPort.Open();
                     break;
                 }
-               catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.Log($"É|Å[Ég{port}Ç™äJÇØÇ‹ÇπÇÒÇ≈ÇµÇΩÅB{e}");
+                    Debug.Log($"„Éù„Éº„Éà{port}„ÅåÊé•Á∂ö„Åß„Åç„Åæ„Åõ„Çì„Åß„Åó„Åü„ÄÇ{e}");
                 }
             }
-                
+
 
             _thread = new Thread(ReadData);
             _thread.Start();
         }
 
-        // ÉfÅ[É^éÛêMéûÇ…åƒÇ‘ä÷êî
         private void ReadData()
         {
-             while (true)
+            while (true)
             {
                 if (_serialPort != null && _serialPort.IsOpen)
                 {
