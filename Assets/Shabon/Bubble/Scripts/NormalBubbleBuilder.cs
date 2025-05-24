@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using R3;
 using Shabon.Score;
@@ -14,16 +16,19 @@ namespace Shabon.Bubble
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
         private readonly IAreaChecker _waitAreaChecker;
+        private readonly IBubbleChain _bubbleChain;
 
         [Inject]
         public NormalBubbleBuilder(
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
-            IAreaChecker waitAreaChecker)
+            IAreaChecker waitAreaChecker,
+            IBubbleChain bubbleChain)
         {
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
+            _bubbleChain = bubbleChain;
         }
         /// <summary>
         /// 個性を付与するメソッド
@@ -37,7 +42,7 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            SetOnDead(bubbleSetter, bubbleMono);
+            SetOnDead(bubbleSetter, bubbleMono, bubbleData);
 
             // Breathの処理
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
@@ -92,12 +97,14 @@ namespace Shabon.Bubble
         /// <summary>
         /// 割られたときの処理
         /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono)
+        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
         {
             bubbleSetter.OnDead += () =>
             {
                 DestroyBubble(bubbleMono);
+                _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
             };
+            
         }
 
         /// <summary>
@@ -117,14 +124,33 @@ namespace Shabon.Bubble
         /// </summary>
         private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
         {
+            IDisposable? reachDisposable = null;
+
             bubbleSetter.OnReach += () =>
             {
                 // DirtValueを増加
                 _dirtValue.Increase(bubbleData.IncreasingDirtValue);
 
+
                 // 待機時間後にOnDeadを呼び出す
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ => bubbleMono.InvokeOnDead());
+
+                // 待機時間後にdestroy
+                reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                    .Subscribe(_ =>
+                    {
+                        if (bubbleMono == null) return;
+                        DestroyBubble(bubbleMono);
+                    });
+
+            };
+
+            // bubbleがdestroyされたら上記の遅延処理をdiposeする処理登録
+            bubbleSetter.OnDead += () =>
+            {
+                reachDisposable?.Dispose();
+
             };
         }
 

@@ -19,3 +19,4 @@ MonoBehaviour:
     forwardVelocity: 0.5
     zoneWaitingTime: 1
     increasingDirtValue: 0
+    chainRadius: 1

@@ -39,7 +39,11 @@ namespace Shabon.Bubble
             // bubbleType別にdataを取得する
             IBubbleData bubbleData = _bubbleParam.GetBubbleDataList().Where(b => b.BubbleType == bubbleType).FirstOrDefault();
 
+
             if (bubbleData is null)
+
+            if (bubbleData == null)
+
             {
                 Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
                 return;
