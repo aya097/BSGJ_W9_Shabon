@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -18,12 +19,13 @@ namespace Shabon.Input
         {
             // 接続可能なport名を取得
             string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports)
+            var availablePorts = ports.Where(s => s.Contains("COM") || s.Contains("usbmodem"));
+            foreach (string port in availablePorts)
             {
                 Debug.Log("Found port: " + port);
             }
 
-            foreach (string port in ports)
+            foreach (string port in availablePorts)
             {
                 _serialPort = new SerialPort(port, 115200, Parity.None, 8, StopBits.One);
                 _serialPort.ReadTimeout = 2000;
