@@ -103,8 +103,8 @@ namespace Shabon.Bubble
             {
                 DestroyBubble(bubbleMono);
                 _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
-            
             };
+            
         }
 
         /// <summary>
@@ -155,7 +155,6 @@ namespace Shabon.Bubble
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform.gameObject);
-
         }
     }
 }
