@@ -4,6 +4,7 @@
 #
 
 .vscode/
+.vsconfig
 
 .utmp/
 /[Ll]ibrary/
