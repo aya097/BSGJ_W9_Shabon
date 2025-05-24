@@ -122,9 +122,6 @@ namespace Shabon.Bubble
                 // DirtValueを増加
                 _dirtValue.Increase(bubbleData.IncreasingDirtValue);
 
-                // 必要に応じてDirtValueの現在値をログに出力
-                Debug.Log($"DirtValue increased: {_dirtValue.DirtNum}");
-
                 // 待機時間後にOnDeadを呼び出す
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ => bubbleMono.InvokeOnDead());

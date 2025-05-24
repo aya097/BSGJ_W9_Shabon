@@ -37,7 +37,6 @@ namespace Shabon.Bubble
         public void Spawn(BubbleType bubbleType)
         {
             // bubbleType別にdataを取得する
-
             IBubbleData bubbleData = _bubbleParam.GetBubbleDataList().Where(b => b.BubbleType == bubbleType).FirstOrDefault();
 
             if (bubbleData is null)
@@ -46,8 +45,7 @@ namespace Shabon.Bubble
                 return;
             }
 
-            // Debug: bubbleDataの値を確認
-            Debug.Log($"Spawning Bubble: {bubbleData.BubbleType}, IncreasingDirtValue: {bubbleData.IncreasingDirtValue}");
+
 
             // バブルビルダーを取得
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
