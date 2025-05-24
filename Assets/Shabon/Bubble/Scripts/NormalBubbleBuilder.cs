@@ -137,6 +137,12 @@ namespace Shabon.Bubble
         /// <param name="bubbleMono"></param>
         private void DestroyBubble(IBubbleMono bubbleMono)
         {
+            if (bubbleMono == null || bubbleMono.Transform == null)
+            {
+                Debug.LogWarning("BubbleMono is already destroyed or null.");
+                return;
+            }
+
             // Clusterから削除
             _bubbleCluster.Remove(bubbleMono);
 
