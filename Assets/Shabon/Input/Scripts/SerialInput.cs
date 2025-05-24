@@ -16,7 +16,7 @@ namespace Shabon.Input
         private float _value;
         public SerialInput()
         {
-            // Ú‘±‰Â”\‚Èƒ|[ƒg‚ğŒŸõ
+            // æ¥ç¶šå¯èƒ½ãªportåã‚’å–å¾—
             string[] ports = SerialPort.GetPortNames();
             foreach (string port in ports)
             {
@@ -25,7 +25,7 @@ namespace Shabon.Input
 
             foreach (string port in ports)
             {
-                _serialPort = new SerialPort(port,115200,Parity.None,8,StopBits.One);
+                _serialPort = new SerialPort(port, 115200, Parity.None, 8, StopBits.One);
                 _serialPort.ReadTimeout = 2000;
                 _serialPort.DtrEnable = true;
                 _serialPort.RtsEnable = true;
@@ -34,21 +34,20 @@ namespace Shabon.Input
                     _serialPort.Open();
                     break;
                 }
-               catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.Log($"ƒ|[ƒg{port}‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B{e}");
+                    Debug.Log($"ãƒãƒ¼ãƒˆ{port}ãŒæ¥ç¶šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚{e}");
                 }
             }
-                
+
 
             _thread = new Thread(ReadData);
             _thread.Start();
         }
 
-        // ƒf[ƒ^óM‚ÉŒÄ‚ÔŠÖ”
         private void ReadData()
         {
-             while (true)
+            while (true)
             {
                 if (_serialPort != null && _serialPort.IsOpen)
                 {
