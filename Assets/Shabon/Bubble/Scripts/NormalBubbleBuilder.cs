@@ -132,7 +132,11 @@ namespace Shabon.Bubble
 
                 // 待機時間後にdestroy
                 reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
-                    .Subscribe(_ => DestroyBubble(bubbleMono));
+                    .Subscribe(_ =>
+                    {
+                        if (bubbleMono == null) return;
+                        DestroyBubble(bubbleMono);
+                    });
 
             };
 

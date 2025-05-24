@@ -3,6 +3,9 @@
 using UnityEngine;
 using R3;
 using System;
+using VContainer;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Shabon.Bubble
 {
@@ -11,6 +14,13 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleChain : IBubbleChain
     {
+        private readonly BubbleCluster _bubbleCluster;
+
+        [Inject]
+        public BubbleChain(BubbleCluster bubbleCluster){
+            _bubbleCluster = bubbleCluster;
+        }
+
         /// <summary>
         /// 指定したバブルを中心に一定範囲内のバブルも連鎖して割る
         /// </summary>
@@ -19,28 +29,24 @@ namespace Shabon.Bubble
             // 連鎖元のBubbleのPosition
             Vector3 targetBubblePosition = targetBubbleMono.Transform.position;
 
-            // まわりのBubbleを割る処理
-            Collider[] aroundColliders = Physics.OverlapSphere(targetBubblePosition, chainRadius);
-            foreach (Collider aroundCollider in aroundColliders)
+            // 周辺のBubbleを取得
+            IEnumerable<IBubbleMono> nearbyBubbles = _bubbleCluster.Bubbles
+                        .Where(b => (b.Transform.position - targetBubblePosition).sqrMagnitude <= Mathf.Pow(chainRadius, 2));
+
+            // 周辺のBubbleを割る
+            foreach (IBubbleMono nearbyBubble in nearbyBubbles)
             {
-                BubbleMono aroundBubbleMono = aroundCollider.transform.parent.gameObject.GetComponent<BubbleMono>();
-
-                // BubbleMonoのnullチェックおよび自身のBubbleMonoの場合は飛ばす
-                if (aroundBubbleMono == null || (BubbleMono)targetBubbleMono == aroundBubbleMono) continue;
-
                 // 0.5秒後に周辺のbubbleをdestory
                 // * 遅延処理いれないとbubble同士が循環参照して(おそらく)unityが落ちるので注意
                 IDisposable disposable = Observable.Timer(TimeSpan.FromSeconds(0.5f))
-                    .Subscribe(_ => 
+                    .Subscribe(_ =>
                     {
-                        if (aroundBubbleMono == null) return;
-                        
-                        aroundBubbleMono.InvokeOnDead();
-
+                        if (nearbyBubble == null) return;
+                        nearbyBubble.InvokeOnDead();
                     });
 
                 // BubbleがDestoryしたら、上記の遅延処理をdisposeさせるよう設定
-                IBubbleBuildSetter aroundBubbleSetter = aroundBubbleMono;
+                IBubbleBuildSetter aroundBubbleSetter = (BubbleMono)nearbyBubble;
                 aroundBubbleSetter.OnDead += () =>
                 {
                     disposable.Dispose();
