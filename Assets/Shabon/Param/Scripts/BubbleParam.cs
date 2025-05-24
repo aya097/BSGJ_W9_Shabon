@@ -21,6 +21,18 @@ namespace Shabon.Bubble
         {
             return bubbleDataList;
         }
+
+        private void OnValidate()
+        {
+            foreach (var data in bubbleDataList)
+            {
+                if (data.IncreasingDirtValue <= 0)
+                {
+                    Debug.LogWarning($"BubbleType: {data.BubbleType} の IncreasingDirtValue が 0 または負の値です。デフォルト値 1 を設定します。");
+                    data.SetIncreasingDirtValue(1);
+                }
+            }
+        }
     }
 
     public interface IBubbleParam
@@ -82,6 +94,12 @@ namespace Shabon.Bubble
         public int IncreasingDirtValue
         {
             get { return increasingDirtValue; }
+        }
+
+        // Setter
+        public void SetIncreasingDirtValue(int value)
+        {
+            increasingDirtValue = value;
         }
     }
 

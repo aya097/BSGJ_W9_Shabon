@@ -119,13 +119,16 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnReach += () =>
             {
-                // DirtValue増やす
+                // DirtValueを増やす
+                _dirtValue.Increase(bubbleData.IncreasingDirtValue);
+
+                // 必要に応じてDirtValueの現在値を確認する場合のみログを残す
+                Debug.Log($"DirtValue increased: {_dirtValue.DirtNum}");
 
                 // 待機時間後にdestroy
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ => DestroyBubble(bubbleMono));
             };
-
         }
 
         /// <summary>
