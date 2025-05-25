@@ -34,6 +34,7 @@ namespace Shabon.Game
             builder.Register<BubbleMono>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<WaitingAreaCheckerMono>().As<IAreaChecker>();
             builder.Register<BubbleChain>(Lifetime.Scoped).As<IBubbleChain>();
+            builder.Register<BubbleCombo>(Lifetime.Scoped).As<IBubbleCombo>();
 
             // Param
             builder.RegisterInstance(gameRuleParam).AsImplementedInterfaces();

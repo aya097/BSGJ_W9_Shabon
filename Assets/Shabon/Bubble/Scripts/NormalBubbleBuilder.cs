@@ -17,18 +17,21 @@ namespace Shabon.Bubble
         private readonly IDirtValue _dirtValue;
         private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleChain _bubbleChain;
+        private readonly IBubbleCombo _bubbleCombo;
 
         [Inject]
         public NormalBubbleBuilder(
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
-            IBubbleChain bubbleChain)
+            IBubbleChain bubbleChain,
+            IBubbleCombo bubbleCombo)
         {
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
             _bubbleChain = bubbleChain;
+            _bubbleCombo = bubbleCombo;
         }
         /// <summary>
         /// 個性を付与するメソッド
@@ -38,11 +41,18 @@ namespace Shabon.Bubble
             IBubbleMono bubbleMono,
             IBubbleData bubbleData)
         {
+            // 連鎖に関するアクション
+            Action chainAction = () =>
+            {
+                _bubbleCombo.AddComboCount(bubbleMono);
+                _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
+            };
+
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            SetOnDead(bubbleSetter, bubbleMono, bubbleData);
+            SetOnDead(bubbleSetter, bubbleMono, chainAction);
 
             // Breathの処理
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
@@ -51,7 +61,7 @@ namespace Shabon.Bubble
             SetOnClap(bubbleSetter, bubbleMono);
 
             // Reachの処理
-            SetOnReach(bubbleSetter, bubbleMono, bubbleData);
+            SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction);
 
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker);
         }
@@ -97,14 +107,10 @@ namespace Shabon.Bubble
         /// <summary>
         /// 割られたときの処理
         /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
+        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction)
         {
-            bubbleSetter.OnDead += () =>
-            {
-                DestroyBubble(bubbleMono);
-                _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
-            };
-            
+            bubbleSetter.OnDead += () => DestroyBubble(bubbleMono);
+            bubbleSetter.OnDead += chainAction;
         }
 
         /// <summary>
@@ -122,15 +128,18 @@ namespace Shabon.Bubble
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData)
+        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, Action chainAction)
         {
             IDisposable? reachDisposable = null;
 
             bubbleSetter.OnReach += () =>
             {
+                // 連鎖に関するactionは解除、連鎖が残っているバブルリストからの除去を追加
+                bubbleSetter.OnDead -= chainAction;
+                bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
+
                 // DirtValueを増加
                 _dirtValue.Increase(bubbleData.IncreasingDirtValue);
-
 
                 // 待機時間後にOnDeadを呼び出す
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
@@ -143,15 +152,10 @@ namespace Shabon.Bubble
                         if (bubbleMono == null) return;
                         DestroyBubble(bubbleMono);
                     });
-
             };
 
             // bubbleがdestroyされたら上記の遅延処理をdiposeする処理登録
-            bubbleSetter.OnDead += () =>
-            {
-                reachDisposable?.Dispose();
-
-            };
+            bubbleSetter.OnDead += () => reachDisposable?.Dispose();
         }
 
         /// <summary>
