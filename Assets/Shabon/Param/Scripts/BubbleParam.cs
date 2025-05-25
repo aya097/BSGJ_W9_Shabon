@@ -28,7 +28,6 @@ namespace Shabon.Bubble
             {
                 if (data.IncreasingDirtValue <= 0)
                 {
-
                     data.SetIncreasingDirtValue(1);
                 }
             }
@@ -129,6 +128,7 @@ namespace Shabon.Bubble
         float ZoneWaitingTime { get; }
         int IncreasingDirtValue { get; }
         float ChainRadius { get; }
+        int BubbleScore { get; }
     }
 }
 
