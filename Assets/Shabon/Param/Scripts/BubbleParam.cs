@@ -105,6 +105,7 @@ namespace Shabon.Bubble
         public void SetIncreasingDirtValue(int value)
         {
             increasingDirtValue = value;
+        }
 
         public float ChainRadius
         {
