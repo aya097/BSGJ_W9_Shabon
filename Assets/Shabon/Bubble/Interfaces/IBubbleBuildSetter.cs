@@ -9,6 +9,6 @@ namespace Shabon.Bubble
         event Action OnDead;
         event Action<OnClapArg> OnClap;
         event Action<OnBreathArg> OnBreath;
-        void SetBuildParam(IBubbleMover bubbleMover, IAreaChecker areaChecker, int bubbleScore);
+        void SetBuildParam(IBubbleMover bubbleMover, IAreaChecker areaChecker, IBubbleData bubbleData);
     }
 }
