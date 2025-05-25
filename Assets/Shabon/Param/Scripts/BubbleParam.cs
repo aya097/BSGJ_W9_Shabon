@@ -74,6 +74,9 @@ namespace Shabon.Bubble
         [Min(0)]
         [SerializeField] float chainRadius;
 
+        [Header("バブルのスコア")]
+        [SerializeField] int bubbleScore;
+
         // Getter
         public BubbleType BubbleType
         {
@@ -99,7 +102,14 @@ namespace Shabon.Bubble
         {
             get { return increasingDirtValue; }
         }
-
+        public float ChainRadius
+        {
+            get { return chainRadius; }
+        }
+        public int BubbleScore
+        {
+            get { return bubbleScore; }
+        }
 
         // Setter
         public void SetIncreasingDirtValue(int value)
@@ -107,11 +117,7 @@ namespace Shabon.Bubble
             increasingDirtValue = value;
         }
 
-        public float ChainRadius
-        {
-            get { return chainRadius; }
-
-        }
+        
     }
 
     public interface IBubbleData
