@@ -15,10 +15,13 @@ namespace Shabon.Bubble
     public class BubbleChain : IBubbleChain
     {
         private readonly BubbleCluster _bubbleCluster;
+        private readonly IBubbleCombo _bubbleCombo;
 
         [Inject]
-        public BubbleChain(BubbleCluster bubbleCluster){
+        public BubbleChain(BubbleCluster bubbleCluster, IBubbleCombo bubbleCombo)
+        {
             _bubbleCluster = bubbleCluster;
+            _bubbleCombo = bubbleCombo;
         }
 
         /// <summary>
@@ -32,6 +35,8 @@ namespace Shabon.Bubble
             // 周辺のBubbleを取得
             IEnumerable<IBubbleMono> nearbyBubbles = _bubbleCluster.Bubbles
                         .Where(b => (b.Transform.position - targetBubblePosition).sqrMagnitude <= Mathf.Pow(chainRadius, 2));
+
+            _bubbleCombo.AddRemainingChainBubble(nearbyBubbles);
 
             // 周辺のBubbleを割る
             foreach (IBubbleMono nearbyBubble in nearbyBubbles)
@@ -47,10 +52,7 @@ namespace Shabon.Bubble
 
                 // BubbleがDestoryしたら、上記の遅延処理をdisposeさせるよう設定
                 IBubbleBuildSetter aroundBubbleSetter = (BubbleMono)nearbyBubble;
-                aroundBubbleSetter.OnDead += () =>
-                {
-                    disposable.Dispose();
-                };
+                aroundBubbleSetter.OnDead += () => disposable.Dispose();
 
             }
         }
