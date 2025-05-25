@@ -47,7 +47,15 @@ namespace Shabon.Bubble
             // 連鎖に関するアクション
             Action chainAction = () =>
             {
-                _scoreValue.Increase(bubbleMono.BubbleScore);
+                if (bubbleMono.BubbleScore >= 0)
+                {
+                    _scoreValue.Increase(bubbleMono.BubbleScore);
+                }
+                else
+                {
+                    _scoreValue.Decrease(Mathf.Abs(bubbleMono.BubbleScore));
+                }
+                
                 _bubbleCombo.AddComboCount(bubbleMono);
                 _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
             };
@@ -67,7 +75,7 @@ namespace Shabon.Bubble
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction);
 
-            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData.BubbleScore);
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData);
         }
 
         /// <summary>
