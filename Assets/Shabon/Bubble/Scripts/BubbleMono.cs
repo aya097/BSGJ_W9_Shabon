@@ -46,11 +46,11 @@ namespace Shabon.Bubble
         public void SetBuildParam(
             IBubbleMover bubbleMover,
             IAreaChecker areaChecker,
-            int bubbleScore)
+            IBubbleData bubbleData)
         {
             _bubbleMover = bubbleMover;
             _waitAreaChecker = areaChecker;
-            _bubbleScore = bubbleScore;
+            _bubbleScore = bubbleData.BubbleScore;
         }
         
         /// <summary>
