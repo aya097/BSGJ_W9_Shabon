@@ -18,6 +18,7 @@ namespace Shabon.Bubble
         private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleChain _bubbleChain;
         private readonly IBubbleCombo _bubbleCombo;
+        private readonly IScoreValue _scoreValue;
 
         [Inject]
         public NormalBubbleBuilder(
@@ -25,13 +26,15 @@ namespace Shabon.Bubble
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
             IBubbleChain bubbleChain,
-            IBubbleCombo bubbleCombo)
+            IBubbleCombo bubbleCombo,
+            IScoreValue scoreValue)
         {
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
             _bubbleChain = bubbleChain;
             _bubbleCombo = bubbleCombo;
+            _scoreValue = scoreValue;
         }
         /// <summary>
         /// 個性を付与するメソッド
@@ -44,6 +47,15 @@ namespace Shabon.Bubble
             // 連鎖に関するアクション
             Action chainAction = () =>
             {
+                if (bubbleMono.BubbleScore >= 0)
+                {
+                    _scoreValue.Increase(bubbleMono.BubbleScore);
+                }
+                else
+                {
+                    _scoreValue.Decrease(Mathf.Abs(bubbleMono.BubbleScore));
+                }
+                
                 _bubbleCombo.AddComboCount(bubbleMono);
                 _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
             };
@@ -63,7 +75,7 @@ namespace Shabon.Bubble
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction);
 
-            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker);
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData);
         }
 
         /// <summary>
@@ -109,8 +121,12 @@ namespace Shabon.Bubble
         /// </summary>
         private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction)
         {
-            bubbleSetter.OnDead += () => DestroyBubble(bubbleMono);
+            bubbleSetter.OnDead += () =>
+            {
+                DestroyBubble(bubbleMono);
+            };
             bubbleSetter.OnDead += chainAction;
+
         }
 
         /// <summary>

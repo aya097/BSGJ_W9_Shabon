@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Shabon.Param;
+using Shabon.Score;
 using UnityEngine;
 using VContainer;
 
@@ -12,9 +14,18 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleCombo : IBubbleCombo
     {
-        private readonly List<IBubbleMono> _destroyedBubbles = new ();
-        private readonly List<IBubbleMono> _remainingChainBubbles = new ();
+        private readonly List<IBubbleMono> _destroyedBubbles = new();
+        private readonly List<IBubbleMono> _remainingChainBubbles = new();
         private int _comboCount = 0;
+        private readonly IScoreValue _scoreValue;
+        private readonly GameRuleParam _gameRuleParam;
+
+        [Inject]
+        public BubbleCombo(IScoreValue scoreValue, GameRuleParam gameRuleParam)
+        {
+            _scoreValue = scoreValue;
+            _gameRuleParam = gameRuleParam;
+        }
 
         /// <summary>
         /// destroyしたbubbleをコンボを加算するメソッド
@@ -36,7 +47,7 @@ namespace Shabon.Bubble
         public void RemoveChainedBubble(IBubbleMono bubbleMono)
         {
             // 1コンボ目のみ例外処理
-            if (_remainingChainBubbles.Count() == 0 ) return;
+            if (_remainingChainBubbles.Count() == 0) return;
             _remainingChainBubbles.Remove(bubbleMono);
         }
 
@@ -52,14 +63,13 @@ namespace Shabon.Bubble
                 _remainingChainBubbles.Add(bubbleMono);
             }
 
-            //Debug.Log($"remainingChainBubbleCount : {_remainingChainBubbles.Count()}");
+            // 連鎖が残っているときはボーナススコアの計算しない
+            if (_remainingChainBubbles.Count() > 0) return;
 
-            if (_remainingChainBubbles.Count() != 0) return;
-            
-            // 連鎖が残っているバブルがなければボーナススコアの計算
-            CalculateComboBonusScore();
+            // 破壊されたBubbleが複数個のときコンボボーナスを計算
+            if (_destroyedBubbles.Count() > 1) CalculateComboBonusScore();
+            ResetCombo();
             return;
-            
         }
 
         /// <summary>
@@ -67,13 +77,36 @@ namespace Shabon.Bubble
         /// </summary>
         private void CalculateComboBonusScore()
         {
-            //Debug.Log("ボーナススコアの計算");
+            float sumBubbleScore = _destroyedBubbles.Sum(b => b.BubbleScore);
+            float bubbleCount = _destroyedBubbles.Count();
 
-            _destroyedBubbles.Clear();
-            _comboCount = 0;
+            // コンボボーナススコア = (バブルの総得点 × a) + (バブルの数 × b) 
+            // a, bはパラメータ
+            int comboBonusScore
+                    = (int)(sumBubbleScore * _gameRuleParam.SumBubbleScoreMultiplier
+                        + bubbleCount * _gameRuleParam.BubbleCountScoreMultiplier);
+
+            if (comboBonusScore >= 0)
+            {
+                _scoreValue.Increase(comboBonusScore);
+            }
+            else
+            {
+                _scoreValue.Decrease(Mathf.Abs(comboBonusScore));
+            }
 
             return;
         }
+
+        /// <summary>
+        /// コンボをリセットするメソッド
+        /// </summary>
+        private void ResetCombo()
+        {
+            _destroyedBubbles.Clear();
+            _comboCount = 0;
+        }
+
 
     }
 

@@ -42,6 +42,8 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<RuntimeObjectServer>().AsImplementedInterfaces();
 
             // Score
+            builder.RegisterInstance(0); 
+            builder.Register<ScoreValue>(Lifetime.Scoped).As<IScoreValue>();
             builder.Register<DirtValue>(Lifetime.Scoped).As<IDirtValue>();
 
             // Breath

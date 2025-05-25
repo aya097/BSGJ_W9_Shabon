@@ -12,6 +12,7 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
+        public int BubbleScore => _bubbleScore;
         public Transform Transform => transform;
         public event Action? OnReach;
         public event Action? OnDead;
@@ -20,6 +21,7 @@ namespace Shabon.Bubble
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
         private IAreaChecker _waitAreaChecker = null!;
+        private int _bubbleScore;
 
         private bool _isReached = false;
 
@@ -43,11 +45,14 @@ namespace Shabon.Bubble
         /// </summary>
         public void SetBuildParam(
             IBubbleMover bubbleMover,
-            IAreaChecker areaChecker)
+            IAreaChecker areaChecker,
+            IBubbleData bubbleData)
         {
             _bubbleMover = bubbleMover;
             _waitAreaChecker = areaChecker;
+            _bubbleScore = bubbleData.BubbleScore;
         }
+        
         /// <summary>
         /// 前方に到達したとき
         /// </summary>

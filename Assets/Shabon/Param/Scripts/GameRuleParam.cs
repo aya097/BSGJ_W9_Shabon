@@ -14,11 +14,23 @@ namespace Shabon.Param
         [Header("フェーズに関するパラメータ（上から1,2,3...）")]
         [SerializeField] List<GamePhaseData> gamePhaseDataList = new();
 
+        [Header("コンボボーナスに用いるパラメータ")]
+        [SerializeField] float sumBubbleScoreMultiplier;
+        [SerializeField] float bubbleCountScoreMultiplier;
+
 
         // Getter
         public IEnumerable<IGamePhaseData> GetGamePhaseDataList()
         {
             return gamePhaseDataList;
+        }
+        public float SumBubbleScoreMultiplier
+        {
+            get { return sumBubbleScoreMultiplier; }
+        }
+        public float BubbleCountScoreMultiplier
+        {
+            get { return bubbleCountScoreMultiplier; }
         }
 
     }
@@ -26,6 +38,8 @@ namespace Shabon.Param
     public interface IGameRuleParam
     {
         IEnumerable<IGamePhaseData> GetGamePhaseDataList();
+        float SumBubbleScoreMultiplier { get; }
+        float BubbleCountScoreMultiplier { get; }
     }
 
     /// <summary>
