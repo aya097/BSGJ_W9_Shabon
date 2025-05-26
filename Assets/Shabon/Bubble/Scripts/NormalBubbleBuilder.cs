@@ -55,7 +55,7 @@ namespace Shabon.Bubble
                 {
                     _scoreValue.Decrease(Mathf.Abs(bubbleMono.BubbleScore));
                 }
-                
+
                 _bubbleCombo.AddComboCount(bubbleMono);
                 _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
             };
@@ -154,9 +154,6 @@ namespace Shabon.Bubble
                 bubbleSetter.OnDead -= chainAction;
                 bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
 
-                // DirtValueを増加
-                _dirtValue.Increase(bubbleData.IncreasingDirtValue);
-
                 // 待機時間後にOnDeadを呼び出す
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ => bubbleMono.InvokeOnDead());
@@ -166,6 +163,8 @@ namespace Shabon.Bubble
                     .Subscribe(_ =>
                     {
                         if (bubbleMono == null) return;
+                        // DirtValueを増加
+                        _dirtValue.Increase(bubbleData.IncreasingDirtValue);
                         DestroyBubble(bubbleMono);
                     });
             };
