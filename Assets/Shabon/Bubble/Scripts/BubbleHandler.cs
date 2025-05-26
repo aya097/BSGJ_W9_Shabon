@@ -5,18 +5,23 @@ using Shabon.Breath;
 using System.Collections.Generic;
 using VContainer;
 using System.Linq;
-using System.Threading.Tasks; // 非同期処理用
+using System.Threading.Tasks;
+using Shabon.Clap; // 非同期処理用
 
 namespace Shabon.Bubble
 {
     public class BubbleHandler : IBubbleHandler
     {
         private readonly BreathGetterViewMono _breathGetter;
+        private readonly ClapGetterViewMono _clapGetter;
+
 
         [Inject]
-        public BubbleHandler(BreathGetterViewMono breathGetterViewMono)
+        public BubbleHandler(BreathGetterViewMono breathGetterViewMono,
+            ClapGetterViewMono clapGetterViewMono)
         {
             _breathGetter = breathGetterViewMono;
+            _clapGetter = clapGetterViewMono;
         }
 
         public void ApplyBreath(Vector3 direction, Vector3 position, float strength)
@@ -28,9 +33,11 @@ namespace Shabon.Bubble
             }
         }
 
-        public void ApplyClap(IEnumerable<IBubbleMono> bubbles, float strength)
+        public void ApplyClap(float strength)
         {
-            foreach (var bubble in bubbles)
+            if (strength == 0) return;
+
+            foreach (var bubble in _clapGetter.GetBubbleMonos())
             {
                 bubble.InvokeOnClap(new OnClapArg(strength));
             }

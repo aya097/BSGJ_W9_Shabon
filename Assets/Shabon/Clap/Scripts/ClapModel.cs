@@ -1,26 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Shabon.Bubble;
+using VContainer;
 
 namespace Shabon.Clap
 {
     public class ClapModel
     {
         private readonly IBubbleHandler _bubbleHandler;
-        private readonly ClapGetterViewMono _clapGetter;
-
-        public ClapModel(IBubbleHandler bubbleHandler, ClapGetterViewMono clapGetter)
+        [Inject]
+        public ClapModel(IBubbleHandler bubbleHandler)
         {
             _bubbleHandler = bubbleHandler;
-            _clapGetter = clapGetter;
         }
 
-        public void ExecuteClap(float strength)
+        public void ApplyClap(float strength)
         {
-            IEnumerable<IBubbleMono> bubbles = _clapGetter.GetBubbleMonos();
-
-
-            _bubbleHandler.ApplyClap(bubbles, strength);
+            _bubbleHandler.ApplyClap(strength);
         }
     }
 }
