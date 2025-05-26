@@ -154,9 +154,6 @@ namespace Shabon.Bubble
                 bubbleSetter.OnDead -= chainAction;
                 bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
 
-                // 待機時間後にOnDeadを呼び出す
-                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
-                    .Subscribe(_ => bubbleMono.InvokeOnDead());
 
                 // 待機時間後にdestroy
                 reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
