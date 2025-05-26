@@ -36,7 +36,6 @@ namespace Shabon.Bubble
         public void ApplyClap(float strength)
         {
             if (strength == 0) return;
-
             foreach (var bubble in _clapGetter.GetBubbleMonos())
             {
                 bubble.InvokeOnClap(new OnClapArg(strength));
