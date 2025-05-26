@@ -35,10 +35,11 @@ namespace Shabon.Input
         float _ratio = 0f;
         void ITickable.Tick()
         {
+
             // Breath
             float horizontal = _inputManager.GetHorizontalDirection();
             float amount = _inputManager.GetBreath();
-            _ratio += horizontal * 0.001f;  // 適当な値
+            _ratio += horizontal * 0.5f * Time.deltaTime;  // 適当な値
             _ratio = Mathf.Max(-1, _ratio);
             _ratio = Mathf.Min(1, _ratio);
 
