@@ -48,7 +48,7 @@ namespace Shabon.Input
             // Clap
             if (_inputManager.GetClap())
             {
-                _clapModel.ExecuteClap(1f);
+                _clapModel.ApplyClap(1f);
             }
         }
     }
