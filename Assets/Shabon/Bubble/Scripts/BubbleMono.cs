@@ -52,7 +52,7 @@ namespace Shabon.Bubble
             _waitAreaChecker = areaChecker;
             _bubbleScore = bubbleData.BubbleScore;
         }
-        
+
         /// <summary>
         /// 前方に到達したとき
         /// </summary>

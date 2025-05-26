@@ -18,5 +18,6 @@ MonoBehaviour:
     bubbleSpawnedArea: 0
     forwardVelocity: 0.5
     zoneWaitingTime: 1
-    increasingDirtValue: 0
+    increasingDirtValue: 1
     chainRadius: 1
+    bubbleScore: 100

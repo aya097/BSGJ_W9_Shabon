@@ -61,6 +61,8 @@ namespace Shabon.Game
 
             // Debug
             builder.RegisterComponentInHierarchy<DebugDirtValueViewMono>();
+            builder.RegisterComponentInHierarchy<DebugComboViewMono>();
+            builder.RegisterComponentInHierarchy<DebugScoreViewMono>();
         }
     }
 }

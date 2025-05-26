@@ -14,6 +14,7 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleCombo : IBubbleCombo
     {
+        public int ComboNum => _comboCount;
         private readonly List<IBubbleMono> _destroyedBubbles = new();
         private readonly List<IBubbleMono> _remainingChainBubbles = new();
         private int _comboCount = 0;
@@ -35,7 +36,6 @@ namespace Shabon.Bubble
         {
             _destroyedBubbles.Add(bubbleMono);
             _comboCount++;
-            Debug.Log($"Combo :{_comboCount}");
 
             RemoveChainedBubble(bubbleMono);
         }

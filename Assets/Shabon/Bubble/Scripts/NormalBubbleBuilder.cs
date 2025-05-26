@@ -166,7 +166,7 @@ namespace Shabon.Bubble
                     });
             };
 
-            // bubbleがdestroyされたら上記の遅延処理をdiposeする処理登録
+            // bubbleがdestroyされたら上記の遅延処理をdisposeする処理登録
             bubbleSetter.OnDead += () => reachDisposable?.Dispose();
         }
 
