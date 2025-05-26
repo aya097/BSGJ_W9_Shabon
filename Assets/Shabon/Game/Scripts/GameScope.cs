@@ -8,6 +8,7 @@ using Shabon.Clap;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Shabon.SelfDebug;
 
 namespace Shabon.Game
 {
@@ -57,6 +58,9 @@ namespace Shabon.Game
             // Clap
             builder.Register<ClapModel>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<ClapGetterViewMono>(); // ClapGetterViewMonoを登録
+
+            // Debug
+            builder.RegisterComponentInHierarchy<DebugDirtValueViewMono>();
         }
     }
 }
