@@ -42,7 +42,7 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<RuntimeObjectServer>().AsImplementedInterfaces();
 
             // Score
-            builder.RegisterInstance(0); 
+            builder.RegisterInstance(0);
             builder.Register<ScoreValue>(Lifetime.Scoped).As<IScoreValue>();
             builder.Register<DirtValue>(Lifetime.Scoped).As<IDirtValue>();
 
@@ -56,7 +56,6 @@ namespace Shabon.Game
 
             // Clap
             builder.Register<ClapModel>(Lifetime.Scoped);
-            builder.RegisterComponentInHierarchy<ClapViewMono>();
             builder.RegisterComponentInHierarchy<ClapGetterViewMono>(); // ClapGetterViewMonoを登録
         }
     }
