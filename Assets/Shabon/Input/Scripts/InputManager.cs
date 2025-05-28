@@ -41,5 +41,38 @@ namespace Shabon.Input
 
             return 0f;
         }
+
+        //  メニュー画面を開く入力を取得するメソッド
+        public bool GetMenuOpen()
+        {
+            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M);
+        }
+
+        // メニュー画面の決定入力を取得するメソッド
+        public bool GetMenuConfirm()
+        {
+            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.KeypadEnter);
+        }
+
+        // メニュー画面の戻る入力を取得するメソッド
+        public bool GetMenuBack()
+        {
+            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.B);
+        }
+
+        // 音量の調整する入力を取得するメソッド
+        public float GetVolumeAdjustment()
+        {
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.UpArrow))
+            {
+                return 1f;
+            }
+            else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.DownArrow))
+            {
+                return -1f;
+            }
+
+            return 0f;
+        }
     }
 }
