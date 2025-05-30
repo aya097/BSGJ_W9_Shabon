@@ -9,6 +9,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using Shabon.SelfDebug;
+using Shabon.Menu;
 
 namespace Shabon.Game
 {
@@ -63,6 +64,12 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<DebugDirtValueViewMono>();
             builder.RegisterComponentInHierarchy<DebugComboViewMono>();
             builder.RegisterComponentInHierarchy<DebugScoreViewMono>();
+
+            // Menu
+            builder.Register<MenuModel>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<MenuViewMono>();
+            builder.Register<MenuPresenter>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<MenuPresenter>(Lifetime.Scoped);
         }
     }
 }
