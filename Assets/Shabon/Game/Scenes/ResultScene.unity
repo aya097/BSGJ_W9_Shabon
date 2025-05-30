@@ -489,9 +489,7 @@ GameObject:
   - component: {fileID: 366781380}
   - component: {fileID: 366781385}
   - component: {fileID: 366781384}
-  - component: {fileID: 366781383}
-  - component: {fileID: 366781382}
-  - component: {fileID: 366781381}
+  - component: {fileID: 366781386}
   m_Layer: 5
   m_Name: TmpView
   m_TagString: Untagged
@@ -521,45 +519,6 @@ RectTransform:
   m_AnchoredPosition: {x: 287.2, y: -286}
   m_SizeDelta: {x: 1000, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &366781381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366781379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eacbb9f112e54483aa6d115df205d297, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 1909385913}
---- !u!114 &366781382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366781379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5faf4f7e3309148a7bbaeed59052c034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  comboText: {fileID: 1116306285}
---- !u!114 &366781383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366781379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bcdcebf40b0d4ed295f33e1e9b405ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dirtText: {fileID: 51961080}
 --- !u!114 &366781384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +557,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366781379}
   m_CullTransparentMesh: 1
+--- !u!114 &366781386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366781379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2562993afdc441abccdfedd04c7b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dirtText: {fileID: 51961080}
+  scoreText: {fileID: 1909385913}
+  comboText: {fileID: 1116306285}
 --- !u!1 &1116306283
 GameObject:
   m_ObjectHideFlags: 0

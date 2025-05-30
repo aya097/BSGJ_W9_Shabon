@@ -63,6 +63,9 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<DebugDirtValueViewMono>();
             builder.RegisterComponentInHierarchy<DebugComboViewMono>();
             builder.RegisterComponentInHierarchy<DebugScoreViewMono>();
+
+            // ResultButton を登録
+            builder.RegisterComponentInHierarchy<ResultButton>();
         }
     }
 }
