@@ -51,7 +51,7 @@ namespace Shabon.Input
         // メニュー画面の決定入力を取得するメソッド
         public bool GetMenuConfirm()
         {
-            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.KeypadEnter);
+            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space);
         }
 
         // メニュー画面の戻る入力を取得するメソッド
