@@ -44,7 +44,6 @@ namespace Shabon.Menu
         [SerializeField] private Button _lowResolutionButton;
 
 
-        public event Action OnBackGameButtonClicked;
         public event Action OnBackTitleButtonClicked;
         public event Action<MenuState> OnPanelSwitchButtonClicked;
         public event Action<ResolutionState> OnChangeResolutionButtonClicked;
@@ -55,7 +54,7 @@ namespace Shabon.Menu
         {
             // ポーズ画面のUIのボタン
             _backGameButton.OnClickAsObservable()
-                .Subscribe(_ => OnBackGameButtonClicked.Invoke())
+                .Subscribe(_ => OnPanelSwitchButtonClicked.Invoke(MenuState.Game))
                 .AddTo(this);
 
             _backTitleButton.OnClickAsObservable()
@@ -96,7 +95,7 @@ namespace Shabon.Menu
         }
 
         // 指定したmenuStateに対応するpanelを表示するメソッド
-        public void ShowPanel(MenuState menuState)
+        public void SwitchPanel(MenuState menuState)
         {
             foreach (MenuStatePanelPair menuStatePanelPair in _menuStatePanelPairs)
             {
@@ -126,12 +125,15 @@ namespace Shabon.Menu
             {
                 case ResolutionState.High:
                     Debug.Log("解像度を 高 にしました");
-                    break;
+                    return;
                 case ResolutionState.Middle:
                     Debug.Log("解像度を 中 にしました");
-                    break;
+                    return;
                 case ResolutionState.Low:
                     Debug.Log("解像度を 低 にしました");
+                    return;
+                default:
+                    Debug.LogWarning("不正なResolutionStateです。");
                     break;
             }
         }
