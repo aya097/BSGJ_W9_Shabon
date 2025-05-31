@@ -65,15 +65,19 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<DebugComboViewMono>();
             builder.RegisterComponentInHierarchy<DebugScoreViewMono>();
 
+<<<<<<< HEAD
             // Menu
             builder.Register<MenuModel>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<MenuViewMono>();
             builder.Register<MenuPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<MenuPresenter>(Lifetime.Scoped);
-            
+
+            // ResultButton を登録
+            //builder.RegisterComponentInHierarchy<ResultButton>();
+=======
             // ResultButton を登録
             builder.RegisterComponentInHierarchy<ResultButton>();
-
+>>>>>>> develop
         }
     }
 }
