@@ -70,6 +70,9 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<MenuViewMono>();
             builder.Register<MenuPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<MenuPresenter>(Lifetime.Scoped);
+
+            // ResultButton を登録
+            //builder.RegisterComponentInHierarchy<ResultButton>();
         }
     }
 }
