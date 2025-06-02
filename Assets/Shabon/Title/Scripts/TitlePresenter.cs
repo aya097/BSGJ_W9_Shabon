@@ -1,14 +1,17 @@
 #nullable enable
 
 using Shabon.Utility;
+using VContainer;
+using VContainer.Unity;
 
 namespace Shabon.Title
 {
     /// <summary>
     /// タイトルシーンのViewとModelを橋渡しするクラス
     /// </summary>
-    public class TitlePresenter
+    public class TitlePresenter : IInitializable
     {
+        [Inject]
         public TitlePresenter(TitleViewMono titleViewMono)
         {
             // Model -> View
@@ -21,6 +24,12 @@ namespace Shabon.Title
             {
                 SceneTransition.Transition(SceneName.GameScene);
             });
+        }
+
+        // このクラスを生成するためのエントリーポイント
+        void IInitializable.Initialize()
+        {
+
         }
     }
 }
