@@ -9,12 +9,14 @@ namespace Shabon.Input
 {
     public class SerialInput : IDisposable
     {
-        public float Value => _value;
+        public float Value0 => _value0;
+        public float Value1 => _value1;
 
         private SerialPort? _serialPort;
         private Thread _thread;
 
-        private float _value;
+        private float _value0;
+        private float _value1;
         public SerialInput()
         {
             // 接続可能なport名を取得
@@ -54,7 +56,10 @@ namespace Shabon.Input
                 if (_serialPort != null && _serialPort.IsOpen)
                 {
                     string message = _serialPort.ReadLine();
-                    _value = float.Parse(message);
+                    // , で区切られている
+                    string[] values = message.Split(',');
+                    _value0 = float.Parse(values[0]);
+                    _value1 = float.Parse(values[1]);
                 }
             }
         }
