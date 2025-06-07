@@ -42,7 +42,8 @@ namespace Shabon.Bubble
         public void Build(
             IBubbleBuildSetter bubbleSetter,
             IBubbleMono bubbleMono,
-            IBubbleData bubbleData)
+            IBubbleData bubbleData,
+            BubbleViewMono bubbleViewMono)
         {
             // 連鎖に関するアクション
             Action chainAction = () =>
@@ -64,16 +65,16 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            SetOnDead(bubbleSetter, bubbleMono, chainAction);
+            SetOnDead(bubbleSetter, bubbleMono, chainAction, bubbleViewMono);
 
             // Breathの処理
-            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
+            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
 
             // Clapの処理
             SetOnClap(bubbleSetter, bubbleMono);
 
             // Reachの処理
-            SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction);
+            SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction, bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData);
         }
@@ -93,10 +94,13 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform)
+        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
+                // 息が吹かれた時のアニメーションを再生
+                bubbleViewMono.PlayClappedAnimation();
+
                 // y座標抜きの平面として扱って計算
                 Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
                 Vector2 breathPosition = new Vector2(arg.Position.x, arg.Position.z);   // Breathの原点
@@ -119,11 +123,11 @@ namespace Shabon.Bubble
         /// <summary>
         /// 割られたときの処理
         /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction)
+        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction, BubbleViewMono bubbleViewMono)
         {
             bubbleSetter.OnDead += () =>
             {
-                DestroyBubble(bubbleMono);
+                DestroyBubble(bubbleMono, bubbleViewMono);
             };
             bubbleSetter.OnDead += chainAction;
 
@@ -144,7 +148,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, Action chainAction)
+        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, Action chainAction, BubbleViewMono bubbleViewMono)
         {
             IDisposable? reachDisposable = null;
 
@@ -162,7 +166,7 @@ namespace Shabon.Bubble
                         if (bubbleMono == null) return;
                         // DirtValueを増加
                         _dirtValue.Increase(bubbleData.IncreasingDirtValue);
-                        DestroyBubble(bubbleMono);
+                        DestroyBubble(bubbleMono, bubbleViewMono);
                     });
             };
 
@@ -174,7 +178,7 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono)
+        private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
         {
             if (bubbleMono == null || bubbleMono.Transform == null)
             {
@@ -185,8 +189,17 @@ namespace Shabon.Bubble
             // Clusterから削除
             _bubbleCluster.Remove(bubbleMono);
 
+            // 割られた時のアニメーションを再生
+            bubbleViewMono.PlayClappedAnimation();
+
+            // アニメーション終わりにdestroy(一旦遅延で対応)
+            Observable.Timer(TimeSpan.FromMilliseconds(600))
+                    .Subscribe(_ => GameObject.Destroy(bubbleMono.Transform.gameObject));
+
             // Destroy
-            GameObject.Destroy(bubbleMono.Transform.gameObject);
+            // GameObject.Destroy(bubbleMono.Transform.gameObject);
         }
+
+
     }
 }
