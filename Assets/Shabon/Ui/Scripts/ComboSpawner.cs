@@ -1,5 +1,7 @@
 #nullable enable
 
+using R3;
+using Shabon.Bubble;
 using Unity.Mathematics;
 using UnityEngine;
 using VContainer;
@@ -23,7 +25,7 @@ namespace Shabon.Ui
         public void Spawn(int comboNum)
         {
             var combo = GameObject.Instantiate(_comboViewParam.ComboPrefab, Vector3.zero, quaternion.identity);
-            GameObject.Destroy(combo);
+            GameObject.Destroy(combo, 1f);
         }
     }
 }

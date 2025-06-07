@@ -112,7 +112,6 @@ namespace Shabon.Bubble
                 Vector3 direction = new Vector3(bubblePosition.x - x, 0f, 0f);
                 direction = direction.normalized * arg.Strength;
                 bubbleMover.MoveByBreath(direction);
-                Debug.Log(direction);
             };
         }
 

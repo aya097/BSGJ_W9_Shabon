@@ -2375,6 +2375,7 @@ MonoBehaviour:
   autoInjectGameObjects: []
   gameRuleParam: {fileID: 11400000, guid: 6249e51209e284e00bf060a0c1807386, type: 2}
   bubbleParam: {fileID: 11400000, guid: 49f80587834de324da74662bbf2b7919, type: 2}
+  comboViewParam: {fileID: 11400000, guid: d7acd768c01604a98a06fb439fa13197, type: 2}
 --- !u!4 &864198486
 Transform:
   m_ObjectHideFlags: 0
