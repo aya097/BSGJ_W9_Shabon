@@ -7,7 +7,7 @@ namespace Shabon.Ui
     public class ComboViewParam : ScriptableObject, IComboViewParam
     {
         [Header("コンボのプレハブ")]
-        [SerializeField] ComboViewMono comboPrefab;
+        [SerializeField] ComboViewMono comboPrefab = null!;
 
         // ゲッター
         public ComboViewMono ComboPrefab

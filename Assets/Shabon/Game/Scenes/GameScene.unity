@@ -6338,7 +6338,7 @@ MonoBehaviour:
   - AreaType: 0
     Area: {fileID: 8742683603224083007}
   comboParent: {fileID: 1286815462}
-  comboArea: {fileID: 0}
+  comboArea: {fileID: 1213574522}
 --- !u!65 &8742683603224083007
 BoxCollider:
   m_ObjectHideFlags: 0
