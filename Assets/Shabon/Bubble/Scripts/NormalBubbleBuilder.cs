@@ -97,6 +97,9 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnBreath += (arg) =>
             {
+                // 息が吹かれた時のアニメーションを再生
+                bubbleViewMono.PlayBreathedAnimation();
+
                 // y座標抜きの平面として扱って計算
                 Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
                 Vector2 breathPosition = new Vector2(arg.Position.x, arg.Position.z);   // Breathの原点
