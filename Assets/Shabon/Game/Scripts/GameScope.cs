@@ -10,6 +10,7 @@ using VContainer;
 using VContainer.Unity;
 using Shabon.SelfDebug;
 using Shabon.Menu;
+using Shabon.Ui;
 
 namespace Shabon.Game
 {
@@ -70,7 +71,11 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<MenuViewMono>();
             builder.Register<MenuPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<MenuPresenter>(Lifetime.Scoped);
-            
+
+            // Ui
+            builder.RegisterComponentInHierarchy<DirtValueViewMono>();
+            builder.RegisterEntryPoint<InGameUiPresenter>();
+
             // ResultButton を登録
             builder.RegisterComponentInHierarchy<ResultButton>();
 
