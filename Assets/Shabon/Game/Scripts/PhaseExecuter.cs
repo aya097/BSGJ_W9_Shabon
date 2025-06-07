@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
+using R3;
 
 namespace Shabon.Game
 {
@@ -24,8 +25,11 @@ namespace Shabon.Game
         private readonly IDirtValue _dirtValue;    // 汚れ値
         private readonly IScoreValue _scoreValue;  // スコア値
         private readonly IBubbleCombo _bubbleCombo; // コンボ値
+        private readonly BubbleCluster _bubbleCluster;
+
 
         private double _currentTime;    // 現在の時間
+        private double _phaseUpdatedTime;   // フェーズが更新された時間
         private int _bubbleCount;   // バブルの生成数
 
         private List<PhaseEvent> _eventList = new();
@@ -36,27 +40,51 @@ namespace Shabon.Game
             IBubbleSpawner bubbleSpawner,
             IDirtValue dirtValue,
             IScoreValue scoreValue,
-            IBubbleCombo bubbleCombo)
+            IBubbleCombo bubbleCombo,
+            BubbleCluster bubbleCluster)
         {
             _gamePhases = gamePhases;
             _bubbleSpawner = bubbleSpawner;
             _dirtValue = dirtValue;
             _scoreValue = scoreValue;
             _bubbleCombo = bubbleCombo;
+            _bubbleCluster = bubbleCluster;
 
             // 初期化
             _currentTime = 0;
+            _phaseUpdatedTime = 0;
             _bubbleCount = 0;
 
+
+
+            StartPhase();
+
+        }
+
+        // フェーズ開始
+        void StartPhase()
+        {
             // 最初の敵生成
             SubscribeSpawnBubble();
+
+            // フェーズの終了を設定
+            SubscribeFinishPhase();
         }
 
         // 敵を生成するイベントを登録
         void SubscribeSpawnBubble()
         {
+            // 次の生成時間
+            double nextTime = _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval;
+
+            // フェーズが終了してたら終わり
+            if (nextTime > _phaseUpdatedTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime)
+            {
+                return;
+            }
+
             _eventList.Add(new PhaseEvent(
-                _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval,
+                nextTime,
                 () =>
                 {
                     _bubbleCount++;
@@ -69,6 +97,30 @@ namespace Shabon.Game
                 }
             ));
         }
+
+        // フェーズに関するイベント
+        void SubscribeFinishPhase()
+        {
+            double finishedTime = _currentTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime;
+            // フェーズの終了を登録
+            _eventList.Add(new PhaseEvent(
+                finishedTime,
+                () =>
+                {
+                    // 次のフェーズに
+                    _gamePhases.Proceed();
+                    // 敵がいなくなるのを待つ
+                    Observable.EveryUpdate()
+                    .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })   // バブルがいなくなるまで待機
+                    .Take(1)                                                    // 一度だけ実行
+                    .Subscribe(_ =>
+                    {
+                        StartPhase();   // 次のフェーズ
+                    });
+                }
+            ));
+        }
+
 
         void ITickable.Tick()
         {
