@@ -10,6 +10,7 @@ using VContainer;
 using VContainer.Unity;
 using Shabon.SelfDebug;
 using Shabon.Menu;
+using Shabon.Ui;
 
 namespace Shabon.Game
 {
@@ -20,6 +21,8 @@ namespace Shabon.Game
     {
         [SerializeField] GameRuleParam gameRuleParam = null!;
         [SerializeField] BubbleParam bubbleParam = null!;
+        [SerializeField] ComboViewParam comboViewParam = null!;
+
         protected override void Configure(IContainerBuilder builder)
         {
             // Game
@@ -41,6 +44,7 @@ namespace Shabon.Game
             // Param
             builder.RegisterInstance(gameRuleParam).AsImplementedInterfaces();
             builder.RegisterInstance(bubbleParam).AsImplementedInterfaces();
+            builder.RegisterInstance(comboViewParam).AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<RuntimeObjectServer>().AsImplementedInterfaces();
 
             // Score
@@ -70,10 +74,14 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<MenuViewMono>();
             builder.Register<MenuPresenter>(Lifetime.Scoped);
             builder.RegisterEntryPoint<MenuPresenter>(Lifetime.Scoped);
-            
+
+            // Ui
+            builder.RegisterComponentInHierarchy<DirtValueViewMono>();
+            builder.RegisterEntryPoint<InGameUiPresenter>();
+            builder.Register<ComboSpawner>(Lifetime.Scoped);
+
             // ResultButton を登録
             builder.RegisterComponentInHierarchy<ResultButton>();
-
         }
     }
 }
