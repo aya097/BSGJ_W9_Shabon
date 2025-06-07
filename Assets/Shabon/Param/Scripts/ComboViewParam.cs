@@ -6,6 +6,7 @@ namespace Shabon.Ui
     [CreateAssetMenu(fileName = "ComboViewParam", menuName = "Scriptable Objects/ComboViewParam")]
     public class ComboViewParam : ScriptableObject, IComboViewParam
     {
+        [Header("コンボのプレハブ")]
         [SerializeField] ComboViewMono comboPrefab;
 
         // ゲッター

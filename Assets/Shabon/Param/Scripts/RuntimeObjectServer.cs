@@ -11,11 +11,17 @@ namespace Shabon.Param
     /// <summary>
     /// Unityのシーン状のオブジェクトをparamとして提供するクラス
     /// </summary>
-    public class RuntimeObjectServer : MonoBehaviour, IBubbleSpawnedArea
+    public class RuntimeObjectServer : MonoBehaviour, IBubbleSpawnedArea, IComboParent
     {
         [Header("バブルのスポーンする場所を指定")]
         [Header("Typeが重複する場合はランダム")]
         [SerializeField] private List<BubbleSpawnedAreaPair> bubbleSpawnedAreas = new();
+
+        [Header("コンボを生成する場所を指定")]
+        [Header("UICanvasの下である必要がある")]
+        [SerializeField] private Transform comboParent = null!;
+        [Header("コンボの生成エリア")]
+        [SerializeField] private RectTransform comboArea = null!;
 
 
         // interface
@@ -30,6 +36,15 @@ namespace Shabon.Param
             }
 
             return new BoxArea(area.gameObject.transform.position, area.size);
+        }
+
+        public Transform ComboParent
+        {
+            get { return comboParent; }
+        }
+        public RectTransform ComboArea
+        {
+            get { return comboArea; }
         }
 
     }
@@ -65,5 +80,11 @@ namespace Shabon.Param
             Position = position;
             Size = size;
         }
+    }
+
+    public interface IComboParent
+    {
+        Transform ComboParent { get; }
+        RectTransform ComboArea { get; }
     }
 }
