@@ -15,7 +15,9 @@ namespace Shabon.Bubble
     public class BubbleCombo : IBubbleCombo
     {
         public int ComboNum => _comboCount;
+        public int MaxNum => _comboMax;
         private int _comboCount = 0;
+        private int _comboMax = 0;
 
         /// <summary>
         /// コンボを加算
@@ -23,6 +25,10 @@ namespace Shabon.Bubble
         public void Increase()
         {
             _comboCount++;
+            if (_comboCount >= _comboMax)
+            {
+                _comboMax = _comboCount;
+            }
         }
 
         /// <summary>
