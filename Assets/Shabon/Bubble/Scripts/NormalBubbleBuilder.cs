@@ -87,7 +87,7 @@ namespace Shabon.Bubble
             bubbleSetter.OnBreath += (arg) =>
             {
                 // 息が吹かれた時のアニメーションを再生
-                bubbleViewMono.PlayBreathedAnimation();
+                // bubbleViewMono.PlayBreathedAnimation();
 
                 // y座標抜きの平面として扱って計算
                 Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
@@ -142,10 +142,10 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
+        private void DestroyBubble(IBubbleMono bubbleMono)
         {
             // Clusterから削除
-            bubbleViewMono.PlayClappedAnimation();
+            _bubbleCluster.Remove(bubbleMono);
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform?.gameObject);
