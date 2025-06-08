@@ -42,7 +42,8 @@ namespace Shabon.Bubble
         public void Build(
             IBubbleBuildSetter bubbleSetter,
             IBubbleMono bubbleMono,
-            IBubbleData bubbleData)
+            IBubbleData bubbleData,
+            BubbleViewMono bubbleViewMono)
         {
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
@@ -55,7 +56,7 @@ namespace Shabon.Bubble
                 () => { DestroyBubble(bubbleMono); });
 
             // Breathの処理
-            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
+            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
 
             // Clapの処理
             SetOnClap(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, _bubbleChain);
@@ -81,10 +82,13 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform)
+        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
+                // 息が吹かれた時のアニメーションを再生
+                bubbleViewMono.PlayBreathedAnimation();
+
                 // y座標抜きの平面として扱って計算
                 Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
                 Vector2 breathPosition = new Vector2(arg.Position.x, arg.Position.z);   // Breathの原点
@@ -120,12 +124,10 @@ namespace Shabon.Bubble
         /// </summary>
         private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath)
         {
-            IDisposable? reachDisposable = null;
-
             bubbleSetter.OnReach += () =>
             {
                 // 待機時間後にdestroy
-                reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
                     {
                         if ((bubbleMono as MonoBehaviour) != null)
@@ -140,10 +142,10 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono)
+        private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
         {
             // Clusterから削除
-            _bubbleCluster.Remove(bubbleMono);
+            bubbleViewMono.PlayClappedAnimation();
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform?.gameObject);
