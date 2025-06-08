@@ -177,18 +177,13 @@ namespace Shabon.Bubble
         private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
         {
             if (bubbleMono == null) return;
-            
+
             // Clusterから削除
             bubbleViewMono.PlayClappedAnimation();
 
             // Destroy
-            Observable.Timer(TimeSpan.FromSeconds(1))
-                .Subscribe(_ =>
-                {
-                    _bubbleCluster.Remove(bubbleMono);
-                    GameObject.Destroy(bubbleMono.Transform.gameObject);
-                }).AddTo(bubbleMono.Transform);
-            
+            _bubbleCluster.Remove(bubbleMono);
+            GameObject.Destroy(bubbleMono.Transform.gameObject);
         }
     }
 }
