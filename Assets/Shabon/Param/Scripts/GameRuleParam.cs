@@ -60,6 +60,14 @@ namespace Shabon.Param
         [Min(0)]
         [SerializeField] int maxBabbleOnField;
 
+        [Header("フェーズの実行時間")]
+        [Min(0)]
+        [SerializeField] float phaseLengthTime;
+
+        [Header("このフェーズの後の休憩時間")]
+        [Min(0)]
+        [SerializeField] float phaseDelayTime;
+
         // Getter
         public int BubblesPerSpawn
         {
@@ -73,6 +81,14 @@ namespace Shabon.Param
         {
             get { return maxBabbleOnField; }
         }
+        public float PhaseLengthTime
+        {
+            get { return phaseLengthTime; }
+        }
+        public float PhaseDelayTime
+        {
+            get { return phaseDelayTime; }
+        }
 
     }
 
@@ -81,5 +97,7 @@ namespace Shabon.Param
         int BubblesPerSpawn { get; }
         float SpawnBubbleInterval { get; }
         int MaxBabbleOnField { get; }
+        float PhaseLengthTime { get; }
+        float PhaseDelayTime { get; }
     }
 }
