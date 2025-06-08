@@ -6,6 +6,6 @@ namespace Shabon.Game
     {
         int CurrentPhaseNum { get; }    // 現在のフェーズ番号
         IGamePhaseData GetCurrentPhaseData(); // 現在のフェーズデータ
-        void Proceed(); // 次のフェーズに進める 
+        bool Proceed(); // 次のフェーズに進める 
     }
 }

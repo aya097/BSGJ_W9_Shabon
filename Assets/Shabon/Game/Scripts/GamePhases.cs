@@ -28,9 +28,15 @@ namespace Shabon.Game
             return _gameRuleParam.GetGamePhaseDataList().ElementAt(_currentPhaseNum); // 現在のフェーズ番号に適したデータを返す
         }
 
-        public void Proceed()
+        public bool Proceed()
         {
+            // フェーズの最大をこえるとき
+            if (_currentPhaseNum + 1 < _gameRuleParam.GetGamePhaseDataList().Count())
+            {
+                return false;
+            }
             _currentPhaseNum++;
+            return true;
         }
     }
 }
