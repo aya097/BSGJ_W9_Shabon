@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEngine.UIElements;
-using System.Drawing;
 using Shabon.Param;
 
 namespace Shabon.Bubble
@@ -51,6 +49,8 @@ namespace Shabon.Bubble
         [Header("バブルのPrefab")]
         [SerializeField] BubbleMono bubblePrefab;
 
+        [Header("バブルのAnimator")]
+        [SerializeField] RuntimeAnimatorController bubbleAnimatorController;
 
         [Header("以下基本パラメータ")]
 
@@ -84,6 +84,10 @@ namespace Shabon.Bubble
         public BubbleMono BubblePrefab
         {
             get { return bubblePrefab; }
+        }
+        public RuntimeAnimatorController BubbleAnimatorController
+        {
+            get { return bubbleAnimatorController; }
         }
         public BubbleSpawnedAreaType BubbleSpawnedArea
         {
@@ -123,6 +127,7 @@ namespace Shabon.Bubble
     {
         BubbleType BubbleType { get; }
         BubbleMono BubblePrefab { get; }
+        RuntimeAnimatorController BubbleAnimatorController { get; }
         BubbleSpawnedAreaType BubbleSpawnedArea { get; }
         float ForwardVelocity { get; }
         float ZoneWaitingTime { get; }

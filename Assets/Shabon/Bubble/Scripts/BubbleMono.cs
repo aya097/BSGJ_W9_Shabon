@@ -65,11 +65,8 @@ namespace Shabon.Bubble
         /// </summary>
         public void InvokeOnDead()
         {
-            if (this == null || transform == null)
-            {
-                Debug.LogWarning("BubbleMono is already destroyed or null.");
-                return;
-            }
+            if (this == null || transform == null) return;
+
 
             OnDead?.Invoke();
         }
