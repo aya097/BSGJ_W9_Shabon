@@ -14,7 +14,10 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleChain : IBubbleChain
     {
+        public bool IsChaining => _isChaining;
         private readonly BubbleCluster _bubbleCluster;
+
+        private bool _isChaining = false;
 
         [Inject]
         public BubbleChain(BubbleCluster bubbleCluster)
@@ -27,6 +30,14 @@ namespace Shabon.Bubble
         /// </summary>
         public void ExecuteBubbleChain(IBubbleMono targetBubbleMono, float chainRadius)
         {
+            // 連鎖中
+            _isChaining = true;
+            // 全部停止
+            foreach (var bubble in _bubbleCluster.Bubbles)
+            {
+                bubble.Stop();
+            }
+
             // 連鎖元のBubbleのPosition
             Vector3 targetBubblePosition = targetBubbleMono.Transform.position;
 
@@ -53,6 +64,16 @@ namespace Shabon.Bubble
                     ExecuteBubbleChain(bubble, chainRadius);    // todo めっちゃ仮
                     bubble.Death.InvokeDeath(BubbleDeathType.Chain);    // 一番前を割る
                 });
+            }
+            else
+            {
+                // 連鎖終わり
+                _isChaining = false;
+                // 全部再開
+                foreach (var bubble in _bubbleCluster.Bubbles)
+                {
+                    bubble.Resume();
+                }
             }
         }
     }

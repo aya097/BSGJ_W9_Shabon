@@ -25,11 +25,15 @@ namespace Shabon.Bubble
         private int _bubbleScore;
 
         private bool _isReached = false;
+        private bool _isStop = false;
 
         void Update()
         {
             // 到達したら移動しない
             if (_isReached) return;
+
+            // 停止中だったら動かない
+            if (_isStop) return;
 
             _bubbleMover.MoveForward();
 
@@ -77,6 +81,15 @@ namespace Shabon.Bubble
         public void InvokeOnBreath(OnBreathArg arg)
         {
             OnBreath?.Invoke(arg);
+        }
+
+        public void Stop()
+        {
+            _isStop = true;
+        }
+        public void Resume()
+        {
+            _isStop = false;
         }
     }
 

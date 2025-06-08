@@ -12,6 +12,8 @@ namespace Shabon.Bubble
         void InvokeOnReach();
         void InvokeOnClap(OnClapArg arg);
         void InvokeOnBreath(OnBreathArg arg);
+        void Stop();
+        void Resume();
     }
 }
 
