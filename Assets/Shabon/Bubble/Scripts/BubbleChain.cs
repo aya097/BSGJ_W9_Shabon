@@ -47,12 +47,12 @@ namespace Shabon.Bubble
                     .Subscribe(_ =>
                     {
                         if (nearbyBubble == null) return;
-                        nearbyBubble.InvokeOnDead();
+                        // nearbyBubble.InvokeOnDead();
                     });
 
                 // BubbleがDestoryしたら、上記の遅延処理をdisposeさせるよう設定
                 IBubbleBuildSetter aroundBubbleSetter = (BubbleMono)nearbyBubble;
-                aroundBubbleSetter.OnDead += () => disposable.Dispose();
+                // aroundBubbleSetter.OnDead += () => disposable.Dispose();
 
             }
         }
