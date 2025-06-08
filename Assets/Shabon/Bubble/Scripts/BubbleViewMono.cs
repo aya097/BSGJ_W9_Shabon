@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class BubbleViewMono : MonoBehaviour
 {
-    private Animator _bubbleAnimator;
+    private Animator _bubbleAnimator = null!;
 
     public void Awake()
     {
