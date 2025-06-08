@@ -14,14 +14,17 @@ namespace Shabon.Bubble
     {
         private readonly BreathGetterViewMono _breathGetter;
         private readonly ClapGetterViewMono _clapGetter;
+        private readonly IBubbleChain _bubbleChain;
 
 
         [Inject]
         public BubbleHandler(BreathGetterViewMono breathGetterViewMono,
-            ClapGetterViewMono clapGetterViewMono)
+            ClapGetterViewMono clapGetterViewMono,
+            IBubbleChain bubbleChain)
         {
             _breathGetter = breathGetterViewMono;
             _clapGetter = clapGetterViewMono;
+            _bubbleChain = bubbleChain;
         }
 
         public void ApplyBreath(Vector3 direction, Vector3 position, float strength)
@@ -36,6 +39,9 @@ namespace Shabon.Bubble
         public void ApplyClap(float strength)
         {
             if (strength == 0) return;
+            // 連鎖中はなにもしない
+            if (_bubbleChain.IsChaining) return;
+
             var bubbleMono = _clapGetter.GetBubbleMonos().OrderBy(b => b.Transform.position.z).FirstOrDefault();    // 一番近いバブル
             if (bubbleMono != null)
             {
