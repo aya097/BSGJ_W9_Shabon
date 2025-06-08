@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using Shabon.Utility;
 
 namespace Shabon.Game
 {
@@ -8,6 +10,7 @@ namespace Shabon.Game
     /// </summary>
     public class ResultViewMono : MonoBehaviour
     {
+        [SerializeField] Button titleButton = null!;
         [SerializeField] TMP_Text dirtText = null!;
         [SerializeField] TMP_Text scoreText = null!;
         [SerializeField] TMP_Text comboText = null!;
@@ -20,7 +23,10 @@ namespace Shabon.Game
             scoreText.text = $"Score: {ResultData.FinalScore}";
             comboText.text = $"Combo: {ResultData.FinalCombo}";
 
-
+            titleButton.onClick.AddListener(() =>
+            {
+                SceneTransition.Transition(SceneName.TitleScene);
+            });
         }
 
 
