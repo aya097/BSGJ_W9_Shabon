@@ -44,38 +44,25 @@ namespace Shabon.Bubble
             IBubbleMono bubbleMono,
             IBubbleData bubbleData)
         {
-            // 連鎖に関するアクション
-            Action chainAction = () =>
-            {
-                if (bubbleMono.BubbleScore >= 0)
-                {
-                    _scoreValue.Increase(bubbleMono.BubbleScore);
-                }
-                else
-                {
-                    _scoreValue.Decrease(Mathf.Abs(bubbleMono.BubbleScore));
-                }
-
-                _bubbleCombo.AddComboCount(bubbleMono);
-                _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
-            };
-
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            BubbleDeath bubbleDeath = new BubbleDeath(BubbleType.Normal, _scoreValue, () => { DestroyBubble(bubbleMono); });
+            BubbleDeath bubbleDeath = new BubbleDeath(
+                BubbleType.Normal,
+                _scoreValue,
+                () => { DestroyBubble(bubbleMono); });
 
             // Breathの処理
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
 
             // Clapの処理
-            SetOnClap(bubbleSetter, bubbleMono, bubbleDeath);
+            SetOnClap(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, _bubbleChain);
 
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath);
 
-            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData);
+            bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData);
         }
 
         /// <summary>
@@ -118,10 +105,11 @@ namespace Shabon.Bubble
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, BubbleDeath bubbleDeath)
+        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, IBubbleChain bubbleChain)
         {
             bubbleSetter.OnClap += _ =>
             {
+                bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
                 bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
             };
         }
@@ -135,11 +123,6 @@ namespace Shabon.Bubble
 
             bubbleSetter.OnReach += () =>
             {
-                // 連鎖に関するactionは解除、連鎖が残っているバブルリストからの除去を追加
-                // bubbleSetter.OnDead -= chainAction;
-                // bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
-
-
                 // 待機時間後にdestroy
                 reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
@@ -150,9 +133,6 @@ namespace Shabon.Bubble
                         }
                     });
             };
-
-            // bubbleがdestroyされたら上記の遅延処理をdisposeする処理登録
-            // bubbleSetter.OnDead += () => reachDisposable?.Dispose();
         }
 
         /// <summary>

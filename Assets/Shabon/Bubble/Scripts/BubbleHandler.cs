@@ -36,9 +36,10 @@ namespace Shabon.Bubble
         public void ApplyClap(float strength)
         {
             if (strength == 0) return;
-            foreach (var bubble in _clapGetter.GetBubbleMonos())
+            var bubbleMono = _clapGetter.GetBubbleMonos().OrderBy(b => b.Transform.position.z).FirstOrDefault();    // 一番近いバブル
+            if (bubbleMono != null)
             {
-                bubble.InvokeOnClap(new OnClapArg(strength));
+                bubbleMono.InvokeOnClap(new OnClapArg(strength));
             }
         }
     }

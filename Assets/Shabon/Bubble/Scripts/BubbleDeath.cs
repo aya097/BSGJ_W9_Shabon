@@ -76,6 +76,7 @@ namespace Shabon.Bubble
         private readonly Action _destroyBubble;  // バブルを削除する処理
         private readonly IScoreValue _score;    // スコア
 
+
         public NormalBubbleDeath(Action destroy, IScoreValue score)
         {
             _destroyBubble = destroy;
@@ -84,8 +85,9 @@ namespace Shabon.Bubble
 
         public void Clap()
         {
-            // スコア増やす and コンボ and 連鎖
+            // スコア増やす
             _score.Increase(100);
+            // 連鎖
 
             // destroy
             _destroyBubble.Invoke();
@@ -102,6 +104,8 @@ namespace Shabon.Bubble
             // スコア増やす and コンボ and 連鎖
             _score.Increase(100);
 
+            // destroy
+            _destroyBubble.Invoke();
         }
         public void Mine()
         {

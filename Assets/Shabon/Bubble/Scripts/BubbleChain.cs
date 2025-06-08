@@ -2,10 +2,10 @@
 
 using UnityEngine;
 using R3;
-using System;
 using VContainer;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Shabon.Bubble
 {
@@ -15,13 +15,11 @@ namespace Shabon.Bubble
     public class BubbleChain : IBubbleChain
     {
         private readonly BubbleCluster _bubbleCluster;
-        private readonly IBubbleCombo _bubbleCombo;
 
         [Inject]
-        public BubbleChain(BubbleCluster bubbleCluster, IBubbleCombo bubbleCombo)
+        public BubbleChain(BubbleCluster bubbleCluster)
         {
             _bubbleCluster = bubbleCluster;
-            _bubbleCombo = bubbleCombo;
         }
 
         /// <summary>
@@ -34,26 +32,27 @@ namespace Shabon.Bubble
 
             // 周辺のBubbleを取得
             IEnumerable<IBubbleMono> nearbyBubbles = _bubbleCluster.Bubbles
-                        .Where(b => (b.Transform.position - targetBubblePosition).sqrMagnitude <= Mathf.Pow(chainRadius, 2));
+                        .Where(b => (b.Transform.position - targetBubblePosition).sqrMagnitude <= Mathf.Pow(chainRadius, 2))  // 半径以内
+                        .Where(b => b.Transform.position.z > targetBubblePosition.z)   // ターゲットより奥にある
+                        .OrderBy(b => b.Transform.position.z);  // 近い順
 
-            _bubbleCombo.AddRemainingChainBubble(nearbyBubbles);
-
-            // 周辺のBubbleを割る
-            foreach (IBubbleMono nearbyBubble in nearbyBubbles)
+            foreach (var b in nearbyBubbles)
             {
-                // 0.5秒後に周辺のbubbleをdestory
-                // * 遅延処理いれないとbubble同士が循環参照して(おそらく)unityが落ちるので注意
-                IDisposable disposable = Observable.Timer(TimeSpan.FromSeconds(0.5f))
-                    .Subscribe(_ =>
-                    {
-                        if (nearbyBubble == null) return;
-                        // nearbyBubble.InvokeOnDead();
-                    });
+                Debug.Log($"{b.Transform.position.z}");
+            }
 
-                // BubbleがDestoryしたら、上記の遅延処理をdisposeさせるよう設定
-                IBubbleBuildSetter aroundBubbleSetter = (BubbleMono)nearbyBubble;
-                // aroundBubbleSetter.OnDead += () => disposable.Dispose();
+            Debug.Log($"{nearbyBubbles.Count()}");
 
+            // 一体でもいたら
+            if (nearbyBubbles.Any())
+            {
+                Observable.Timer(TimeSpan.FromSeconds(0.2f)).
+                Subscribe(_ =>
+                {
+                    var bubble = nearbyBubbles.FirstOrDefault();
+                    ExecuteBubbleChain(bubble, chainRadius);    // todo めっちゃ仮
+                    bubble.Death.InvokeDeath(BubbleDeathType.Chain);    // 一番前を割る
+                });
             }
         }
     }
