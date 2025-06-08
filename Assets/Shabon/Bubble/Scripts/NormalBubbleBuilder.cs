@@ -64,7 +64,7 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            SetOnDead(bubbleSetter, bubbleMono, chainAction);
+            // SetOnDead(bubbleSetter, bubbleMono, chainAction);
 
             // Breathの処理
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
@@ -118,15 +118,15 @@ namespace Shabon.Bubble
         /// <summary>
         /// 割られたときの処理
         /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction)
-        {
-            bubbleSetter.OnDead += () =>
-            {
-                DestroyBubble(bubbleMono);
-            };
-            bubbleSetter.OnDead += chainAction;
+        // private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction)
+        // {
+        //     bubbleSetter.OnDead += () =>
+        //     {
+        //         DestroyBubble(bubbleMono);
+        //     };
+        //     bubbleSetter.OnDead += chainAction;
 
-        }
+        // }
 
         /// <summary>
         /// Clapされた時の処理
@@ -136,7 +136,7 @@ namespace Shabon.Bubble
             bubbleSetter.OnClap += _ =>
             {
                 // Clapされたら割れる
-                bubbleMono.InvokeOnDead();
+                // bubbleMono.InvokeOnDead();
             };
         }
 
@@ -150,8 +150,8 @@ namespace Shabon.Bubble
             bubbleSetter.OnReach += () =>
             {
                 // 連鎖に関するactionは解除、連鎖が残っているバブルリストからの除去を追加
-                bubbleSetter.OnDead -= chainAction;
-                bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
+                // bubbleSetter.OnDead -= chainAction;
+                // bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
 
 
                 // 待機時間後にdestroy
@@ -166,7 +166,7 @@ namespace Shabon.Bubble
             };
 
             // bubbleがdestroyされたら上記の遅延処理をdisposeする処理登録
-            bubbleSetter.OnDead += () => reachDisposable?.Dispose();
+            // bubbleSetter.OnDead += () => reachDisposable?.Dispose();
         }
 
         /// <summary>

@@ -15,7 +15,6 @@ namespace Shabon.Bubble
         public int BubbleScore => _bubbleScore;
         public Transform Transform => transform;
         public event Action? OnReach;
-        public event Action? OnDead;
         public event Action<OnClapArg>? OnClap;
         public event Action<OnBreathArg>? OnBreath;
 
@@ -60,19 +59,7 @@ namespace Shabon.Bubble
         {
             OnReach?.Invoke();
         }
-        /// <summary>
-        /// 割れたとき
-        /// </summary>
-        public void InvokeOnDead()
-        {
-            if (this == null || transform == null)
-            {
-                Debug.LogWarning("BubbleMono is already destroyed or null.");
-                return;
-            }
 
-            OnDead?.Invoke();
-        }
         /// <summary>
         /// Clapされたとき
         /// </summary>
