@@ -4,20 +4,9 @@ using UnityEngine;
 /// <summary>
 /// Bubbleの見た目を管理するクラス
 /// </summary>
-[RequireComponent(typeof(Animator))]
 public class BubbleViewMono : MonoBehaviour
 {
-    private Animator _bubbleAnimator = null!;
-
-    public void Awake()
-    {
-        _bubbleAnimator = GetComponent<Animator>();
-    }
-
-    public void SetAnimatorController(RuntimeAnimatorController bubbleAnimatorController)
-    {
-        _bubbleAnimator.runtimeAnimatorController = bubbleAnimatorController;
-    }
+    [SerializeField] private Animator _bubbleAnimator = null!;
 
     // 割られた時のアニメーションを再生するメソッド
     public void PlayClappedAnimation()

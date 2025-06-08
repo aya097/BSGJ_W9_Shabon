@@ -56,7 +56,7 @@ namespace Shabon.Bubble
                 () => { DestroyBubble(bubbleMono); });
 
             // Breathの処理
-            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
+            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
 
             // Clapの処理
             SetOnClap(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, _bubbleChain);
@@ -82,12 +82,12 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
+        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
                 // 息が吹かれた時のアニメーションを再生
-                bubbleViewMono.PlayBreathedAnimation();
+                // bubbleViewMono.PlayBreathedAnimation();
 
                 // y座標抜きの平面として扱って計算
                 Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
@@ -142,10 +142,10 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
+        private void DestroyBubble(IBubbleMono bubbleMono)
         {
             // Clusterから削除
-            bubbleViewMono.PlayClappedAnimation();
+            _bubbleCluster.Remove(bubbleMono);
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform?.gameObject);
