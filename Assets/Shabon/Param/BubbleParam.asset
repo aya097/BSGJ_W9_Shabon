@@ -15,6 +15,7 @@ MonoBehaviour:
   bubbleDataList:
   - bubbleType: 0
     bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
+    bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
     bubbleSpawnedArea: 0
     forwardVelocity: 0.5
     zoneWaitingTime: 1
