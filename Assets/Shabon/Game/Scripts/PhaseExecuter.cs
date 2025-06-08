@@ -118,6 +118,7 @@ namespace Shabon.Game
                     {
                         if (isEnd)
                         {
+                            ResultData.SaveResults(_dirtValue.DirtNum, _scoreValue.ScoreNum, _bubbleCombo.MaxNum);
                             SceneTransition.Transition(SceneName.ResultScene);
                         }
                         else
