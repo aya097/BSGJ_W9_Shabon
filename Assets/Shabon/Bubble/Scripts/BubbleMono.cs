@@ -13,7 +13,7 @@ namespace Shabon.Bubble
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
         public int BubbleScore => _bubbleScore;
-        public Transform Transform => transform;
+        public Transform? Transform => transform;
         public event Action? OnReach;
         public event Action<OnClapArg>? OnClap;
         public event Action<OnBreathArg>? OnBreath;

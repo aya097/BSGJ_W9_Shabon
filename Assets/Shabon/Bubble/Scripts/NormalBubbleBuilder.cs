@@ -142,10 +142,12 @@ namespace Shabon.Bubble
 
                 // 待機時間後にdestroy
                 reachDisposable = Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
-                    .TakeUntil(_ => { return bubbleMono == null; })   // nullになったらキャンセル
                     .Subscribe(_ =>
                     {
-                        bubbleDeath.InvokeDeath(BubbleDeathType.Attack);
+                        if ((bubbleMono as MonoBehaviour) != null)
+                        {
+                            bubbleDeath.InvokeDeath(BubbleDeathType.Attack);
+                        }
                     });
             };
 
@@ -163,7 +165,7 @@ namespace Shabon.Bubble
             _bubbleCluster.Remove(bubbleMono);
 
             // Destroy
-            GameObject.Destroy(bubbleMono.Transform.gameObject);
+            GameObject.Destroy(bubbleMono.Transform?.gameObject);
         }
     }
 }
