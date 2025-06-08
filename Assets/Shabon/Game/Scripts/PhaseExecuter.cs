@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 using R3;
+using Shabon.Utility;
 
 namespace Shabon.Game
 {
@@ -108,14 +109,22 @@ namespace Shabon.Game
                 () =>
                 {
                     // 次のフェーズに
-                    _gamePhases.Proceed();
+                    bool isEnd = _gamePhases.Proceed();
                     // 敵がいなくなるのを待つ
                     Observable.EveryUpdate()
                     .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })   // バブルがいなくなるまで待機
                     .Take(1)                                                    // 一度だけ実行
                     .Subscribe(_ =>
                     {
-                        StartPhase();   // 次のフェーズ
+                        if (isEnd)
+                        {
+                            ResultData.SaveResults(_dirtValue.DirtNum, _scoreValue.ScoreNum, _bubbleCombo.MaxNum);
+                            SceneTransition.Transition(SceneName.ResultScene);
+                        }
+                        else
+                        {
+                            StartPhase();   // 次のフェーズ
+                        }
                     });
                 }
             ));
