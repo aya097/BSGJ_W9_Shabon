@@ -6,12 +6,14 @@ namespace Shabon.Bubble
 {
     public interface IBubbleMono
     {
-        int BubbleScore{ get; }
+        int BubbleScore { get; }
         Transform Transform { get; }
+        public BubbleDeath Death { get; }
         void InvokeOnReach();
-        void InvokeOnDead();
         void InvokeOnClap(OnClapArg arg);
         void InvokeOnBreath(OnBreathArg arg);
+        void Stop();
+        void Resume();
     }
 }
 

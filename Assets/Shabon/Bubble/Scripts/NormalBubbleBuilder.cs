@@ -45,38 +45,26 @@ namespace Shabon.Bubble
             IBubbleData bubbleData,
             BubbleViewMono bubbleViewMono)
         {
-            // 連鎖に関するアクション
-            Action chainAction = () =>
-            {
-                if (bubbleMono.BubbleScore >= 0)
-                {
-                    _scoreValue.Increase(bubbleMono.BubbleScore);
-                }
-                else
-                {
-                    _scoreValue.Decrease(Mathf.Abs(bubbleMono.BubbleScore));
-                }
-
-                _bubbleCombo.AddComboCount(bubbleMono);
-                _bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
-            };
-
             // BubbleMoverの生成
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            SetOnDead(bubbleSetter, bubbleMono, chainAction, bubbleViewMono);
+            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
+            BubbleDeath bubbleDeath = new BubbleDeath(
+                BubbleType.Normal,
+                deathParams,
+                () => { DestroyBubble(bubbleMono); });
 
             // Breathの処理
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
 
             // Clapの処理
-            SetOnClap(bubbleSetter, bubbleMono, bubbleViewMono);
+            SetOnClap(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, _bubbleChain);
 
             // Reachの処理
-            SetOnReach(bubbleSetter, bubbleMono, bubbleData, chainAction, bubbleViewMono);
+            SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath);
 
-            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData);
+            bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData);
         }
 
         /// <summary>
@@ -120,54 +108,34 @@ namespace Shabon.Bubble
         }
 
         /// <summary>
-        /// 割られたときの処理
-        /// </summary>
-        private void SetOnDead(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, Action chainAction, BubbleViewMono bubbleViewMono)
-        {
-            bubbleSetter.OnDead += () =>
-            {
-                DestroyBubble(bubbleMono, bubbleViewMono);
-            };
-            bubbleSetter.OnDead += chainAction;
-
-        }
-
-        /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
+        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, IBubbleChain bubbleChain)
         {
             bubbleSetter.OnClap += _ =>
             {
-                // bubbleViewMono.PlayClappedAnimation();
-                // Clapされたら割れる
-                bubbleMono.InvokeOnDead();
+                bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
+                bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
             };
         }
 
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, Action chainAction, BubbleViewMono bubbleViewMono)
+        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath)
         {
             bubbleSetter.OnReach += () =>
             {
-                // 連鎖に関するactionは解除、連鎖が残っているバブルリストからの除去を追加
-                bubbleSetter.OnDead -= chainAction;
-                bubbleSetter.OnDead += () => _bubbleCombo.RemoveChainedBubble(bubbleMono);
-
-
                 // 待機時間後にdestroy
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
                     {
-                        if (bubbleMono == null) return;
-                        // DirtValueを増加
-                        _dirtValue.Increase(bubbleData.IncreasingDirtValue);
-                        DestroyBubble(bubbleMono, bubbleViewMono);
-                    }).AddTo(bubbleMono.Transform);
+                        if ((bubbleMono as MonoBehaviour) != null)
+                        {
+                            bubbleDeath.InvokeDeath(BubbleDeathType.Attack);
+                        }
+                    });
             };
-
         }
 
         /// <summary>
@@ -176,14 +144,11 @@ namespace Shabon.Bubble
         /// <param name="bubbleMono"></param>
         private void DestroyBubble(IBubbleMono bubbleMono, BubbleViewMono bubbleViewMono)
         {
-            if (bubbleMono == null) return;
-
             // Clusterから削除
             bubbleViewMono.PlayClappedAnimation();
 
             // Destroy
-            _bubbleCluster.Remove(bubbleMono);
-            GameObject.Destroy(bubbleMono.Transform.gameObject);
+            GameObject.Destroy(bubbleMono.Transform?.gameObject);
         }
     }
 }
