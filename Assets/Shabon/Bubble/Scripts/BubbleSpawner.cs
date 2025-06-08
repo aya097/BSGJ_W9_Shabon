@@ -59,8 +59,7 @@ namespace Shabon.Bubble
 
             // バブルを生成
             BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
-            BubbleViewMono bubbleViewMono = null;//bubbleMono.gameObject.GetComponentInChildren<BubbleViewMono>();
-            // bubbleViewMono.SetAnimatorController(bubbleData.BubbleAnimatorController);
+            BubbleViewMono bubbleViewMono = bubbleMono.gameObject.GetComponentInChildren<BubbleViewMono>();
 
             // ビルド
             bubbleBuilder.Build(bubbleMono, bubbleMono, bubbleData, bubbleViewMono);
