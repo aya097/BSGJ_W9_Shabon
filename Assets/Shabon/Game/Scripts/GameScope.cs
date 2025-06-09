@@ -29,6 +29,7 @@ namespace Shabon.Game
             builder.Register<GamePhases>(Lifetime.Scoped).As<IGamePhases>();
             builder.RegisterEntryPoint<PhaseExecutor>(Lifetime.Scoped);
 
+
             // Bubble
             builder.Register<BubbleSpawner>(Lifetime.Scoped).As<IBubbleSpawner>();
             builder.Register<BubbleCluster>(Lifetime.Scoped);
@@ -79,6 +80,7 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<DirtValueViewMono>();
             builder.RegisterEntryPoint<InGameUiPresenter>();
             builder.Register<ComboSpawner>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<ClockViewMono>();
 
             // ResultButton を登録
             builder.RegisterComponentInHierarchy<ResultButton>();

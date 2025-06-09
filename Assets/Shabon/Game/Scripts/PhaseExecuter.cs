@@ -20,6 +20,11 @@ namespace Shabon.Game
     /// </summary>
     public class PhaseExecutor : ITickable
     {
+        public double CurrentTime => _currentTime; // 現在の時間を公開
+        public double LastPhaseUpdateTime => _phaseUpdatedTime; // 最後にフェーズが更新された時間
+        public double FinishedTime => _phaseUpdatedTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime; // フェーズ終了時間を計算
+        public IGamePhases GamePhases => _gamePhases; // 公開プロパティを追加
+
         private readonly IGamePhases _gamePhases;   // ゲームフェーズに関するデータ用のクラス
         private readonly IBubbleSpawner _bubbleSpawner; // バブル生成用のクラス
         private readonly IDirtValue _dirtValue;    // 汚れ値
@@ -124,7 +129,7 @@ namespace Shabon.Game
 
         void ITickable.Tick()
         {
-            _currentTime += Time.deltaTime;
+            _currentTime += Time.deltaTime; // 現在の時間を更新
 
             InvokeEvent();
         }
