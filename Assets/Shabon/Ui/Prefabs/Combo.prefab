@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7732260083773093851}
-  - component: {fileID: 6932341612457047718}
+  - component: {fileID: 4305650503684473298}
   m_Layer: 0
   m_Name: Combo
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6932341612457047718
+--- !u!114 &4305650503684473298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7576204102773876681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccac230d95ce4001adb4c533f5164bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 009ec66079d184777bea26b3dd3b4cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   comboText: {fileID: 5943622283414467014}

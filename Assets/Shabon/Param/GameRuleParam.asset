@@ -14,14 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePhaseDataList:
   - bubblesPerSpawn: 1
-    spawnBubbleInterval: 1
-    maxBabbleOnField: 5
-    phaseLengthTime: 30
-    phaseDelayTime: 3
-  - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
-    maxBabbleOnField: 2
+    maxBabbleOnField: 8
     phaseLengthTime: 30
-    phaseDelayTime: 3
+    phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
   bubbleCountScoreMultiplier: 1

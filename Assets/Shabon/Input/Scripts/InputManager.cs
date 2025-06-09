@@ -1,4 +1,6 @@
 #nullable enable
+using UnityEngine;
+
 namespace Shabon.Input
 {
     /// <summary>
@@ -6,40 +8,52 @@ namespace Shabon.Input
     /// </summary>
     public class InputManager : IInputManager
     {
+        private readonly SerialInput _serialInput;
+
+        public InputManager()
+        {
+            _serialInput = new SerialInput();
+        }
         // Clapしたときに一度だけtrue
         public bool GetClap()
         {
-            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space); // スペースをClapの代替
+            return UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space) // スペースをClapの代替
+                || (_serialInput.Value1 == 1f); // デバイスの入力
         }
 
         // Breathの大きさに応じた値0~1を返す
         public float GetBreath()
         {
+            float value = (_serialInput.Value0 - 2f) / 8f; // だいたいこれくらい
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Alpha1))
             {
-                return 0.5f;
+                value = 0.5f;
             }
             else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Alpha2))
             {
-                return 1f;
+                value = 1f;
             }
 
-            return 0;
+            return Mathf.Clamp01(value);
         }
 
         // 左右の移動量を-1~1で返す
         public float GetHorizontalDirection()
         {
-            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow))
-            {
-                return 1f;
-            }
-            else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftArrow))
-            {
-                return -1f;
-            }
+            float value = UnityEngine.Input.mousePosition.x / Screen.width;
+            value = (value - 0.5f) * 2f;
 
-            return 0f;
+            // if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow))
+            // {
+            //     value = 0.5f;
+            // }
+            // else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftArrow))
+            // {
+            //     value = -0.5f;
+            // }
+
+
+            return value;
         }
 
         //  メニュー画面を開く入力を取得するメソッド

@@ -80,10 +80,13 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<DirtValueViewMono>();
             builder.RegisterEntryPoint<InGameUiPresenter>();
             builder.Register<ComboSpawner>(Lifetime.Scoped);
+
             builder.RegisterComponentInHierarchy<ClockViewMono>();
 
             // ResultButton を登録
             builder.RegisterComponentInHierarchy<ResultButton>();
+
+
         }
     }
 }

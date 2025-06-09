@@ -42,12 +42,12 @@ namespace Shabon.Bubble
 
             if (bubbleData is null)
 
-            if (bubbleData == null)
+                if (bubbleData == null)
 
-            {
-                Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
-                return;
-            }
+                {
+                    Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
+                    return;
+                }
 
 
 
@@ -59,9 +59,10 @@ namespace Shabon.Bubble
 
             // バブルを生成
             BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
+            BubbleViewMono bubbleViewMono = bubbleMono.gameObject.GetComponentInChildren<BubbleViewMono>();
 
             // ビルド
-            bubbleBuilder.Build(bubbleMono, bubbleMono, bubbleData);
+            bubbleBuilder.Build(bubbleMono, bubbleMono, bubbleData, bubbleViewMono);
 
             // Clusterに登録
             _bubbleCluster.Add(bubbleMono);

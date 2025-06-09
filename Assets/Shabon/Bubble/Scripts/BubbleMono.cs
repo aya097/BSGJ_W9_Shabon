@@ -13,17 +13,19 @@ namespace Shabon.Bubble
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
         public int BubbleScore => _bubbleScore;
-        public Transform Transform => transform;
+        public Transform? Transform => transform;
+        public BubbleDeath Death => _bubbleDeath;
         public event Action? OnReach;
-        public event Action? OnDead;
         public event Action<OnClapArg>? OnClap;
         public event Action<OnBreathArg>? OnBreath;
 
         private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
+        private BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
         private IAreaChecker _waitAreaChecker = null!;
         private int _bubbleScore;
 
         private bool _isReached = false;
+        private bool _isStop = false;
 
         void Update()
         {
@@ -31,6 +33,9 @@ namespace Shabon.Bubble
 
             // 到達したら移動しない
             if (_isReached) return;
+
+            // 停止中だったら動かない
+            if (_isStop) return;
 
             _bubbleMover.MoveForward();
 
@@ -47,10 +52,12 @@ namespace Shabon.Bubble
         /// </summary>
         public void SetBuildParam(
             IBubbleMover bubbleMover,
+            BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,
             IBubbleData bubbleData)
         {
             _bubbleMover = bubbleMover;
+            _bubbleDeath = bubbleDeath;
             _waitAreaChecker = areaChecker;
             _bubbleScore = bubbleData.BubbleScore;
         }
@@ -62,19 +69,7 @@ namespace Shabon.Bubble
         {
             OnReach?.Invoke();
         }
-        /// <summary>
-        /// 割れたとき
-        /// </summary>
-        public void InvokeOnDead()
-        {
-            if (this == null || transform == null)
-            {
-                Debug.LogWarning("BubbleMono is already destroyed or null.");
-                return;
-            }
 
-            OnDead?.Invoke();
-        }
         /// <summary>
         /// Clapされたとき
         /// </summary>
@@ -88,6 +83,15 @@ namespace Shabon.Bubble
         public void InvokeOnBreath(OnBreathArg arg)
         {
             OnBreath?.Invoke(arg);
+        }
+
+        public void Stop()
+        {
+            _isStop = true;
+        }
+        public void Resume()
+        {
+            _isStop = false;
         }
     }
 
