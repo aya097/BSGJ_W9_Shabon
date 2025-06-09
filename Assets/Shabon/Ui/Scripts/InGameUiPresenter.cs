@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using R3;
 using Shabon.Bubble;
+using Shabon.Game;
+using Shabon.Param;
 using Shabon.Score;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -22,9 +25,11 @@ namespace Shabon.Ui
             // Model
             IDirtValue dirtValue,
             IBubbleCombo bubbleCombo,
+            PhaseExecutor phaseExecutor,
             // View
             DirtValueViewMono dirtValueViewMono,
-            ComboSpawner comboSpawner   // ViewではないがViewを生成する
+            ComboSpawner comboSpawner,   // ViewではないがViewを生成する
+            ClockViewMono clockViewMono
         )
         {
             // Model -> View
@@ -46,6 +51,14 @@ namespace Shabon.Ui
                     comboSpawner.Spawn(value);
                 }
             });
+
+            // 時間を時計に反映
+            Observable.EveryValueChanged(phaseExecutor, p => p.CurrentTime)
+                .Subscribe(time =>
+                {
+                    Debug.Log($"{time}");
+                    clockViewMono.SetTime((float)time, (float)phaseExecutor.LastPhaseUpdateTime, (float)phaseExecutor.FinishedTime);
+                });
 
         }
 

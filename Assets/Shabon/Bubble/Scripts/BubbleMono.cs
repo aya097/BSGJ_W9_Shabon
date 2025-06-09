@@ -29,6 +29,8 @@ namespace Shabon.Bubble
 
         void Update()
         {
+
+
             // 到達したら移動しない
             if (_isReached) return;
 
