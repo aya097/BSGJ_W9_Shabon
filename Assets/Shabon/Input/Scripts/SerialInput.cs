@@ -19,6 +19,7 @@ namespace Shabon.Input
         private float _value1;
         public SerialInput()
         {
+            return;
             // 接続可能なport名を取得
             string[] ports = SerialPort.GetPortNames();
             var availablePorts = ports.Where(s => s.Contains("COM") || s.Contains("usbmodem"));
