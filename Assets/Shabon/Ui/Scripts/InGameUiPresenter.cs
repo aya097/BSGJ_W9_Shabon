@@ -16,7 +16,7 @@ namespace Shabon.Ui
     /// <summary>
     /// インゲームのUI用Presenter
     /// </summary>
-    public class InGameUiPresenter : IInitializable
+    public class InGameUiPresenter : IInitializable, IDisposable
     {
         private List<IDisposable> _disposables = new(); // R3用
 
@@ -43,28 +43,39 @@ namespace Shabon.Ui
             );
 
             // コンボが0以外に変化したら生成
-            Observable.EveryValueChanged(bubbleCombo, b => b.ComboNum)
-            .Subscribe(value =>
-            {
-                if (value != 0)
+            _disposables.Add(
+                Observable.EveryValueChanged(bubbleCombo, b => b.ComboNum)
+                .Subscribe(value =>
                 {
-                    comboSpawner.Spawn(value);
-                }
-            });
+                    if (value != 0)
+                    {
+                        comboSpawner.Spawn(value);
+                    }
+                })
+            );
 
             // 時間を時計に反映
-            Observable.EveryValueChanged(phaseExecutor, p => p.CurrentTime)
+            _disposables.Add(
+                Observable.EveryValueChanged(phaseExecutor, p => p.CurrentTime)
                 .Subscribe(time =>
                 {
                     clockViewMono.SetTime((float)time, (float)phaseExecutor.LastPhaseUpdateTime, (float)phaseExecutor.FinishedTime);
-                });
-
+                })
+            );
         }
 
         // このクラスを生成するためのエントリーポイント
         void IInitializable.Initialize()
         {
 
+        }
+
+        void IDisposable.Dispose()
+        {
+            foreach (var disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
         }
     }
 }
