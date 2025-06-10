@@ -47,13 +47,6 @@ namespace Shabon.Bubble
                         .Where(b => b.Transform.position.z > targetBubblePosition.z)   // ターゲットより奥にある
                         .OrderBy(b => b.Transform.position.z);  // 近い順
 
-            foreach (var b in nearbyBubbles)
-            {
-                Debug.Log($"{b.Transform.position.z}");
-            }
-
-            Debug.Log($"{nearbyBubbles.Count()}");
-
             // 一体でもいたら
             if (nearbyBubbles.Any())
             {

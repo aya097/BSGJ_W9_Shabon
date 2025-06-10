@@ -56,7 +56,6 @@ namespace Shabon.Ui
             Observable.EveryValueChanged(phaseExecutor, p => p.CurrentTime)
                 .Subscribe(time =>
                 {
-                    Debug.Log($"{time}");
                     clockViewMono.SetTime((float)time, (float)phaseExecutor.LastPhaseUpdateTime, (float)phaseExecutor.FinishedTime);
                 });
 

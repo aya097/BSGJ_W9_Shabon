@@ -1635,8 +1635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce80b6ca1cc54becb84451de997e336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClockImage: {fileID: 125920125}
-  clockhari: {fileID: 1674582240}
+  clockHand: {fileID: 1674582240}
 --- !u!1001 &482768428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5119,7 +5118,7 @@ GameObject:
   - component: {fileID: 1674582242}
   - component: {fileID: 1674582241}
   m_Layer: 0
-  m_Name: hari
+  m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5132,7 +5131,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674582239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.5428483, w: 0.8398308}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
