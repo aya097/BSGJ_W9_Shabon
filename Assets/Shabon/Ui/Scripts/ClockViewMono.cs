@@ -8,8 +8,7 @@ namespace Shabon.Ui
 {
     public class ClockViewMono : MonoBehaviour
     {
-        [SerializeField] Image ClockImage = null!;
-        [SerializeField] RectTransform clockhari = null!;
+        [SerializeField] RectTransform clockHand = null!;
 
 
         public void SetTime(float currentTime, float minTime, float maxTime)
@@ -26,7 +25,7 @@ namespace Shabon.Ui
 
             // 時計の背景画像のfillAmountを更新
 
-            clockhari.rotation = Quaternion.Euler(0, 0, 360f * timeRatio);
+            clockHand.rotation = Quaternion.Euler(0, 0, -360f * timeRatio);
 
 
 

@@ -30,12 +30,12 @@ namespace Shabon.Game
 
         public bool Proceed()
         {
-            // フェーズの最大をこえるとき
+            // フェーズの最大をこえないとき
             if (_currentPhaseNum + 1 < _gameRuleParam.GetGamePhaseDataList().Count())
             {
+                _currentPhaseNum++;
                 return false;
             }
-            _currentPhaseNum++;
             return true;
         }
     }
