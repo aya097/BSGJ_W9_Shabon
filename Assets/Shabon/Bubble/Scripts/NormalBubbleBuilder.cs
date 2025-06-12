@@ -96,14 +96,25 @@ namespace Shabon.Bubble
 
                 // y除算するため
                 if (Mathf.Abs(breathDirection.y) < 0.01) breathDirection.y = 0.01f * Mathf.Sign(breathDirection.y);
+
                 // x軸上でどれだけ離れているか
                 float y = bubblePosition.y - breathPosition.y;
                 float x = breathPosition.x + breathDirection.x / breathDirection.y * y;
+
+                // Bubbleの横移動
+                Vector3 lateralDirection = new Vector3(bubblePosition.x - x, 0f, 0f).normalized * arg.Strength;
+
+                // BubbleとPlayerの延長線上に移動する方向
+                Vector3 forwardDirection = new Vector3(arg.Direction.x, 0f, arg.Direction.z).normalized * arg.Strength;
+
+                // 延長線上の移動
+                Vector3 combinedDirection = forwardDirection;
 
                 // Bubbleを移動
                 Vector3 direction = new Vector3(bubblePosition.x - x, 0f, 0f);
                 direction = direction.normalized * arg.Strength;
                 bubbleMover.MoveByBreath(direction);
+                bubbleMover.MoveByBreath(combinedDirection);
             };
         }
 
