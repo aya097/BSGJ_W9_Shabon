@@ -10,31 +10,45 @@ namespace Shabon.Sound
     [CreateAssetMenu(fileName = "SoundParam", menuName = "Scriptable Objects/SoundParam")]
     public class SoundParam : ScriptableObject
     {
-        [SerializeField] List<SoundInformation> soundInfo = new();
+        [SerializeField] List<BgmInformation> bgmInfo = new();
+        [SerializeField] List<SeInformation> seInfo = new();
 
-        public IEnumerable<SoundInformation> SoundInfo => soundInfo;
+        public IEnumerable<BgmInformation> BgmInfo => bgmInfo;
+        public IEnumerable<SeInformation> SeInfo => seInfo;
     }
 
     [Serializable]
-    public class SoundInformation
+
+    public class BgmInformation
     {
         [SerializeField] private AudioClip clip;
-        [SerializeField] private SoundTypeEnum soundType;
+        [SerializeField] private BgmTypeEnum bgmType;
 
         public AudioClip Clip => clip;
-        public SoundTypeEnum SoundType => soundType;
+        public BgmTypeEnum BgmType => bgmType;
+    }
+    [Serializable]
+    public class SeInformation
+    {
+        [SerializeField] private AudioClip clip;
+        [SerializeField] private SeTypeEnum seType;
+
+        public AudioClip Clip => clip;
+        public SeTypeEnum SeType => seType;
     }
 
     /// <summary>
     /// 音源の種類
     /// </summary>
-    public enum SoundTypeEnum
+    public enum BgmTypeEnum
     {
         TitleBGM,
         InGameBGM,
-        SimpleSE,
-        BubbleSE,
-
+    }
+    public enum SeTypeEnum
+    {
+        bubbleSE,
+        clapSE,
     }
 
 }
