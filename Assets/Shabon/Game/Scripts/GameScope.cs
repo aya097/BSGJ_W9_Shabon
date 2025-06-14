@@ -82,6 +82,15 @@ namespace Shabon.Game
             builder.Register<ComboSpawner>(Lifetime.Scoped);
 
             builder.RegisterComponentInHierarchy<ClockViewMono>();
+
+            // RuntimeObjectServerを取得
+            var runtimeObjectServer = Object.FindFirstObjectByType<RuntimeObjectServer>();
+
+            // PlayerCameraを登録
+            builder.RegisterInstance(runtimeObjectServer.PlayerCamera).As<Transform>();
+
+            // NormalBubbleBuilderを登録
+            builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
         }
     }
 }
