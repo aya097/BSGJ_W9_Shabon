@@ -1884,6 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5933bace443514c94b4c5376bdef1385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 1
 --- !u!65 &498817821
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6227,6 +6228,7 @@ MonoBehaviour:
     Area: {fileID: 8742683603224083007}
   comboParent: {fileID: 1286815462}
   comboArea: {fileID: 1213574522}
+  playerCamera: {fileID: 811416298}
 --- !u!65 &8742683603224083007
 BoxCollider:
   m_ObjectHideFlags: 0

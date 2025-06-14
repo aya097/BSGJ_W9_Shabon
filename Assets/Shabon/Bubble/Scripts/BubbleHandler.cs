@@ -7,6 +7,7 @@ using VContainer;
 using System.Linq;
 using System.Threading.Tasks;
 using Shabon.Clap; // 非同期処理用
+using Shabon.Score;
 
 namespace Shabon.Bubble
 {
@@ -15,16 +16,19 @@ namespace Shabon.Bubble
         private readonly BreathGetterViewMono _breathGetter;
         private readonly ClapGetterViewMono _clapGetter;
         private readonly IBubbleChain _bubbleChain;
+        private readonly IScoreValue _scoreValue;
 
 
         [Inject]
         public BubbleHandler(BreathGetterViewMono breathGetterViewMono,
             ClapGetterViewMono clapGetterViewMono,
-            IBubbleChain bubbleChain)
+            IBubbleChain bubbleChain,
+            IScoreValue scoreValue)
         {
             _breathGetter = breathGetterViewMono;
             _clapGetter = clapGetterViewMono;
             _bubbleChain = bubbleChain;
+            _scoreValue = scoreValue;
         }
 
         public void ApplyBreath(Vector3 direction, Vector3 position, float strength)
@@ -39,13 +43,29 @@ namespace Shabon.Bubble
         public void ApplyClap(float strength)
         {
             if (strength == 0) return;
-            // 連鎖中はなにもしない
+
+            // 連鎖中は何もしない
             if (_bubbleChain.IsChaining) return;
 
-            var bubbleMono = _clapGetter.GetBubbleMonos().OrderBy(b => b.Transform.position.z).FirstOrDefault();    // 一番近いバブル
-            if (bubbleMono != null)
+            // 範囲内のすべてのバブルを取得
+            var bubblesInRange = _clapGetter.GetBubbleMonos();
+
+            // 倒したバブルの数をカウント
+            int defeatedCount = 0;
+
+            foreach (var bubbleMono in bubblesInRange)
             {
                 bubbleMono.InvokeOnClap(new OnClapArg(strength));
+                defeatedCount++;
+            }
+
+            // 同時に倒した数に応じてスコアを増加
+            if (defeatedCount > 0)
+            {
+                _scoreValue.Increase(defeatedCount * 10);
+
+                // 同時に倒した数をログに出力
+                Debug.Log($"同時に倒したバブルの数: {defeatedCount}");
             }
         }
     }

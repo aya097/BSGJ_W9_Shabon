@@ -23,6 +23,9 @@ namespace Shabon.Param
         [Header("コンボの生成エリア")]
         [SerializeField] private RectTransform comboArea = null!;
 
+        [Header("プレイヤーを参照")]
+        [SerializeField] private Transform playerCamera = null!;
+
 
         // interface
         public BoxArea GetArea(BubbleSpawnedAreaType areaType)
@@ -47,6 +50,27 @@ namespace Shabon.Param
             get { return comboArea; }
         }
 
+        private void Start()
+        {
+            if (playerCamera == null)
+            {
+                var mainCamera = Camera.main;
+                if (mainCamera != null)
+                {
+                    playerCamera = mainCamera.transform;
+                }
+                else
+                {
+                    Debug.LogWarning("Main Camera が見つかりません。PlayerCamera を手動で設定してください。");
+                }
+            }
+        }
+
+        // プレイヤーのカメラを取得するプロパティ
+        public Transform PlayerCamera
+        {
+            get { return playerCamera; }
+        }
     }
 
     // SpawnedAreaに関して
