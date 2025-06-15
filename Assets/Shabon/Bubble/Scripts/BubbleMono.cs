@@ -18,6 +18,7 @@ namespace Shabon.Bubble
             get { return _isAttacking; }
             set { _isAttacking = value; }
         }
+        public bool IsStop => _isStop;
         public int BubbleScore => _bubbleScore;
         public Transform? Transform => transform;
         public BubbleDeath Death => _bubbleDeath;

@@ -87,8 +87,8 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnBreath += (arg) =>
             {
-                // 到達してないときだけ
-                if (!bubbleMono.IsReached)
+                // 到達してないときかつ動かないとき
+                if (!(bubbleMono.IsReached || bubbleMono.IsStop))
                 {
                     // 息が吹かれた時のアニメーションを再生
                     bubbleViewMono.PlayBreath();
