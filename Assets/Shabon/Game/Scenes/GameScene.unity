@@ -6228,7 +6228,7 @@ MonoBehaviour:
     Area: {fileID: 8742683603224083007}
   comboParent: {fileID: 1286815462}
   comboArea: {fileID: 1213574522}
-  playerCamera: {fileID: 811416298}
+  playerTransform: {fileID: 811416298}
 --- !u!65 &8742683603224083007
 BoxCollider:
   m_ObjectHideFlags: 0

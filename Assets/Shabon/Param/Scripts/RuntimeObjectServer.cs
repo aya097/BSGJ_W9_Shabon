@@ -11,7 +11,7 @@ namespace Shabon.Param
     /// <summary>
     /// Unityのシーン状のオブジェクトをparamとして提供するクラス
     /// </summary>
-    public class RuntimeObjectServer : MonoBehaviour, IBubbleSpawnedArea, IComboParent
+    public class RuntimeObjectServer : MonoBehaviour, IBubbleSpawnedArea, IComboParent, IPlayerTransform
     {
         [Header("バブルのスポーンする場所を指定")]
         [Header("Typeが重複する場合はランダム")]
@@ -24,7 +24,7 @@ namespace Shabon.Param
         [SerializeField] private RectTransform comboArea = null!;
 
         [Header("プレイヤーを参照")]
-        [SerializeField] private Transform playerCamera = null!;
+        [SerializeField] private Transform playerTransform = null!;
 
 
         // interface
@@ -50,26 +50,10 @@ namespace Shabon.Param
             get { return comboArea; }
         }
 
-        private void Start()
-        {
-            if (playerCamera == null)
-            {
-                var mainCamera = Camera.main;
-                if (mainCamera != null)
-                {
-                    playerCamera = mainCamera.transform;
-                }
-                else
-                {
-                    Debug.LogWarning("Main Camera が見つかりません。PlayerCamera を手動で設定してください。");
-                }
-            }
-        }
-
         // プレイヤーのカメラを取得するプロパティ
-        public Transform PlayerCamera
+        public Transform PlayerTransform
         {
-            get { return playerCamera; }
+            get { return playerTransform; }
         }
     }
 
@@ -110,5 +94,10 @@ namespace Shabon.Param
     {
         Transform ComboParent { get; }
         RectTransform ComboArea { get; }
+    }
+
+    public interface IPlayerTransform
+    {
+        Transform PlayerTransform { get; }
     }
 }

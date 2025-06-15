@@ -2,6 +2,7 @@
 
 using System;
 using R3;
+using Shabon.Param;
 using Shabon.Score;
 using UnityEngine;
 using VContainer;
@@ -13,7 +14,7 @@ namespace Shabon.Bubble
     /// </summary>
     public class NormalBubbleBuilder : IBubbleBuilder
     {
-        private readonly Transform _playerCamera;
+        private readonly IPlayerTransform _playerTransform;
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
         private readonly IAreaChecker _waitAreaChecker;
@@ -23,7 +24,7 @@ namespace Shabon.Bubble
 
         [Inject]
         public NormalBubbleBuilder(
-            Transform playerCamera,
+            IPlayerTransform playerTransform,
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
@@ -31,7 +32,7 @@ namespace Shabon.Bubble
             IBubbleCombo bubbleCombo,
             IScoreValue scoreValue)
         {
-            _playerCamera = playerCamera;
+            _playerTransform = playerTransform;
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
@@ -78,8 +79,8 @@ namespace Shabon.Bubble
             float forwardVelocity = bubbleData.ForwardVelocity;
             return bubbleData.BubbleType switch
             {
-                BubbleType.Normal => new NormalBubbleMover(transform, _playerCamera.transform, forwardVelocity),
-                _ => new NormalBubbleMover(transform, _playerCamera.transform, forwardVelocity) // もし該当がなければNormalを返しておく
+                BubbleType.Normal => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
+                _ => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform) // もし該当がなければNormalを返しておく
             };
         }
         /// <summary>
@@ -163,13 +164,6 @@ namespace Shabon.Bubble
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform?.gameObject);
-        }
-
-        private void ExampleUsage()
-        {
-            // PlayerCameraの位置を使用する例
-            Vector3 playerPosition = _playerCamera.transform.position;
-            Debug.Log($"Playerの位置: {playerPosition}");
         }
     }
 }
