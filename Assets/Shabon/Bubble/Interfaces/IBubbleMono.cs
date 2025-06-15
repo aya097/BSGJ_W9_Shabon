@@ -6,6 +6,8 @@ namespace Shabon.Bubble
 {
     public interface IBubbleMono
     {
+        bool IsReached { get; }
+        bool IsAttacking { get; set; }
         int BubbleScore { get; }
         Transform Transform { get; }
         public BubbleDeath Death { get; }

@@ -18,7 +18,6 @@ namespace Shabon.Bubble
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
         private readonly IAreaChecker _waitAreaChecker;
-        private readonly IBubbleChain _bubbleChain;
         private readonly IBubbleCombo _bubbleCombo;
         private readonly IScoreValue _scoreValue;
 
@@ -28,7 +27,6 @@ namespace Shabon.Bubble
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
-            IBubbleChain bubbleChain,
             IBubbleCombo bubbleCombo,
             IScoreValue scoreValue)
         {
@@ -36,7 +34,6 @@ namespace Shabon.Bubble
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
-            _bubbleChain = bubbleChain;
             _bubbleCombo = bubbleCombo;
             _scoreValue = scoreValue;
         }
@@ -60,13 +57,13 @@ namespace Shabon.Bubble
                 () => { DestroyBubble(bubbleMono); });
 
             // Breathの処理
-            SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
+            SetOnBreath(bubbleMono, bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
 
             // Clapの処理
-            SetOnClap(bubbleSetter, bubbleDeath);
+            SetOnClap(bubbleMono, bubbleSetter, bubbleDeath, bubbleViewMono);
 
             // Reachの処理
-            SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath);
+            SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData);
         }
@@ -86,35 +83,47 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform)
+        private void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
-                // 息が吹かれた時のアニメーションを再生
-                // bubbleViewMono.PlayBreathedAnimation();
+                // 到達してないときだけ
+                if (!bubbleMono.IsReached)
+                {
+                    // 息が吹かれた時のアニメーションを再生
+                    bubbleViewMono.PlayBreath();
 
-                // Playerと逆の方向
-                Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
-                moveDirection.y = 0;
-                bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
+                    // Playerと逆の方向
+                    Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
+                    moveDirection.y = 0;
+                    bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
+                }
             };
         }
 
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath)
+        private void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnClap += _ =>
             {
-                bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                // 攻撃中は倒せない
+                if (!bubbleMono.IsAttacking)
+                {
+                    bubbleMono.Stop();
+                    bubbleView.PlayClap(() =>
+                    {
+                        bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                    });
+                }
             };
         }
 
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath)
+        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnReach += () =>
             {
@@ -124,7 +133,8 @@ namespace Shabon.Bubble
                     {
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
-                            bubbleDeath.InvokeDeath(BubbleDeathType.Attack);
+                            bubbleMono.IsAttacking = true;
+                            bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
                     });
             };
