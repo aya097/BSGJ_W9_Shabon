@@ -43,6 +43,10 @@ namespace Shabon.Bubble
         //攻撃するときのアニメーションを再生するメソッド
         public void PlayAttack(Action? callback = null)
         {
+            // Breathをリセット
+            _breathDisposable?.Dispose();
+            Play(BubbleAnimationEnum.Idle);
+
             Play(BubbleAnimationEnum.Attack);
             Observable.Timer(TimeSpan.FromSeconds(0.7f))
                 .Subscribe(_ =>
@@ -54,6 +58,10 @@ namespace Shabon.Bubble
         // Clapされたときのアニメーション
         public void PlayClap(Action? callback = null)
         {
+            // Breathをリセット
+            _breathDisposable?.Dispose();
+            Play(BubbleAnimationEnum.Idle);
+
             Play(BubbleAnimationEnum.Clap);
             Observable.Timer(TimeSpan.FromSeconds(0.9f))
                 .Subscribe(_ =>
