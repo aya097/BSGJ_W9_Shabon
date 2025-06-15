@@ -13,13 +13,6 @@ namespace Shabon.Clap
         // BubbleMonoを取得する
         public IEnumerable<IBubbleMono> GetBubbleMonos()
         {
-            var boxCol = GetComponent<BoxCollider>();
-            if (boxCol == null)
-            {
-                Debug.LogWarning($"BoxCollider が {gameObject.name} にアタッチされていません。");
-                return Enumerable.Empty<IBubbleMono>();
-            }
-
             // 円形の範囲でColliderを取得
             Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 

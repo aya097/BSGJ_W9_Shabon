@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Shabon.Bubble
@@ -10,21 +11,22 @@ namespace Shabon.Bubble
     public class NormalBubbleMover : IBubbleMover
     {
         private readonly Transform _transform;  // 制御するBubbleのtransform
-        private readonly Transform _playerTransform; // PlayerのTransform
+        private readonly Transform _targetTransform; // PlayerのTransform
         private readonly float _forwardVelocity;
 
-        public NormalBubbleMover(Transform transform, Transform playerTransform, float forwardVelocity)
+        public NormalBubbleMover(Transform transform, float forwardVelocity, Transform targetTransform)
         {
             _transform = transform;
-            _playerTransform = playerTransform;
             _forwardVelocity = forwardVelocity;
+            _targetTransform = targetTransform;
         }
 
         public void MoveForward()
         {
-            // Playerに向かって移動
-            Vector3 directionToPlayer = (_playerTransform.position - _transform.position).normalized;
-            _transform.Translate(directionToPlayer * _forwardVelocity * Time.deltaTime, Space.World);
+            // target方向にy座標を変更せずに移動
+            Vector3 directionToTarget = _targetTransform.position - _transform.position;
+            directionToTarget.y = 0;
+            _transform.Translate(directionToTarget.normalized * _forwardVelocity * Time.deltaTime, Space.World);
         }
 
         public void MoveByBreath(Vector3 direction)

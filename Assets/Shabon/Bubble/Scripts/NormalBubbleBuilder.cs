@@ -2,6 +2,7 @@
 
 using System;
 using R3;
+using Shabon.Param;
 using Shabon.Score;
 using UnityEngine;
 using VContainer;
@@ -13,7 +14,7 @@ namespace Shabon.Bubble
     /// </summary>
     public class NormalBubbleBuilder : IBubbleBuilder
     {
-        private readonly Transform _playerCamera;
+        private readonly IPlayerTransform _playerTransform;
         private readonly BubbleCluster _bubbleCluster;
         private readonly IDirtValue _dirtValue;
         private readonly IAreaChecker _waitAreaChecker;
@@ -23,7 +24,7 @@ namespace Shabon.Bubble
 
         [Inject]
         public NormalBubbleBuilder(
-            Transform playerCamera,
+            IPlayerTransform playerTransform,
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
@@ -31,7 +32,7 @@ namespace Shabon.Bubble
             IBubbleCombo bubbleCombo,
             IScoreValue scoreValue)
         {
-            _playerCamera = playerCamera;
+            _playerTransform = playerTransform;
             _bubbleCluster = bubbleCluster;
             _dirtValue = dirtValue;
             _waitAreaChecker = waitAreaChecker;
@@ -62,7 +63,7 @@ namespace Shabon.Bubble
             SetOnBreath(bubbleSetter, bubbleMover, bubbleMono.Transform);
 
             // Clapの処理
-            SetOnClap(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, _bubbleChain);
+            SetOnClap(bubbleSetter, bubbleDeath);
 
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath);
@@ -78,8 +79,8 @@ namespace Shabon.Bubble
             float forwardVelocity = bubbleData.ForwardVelocity;
             return bubbleData.BubbleType switch
             {
-                BubbleType.Normal => new NormalBubbleMover(transform, _playerCamera.transform, forwardVelocity),
-                _ => new NormalBubbleMover(transform, _playerCamera.transform, forwardVelocity) // もし該当がなければNormalを返しておく
+                BubbleType.Normal => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
+                _ => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform) // もし該当がなければNormalを返しておく
             };
         }
         /// <summary>
@@ -92,43 +93,20 @@ namespace Shabon.Bubble
                 // 息が吹かれた時のアニメーションを再生
                 // bubbleViewMono.PlayBreathedAnimation();
 
-                // y座標抜きの平面として扱って計算
-                Vector2 bubblePosition = new Vector2(bubbleTransform.position.x, bubbleTransform.position.z); // Bubbleの座標
-                Vector2 breathPosition = new Vector2(arg.Position.x, arg.Position.z);   // Breathの原点
-                Vector2 breathDirection = new Vector2(arg.Direction.x, arg.Direction.z);   // Breathの向き 
-
-                // y除算するため
-                if (Mathf.Abs(breathDirection.y) < 0.01) breathDirection.y = 0.01f * Mathf.Sign(breathDirection.y);
-
-                // x軸上でどれだけ離れているか
-                float y = bubblePosition.y - breathPosition.y;
-                float x = breathPosition.x + breathDirection.x / breathDirection.y * y;
-
-                // Bubbleの横移動
-                Vector3 lateralDirection = new Vector3(bubblePosition.x - x, 0f, 0f).normalized * arg.Strength;
-
-                // BubbleとPlayerの延長線上に移動する方向
-                Vector3 forwardDirection = new Vector3(arg.Direction.x, 0f, arg.Direction.z).normalized * arg.Strength;
-
-                // 延長線上の移動
-                Vector3 combinedDirection = forwardDirection;
-
-                // Bubbleを移動
-                Vector3 direction = new Vector3(bubblePosition.x - x, 0f, 0f);
-                direction = direction.normalized * arg.Strength;
-                bubbleMover.MoveByBreath(direction);
-                bubbleMover.MoveByBreath(combinedDirection);
+                // Playerと逆の方向
+                Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
+                moveDirection.y = 0;
+                bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
             };
         }
 
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, IBubbleChain bubbleChain)
+        private void SetOnClap(IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath)
         {
             bubbleSetter.OnClap += _ =>
             {
-                bubbleChain.ExecuteBubbleChain(bubbleMono, bubbleData.ChainRadius);
                 bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
             };
         }
@@ -163,13 +141,6 @@ namespace Shabon.Bubble
 
             // Destroy
             GameObject.Destroy(bubbleMono.Transform?.gameObject);
-        }
-
-        private void ExampleUsage()
-        {
-            // PlayerCameraの位置を使用する例
-            Vector3 playerPosition = _playerCamera.transform.position;
-            Debug.Log($"Playerの位置: {playerPosition}");
         }
     }
 }

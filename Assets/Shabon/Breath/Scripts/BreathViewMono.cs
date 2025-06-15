@@ -17,7 +17,8 @@ namespace Shabon.Breath
         [Inject]
         public void Initialize(BreathModel breath)
         {
-            originTransform.position = breath.Position;
+            // 座標を初期化
+            breath.SetPosition(originTransform.position);
 
             // 向きが変わったら更新
             Observable.EveryValueChanged(breath, b => b.Direction)
