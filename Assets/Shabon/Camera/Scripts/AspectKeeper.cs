@@ -8,7 +8,7 @@ namespace Shabon.SelfCamera
     /// </summary>
     public class AspectKeeper : MonoBehaviour
     {
-        public Camera _camera;
+        [SerializeField] private Camera _camera = null!;
         public float baseWidth = 16.0f;
         public float baseHeight = 9.0f;
 
