@@ -1,10 +1,13 @@
 #nullable enable
+using System;
+using R3;
 using UnityEngine;
 
 namespace Shabon.Bubble
 {
     public enum BubbleAnimationEnum
     {
+        Idle,
         Clap,
         Breath,
         Attack,
@@ -16,10 +19,35 @@ namespace Shabon.Bubble
     {
         [SerializeField] private Animator _bubbleAnimator = null!;
 
-        // 割られた時のアニメーションを再生するメソッド
-        public void Play(BubbleAnimationEnum animationEnum)
+        private BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
+        private IDisposable? _breathDisposable = null!;
+
+
+
+        // 息吹かれたときのアニメーションを再生するメソッド
+        public void PlayBreath()
         {
-            _bubbleAnimator.SetTrigger(animationEnum.ToString());
+            // Breathは毎フレーム呼ばれるから修正
+            _breathDisposable?.Dispose();
+
+            _breathDisposable = Observable.Timer(TimeSpan.FromSeconds(0.1f))
+                .Subscribe(_ =>
+                {
+                    Play(BubbleAnimationEnum.Idle);
+                });
+
+            Play(BubbleAnimationEnum.Breath);
+        }
+
+
+
+        private void Play(BubbleAnimationEnum animation)
+        {
+            if (_currentAnimation != animation)
+            {
+                _currentAnimation = animation;
+                _bubbleAnimator.SetTrigger(animation.ToString());
+            }
         }
     }
 }
