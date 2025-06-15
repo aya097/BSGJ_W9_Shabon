@@ -50,7 +50,7 @@ namespace Shabon.Param
             get { return comboArea; }
         }
 
-        // プレイヤーのカメラを取得するプロパティ
+        // プレイヤーを取得するプロパティ
         public Transform PlayerTransform
         {
             get { return playerTransform; }

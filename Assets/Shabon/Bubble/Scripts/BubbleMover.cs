@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Shabon.Bubble
@@ -22,9 +23,10 @@ namespace Shabon.Bubble
 
         public void MoveForward()
         {
-            // Playerに向かって移動
-            Vector3 directionToPlayer = (_targetTransform.position - _transform.position).normalized;
-            _transform.Translate(directionToPlayer * _forwardVelocity * Time.deltaTime, Space.World);
+            // target方向にy座標を変更せずに移動
+            Vector3 directionToTarget = _targetTransform.position - _transform.position;
+            directionToTarget.y = 0;
+            _transform.Translate(directionToTarget.normalized * _forwardVelocity * Time.deltaTime, Space.World);
         }
 
         public void MoveByBreath(Vector3 direction)
