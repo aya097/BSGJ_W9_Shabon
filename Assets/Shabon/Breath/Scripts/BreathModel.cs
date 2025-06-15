@@ -22,7 +22,6 @@ namespace Shabon.Breath
             _bubbleHandler = bubbleHandler;
 
             _currentDirection = new Vector3(0, 0, 1f);
-            _originPosition = new Vector3(0f, 0.5f, -2f);
         }
 
         /// <summary>
@@ -56,6 +55,15 @@ namespace Shabon.Breath
             float rad = degree / 180f * Mathf.PI;
             // z軸向きに
             _currentDirection = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
+        }
+
+        /// <summary>
+        /// 息の発生源を設定
+        /// </summary>
+        /// <param name="pos"></param>
+        public void SetPosition(Vector3 pos)
+        {
+            _originPosition = pos;
         }
     }
 }
