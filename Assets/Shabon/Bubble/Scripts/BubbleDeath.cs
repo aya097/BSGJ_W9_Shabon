@@ -108,8 +108,8 @@ namespace Shabon.Bubble
             _deathParams.Score.Increase(100);   // todo 仮
 
             // コンボリセット
-            _deathParams.Combo.Reset();
-            _deathParams.Combo.Increase();
+            // _deathParams.Combo.Reset();
+            // _deathParams.Combo.Increase();
 
             // destroy
             _destroyBubble.Invoke();

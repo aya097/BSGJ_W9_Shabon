@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using R3;
 using Shabon.Bubble;
+using Shabon.Clap;
 using Shabon.Game;
 using Shabon.Param;
 using Shabon.Score;
@@ -26,10 +27,12 @@ namespace Shabon.Ui
             IDirtValue dirtValue,
             IBubbleCombo bubbleCombo,
             PhaseExecutor phaseExecutor,
+            ClapModel clapModel,
             // View
             DirtValueViewMono dirtValueViewMono,
             ComboSpawner comboSpawner,   // ViewではないがViewを生成する
-            ClockViewMono clockViewMono
+            ClockViewMono clockViewMono,
+            ClapUiViewMono clapUiViewMono
         )
         {
             // Model -> View
@@ -60,6 +63,15 @@ namespace Shabon.Ui
                 .Subscribe(time =>
                 {
                     clockViewMono.SetTime((float)time, (float)phaseExecutor.LastPhaseUpdateTime, (float)phaseExecutor.FinishedTime);
+                })
+            );
+
+            // Clapのクールタイム
+            _disposables.Add(
+                Observable.EveryValueChanged(clapModel, c => c.CurrentTime)
+                .Subscribe(time =>
+                {
+                    clapUiViewMono.SetCoolTime(0, clapModel.CoolTime, clapModel.CurrentTime);
                 })
             );
         }
