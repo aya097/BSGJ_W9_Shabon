@@ -51,6 +51,17 @@ namespace Shabon.Bubble
                 }).AddTo(this);
         }
 
+        // Clapされたときのアニメーション
+        public void PlayClap(Action? callback = null)
+        {
+            Play(BubbleAnimationEnum.Clap);
+            Observable.Timer(TimeSpan.FromSeconds(0.9f))
+                .Subscribe(_ =>
+                {
+                    callback?.Invoke();
+                }).AddTo(this);
+        }
+
 
 
         private void Play(BubbleAnimationEnum animation)

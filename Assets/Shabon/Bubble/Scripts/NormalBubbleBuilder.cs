@@ -60,7 +60,7 @@ namespace Shabon.Bubble
             SetOnBreath(bubbleMono, bubbleSetter, bubbleMover, bubbleMono.Transform, bubbleViewMono);
 
             // Clapの処理
-            SetOnClap(bubbleMono, bubbleSetter, bubbleDeath);
+            SetOnClap(bubbleMono, bubbleSetter, bubbleDeath, bubbleViewMono);
 
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
@@ -104,14 +104,18 @@ namespace Shabon.Bubble
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath)
+        private void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnClap += _ =>
             {
                 // 攻撃中は倒せない
-                if (bubbleMono.IsAttacking)
+                if (!bubbleMono.IsAttacking)
                 {
-                    bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                    bubbleMono.Stop();
+                    bubbleView.PlayClap(() =>
+                    {
+                        bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                    });
                 }
             };
         }
