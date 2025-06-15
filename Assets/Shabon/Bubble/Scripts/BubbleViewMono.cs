@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using R3;
+using R3.Triggers;
 using UnityEngine;
 
 namespace Shabon.Bubble
@@ -37,6 +38,17 @@ namespace Shabon.Bubble
                 });
 
             Play(BubbleAnimationEnum.Breath);
+        }
+
+        //攻撃するときのアニメーションを再生するメソッド
+        public void PlayAttack(Action? callback = null)
+        {
+            Play(BubbleAnimationEnum.Attack);
+            Observable.Timer(TimeSpan.FromSeconds(0.7f))
+                .Subscribe(_ =>
+                {
+                    callback?.Invoke();
+                }).AddTo(this);
         }
 
 
