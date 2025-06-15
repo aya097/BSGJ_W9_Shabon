@@ -1,22 +1,25 @@
 #nullable enable
 using UnityEngine;
 
-/// <summary>
-/// Bubbleの見た目を管理するクラス
-/// </summary>
-public class BubbleViewMono : MonoBehaviour
+namespace Shabon.Bubble
 {
-    [SerializeField] private Animator _bubbleAnimator = null!;
-
-    // 割られた時のアニメーションを再生するメソッド
-    public void PlayClappedAnimation()
+    public enum BubbleAnimationEnum
     {
-        _bubbleAnimator.SetTrigger("ClapTrigger");
+        Clap,
+        Breath,
+        Attack,
     }
-
-    // 息が吹かれた時のアニメーションを再生するメソッド
-    public void PlayBreathedAnimation()
+    /// <summary>
+    /// Bubbleの見た目を管理するクラス
+    /// </summary>
+    public class BubbleViewMono : MonoBehaviour
     {
-        Debug.Log("息が吹かれたときのアニメーションを再生");
+        [SerializeField] private Animator _bubbleAnimator = null!;
+
+        // 割られた時のアニメーションを再生するメソッド
+        public void Play(BubbleAnimationEnum animationEnum)
+        {
+            _bubbleAnimator.SetTrigger(animationEnum.ToString());
+        }
     }
 }
