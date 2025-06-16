@@ -11,6 +11,11 @@ namespace Shabon.Ui
     {
         [SerializeField] private Image _coolTime = null!;
 
+        void Awake()
+        {
+            _coolTime.fillAmount = 1f;
+        }
+
         public void SetCoolTime(float min, float max, float num)
         {
             float range = max - min;
