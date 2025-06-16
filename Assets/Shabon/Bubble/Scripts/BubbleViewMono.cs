@@ -45,7 +45,6 @@ namespace Shabon.Bubble
         {
             // Breathをリセット
             _breathDisposable?.Dispose();
-            Play(BubbleAnimationEnum.Idle);
 
             Play(BubbleAnimationEnum.Attack);
             Observable.Timer(TimeSpan.FromSeconds(0.7f))
@@ -60,7 +59,6 @@ namespace Shabon.Bubble
         {
             // Breathをリセット
             _breathDisposable?.Dispose();
-            Play(BubbleAnimationEnum.Idle);
 
             Play(BubbleAnimationEnum.Clap);
             Observable.Timer(TimeSpan.FromSeconds(0.9f))
