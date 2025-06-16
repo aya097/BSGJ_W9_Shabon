@@ -64,6 +64,7 @@ namespace Shabon.Game
             // Clap
             builder.Register<ClapModel>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<ClapGetterViewMono>(); // ClapGetterViewMonoを登録
+            builder.RegisterComponentInHierarchy<ClapViewMono>();
 
             // Debug
             builder.RegisterComponentInHierarchy<DebugDirtValueViewMono>();
@@ -81,7 +82,6 @@ namespace Shabon.Game
             builder.RegisterEntryPoint<InGameUiPresenter>();
             builder.Register<ComboSpawner>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<ClapUiViewMono>();
-
             builder.RegisterComponentInHierarchy<ClockViewMono>();
 
             // NormalBubbleBuilderを登録

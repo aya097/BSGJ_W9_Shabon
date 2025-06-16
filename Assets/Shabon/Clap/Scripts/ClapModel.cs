@@ -3,13 +3,15 @@ using UnityEngine;
 using Shabon.Bubble;
 using VContainer;
 using R3;
+using LitMotion;
 
 namespace Shabon.Clap
 {
     public class ClapModel
     {
-        public float CoolTime => ClapCoolTime;
-        public float CurrentTime => _currentTime;
+        public float CoolTime => ClapCoolTime;  // クールタイムの長さ
+        public float CurrentTime => _currentTime;   // 現在のクールタイム時間
+        public bool IsClap => !_canClap; // クラップされたらtrueに変わる
         private readonly IBubbleHandler _bubbleHandler;
         private bool _canClap = true; // Clap可能かどうかを管理するフラグ
         private const float ClapCoolTime = 5f; // クールダウン時間
@@ -30,15 +32,14 @@ namespace Shabon.Clap
                 _canClap = false; // Clapを使用不可に設定
                 _currentTime = 0f;
 
-                // Observable.Timerを使用してクールタイムを管理
-
-                Observable.Timer(TimeSpan.FromSeconds(ClapCoolTime))
-                    .Subscribe(_ => ResetClap())
-                    .AddTo(_disposable);
-                Observable.EveryUpdate()
-                    .TakeUntil(_ => _currentTime >= 5f)
-                    .Subscribe(_ => _currentTime += Time.deltaTime)
-                    .AddTo(_disposable);
+                // 0からCoolTimeまでCoolTime秒かけて遷移
+                LMotion.Create(0f, CoolTime, CoolTime)
+                    .WithEase(Ease.Linear)              // 線形に遷移
+                    .WithOnComplete(() => ResetClap())  // 遷移が完了したらリセット
+                    .Bind(value =>                      // 値の変更を反映
+                    {
+                        _currentTime = value;
+                    });
             }
 
         }

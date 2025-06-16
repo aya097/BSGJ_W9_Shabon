@@ -63,9 +63,6 @@ namespace Shabon.Bubble
             if (defeatedCount > 0)
             {
                 _scoreValue.Increase(defeatedCount * 10);
-
-                // 同時に倒した数をログに出力
-                Debug.Log($"同時に倒したバブルの数: {defeatedCount}");
             }
         }
     }
