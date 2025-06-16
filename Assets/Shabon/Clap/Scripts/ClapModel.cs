@@ -9,8 +9,9 @@ namespace Shabon.Clap
 {
     public class ClapModel
     {
-        public float CoolTime => ClapCoolTime;
-        public float CurrentTime => _currentTime;
+        public float CoolTime => ClapCoolTime;  // クールタイムの長さ
+        public float CurrentTime => _currentTime;   // 現在のクールタイム時間
+        public bool IsClap => !_canClap; // クラップされたらtrueに変わる
         private readonly IBubbleHandler _bubbleHandler;
         private bool _canClap = true; // Clap可能かどうかを管理するフラグ
         private const float ClapCoolTime = 5f; // クールダウン時間
