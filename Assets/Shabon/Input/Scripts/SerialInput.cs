@@ -72,28 +72,42 @@ namespace Shabon.Input
                         string[] values = message.Split(',');
                         if (values[0] == "Handle")
                         {
-                            _value0 = float.Parse(values[1]);
-                            _value1 = float.Parse(values[2]);
+                            if (float.TryParse(values[1], out float v0))
+                            {
+                                _value0 = v0;
+                            }
+                            if (float.TryParse(values[2], out float v1))
+                            {
+                                _value1 = v1;
+                                if (_value1 == 1f) Debug.Log("wil clap");
+                            }
                         }
                         else if (values[0] == "Angle")
                         {
-                            _value2 = float.Parse(values[1]);
+                            if (float.TryParse(values[1], out float v2))
+                            {
+                                _value2 = v2;
+                            }
                         }
                     }
                 }
             }
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _thread.Join();
             _serialPort[0]?.Dispose();
             _serialPort[1]?.Dispose();
+            Debug.Log("Disposed!!");
         }
 
         ~SerialInput()
         {
-            Dispose();
+            _thread.Join();
+            _serialPort[0]?.Dispose();
+            _serialPort[1]?.Dispose();
+            Debug.Log("Disposed!!");
         }
     }
 }
