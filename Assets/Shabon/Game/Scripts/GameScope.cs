@@ -60,6 +60,7 @@ namespace Shabon.Game
             // Input
             builder.Register<InputManager>(Lifetime.Scoped).As<IInputManager>();
             builder.RegisterEntryPoint<InputPresenter>(Lifetime.Scoped);
+            builder.Register<SerialInput>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
 
             // Clap
             builder.Register<ClapModel>(Lifetime.Scoped);

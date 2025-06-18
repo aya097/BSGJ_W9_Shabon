@@ -1,5 +1,7 @@
 #nullable enable
+using System;
 using UnityEngine;
+using VContainer;
 
 namespace Shabon.Input
 {
@@ -10,9 +12,10 @@ namespace Shabon.Input
     {
         private readonly SerialInput _serialInput;
 
-        public InputManager()
+        [Inject]
+        public InputManager(SerialInput serialInput)
         {
-            _serialInput = new SerialInput();
+            _serialInput = serialInput;
         }
         // Clapしたときに一度だけtrue
         public bool GetClap()

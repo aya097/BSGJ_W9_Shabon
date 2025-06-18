@@ -16,7 +16,8 @@ namespace Shabon.Input
 
         private const int PortNum = 2;
         private List<SerialPort?> _serialPort = new();
-        private Thread _thread;
+        private Thread _thread0, _thread1;
+        private bool _isRunning;
         private int _portItr = 0;
 
         private float _value0;
@@ -54,40 +55,50 @@ namespace Shabon.Input
                 }
             }
 
-
-            _thread = new Thread(ReadData);
-            _thread.Start();
+            _isRunning = true;
+            _thread0 = new Thread(ReadData0);
+            _thread1 = new Thread(ReadData1);
+            _thread0.Start();
+            _thread1.Start();
+        }
+        private void ReadData0()
+        {
+            ReadData(0);
         }
 
-        private void ReadData()
+        private void ReadData1()
         {
-            while (true)
+            ReadData(1);
+        }
+        private void ReadData(int num)
+        {
+            while (_isRunning)
             {
-                for (int i = 0; i < _serialPort.Count; i++)
+                if (num >= _serialPort.Count) return;
+
+                if (_serialPort[num] != null && _serialPort[num]!.IsOpen)
                 {
-                    if (_serialPort[i] != null && _serialPort[i]!.IsOpen)
+                    string message = _serialPort[num]!.ReadLine();
+                    // , で区切られている
+                    string[] values = message.Split(',');
+
+                    if (values[0] == "Handle")
                     {
-                        string message = _serialPort[i]!.ReadLine();
-                        // , で区切られている
-                        string[] values = message.Split(',');
-                        if (values[0] == "Handle")
+                        if (float.TryParse(values[1], out float v0))
                         {
-                            if (float.TryParse(values[1], out float v0))
-                            {
-                                _value0 = v0;
-                            }
-                            if (float.TryParse(values[2], out float v1))
-                            {
-                                _value1 = v1;
-                                if (_value1 == 1f) Debug.Log("wil clap");
-                            }
+                            _value0 = v0;
                         }
-                        else if (values[0] == "Angle")
+                        if (float.TryParse(values[2], out float v1))
                         {
-                            if (float.TryParse(values[1], out float v2))
-                            {
-                                _value2 = v2;
-                            }
+                            _value1 = v1;
+                            Debug.Log(Value1);
+                        }
+                    }
+                    else if (values[0] == "Angle")
+                    {
+                        if (float.TryParse(values[1], out float v2))
+                        {
+                            _value2 = v2;
                         }
                     }
                 }
@@ -96,18 +107,13 @@ namespace Shabon.Input
 
         void IDisposable.Dispose()
         {
-            _thread.Join();
-            _serialPort[0]?.Dispose();
-            _serialPort[1]?.Dispose();
-            Debug.Log("Disposed!!");
-        }
-
-        ~SerialInput()
-        {
-            _thread.Join();
-            _serialPort[0]?.Dispose();
-            _serialPort[1]?.Dispose();
-            Debug.Log("Disposed!!");
+            _isRunning = false;
+            _thread0.Join();
+            _thread1.Join();
+            for (int i = 0; i < _serialPort.Count; i++)
+            {
+                _serialPort[i]?.Dispose();
+            }
         }
     }
 }
