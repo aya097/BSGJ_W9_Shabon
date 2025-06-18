@@ -3,6 +3,7 @@ Shader "Custom/BubbleShader"
     Properties
     {
         _MainTex ("Sprite Texture", 2D) = "white" {}
+        _HighLightThickness ("Highlight Thickness", Float) = 0.1
 
         // Legacy properties. They're here so that materials using this shader can gracefully fallback to the legacy sprite shader.
         [HideInInspector] _Color ("Tint", Color) = (1,1,1,1)
@@ -40,11 +41,11 @@ Shader "Custom/BubbleShader"
             };
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
-
+            float _HighLightThickness;
             v2f vert(appdata v)
             {
                 v2f o;
-                o.vertex = TransformObjectToHClip(v.vertex * 1.1);  // 外側に拡大
+                o.vertex = TransformObjectToHClip(v.vertex * (1 + _HighLightThickness));  // 外側に拡大
                 o.uv = v.uv;
                 return o;
             }
