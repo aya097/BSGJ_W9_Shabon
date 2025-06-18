@@ -52,6 +52,7 @@ namespace Shabon.Input
             //     value = -0.5f;
             // }
 
+            Debug.Log(_serialInput.Value2);
 
             return value;
         }

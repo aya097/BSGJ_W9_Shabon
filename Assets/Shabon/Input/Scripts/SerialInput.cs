@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading;
@@ -11,12 +12,16 @@ namespace Shabon.Input
     {
         public float Value0 => _value0;
         public float Value1 => _value1;
+        public float Value2 => _value2;
 
-        private SerialPort? _serialPort;
+        private const int PortNum = 2;
+        private List<SerialPort?> _serialPort = new();
         private Thread _thread;
+        private int _portItr = 0;
 
         private float _value0;
         private float _value1;
+        private float _value2;
         public SerialInput()
         {
 #if UNITY_WEBGL
@@ -30,16 +35,18 @@ namespace Shabon.Input
                 Debug.Log("Found port: " + port);
             }
 
+            _portItr = 0;
             foreach (string port in availablePorts)
             {
-                _serialPort = new SerialPort(port, 115200, Parity.None, 8, StopBits.One);
-                _serialPort.ReadTimeout = 2000;
-                _serialPort.DtrEnable = true;
-                _serialPort.RtsEnable = true;
+                _serialPort.Add(new SerialPort(port, 115200, Parity.None, 8, StopBits.One));
+                _serialPort[_portItr]!.ReadTimeout = 2000;
+                _serialPort[_portItr]!.DtrEnable = true;
+                _serialPort[_portItr]!.RtsEnable = true;
                 try
                 {
-                    _serialPort.Open();
-                    break;
+                    _serialPort[_portItr]!.Open();
+                    _portItr++;
+                    if (_portItr >= PortNum) break;
                 }
                 catch (Exception e)
                 {
@@ -56,13 +63,23 @@ namespace Shabon.Input
         {
             while (true)
             {
-                if (_serialPort != null && _serialPort.IsOpen)
+                for (int i = 0; i < _serialPort.Count; i++)
                 {
-                    string message = _serialPort.ReadLine();
-                    // , で区切られている
-                    string[] values = message.Split(',');
-                    _value0 = float.Parse(values[0]);
-                    _value1 = float.Parse(values[1]);
+                    if (_serialPort[i] != null && _serialPort[i]!.IsOpen)
+                    {
+                        string message = _serialPort[i]!.ReadLine();
+                        // , で区切られている
+                        string[] values = message.Split(',');
+                        if (values[0] == "Handle")
+                        {
+                            _value0 = float.Parse(values[1]);
+                            _value1 = float.Parse(values[2]);
+                        }
+                        else if (values[0] == "Angle")
+                        {
+                            _value2 = float.Parse(values[1]);
+                        }
+                    }
                 }
             }
         }
@@ -70,7 +87,8 @@ namespace Shabon.Input
         public void Dispose()
         {
             _thread.Join();
-            _serialPort?.Dispose();
+            _serialPort[0]?.Dispose();
+            _serialPort[1]?.Dispose();
         }
 
         ~SerialInput()
