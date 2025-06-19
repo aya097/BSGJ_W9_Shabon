@@ -23,6 +23,12 @@ namespace Shabon.Bubble
 
         private BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
+        private Color _originalColor;
+
+        void Awake()
+        {
+            _originalColor = _spriteRenderer.color;
+        }
 
 
         // ハイライト
@@ -33,6 +39,11 @@ namespace Shabon.Bubble
         public void TurnOffHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
+        }
+        // メイド
+        public void SetDarkness(float value)
+        {
+            _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
         }
 
 

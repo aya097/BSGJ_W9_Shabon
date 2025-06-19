@@ -99,7 +99,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
+        private void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
@@ -107,7 +107,9 @@ namespace Shabon.Bubble
                 if (!(bubbleMono.IsReached || bubbleMono.IsStop))
                 {
                     // 息が吹かれた時のアニメーションを再生
-                    bubbleViewMono.PlayBreath();
+                    bubbleView.PlayBreath();
+                    bubbleView.SetDarkness(0f);
+
 
                     // Playerと逆の方向
                     Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
@@ -128,6 +130,7 @@ namespace Shabon.Bubble
                 if (!bubbleMono.IsAttacking)
                 {
                     bubbleMono.Stop();
+                    bubbleView.SetDarkness(0f);
                     bubbleView.TurnOffHighlight();
                     bubbleView.PlayClap(() =>
                     {
@@ -144,6 +147,7 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnReach += () =>
             {
+                bubbleView.SetDarkness(0.2f);
                 // 待機時間後にdestroy
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
@@ -151,6 +155,7 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
+                            bubbleView.SetDarkness(0f);
                             bubbleView.TurnOffHighlight();
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
