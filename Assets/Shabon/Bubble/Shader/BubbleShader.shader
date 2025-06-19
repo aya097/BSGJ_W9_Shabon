@@ -4,6 +4,7 @@ Shader "Custom/BubbleShader"
     {
         _MainTex ("Sprite Texture", 2D) = "white" {}
         _HighLightThickness ("Highlight Thickness", Float) = 0.1
+        _HighLightFlag("Enable Highlight", Float) = 0
 
         // Legacy properties. They're here so that materials using this shader can gracefully fallback to the legacy sprite shader.
         [HideInInspector] _Color ("Tint", Color) = (1,1,1,1)
@@ -42,6 +43,7 @@ Shader "Custom/BubbleShader"
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
             float _HighLightThickness;
+            float _HighLightFlag;
             v2f vert(appdata v)
             {
                 v2f o;
@@ -52,12 +54,13 @@ Shader "Custom/BubbleShader"
 
             half4 frag(v2f i) : SV_Target
             {
+                _HighLightFlag = clamp(_HighLightFlag, 0, 1); // _HighLightFlagを0から1の範囲に制限
                 // アウトラインの色を設定
                 half4 outlineColor = half4(0.5 + i.uv.x * 0.5,0.5 + i.uv.y * 0.5 , 0.5, 1); 
                 // テクスチャをサンプリング
                 half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 // アウトラインの色とテクスチャの色を合成
-                return outlineColor * texColor.a;
+                return outlineColor * texColor.a * _HighLightFlag; // _HighLightFlagが1のときのみアウトラインを描画
             }
             ENDHLSL
         }

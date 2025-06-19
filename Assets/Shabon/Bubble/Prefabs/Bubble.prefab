@@ -279,3 +279,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bubbleAnimator: {fileID: 2303769695889295307}
+  _spriteRenderer: {fileID: 3369368968591772406}

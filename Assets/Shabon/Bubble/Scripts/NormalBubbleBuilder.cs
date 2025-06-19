@@ -1,6 +1,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using R3;
 using Shabon.Param;
 using Shabon.Score;
@@ -20,6 +21,7 @@ namespace Shabon.Bubble
         private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleCombo _bubbleCombo;
         private readonly IScoreValue _scoreValue;
+        private readonly List<IDisposable> _presenterObservable = new();
 
         [Inject]
         public NormalBubbleBuilder(
@@ -66,6 +68,20 @@ namespace Shabon.Bubble
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData);
+
+            // プレゼンター処理？
+            Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
+                .Subscribe(clapable =>
+                {
+                    if (clapable)
+                    {
+                        bubbleViewMono.TurnOnHighlight();
+                    }
+                    else
+                    {
+                        bubbleViewMono.TurnOffHighlight();
+                    }
+                }).AddTo(bubbleViewMono);
         }
 
         /// <summary>
