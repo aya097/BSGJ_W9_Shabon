@@ -56,6 +56,7 @@ namespace Shabon.Game
             // Breath
             builder.Register<BreathModel>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<BreathViewMono>();
+            builder.RegisterComponentInHierarchy<WindmillViewMono>();
 
             // Input
             builder.Register<InputManager>(Lifetime.Scoped).As<IInputManager>();
