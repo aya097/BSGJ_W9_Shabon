@@ -12,13 +12,22 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
+        // 攻撃位置に到達している
         public bool IsReached => _isReached;
+        // 攻撃中か
         public bool IsAttacking
         {
             get { return _isAttacking; }
             set { _isAttacking = value; }
         }
+        // 停止させられているか
         public bool IsStop => _isStop;
+        // Clapできるか？
+        public bool IsClapable
+        {
+            get { return _isClapable; }
+            set { _isClapable = value; }
+        }
         public int BubbleScore => _bubbleScore;
         public Transform? Transform => transform;
         public BubbleDeath Death => _bubbleDeath;
@@ -33,6 +42,7 @@ namespace Shabon.Bubble
         private bool _isReached = false;
         private bool _isAttacking = false;
         private bool _isStop = false;
+        private bool _isClapable = false;
 
         void Update()
         {
