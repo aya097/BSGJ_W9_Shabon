@@ -128,6 +128,7 @@ namespace Shabon.Bubble
                 if (!bubbleMono.IsAttacking)
                 {
                     bubbleMono.Stop();
+                    bubbleView.TurnOffHighlight();
                     bubbleView.PlayClap(() =>
                     {
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
@@ -150,6 +151,7 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
+                            bubbleView.TurnOffHighlight();
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
                     });
