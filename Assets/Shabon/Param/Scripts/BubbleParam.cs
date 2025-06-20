@@ -120,7 +120,7 @@ namespace Shabon.Bubble
             increasingDirtValue = value;
         }
 
-        
+
     }
 
     public interface IBubbleData
