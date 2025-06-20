@@ -4,10 +4,16 @@ import utime
 #  デバッグ用
 Led_Red = Pin(13, Pin.OUT)
 
-# ADC0 に接続（GPIO26）
-adc_mic = ADC(0)
+# ADC0 に接続（GPI026）
+adc_submic = ADC(0)
+# ADC1 に接続（GPIO27）
+adc_mic = ADC(1)
 # ADC2 に接続（GPIO28）
 adc_magnet = ADC(2)
+
+#  サブマイク
+send_value_submic = 0
+threshold_submic = 2  # 超えたら出力
 
 # 磁石のパラメータ
 rot_num = 0  # 回転数
@@ -35,8 +41,14 @@ def read_voltage(adc):
 
 
 while True:
+    # サブマイクの取得
+    voltage = read_voltage(adc_submic)
+    if (voltage >= threshold_submic):
+        voltage /= 3.3
+        if (voltage > send_value_submic):
+            send_value_submic = voltage
 
-    #  磁石（風車）の取得
+     #  磁石（風車）の取得
     voltage = read_voltage(adc_magnet)
     #  差があれば回転したとみなす
     diff = voltage - voltage_buffer
@@ -67,7 +79,9 @@ while True:
 
     # 値を送信
     if (utime.ticks_diff(now, last_send_time) >= send_interval_ms):
-        print("Handle,", send_value_magnet, ",", send_value_mic)
+        print("Handle,", send_value_magnet, ",",
+              send_value_mic, ",", send_value_submic)
+        send_value_submic = 0
         last_send_time = now
 
     # 値を送信
