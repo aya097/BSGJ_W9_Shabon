@@ -155,7 +155,6 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
-                            bubbleView.SetDarkness(0f);
                             bubbleView.TurnOffHighlight();
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
