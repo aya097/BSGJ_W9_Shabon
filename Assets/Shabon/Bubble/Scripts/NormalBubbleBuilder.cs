@@ -147,7 +147,6 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnReach += () =>
             {
-                bubbleView.SetDarkness(0.2f);
                 // 待機時間後にdestroy
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
@@ -155,6 +154,7 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
+                            bubbleView.SetDarkness(0.2f);
                             bubbleView.TurnOffHighlight();
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }

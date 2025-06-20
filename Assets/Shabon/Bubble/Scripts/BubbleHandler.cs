@@ -1,14 +1,7 @@
 using UnityEngine;
-using System;
-using Shabon.Bubble;
-using Shabon.Breath;
-using System.Collections.Generic;
 using VContainer;
 using System.Linq;
-using System.Threading.Tasks;
-using Shabon.Clap; // 非同期処理用
 using Shabon.Score;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 namespace Shabon.Bubble
 {
