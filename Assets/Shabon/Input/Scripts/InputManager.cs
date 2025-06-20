@@ -27,7 +27,9 @@ namespace Shabon.Input
         // Breathの大きさに応じた値0~1を返す
         public float GetBreath()
         {
-            float value = (_serialInput.Value0 - 2f) / 8f; // だいたいこれくらい
+            float value1 = (_serialInput.Value0 - 2f) / 8f; // だいたいこれくらい<-風車の入力
+            float value2 = _serialInput.Value3; // サブマイク
+            float value = MathF.Max(value1, value2);
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Alpha1))
             {
                 value = 0.5f;
