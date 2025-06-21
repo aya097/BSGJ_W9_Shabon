@@ -42,7 +42,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
-        public void Build(
+        public virtual void Build(
             IBubbleBuildSetter bubbleSetter,
             IBubbleMono bubbleMono,
             IBubbleData bubbleData,
@@ -99,7 +99,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
+        protected virtual void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
@@ -122,7 +122,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        protected virtual void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnClap += _ =>
             {
@@ -166,7 +166,7 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono)
+        protected virtual void DestroyBubble(IBubbleMono bubbleMono)
         {
             // Clusterから削除
             _bubbleCluster.Remove(bubbleMono);

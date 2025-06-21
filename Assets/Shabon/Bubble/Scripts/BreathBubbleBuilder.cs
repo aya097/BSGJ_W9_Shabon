@@ -1,0 +1,119 @@
+#nullable enable
+
+using Shabon.Param;
+using Shabon.Score;
+using UnityEngine;
+using VContainer;
+
+namespace Shabon.Bubble
+{
+    /// <summary>
+    /// BreathBubbleの個性を付与するクラス
+    /// </summary>
+    public class BreathBubbleBuilder : NormalBubbleBuilder
+    {
+        private readonly IPlayerTransform _playerTransform;
+        private readonly BubbleCluster _bubbleCluster;
+        private readonly IDirtValue _dirtValue;
+        private readonly IAreaChecker _waitAreaChecker;
+        private readonly IBubbleCombo _bubbleCombo;
+        private readonly IScoreValue _scoreValue;
+
+        [Inject]
+        public BreathBubbleBuilder(
+            IPlayerTransform playerTransform,
+            BubbleCluster bubbleCluster,
+            IDirtValue dirtValue,
+            IAreaChecker waitAreaChecker,
+            IBubbleCombo bubbleCombo,
+            IScoreValue scoreValue)
+            : base(playerTransform, bubbleCluster, dirtValue, waitAreaChecker, bubbleCombo, scoreValue)
+        {
+            _playerTransform = playerTransform;
+            _bubbleCluster = bubbleCluster;
+            _dirtValue = dirtValue;
+            _waitAreaChecker = waitAreaChecker;
+            _bubbleCombo = bubbleCombo;
+            _scoreValue = scoreValue;
+        }
+
+        public override void Build(
+            IBubbleBuildSetter bubbleSetter,
+            IBubbleMono bubbleMono,
+            IBubbleData bubbleData,
+            BubbleViewMono bubbleViewMono)
+        {
+            base.Build(bubbleSetter, bubbleMono, bubbleData, bubbleViewMono);
+
+            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
+            BubbleDeath bubbleDeath = new BubbleDeath(
+                BubbleType.Breath,
+                deathParams,
+                () => { DestroyBubble(bubbleMono); });
+
+            SetOnDead(bubbleMono, bubbleDeath, bubbleViewMono);
+        }
+
+        /// <summary>
+        /// 息を吹かれたときの処理を作成
+        /// </summary>
+        protected override void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnBreath += (arg) =>
+            {
+                // 到達してないときかつ動かないとき
+                if (!(bubbleMono.IsReached || bubbleMono.IsStop))
+                {
+                    // 息を吹いている状態にする
+                    if (bubbleMono is BreathBubbleMono breathBubbleMono)
+                    {
+                        breathBubbleMono.IsBreathing = true;
+                    }
+
+                    // 息が吹かれた時のアニメーションを再生
+                    bubbleView.PlayBreath();
+                    bubbleView.SetDarkness(0f);
+
+                    // Playerと逆の方向
+                    Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
+                    moveDirection.y = 0;
+                    bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Clapされた時の処理
+        /// </summary>
+        protected override void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnClap += _ =>
+            {
+                Debug.Log("BreathBubbleはClapは無効");
+                // memo: ここでclapが効いてないようなアニメーション再生？
+            };
+        }
+
+        /// <summary>
+        /// 死んだときの処理
+        /// <summary>
+        private void SetOnDead(IBubbleMono bubbleMono, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        {
+            if (bubbleMono is BreathBubbleMono breathBubbleMono)
+            {
+                breathBubbleMono.OnDead += () =>
+                {
+                    bubbleMono.Stop();
+                    bubbleView.SetDarkness(0f);
+                    bubbleView.TurnOffHighlight();
+                    bubbleView.PlayClap(() =>
+                    {
+                        bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                    });
+                };
+            }
+
+        }
+
+    }
+}
