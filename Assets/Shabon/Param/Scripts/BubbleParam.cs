@@ -76,6 +76,16 @@ namespace Shabon.Bubble
         [Header("バブルのスコア")]
         [SerializeField] int bubbleScore;
 
+        [Header("BreathBubble専用パラメータ")]
+
+        [Header("倒すために息を吹く時間(s)")]
+        [Min(0)]
+        [SerializeField] float requiredBreathTime;
+
+        [Header("再度息を吹くまでの猶予時間(s)")]
+        [Min(0)]
+        [SerializeField] float breathResetInterval;
+
         // Getter
         public BubbleType BubbleType
         {
@@ -113,6 +123,14 @@ namespace Shabon.Bubble
         {
             get { return bubbleScore; }
         }
+        public float RequiredBreathTime
+        {
+            get { return requiredBreathTime; }
+        }
+        public float BreathResetInterval
+        {
+            get { return breathResetInterval; }
+        }
 
         // Setter
         public void SetIncreasingDirtValue(int value)
@@ -134,6 +152,8 @@ namespace Shabon.Bubble
         int IncreasingDirtValue { get; }
         float ChainRadius { get; }
         int BubbleScore { get; }
+        float RequiredBreathTime { get; }
+        float BreathResetInterval { get; }
     }
 }
 
