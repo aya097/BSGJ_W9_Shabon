@@ -34,10 +34,12 @@ namespace Shabon.Game
             builder.Register<BubbleSpawner>(Lifetime.Scoped).As<IBubbleSpawner>();
             builder.Register<BubbleCluster>(Lifetime.Scoped);
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
+            builder.Register<BreathBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BossBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>().AsSelf();
             builder.Register<BubbleHandler>(Lifetime.Scoped).As<IBubbleHandler>();
             builder.RegisterComponentInHierarchy<BreathGetterViewMono>();
             builder.Register<BubbleMono>(Lifetime.Scoped);
+            builder.Register<BreathBubbleMono>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<WaitingAreaCheckerMono>().As<IAreaChecker>();
             builder.Register<BubbleChain>(Lifetime.Scoped).As<IBubbleChain>();
             builder.Register<BubbleCombo>(Lifetime.Scoped).As<IBubbleCombo>();
