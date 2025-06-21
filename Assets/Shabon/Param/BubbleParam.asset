@@ -28,7 +28,7 @@ MonoBehaviour:
     bubblePrefab: {fileID: -4593445064888892722, guid: 0afc96797dca2c041aea38182f4a5a7c, type: 3}
     bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
     bubbleSpawnedArea: 0
-    forwardVelocity: 0.3
+    forwardVelocity: 0.2
     zoneWaitingTime: 1
     increasingDirtValue: 1
     chainRadius: 0.75
