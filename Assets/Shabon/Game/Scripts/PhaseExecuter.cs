@@ -98,6 +98,9 @@ namespace Shabon.Game
                     // Bubbleスポーン
                     _bubbleSpawner.Spawn(BubbleType.Normal);
 
+                    // Quickタイプをスポーンする処理を追加
+                    _bubbleSpawner.Spawn(BubbleType.Quick);
+
                     // 次のEventを登録
                     SubscribeSpawnBubble();
                 }

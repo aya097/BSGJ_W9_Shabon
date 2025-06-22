@@ -22,6 +22,13 @@ MonoBehaviour:
     increasingDirtValue: 1
     chainRadius: 0.75
     bubbleScore: 100
+
+  - bubbleType: 2
+    bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
+    bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
+    bubbleSpawnedArea: 0
+    forwardVelocity: 0.7
+
     requiredBreathTime: 0
     breathResetInterval: 0
   - bubbleType: 1
@@ -29,9 +36,13 @@ MonoBehaviour:
     bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
     bubbleSpawnedArea: 0
     forwardVelocity: 0.2
+
     zoneWaitingTime: 1
     increasingDirtValue: 1
     chainRadius: 0.75
     bubbleScore: 100
+
+
     requiredBreathTime: 3
     breathResetInterval: 1
+

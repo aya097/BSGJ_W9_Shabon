@@ -90,10 +90,8 @@ namespace Shabon.Bubble
                 BubbleType.Normal => _objectResolver.Resolve<NormalBubbleBuilder>(),
                 BubbleType.Breath => _objectResolver.Resolve<BreathBubbleBuilder>(),
                 BubbleType.Boss => _objectResolver.Resolve<BossBubbleBuilder>(),
-                // バブルの種類が増えたらここに追加
-
+                BubbleType.Quick => _objectResolver.Resolve<NormalBubbleBuilder>(),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(bubbleType), bubbleType, "未対応のBubbleTypeです") // defaultの処理
-
             };
         }
     }
