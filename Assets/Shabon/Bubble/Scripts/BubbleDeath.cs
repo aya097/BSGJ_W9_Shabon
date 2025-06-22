@@ -73,6 +73,7 @@ namespace Shabon.Bubble
             return bubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleDeath(destroyBubble, deathParams),
+                BubbleType.Breath => new NormalBubbleDeath(destroyBubble, deathParams), 
 
                 _ => new NormalBubbleDeath(destroyBubble, deathParams)
             };

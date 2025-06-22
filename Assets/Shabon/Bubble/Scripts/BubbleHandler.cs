@@ -1,12 +1,6 @@
 using UnityEngine;
-using System;
-using Shabon.Bubble;
-using Shabon.Breath;
-using System.Collections.Generic;
 using VContainer;
 using System.Linq;
-using System.Threading.Tasks;
-using Shabon.Clap; // 非同期処理用
 using Shabon.Score;
 
 namespace Shabon.Bubble
@@ -14,20 +8,17 @@ namespace Shabon.Bubble
     public class BubbleHandler : IBubbleHandler
     {
         private readonly BreathGetterViewMono _breathGetter;
-        private readonly ClapGetterViewMono _clapGetter;
-        private readonly IBubbleChain _bubbleChain;
+        private readonly BubbleCluster _bubbleCluster;
         private readonly IScoreValue _scoreValue;
 
 
         [Inject]
         public BubbleHandler(BreathGetterViewMono breathGetterViewMono,
-            ClapGetterViewMono clapGetterViewMono,
-            IBubbleChain bubbleChain,
+            BubbleCluster bubbleCluster,
             IScoreValue scoreValue)
         {
             _breathGetter = breathGetterViewMono;
-            _clapGetter = clapGetterViewMono;
-            _bubbleChain = bubbleChain;
+            _bubbleCluster = bubbleCluster;
             _scoreValue = scoreValue;
         }
 
@@ -44,11 +35,8 @@ namespace Shabon.Bubble
         {
             if (strength == 0) return;
 
-            // 連鎖中は何もしない
-            if (_bubbleChain.IsChaining) return;
-
             // 範囲内のすべてのバブルを取得
-            var bubblesInRange = _clapGetter.GetBubbleMonos();
+            var bubblesInRange = _bubbleCluster.Bubbles.Where(b => b.IsClapable);
 
             // 倒したバブルの数をカウント
             int defeatedCount = 0;

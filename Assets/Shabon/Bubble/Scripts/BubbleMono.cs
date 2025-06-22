@@ -12,13 +12,22 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
+        // 攻撃位置に到達している
         public bool IsReached => _isReached;
+        // 攻撃中か
         public bool IsAttacking
         {
             get { return _isAttacking; }
             set { _isAttacking = value; }
         }
+        // 停止させられているか
         public bool IsStop => _isStop;
+        // Clapできるか？
+        public bool IsClapable
+        {
+            get { return _isClapable; }
+            set { _isClapable = value; }
+        }
         public int BubbleScore => _bubbleScore;
         public Transform? Transform => transform;
         public BubbleDeath Death => _bubbleDeath;
@@ -26,17 +35,17 @@ namespace Shabon.Bubble
         public event Action<OnClapArg>? OnClap;
         public event Action<OnBreathArg>? OnBreath;
 
-        private IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
-        private BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
-        private IAreaChecker _waitAreaChecker = null!;
-        private int _bubbleScore;
-        private bool _isReached = false;
+        protected IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
+        protected BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
+        protected IAreaChecker _waitAreaChecker = null!;
+        protected int _bubbleScore;
+        protected bool _isReached = false;
         private bool _isAttacking = false;
-        private bool _isStop = false;
+        protected bool _isStop = false;
+        private bool _isClapable = false;
 
-        void Update()
+        protected virtual void Update()
         {
-
 
             // 到達したら移動しない
             if (_isReached) return;
@@ -57,7 +66,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// ビルドの際にパラメータを注ぐ用のクラス
         /// </summary>
-        public void SetBuildParam(
+        public virtual void SetBuildParam(
             IBubbleMover bubbleMover,
             BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,

@@ -19,10 +19,32 @@ namespace Shabon.Bubble
     public class BubbleViewMono : MonoBehaviour
     {
         [SerializeField] private Animator _bubbleAnimator = null!;
+        [SerializeField] private SpriteRenderer _spriteRenderer = null!;
 
         private BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
+        private Color _originalColor;
 
+        void Awake()
+        {
+            _originalColor = _spriteRenderer.color;
+        }
+
+
+        // ハイライト
+        public void TurnOnHighlight()
+        {
+            _spriteRenderer.material.SetFloat("_HighLightFlag", 1f);
+        }
+        public void TurnOffHighlight()
+        {
+            _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
+        }
+        // メイド
+        public void SetDarkness(float value)
+        {
+            _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
+        }
 
 
         // 息吹かれたときのアニメーションを再生するメソッド

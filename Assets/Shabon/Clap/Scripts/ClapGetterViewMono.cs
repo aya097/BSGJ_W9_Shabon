@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Shabon.Bubble;
+using VContainer;
+using Unity.VisualScripting;
 
 namespace Shabon.Clap
 {
@@ -10,8 +12,36 @@ namespace Shabon.Clap
     {
         [SerializeField] private float radius = 1.0f; // 円の半径を指定
 
+        private BubbleCluster _bubbleCluster = null!;
+        [Inject]
+        void Initialize(BubbleCluster bubbleCluster)
+        {
+            _bubbleCluster = bubbleCluster;
+        }
+
+        void Update()
+        {
+            // ヒットしたバブル
+            var hitBubbles = GetBubbleMonos();
+
+            // ヒットしていないバブルを探す
+            var notHitBubbles = _bubbleCluster.Bubbles.ToList();
+
+            foreach (var bubble in hitBubbles)
+            {
+                notHitBubbles.Remove(bubble);
+                // ヒットしたバブルはIsClapableをtrueにする
+                bubble.IsClapable = true;
+            }
+            // ヒットしてないバブルのIsClapableをfalseにする
+            foreach (var bubble in notHitBubbles)
+            {
+                bubble.IsClapable = false;
+            }
+        }
+
         // BubbleMonoを取得する
-        public IEnumerable<IBubbleMono> GetBubbleMonos()
+        private IEnumerable<IBubbleMono> GetBubbleMonos()
         {
             // 円形の範囲でColliderを取得
             Collider[] hits = Physics.OverlapSphere(transform.position, radius);

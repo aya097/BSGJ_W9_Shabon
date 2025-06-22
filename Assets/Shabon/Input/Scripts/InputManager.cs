@@ -1,5 +1,7 @@
 #nullable enable
+using System;
 using UnityEngine;
+using VContainer;
 
 namespace Shabon.Input
 {
@@ -10,9 +12,10 @@ namespace Shabon.Input
     {
         private readonly SerialInput _serialInput;
 
-        public InputManager()
+        [Inject]
+        public InputManager(SerialInput serialInput)
         {
-            _serialInput = new SerialInput();
+            _serialInput = serialInput;
         }
         // Clapしたときに一度だけtrue
         public bool GetClap()
@@ -24,7 +27,9 @@ namespace Shabon.Input
         // Breathの大きさに応じた値0~1を返す
         public float GetBreath()
         {
-            float value = (_serialInput.Value0 - 2f) / 8f; // だいたいこれくらい
+            float value1 = (_serialInput.Value0 - 2f) / 8f; // だいたいこれくらい<-風車の入力
+            float value2 = _serialInput.Value3; // サブマイク
+            float value = MathF.Max(value1, value2);
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Alpha1))
             {
                 value = 0.5f;
@@ -40,9 +45,6 @@ namespace Shabon.Input
         // 左右の移動量を-1~1で返す
         public float GetHorizontalDirection()
         {
-            float value = UnityEngine.Input.mousePosition.x / Screen.width;
-            value = (value - 0.5f) * 2f;
-
             // if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow))
             // {
             //     value = 0.5f;
@@ -52,6 +54,13 @@ namespace Shabon.Input
             //     value = -0.5f;
             // }
 
+            float value = _serialInput.Value2 / 4;
+            value = -(int)value * 4 / 90f;
+            if (_serialInput.Value2 == 0f)
+            {
+                value = UnityEngine.Input.mousePosition.x / Screen.width;
+                value = (value - 0.5f) * 2f;
+            }
 
             return value;
         }

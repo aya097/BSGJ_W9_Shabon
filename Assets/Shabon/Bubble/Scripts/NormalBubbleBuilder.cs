@@ -1,6 +1,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using R3;
 using Shabon.Param;
 using Shabon.Score;
@@ -20,6 +21,7 @@ namespace Shabon.Bubble
         private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleCombo _bubbleCombo;
         private readonly IScoreValue _scoreValue;
+        private readonly List<IDisposable> _presenterObservable = new();
 
         [Inject]
         public NormalBubbleBuilder(
@@ -40,7 +42,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
-        public void Build(
+        public virtual void Build(
             IBubbleBuildSetter bubbleSetter,
             IBubbleMono bubbleMono,
             IBubbleData bubbleData,
@@ -66,6 +68,20 @@ namespace Shabon.Bubble
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData);
+
+            // プレゼンター処理？
+            Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
+                .Subscribe(clapable =>
+                {
+                    if (clapable)
+                    {
+                        bubbleViewMono.TurnOnHighlight();
+                    }
+                    else
+                    {
+                        bubbleViewMono.TurnOffHighlight();
+                    }
+                }).AddTo(bubbleViewMono);
         }
 
         /// <summary>
@@ -83,7 +99,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
-        private void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleViewMono)
+        protected virtual void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
@@ -91,7 +107,9 @@ namespace Shabon.Bubble
                 if (!(bubbleMono.IsReached || bubbleMono.IsStop))
                 {
                     // 息が吹かれた時のアニメーションを再生
-                    bubbleViewMono.PlayBreath();
+                    bubbleView.PlayBreath();
+                    bubbleView.SetDarkness(0f);
+
 
                     // Playerと逆の方向
                     Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
@@ -104,7 +122,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
-        private void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        protected virtual void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnClap += _ =>
             {
@@ -112,6 +130,8 @@ namespace Shabon.Bubble
                 if (!bubbleMono.IsAttacking)
                 {
                     bubbleMono.Stop();
+                    bubbleView.SetDarkness(0f);
+                    bubbleView.TurnOffHighlight();
                     bubbleView.PlayClap(() =>
                     {
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
@@ -134,6 +154,8 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
+                            bubbleView.SetDarkness(0.2f);
+                            bubbleView.TurnOffHighlight();
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
                     });
@@ -144,7 +166,7 @@ namespace Shabon.Bubble
         /// BubbleをDestroyする用の関数、これ以外ではDestroyしてはいけない
         /// </summary>
         /// <param name="bubbleMono"></param>
-        private void DestroyBubble(IBubbleMono bubbleMono)
+        protected virtual void DestroyBubble(IBubbleMono bubbleMono)
         {
             // Clusterから削除
             _bubbleCluster.Remove(bubbleMono);

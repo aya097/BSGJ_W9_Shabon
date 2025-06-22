@@ -40,16 +40,11 @@ namespace Shabon.Bubble
             IBubbleData bubbleData = _bubbleParam.GetBubbleDataList().Where(b => b.BubbleType == bubbleType).FirstOrDefault();
 
 
-            if (bubbleData is null)
-
-                if (bubbleData == null)
-
-                {
-                    Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
-                    return;
-                }
-
-
+            if (bubbleData == null)
+            {
+                Debug.LogWarning("BubbleDataBaseに対象のbubbleTypeが存在しません");
+                return;
+            }
 
             // バブルビルダーを取得
             IBubbleBuilder bubbleBuilder = GetBubbleBuilder(bubbleType);
@@ -58,7 +53,8 @@ namespace Shabon.Bubble
             Vector3 spawningPosition = DecideSpawningPosition(_bubbleSpawnedArea.GetArea(bubbleData.BubbleSpawnedArea));
 
             // バブルを生成
-            BubbleMono bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
+            var bubbleMono = GameObject.Instantiate(bubbleData.BubblePrefab, spawningPosition, Quaternion.identity);
+
             BubbleViewMono bubbleViewMono = bubbleMono.gameObject.GetComponentInChildren<BubbleViewMono>();
 
             // ビルド
@@ -67,6 +63,7 @@ namespace Shabon.Bubble
             // Clusterに登録
             _bubbleCluster.Add(bubbleMono);
         }
+
 
         /// <summary>
         /// BoxAreaからランダムに座標を作成する
@@ -86,13 +83,12 @@ namespace Shabon.Bubble
         /// <summary>
         /// BubbleType別にBuilderを取得
         /// </summary>
-        /// memo: Builder分けずに１つにまとめた方がスマートかも...?(ひとまずこれで)
-        /// memo: あまり良くない実装かも...すみません
         private IBubbleBuilder GetBubbleBuilder(BubbleType bubbleType)
         {
             return bubbleType switch
             {
                 BubbleType.Normal => _objectResolver.Resolve<NormalBubbleBuilder>(),
+                BubbleType.Breath => _objectResolver.Resolve<BreathBubbleBuilder>(),
                 BubbleType.Boss => _objectResolver.Resolve<BossBubbleBuilder>(),
                 BubbleType.Quick => _objectResolver.Resolve<NormalBubbleBuilder>(),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(bubbleType), bubbleType, "未対応のBubbleTypeです") // defaultの処理
