@@ -6,8 +6,8 @@ namespace Shabon.Bubble
         // 今後追加します
         Normal,
 
-        Boss,
-        Quick
+
+        Quick,
 
         Breath,
         Boss
