@@ -13,6 +13,14 @@ namespace Shabon.Bubble
         Breath,
         Attack,
     }
+    public enum HighLightType
+    {
+        None,
+        Clapable,
+        Claped,
+        Attack,
+        Breathed,
+    }
     /// <summary>
     /// Bubbleの見た目を管理するクラス
     /// </summary>
@@ -31,20 +39,50 @@ namespace Shabon.Bubble
         }
 
 
+        // ハイライトを設定
+        public void SetHighlight(HighLightType highLightType)
+        {
+            if (highLightType == HighLightType.Clapable)
+            {
+                SetDarkness(0f);
+                TurnOnHighlight();
+            }
+            else if (highLightType == HighLightType.Claped)
+            {
+                SetDarkness(0f);
+                TurnOffHighlight();
+            }
+            else if (highLightType == HighLightType.Attack)
+            {
+                SetDarkness(0.2f);
+                TurnOffHighlight();
+            }
+            else if (highLightType == HighLightType.Breathed)
+            {
+                SetDarkness(0f);
+            }
+            else if (highLightType == HighLightType.None)
+            {
+                SetDarkness(0f);
+                TurnOffHighlight();
+            }
+        }
         // ハイライト
-        public void TurnOnHighlight()
+        private void TurnOnHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 1f);
         }
-        public void TurnOffHighlight()
+        private void TurnOffHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
         }
         // メイド
-        public void SetDarkness(float value)
+        private void SetDarkness(float value)
         {
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
         }
+
+
 
 
         // 息吹かれたときのアニメーションを再生するメソッド
