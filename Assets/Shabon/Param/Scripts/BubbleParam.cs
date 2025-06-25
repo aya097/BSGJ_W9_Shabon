@@ -158,5 +158,19 @@ namespace Shabon.Bubble
             get { return breathResetInterval; }
         }
     }
+
+    [Serializable]
+    public class BossBubbleData : BubbleData
+    {
+        [Header("----- BossBubble固有のパラメータ -----")]
+        [Header("体力（＝ 倒すのに必要なclapの回数）")]
+        [Min(0)]
+        [SerializeField] int hp;
+
+        public int Hp
+        {
+            get { return hp; }
+        }
+    }
 }
 
