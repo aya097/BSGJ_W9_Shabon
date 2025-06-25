@@ -61,6 +61,11 @@ namespace Shabon.Bubble
             {
                 SetDarkness(0f);
             }
+            else if (highLightType == HighLightType.None)
+            {
+                SetDarkness(0f);
+                TurnOffHighlight();
+            }
         }
         // ハイライト
         private void TurnOnHighlight()
