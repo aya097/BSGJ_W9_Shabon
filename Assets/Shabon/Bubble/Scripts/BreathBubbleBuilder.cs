@@ -72,7 +72,7 @@ namespace Shabon.Bubble
 
                     // 息が吹かれた時のアニメーションを再生
                     bubbleView.PlayBreath();
-                    bubbleView.SetDarkness(0f);
+                    bubbleView.SetHighlight(HighLightType.Breathed);
 
                     // Playerと逆の方向
                     Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
@@ -104,8 +104,7 @@ namespace Shabon.Bubble
                 breathBubbleMono.OnDead += () =>
                 {
                     bubbleMono.Stop();
-                    bubbleView.SetDarkness(0f);
-                    bubbleView.TurnOffHighlight();
+                    bubbleView.SetHighlight(HighLightType.Attack);
                     bubbleView.PlayClap(() =>
                     {
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
