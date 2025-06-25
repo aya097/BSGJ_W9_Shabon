@@ -87,12 +87,13 @@ namespace Shabon.Bubble
         /// <summary>
         /// 適切なBubbleMoverを返す
         /// </summary>
-        protected virtual IBubbleMover GetBubbleMover(Transform transform, IBubbleData bubbleData)
+        private IBubbleMover GetBubbleMover(Transform transform, IBubbleData bubbleData)
         {
             float forwardVelocity = bubbleData.ForwardVelocity;
             return bubbleData.BubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
+                BubbleType.Boss => new BossBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
                 _ => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform) // もし該当がなければNormalを返しておく
             };
         }
