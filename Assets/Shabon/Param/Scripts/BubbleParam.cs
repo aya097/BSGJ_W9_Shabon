@@ -12,7 +12,7 @@ namespace Shabon.Bubble
     public class BubbleParam : ScriptableObject, IBubbleParam
     {
         [Header("Bubbleのパラーメータ設定")]
-        [SerializeField] List<BubbleData> bubbleDataList;
+        [SerializeReference, SubclassSelector] private List<BubbleData> bubbleDataList;
 
         // Getter
         public IEnumerable<IBubbleData> GetBubbleDataList()
@@ -76,16 +76,6 @@ namespace Shabon.Bubble
         [Header("バブルのスコア")]
         [SerializeField] int bubbleScore;
 
-        [Header("BreathBubble専用パラメータ")]
-
-        [Header("倒すために息を吹く時間(s)")]
-        [Min(0)]
-        [SerializeField] float requiredBreathTime;
-
-        [Header("再度息を吹くまでの猶予時間(s)")]
-        [Min(0)]
-        [SerializeField] float breathResetInterval;
-
         // Getter
         public BubbleType BubbleType
         {
@@ -123,21 +113,12 @@ namespace Shabon.Bubble
         {
             get { return bubbleScore; }
         }
-        public float RequiredBreathTime
-        {
-            get { return requiredBreathTime; }
-        }
-        public float BreathResetInterval
-        {
-            get { return breathResetInterval; }
-        }
 
         // Setter
         public void SetIncreasingDirtValue(int value)
         {
             increasingDirtValue = value;
         }
-
 
     }
 
@@ -152,8 +133,30 @@ namespace Shabon.Bubble
         int IncreasingDirtValue { get; }
         float ChainRadius { get; }
         int BubbleScore { get; }
-        float RequiredBreathTime { get; }
-        float BreathResetInterval { get; }
+
+        void SetIncreasingDirtValue(int value);
+    }
+
+    [Serializable]
+    public class BreathBubbleData : BubbleData
+    {
+        [Header("----- BreathBubble固有のパラメータ -----")]
+        [Header("倒すために息を吹く時間(s)")]
+        [Min(0)]
+        [SerializeField] float requiredBreathTime;
+
+        [Header("再度息を吹くまでの猶予時間(s)")]
+        [Min(0)]
+        [SerializeField] float breathResetInterval;
+
+        public float RequiredBreathTime
+        {
+            get { return requiredBreathTime; }
+        }
+        public float BreathResetInterval
+        {
+            get { return breathResetInterval; }
+        }
     }
 }
 
