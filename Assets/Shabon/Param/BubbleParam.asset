@@ -13,25 +13,32 @@ MonoBehaviour:
   m_Name: BubbleParam
   m_EditorClassIdentifier: 
   bubbleDataList:
-  - bubbleType: 1
-    bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
-    bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
-    bubbleSpawnedArea: 0
-    forwardVelocity: 0.3
-    zoneWaitingTime: 1
-    increasingDirtValue: 1
-    chainRadius: 0.75
-    bubbleScore: 100
-    requiredBreathTime: 0
-    breathResetInterval: 0
-  - bubbleType: 2
-    bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
-    bubbleAnimatorController: {fileID: 9100000, guid: bc43c70f1c72545d3bb2583e9879912a, type: 2}
-    bubbleSpawnedArea: 0
-    forwardVelocity: 0.5
-    zoneWaitingTime: 1
-    increasingDirtValue: 1
-    chainRadius: 0.75
-    bubbleScore: 100
-    requiredBreathTime: 0
-    breathResetInterval: 0
+  - rid: 7383347596459508401
+  - rid: 7383347596459508406
+  references:
+    version: 2
+    RefIds:
+    - rid: 7383347596459508401
+      type: {class: BubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
+      data:
+        bubbleType: 1
+        bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
+        bubbleAnimatorController: {fileID: 0}
+        bubbleSpawnedArea: 0
+        forwardVelocity: 0.5
+        zoneWaitingTime: 2
+        increasingDirtValue: 1
+        chainRadius: 0.75
+        bubbleScore: 100
+    - rid: 7383347596459508406
+      type: {class: BubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
+      data:
+        bubbleType: 2
+        bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
+        bubbleAnimatorController: {fileID: 0}
+        bubbleSpawnedArea: 0
+        forwardVelocity: 0.7
+        zoneWaitingTime: 2
+        increasingDirtValue: 1
+        chainRadius: 0.75
+        bubbleScore: 200
