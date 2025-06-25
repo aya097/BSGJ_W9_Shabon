@@ -87,7 +87,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// 適切なBubbleMoverを返す
         /// </summary>
-        private IBubbleMover GetBubbleMover(Transform transform, IBubbleData bubbleData)
+        protected virtual IBubbleMover GetBubbleMover(Transform transform, IBubbleData bubbleData)
         {
             float forwardVelocity = bubbleData.ForwardVelocity;
             return bubbleData.BubbleType switch
@@ -142,7 +142,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        protected virtual void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnReach += () =>
             {
