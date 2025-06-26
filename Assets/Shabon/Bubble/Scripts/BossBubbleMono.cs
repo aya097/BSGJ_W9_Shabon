@@ -16,16 +16,19 @@ namespace Shabon.Bubble
             get { return _isBreathing; }
             set { _isBreathing = value; }
         }
-
         public int BossHp
         {
             get { return _bossHp; }
             set { _bossHp = value; }
         }
-        public bool IsAttacked => _isAttacked;
+        public bool IsBack
+        {
+            get { return _isBack; }
+            set { _isBack = value; }
+        }
 
         private bool _isBreathing = false;
-        private bool _isAttacked = false;
+        private bool _isBack = false;
         private int _bossHp = 0;
         private Vector3 _basePosition;
 
@@ -41,12 +44,12 @@ namespace Shabon.Bubble
             // 停止中だったら動かない
             if (_isStop) return;
 
-            if (_isAttacked)
+            if (_isBack)
             {
                 if (_bubbleMover is BossBubbleMover bossBubbleMover)
                     bossBubbleMover.MoveBackward(_basePosition);
                 int distance = (int)Vector3.Distance(transform.position, _basePosition);
-                if (distance == 0) _isAttacked = false;
+                if (distance == 0) _isBack = false;
             }
             else
             {
