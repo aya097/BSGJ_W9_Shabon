@@ -65,7 +65,6 @@ namespace Shabon.Bubble
                 // 攻撃中は倒せない
                 if (!bubbleMono.IsAttacking)
                 {
-                    bubbleMono.Stop();
                     bubbleView.SetHighlight(HighLightType.Claped);
                     bubbleView.PlayClap(() =>
                     {
@@ -75,9 +74,30 @@ namespace Shabon.Bubble
                             if (bossBubbleMono.BossHp == 0)
                                 bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         }
-                            
                     });
                 }
+            };
+        }
+
+        protected override void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnReach += () =>
+            {
+                Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
+                    .Subscribe(_ =>
+                    {
+                        if ((bubbleMono as MonoBehaviour) != null
+                                && bubbleMono is BossBubbleMono bossBubbleMono)
+                        {
+                            bubbleMono.IsAttacking = true;
+                            bubbleView.SetHighlight(HighLightType.Attack);
+                            bubbleView.PlayAttack(() =>
+                            {
+                                bubbleMono.IsAttacking = false;
+                                bossBubbleMono.IsBack = true;
+                            });
+                        }
+                    });
             };
         }
 
