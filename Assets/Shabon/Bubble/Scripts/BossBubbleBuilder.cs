@@ -58,5 +58,28 @@ namespace Shabon.Bubble
 
         }
 
+        protected override void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnClap += _ =>
+            {
+                // 攻撃中は倒せない
+                if (!bubbleMono.IsAttacking)
+                {
+                    bubbleMono.Stop();
+                    bubbleView.SetHighlight(HighLightType.Claped);
+                    bubbleView.PlayClap(() =>
+                    {
+                        if (bubbleMono is BossBubbleMono bossBubbleMono)
+                        {
+                            bossBubbleMono.BossHp--;
+                            if (bossBubbleMono.BossHp == 0)
+                                bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                        }
+                            
+                    });
+                }
+            };
+        }
+
     }
 }
