@@ -22,7 +22,7 @@ public class BossBubbleMover : NormalBubbleMover
     {
         Vector3 directionToTarget = basePosition - _transform.position;
         directionToTarget.y = 0;
-        _transform.Translate(directionToTarget.normalized * _forwardVelocity * Time.deltaTime, Space.World);
+        _transform.Translate(directionToTarget.normalized * _forwardVelocity * 10 * Time.deltaTime, Space.World);
         
     }
 }
