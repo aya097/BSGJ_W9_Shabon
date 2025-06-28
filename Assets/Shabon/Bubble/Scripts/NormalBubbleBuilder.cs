@@ -75,11 +75,11 @@ namespace Shabon.Bubble
                 {
                     if (clapable)
                     {
-                        bubbleViewMono.TurnOnHighlight();
+                        bubbleViewMono.SetHighlight(HighLightType.Clapable);
                     }
                     else
                     {
-                        bubbleViewMono.TurnOffHighlight();
+                        bubbleViewMono.SetHighlight(HighLightType.None);
                     }
                 }).AddTo(bubbleViewMono);
         }
@@ -108,7 +108,7 @@ namespace Shabon.Bubble
                 {
                     // 息が吹かれた時のアニメーションを再生
                     bubbleView.PlayBreath();
-                    bubbleView.SetDarkness(0f);
+                    bubbleView.SetHighlight(HighLightType.Breathed);
 
 
                     // Playerと逆の方向
@@ -130,8 +130,7 @@ namespace Shabon.Bubble
                 if (!bubbleMono.IsAttacking)
                 {
                     bubbleMono.Stop();
-                    bubbleView.SetDarkness(0f);
-                    bubbleView.TurnOffHighlight();
+                    bubbleView.SetHighlight(HighLightType.Claped);
                     bubbleView.PlayClap(() =>
                     {
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
@@ -154,8 +153,7 @@ namespace Shabon.Bubble
                         if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
-                            bubbleView.SetDarkness(0.2f);
-                            bubbleView.TurnOffHighlight();
+                            bubbleView.SetHighlight(HighLightType.Attack);
                             bubbleView.PlayAttack(() => bubbleDeath.InvokeDeath(BubbleDeathType.Attack));
                         }
                     });

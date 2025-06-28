@@ -50,7 +50,7 @@ namespace Shabon.Clap
             return hits
                 .Select(x =>
                 {
-                    var parent = x.transform.parent;
+                    var parent = x.transform.parent.parent;
                     var bubbleMono = parent?.GetComponent<IBubbleMono>();
                     return bubbleMono;
                 })
