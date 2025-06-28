@@ -128,6 +128,9 @@ namespace Shabon.Game
                         {
                             ResultData.SaveResults(_dirtValue.DirtNum, _scoreValue.ScoreNum, _bubbleCombo.MaxNum);
                             SceneTransition.Transition(SceneName.ResultScene);
+                            // スコアを保存
+                            RankingScore.SaveScore(_scoreValue.ScoreNum);
+
                         }
                         else
                         {
