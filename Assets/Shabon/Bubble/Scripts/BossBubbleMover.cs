@@ -1,7 +1,7 @@
 using Shabon.Bubble;
 using UnityEngine;
 
-public class BossBubbleMover : NormalBubbleMover
+public class BossBubbleMover : NormalBubbleMover, IBubbleMover
 {
     private readonly Transform _transform;  // 制御するBubbleのtransform
     private readonly Transform _targetTransform; // PlayerのTransform
