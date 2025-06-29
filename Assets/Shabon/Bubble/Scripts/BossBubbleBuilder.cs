@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using R3;
 using Shabon.Param;
 using Shabon.Score;
-using Unity.VisualScripting;
 using UnityEngine;
 using VContainer;
 
@@ -23,6 +22,7 @@ namespace Shabon.Bubble
         private readonly IBubbleCombo _bubbleCombo;
         private readonly IScoreValue _scoreValue;
         private readonly List<IDisposable> _presenterObservable = new();
+        private readonly IBubbleSpawner _bubbleSpawner;
 
         [Inject]
         public BossBubbleBuilder(
@@ -31,7 +31,8 @@ namespace Shabon.Bubble
             IDirtValue dirtValue,
             IAreaChecker waitAreaChecker,
             IBubbleCombo bubbleCombo,
-            IScoreValue scoreValue)
+            IScoreValue scoreValue,
+            IBubbleSpawner bubbleSpawner)
             : base(playerTransform, bubbleCluster, dirtValue, waitAreaChecker, bubbleCombo, scoreValue)
         {
             _playerTransform = playerTransform;
@@ -40,6 +41,7 @@ namespace Shabon.Bubble
             _waitAreaChecker = waitAreaChecker;
             _bubbleCombo = bubbleCombo;
             _scoreValue = scoreValue;
+            _bubbleSpawner = bubbleSpawner;
         }
 
         /// <summary>
@@ -56,6 +58,17 @@ namespace Shabon.Bubble
                 deathParams,
                 () => { DestroyBubble(bubbleMono); });
 
+            if (bubbleViewMono is BossBubbleViewMono bossBubbleView)
+                SetOnSpawn(bubbleSetter, bubbleMono, bossBubbleView);
+            
+        }
+        
+        protected override void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnBreath += (arg) =>
+            {
+                
+            };
         }
 
         protected override void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
@@ -63,19 +76,22 @@ namespace Shabon.Bubble
             bubbleSetter.OnClap += _ =>
             {
                 // 攻撃中は倒せない
-                if (!bubbleMono.IsAttacking)
+                if (bubbleMono.IsAttacking) return;
+
+                bubbleMono.Stop();
+                bubbleView.SetHighlight(HighLightType.Claped);
+                bubbleView.PlayClap(() =>
                 {
-                    bubbleView.SetHighlight(HighLightType.Claped);
-                    bubbleView.PlayClap(() =>
+                    bubbleMono.DecreaseHp(1);
+                    if (bubbleMono.BossHitPoint == 0)
                     {
-                        if (bubbleMono is BossBubbleMono bossBubbleMono)
-                        {
-                            bossBubbleMono.BossHp--;
-                            if (bossBubbleMono.BossHp == 0)
-                                bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
-                        }
-                    });
-                }
+                        bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                        return;
+                    }
+
+                    bubbleMono.Resume();
+                });
+
             };
         }
 
@@ -86,20 +102,43 @@ namespace Shabon.Bubble
                 Observable.Timer(TimeSpan.FromSeconds(bubbleData.ZoneWaitingTime))
                     .Subscribe(_ =>
                     {
-                        if ((bubbleMono as MonoBehaviour) != null
-                                && bubbleMono is BossBubbleMono bossBubbleMono)
+                        if ((bubbleMono as MonoBehaviour) != null)
                         {
                             bubbleMono.IsAttacking = true;
                             bubbleView.SetHighlight(HighLightType.Attack);
                             bubbleView.PlayAttack(() =>
                             {
+                                _dirtValue.Increase(3); // 汚れ値増加 todo:仮
                                 bubbleMono.IsAttacking = false;
-                                bossBubbleMono.IsBack = true;
+                                bubbleMono.IsReached = false;
+                                bubbleMono.Back();
                             });
                         }
                     });
             };
         }
 
+        // バブルを呼び出す処理
+        private void SetOnSpawn(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, BossBubbleViewMono bossBubbleView)
+        {
+            if (bubbleSetter is BossBubbleMono bossBubbleSetter)
+            {
+                bossBubbleSetter.OnSpawn += (bubbleTypeList) =>
+                {
+                    bubbleMono.Stop();
+                    bossBubbleView.SetHighlight(HighLightType.None);
+                    bossBubbleView.PlaySpawn(() =>
+                        {
+                            foreach (BubbleType bubbleType in bubbleTypeList)
+                            {
+                                _bubbleSpawner.Spawn(bubbleType);
+                            }
+                            bubbleMono.Resume();
+                        }
+                    );
+                };
+            }
+
+        }
     }
 }
