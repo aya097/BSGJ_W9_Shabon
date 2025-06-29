@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-
 
 namespace Shabon.Bubble
 {
@@ -19,6 +17,7 @@ namespace Shabon.Bubble
         void Stop();
         void Resume();
 
+        // BossBubble
         int BossHitPoint { get => 0; }
         void Back() { }
         void DecreaseHp(int bossHitPoint) { }
