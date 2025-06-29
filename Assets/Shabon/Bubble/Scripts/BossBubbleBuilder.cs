@@ -108,7 +108,7 @@ namespace Shabon.Bubble
                             bubbleView.SetHighlight(HighLightType.Attack);
                             bubbleView.PlayAttack(() =>
                             {
-                                _dirtValue.Increase(3); // 汚れ値増加 todo:仮
+                                _dirtValue.Increase(bubbleData.IncreasingDirtValue);
                                 bubbleMono.IsAttacking = false;
                                 bubbleMono.IsReached = false;
                                 bubbleMono.Back();
@@ -126,7 +126,7 @@ namespace Shabon.Bubble
                 bossBubbleSetter.OnSpawn += (bubbleTypeList) =>
                 {
                     bubbleMono.Stop();
-                    bossBubbleView.SetHighlight(HighLightType.None);
+                    bossBubbleView.SetHighlight(HighLightType.None); // ここ仮
                     bossBubbleView.PlaySpawn(() =>
                         {
                             foreach (BubbleType bubbleType in bubbleTypeList)
