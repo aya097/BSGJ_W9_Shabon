@@ -135,8 +135,14 @@ namespace Shabon.Bubble
         int BubbleScore { get; }
 
         void SetIncreasingDirtValue(int value);
+
+        // BossBubble
+        int BossHitPoint { get => 0; }
+        float BubbleSpawnInterval { get => 0.0f; }
+        int BubbleSpawnNum { get => 0; }
     }
 
+    // BreathBubble固有のパラメータ
     [Serializable]
     public class BreathBubbleData : BubbleData
     {
@@ -159,17 +165,34 @@ namespace Shabon.Bubble
         }
     }
 
+    // BossBubble固有のパラメータ
     [Serializable]
-    public class BossBubbleData : BubbleData
+    public class BossBubbleData : BubbleData, IBubbleData
     {
         [Header("----- BossBubble固有のパラメータ -----")]
         [Header("体力（＝ 倒すのに必要なclapの回数）")]
         [Min(0)]
-        [SerializeField] int hp;
+        [SerializeField] int bossHitPoint;
 
-        public int Hp
+        [Header("バブルをスポーンさせる頻度(秒)")]
+        [Min(0)]
+        [SerializeField] float bubbleSpawnInterval;
+
+        [Header("スポーンさせるバブルの数")]
+        [Min(1)]
+        [SerializeField] int bubbleSpawnNum;
+
+        public int BossHitPoint
         {
-            get { return hp; }
+            get { return bossHitPoint; }
+        }
+        public float BubbleSpawnInterval
+        {
+            get { return bubbleSpawnInterval; }
+        }
+        public int BubbleSpawnNum
+        {
+            get { return bubbleSpawnNum; }
         }
     }
 }
