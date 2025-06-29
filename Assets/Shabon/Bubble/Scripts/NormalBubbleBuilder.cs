@@ -93,6 +93,7 @@ namespace Shabon.Bubble
             return bubbleData.BubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
+                BubbleType.Boss => new BossBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform),
                 _ => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform) // もし該当がなければNormalを返しておく
             };
         }
@@ -142,7 +143,7 @@ namespace Shabon.Bubble
         /// <summary>
         /// エリアに到達したときの処理
         /// </summary>
-        private void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
+        protected virtual void SetOnReach(IBubbleBuildSetter bubbleSetter, IBubbleMono bubbleMono, IBubbleData bubbleData, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnReach += () =>
             {

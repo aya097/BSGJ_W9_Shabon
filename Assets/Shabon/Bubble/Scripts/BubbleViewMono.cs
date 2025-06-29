@@ -12,6 +12,7 @@ namespace Shabon.Bubble
         Clap,
         Breath,
         Attack,
+        Spawn
     }
     public enum HighLightType
     {
@@ -26,12 +27,12 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleViewMono : MonoBehaviour
     {
-        [SerializeField] private Animator _bubbleAnimator = null!;
-        [SerializeField] private SpriteRenderer _spriteRenderer = null!;
+        [SerializeField] protected Animator _bubbleAnimator = null!;
+        [SerializeField] protected SpriteRenderer _spriteRenderer = null!;
 
-        private BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
+        protected BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
-        private Color _originalColor;
+        protected Color _originalColor;
 
         void Awake()
         {
@@ -68,16 +69,16 @@ namespace Shabon.Bubble
             }
         }
         // ハイライト
-        private void TurnOnHighlight()
+        protected virtual void TurnOnHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 1f);
         }
-        private void TurnOffHighlight()
+        protected virtual void TurnOffHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
         }
         // メイド
-        private void SetDarkness(float value)
+        protected virtual void SetDarkness(float value)
         {
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
         }
@@ -101,7 +102,7 @@ namespace Shabon.Bubble
         }
 
         //攻撃するときのアニメーションを再生するメソッド
-        public void PlayAttack(Action? callback = null)
+        public virtual void PlayAttack(Action? callback = null)
         {
             // Breathをリセット
             _breathDisposable?.Dispose();
@@ -115,7 +116,7 @@ namespace Shabon.Bubble
         }
 
         // Clapされたときのアニメーション
-        public void PlayClap(Action? callback = null)
+        public virtual void PlayClap(Action? callback = null)
         {
             // Breathをリセット
             _breathDisposable?.Dispose();
@@ -130,7 +131,7 @@ namespace Shabon.Bubble
 
 
 
-        private void Play(BubbleAnimationEnum animation)
+        protected virtual void Play(BubbleAnimationEnum animation)
         {
             if (_currentAnimation != animation)
             {

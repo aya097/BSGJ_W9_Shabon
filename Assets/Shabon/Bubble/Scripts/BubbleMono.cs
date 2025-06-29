@@ -13,7 +13,11 @@ namespace Shabon.Bubble
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
         // 攻撃位置に到達している
-        public bool IsReached => _isReached;
+        public bool IsReached
+        {
+            get { return _isReached; }
+            set { _isReached = value; }
+        }
         // 攻撃中か
         public bool IsAttacking
         {

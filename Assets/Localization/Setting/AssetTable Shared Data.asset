@@ -38,6 +38,10 @@ MonoBehaviour:
       1
     m_Metadata:
       m_Items: []
+  - m_Id: 3978146599657472
+    m_Key: Bubble/Bubble/View
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 7865446932015743671
