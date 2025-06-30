@@ -95,10 +95,17 @@ namespace Shabon.Game
                 () =>
                 {
                     _bubbleCount++;
-
-                    // ランダムにBubbleスポーン
-                    BubbleType bubbleType = SelectSpawningBubble(_gamePhases.GetCurrentPhaseData().SpawningBubbles);
-                    _bubbleSpawner.Spawn(bubbleType);
+                    // 一度の生成数だけバブルを生成
+                    for (int i = 0; i < _gamePhases.GetCurrentPhaseData().BubblesPerSpawn; i++)
+                    {
+                        // バブルの最大数を超えないようにする
+                        if (_bubbleCluster.Bubbles.Count() < _gamePhases.GetCurrentPhaseData().MaxBabbleOnField)
+                        {
+                            // ランダムにBubbleスポーン
+                            BubbleType bubbleType = SelectSpawningBubble(_gamePhases.GetCurrentPhaseData().SpawningBubbles);
+                            _bubbleSpawner.Spawn(bubbleType);
+                        }
+                    }
 
                     // 次のEventを登録
                     SubscribeSpawnBubble();

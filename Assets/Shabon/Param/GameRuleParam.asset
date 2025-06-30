@@ -22,7 +22,7 @@ MonoBehaviour:
       ratio: 2
     - type: 3
       ratio: 1
-    maxBabbleOnField: 8
+    maxBabbleOnField: 30
     phaseLengthTime: 30
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
