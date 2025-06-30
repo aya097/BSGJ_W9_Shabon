@@ -101,6 +101,9 @@ namespace Shabon.Game
                     // Quickタイプをスポーンする処理を追加
                     _bubbleSpawner.Spawn(BubbleType.Quick);
 
+                    // Breathタイプをスポーン
+                    _bubbleSpawner.Spawn(BubbleType.Breath);
+
                     // 次のEventを登録
                     SubscribeSpawnBubble();
                 }

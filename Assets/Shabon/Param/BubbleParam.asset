@@ -15,8 +15,8 @@ MonoBehaviour:
   bubbleDataList:
   - rid: 7383347596459508401
   - rid: 7383347596459508406
-  - rid: 7383347597461684939
   - rid: 7383347643596406999
+  - rid: 7383347597461684939
   references:
     version: 2
     RefIds:
@@ -66,7 +66,7 @@ MonoBehaviour:
         bubblePrefab: {fileID: -4593445064888892722, guid: 0afc96797dca2c041aea38182f4a5a7c, type: 3}
         bubbleAnimatorController: {fileID: 0}
         bubbleSpawnedArea: 0
-        forwardVelocity: 0.1
+        forwardVelocity: 0.2
         zoneWaitingTime: 2
         increasingDirtValue: 1
         chainRadius: 0.75
