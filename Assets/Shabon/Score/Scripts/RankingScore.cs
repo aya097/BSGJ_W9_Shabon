@@ -34,7 +34,7 @@ namespace Shabon.Score
         public static List<int> LoadScores()
         {
 #if UNITY_WEBGL
-            new List<int>() return;
+            return new List<int>();
 #endif
             if (!File.Exists(FilePath))
             {
