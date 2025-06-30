@@ -17,6 +17,9 @@ namespace Shabon.Score
         /// </summary>
         public static void SaveScore(int score)
         {
+#if UNITY_WEBGL
+            return;
+#endif
             Debug.Log($"Saving Score: {score}");
             List<int> scores = LoadScores();
             scores.Add(score);
@@ -30,6 +33,9 @@ namespace Shabon.Score
         /// </summary>
         public static List<int> LoadScores()
         {
+#if UNITY_WEBGL
+            return new List<int>();
+#endif
             if (!File.Exists(FilePath))
             {
                 return new List<int>();
