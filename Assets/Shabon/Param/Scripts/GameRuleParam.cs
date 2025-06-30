@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Shabon.Bubble;
 using UnityEngine;
 
 namespace Shabon.Param
@@ -56,6 +57,9 @@ namespace Shabon.Param
         [Min(0)]
         [SerializeField] float spawnBubbleInterval;
 
+        [Header("登場バブルと生成割合")]
+        [SerializeField] List<SpawningRatio> spawningBubbles = new();
+
         [Header("バブルのステージ上の最大数")]
         [Min(0)]
         [SerializeField] int maxBabbleOnField;
@@ -77,6 +81,11 @@ namespace Shabon.Param
         {
             get { return spawnBubbleInterval; }
         }
+        public IEnumerable<SpawningRatio> SpawningBubbles
+        {
+            get { return spawningBubbles; }
+        }
+
         public int MaxBabbleOnField
         {
             get { return maxBabbleOnField; }
@@ -94,10 +103,23 @@ namespace Shabon.Param
 
     public interface IGamePhaseData
     {
-        int BubblesPerSpawn { get; }
-        float SpawnBubbleInterval { get; }
-        int MaxBabbleOnField { get; }
-        float PhaseLengthTime { get; }
-        float PhaseDelayTime { get; }
+        int BubblesPerSpawn { get; }    // 一度のバブルのスポーン数
+        float SpawnBubbleInterval { get; }  // バブルの生成間隔
+        IEnumerable<SpawningRatio> SpawningBubbles { get; } // 登場するバブルと生成割合
+
+        int MaxBabbleOnField { get; }   // バブルの最大数
+        float PhaseLengthTime { get; }  // フェーズの長さ
+        float PhaseDelayTime { get; }   // このフェーズが終わったあとの時間
+    }
+    // バブルの生成確率を記載するクラス
+    [Serializable]
+    public class SpawningRatio
+    {
+        [SerializeField] private BubbleType type;
+        [SerializeField] private float ratio;   // 全体に対する割あり（0~1でなくてよい）
+
+        public BubbleType Type => type;
+        public float Ratio => ratio;
+
     }
 }
