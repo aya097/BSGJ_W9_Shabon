@@ -13,6 +13,7 @@ using VContainer;
 using VContainer.Unity;
 using R3;
 using Shabon.Utility;
+using Shabon.Param;
 
 namespace Shabon.Game
 {
@@ -95,14 +96,9 @@ namespace Shabon.Game
                 {
                     _bubbleCount++;
 
-                    // Bubbleスポーン
-                    _bubbleSpawner.Spawn(BubbleType.Normal);
-
-                    // Quickタイプをスポーンする処理を追加
-                    _bubbleSpawner.Spawn(BubbleType.Quick);
-
-                    // Breathタイプをスポーン
-                    _bubbleSpawner.Spawn(BubbleType.Breath);
+                    // ランダムにBubbleスポーン
+                    BubbleType bubbleType = SelectSpawningBubble(_gamePhases.GetCurrentPhaseData().SpawningBubbles);
+                    _bubbleSpawner.Spawn(bubbleType);
 
                     // 次のEventを登録
                     SubscribeSpawnBubble();
@@ -191,6 +187,35 @@ namespace Shabon.Game
             }
         }
 
+        /// <summary>
+        /// 生成されるバブルを確率で選択
+        /// </summary>
+        /// <param name="spawningRatios"></param>
+        /// <returns></returns>
+        public BubbleType SelectSpawningBubble(IEnumerable<SpawningRatio> spawningRatios)
+        {
+            float whole = 0;    // 全体の割合
+            foreach (var spawningRatio in spawningRatios)
+            {
+                whole += spawningRatio.Ratio;
+            }
 
+            // 生成されるバブルを確率で選択
+            float rand = UnityEngine.Random.Range(0, whole);
+
+            float sum = 0;  // 合計値
+            foreach (var spawningRatio in spawningRatios)
+            {
+                sum += spawningRatio.Ratio;
+                if (rand <= sum)
+                {
+                    Debug.Log($"選択されるバブルの割合: ランダム{rand}, 選択されたバブル{spawningRatio.Type}, 合計値{sum}");
+
+                    return spawningRatio.Type; // 選択されたバブルタイプを返す
+                }
+            }
+
+            return BubbleType.Normal; // デフォルトはNormalバブル
+        }
     }
 }
