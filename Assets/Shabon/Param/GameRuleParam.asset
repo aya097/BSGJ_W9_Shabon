@@ -15,7 +15,14 @@ MonoBehaviour:
   gamePhaseDataList:
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
-    maxBabbleOnField: 8
+    spawningBubbles:
+    - type: 1
+      ratio: 4
+    - type: 2
+      ratio: 2
+    - type: 3
+      ratio: 1
+    maxBabbleOnField: 30
     phaseLengthTime: 30
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1

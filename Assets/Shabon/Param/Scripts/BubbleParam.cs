@@ -49,9 +49,6 @@ namespace Shabon.Bubble
         [Header("バブルのPrefab")]
         [SerializeField] BubbleMono bubblePrefab;
 
-        [Header("バブルのAnimator")]
-        [SerializeField] RuntimeAnimatorController bubbleAnimatorController;
-
         [Header("以下基本パラメータ")]
 
         [Header("バブルの生成エリア")]
@@ -69,10 +66,6 @@ namespace Shabon.Bubble
         [Min(0)]
         [SerializeField] int increasingDirtValue;
 
-        [Header("連鎖可能なバブル中心からの距離")]
-        [Min(0)]
-        [SerializeField] float chainRadius;
-
         [Header("バブルのスコア")]
         [SerializeField] int bubbleScore;
 
@@ -84,10 +77,6 @@ namespace Shabon.Bubble
         public BubbleMono BubblePrefab
         {
             get { return bubblePrefab; }
-        }
-        public RuntimeAnimatorController BubbleAnimatorController
-        {
-            get { return bubbleAnimatorController; }
         }
         public BubbleSpawnedAreaType BubbleSpawnedArea
         {
@@ -104,10 +93,6 @@ namespace Shabon.Bubble
         public int IncreasingDirtValue
         {
             get { return increasingDirtValue; }
-        }
-        public float ChainRadius
-        {
-            get { return chainRadius; }
         }
         public int BubbleScore
         {
@@ -126,12 +111,10 @@ namespace Shabon.Bubble
     {
         BubbleType BubbleType { get; }
         BubbleMono BubblePrefab { get; }
-        RuntimeAnimatorController BubbleAnimatorController { get; }
         BubbleSpawnedAreaType BubbleSpawnedArea { get; }
         float ForwardVelocity { get; }
         float ZoneWaitingTime { get; }
         int IncreasingDirtValue { get; }
-        float ChainRadius { get; }
         int BubbleScore { get; }
 
         void SetIncreasingDirtValue(int value);
