@@ -119,6 +119,10 @@ namespace Shabon.Bubble
 
         void SetIncreasingDirtValue(int value);
 
+        // BreathBubble
+        float RequiredBreathTime { get => 0.0f; }
+        float BreathResetInterval { get => 0.0f; }
+
         // BossBubble
         int BossHitPoint { get => 0; }
         float BubbleSpawnInterval { get => 0.0f; }
@@ -127,7 +131,7 @@ namespace Shabon.Bubble
 
     // BreathBubble固有のパラメータ
     [Serializable]
-    public class BreathBubbleData : BubbleData
+    public class BreathBubbleData : BubbleData, IBubbleData
     {
         [Header("----- BreathBubble固有のパラメータ -----")]
         [Header("倒すために息を吹く時間(s)")]
