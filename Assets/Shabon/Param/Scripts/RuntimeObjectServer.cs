@@ -26,6 +26,9 @@ namespace Shabon.Param
         [Header("プレイヤーを参照")]
         [SerializeField] private Transform playerTransform = null!;
 
+        [Header("汚れエフェクトを生成するCanvas")]
+        [SerializeField] private Canvas dirtEffectCanvas = null!;
+
 
         // interface
         public BoxArea GetArea(BubbleSpawnedAreaType areaType)
@@ -48,6 +51,10 @@ namespace Shabon.Param
         public RectTransform ComboArea
         {
             get { return comboArea; }
+        }
+        public Canvas DirtEffectCanvas
+        {
+            get { return dirtEffectCanvas; }
         }
 
         // プレイヤーを取得するプロパティ
@@ -100,4 +107,10 @@ namespace Shabon.Param
     {
         Transform PlayerTransform { get; }
     }
+
+    public interface IDirtEffectCanvas
+    {
+        Canvas DirtEffectCanvas { get; }
+    }
 }
+
