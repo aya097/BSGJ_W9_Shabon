@@ -92,6 +92,7 @@ namespace Shabon.Game
 
             // DirtEffect
             builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<DirtEffectCollectorMono>();
 
             // NormalBubbleBuilderを登録
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf73639ccadf40fdaf7e540a27a8742, type: 3}
   m_Name: DirtViewParam
   m_EditorClassIdentifier: 
-  dirtPrefab: {fileID: 0}
+  dirtPrefab: {fileID: 2782852725407693863, guid: 7ad8821e6597a489faa8d25c873e5b32, type: 3}
