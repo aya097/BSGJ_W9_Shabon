@@ -22,6 +22,8 @@ namespace Shabon.Game
         [SerializeField] GameRuleParam gameRuleParam = null!;
         [SerializeField] BubbleParam bubbleParam = null!;
         [SerializeField] ComboViewParam comboViewParam = null!;
+        [SerializeField] DirtViewParam dirtViewParam = null!;
+
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -87,6 +89,10 @@ namespace Shabon.Game
             builder.Register<ComboSpawner>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<ClapUiViewMono>();
             builder.RegisterComponentInHierarchy<ClockViewMono>();
+
+            // DirtEffect
+            builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<DirtEffectCollectorMono>();
 
             // NormalBubbleBuilderを登録
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
