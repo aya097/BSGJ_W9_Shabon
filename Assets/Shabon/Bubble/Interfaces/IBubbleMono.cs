@@ -4,6 +4,7 @@ namespace Shabon.Bubble
 {
     public interface IBubbleMono
     {
+        bool IsBreathing { get; set; }
         bool IsReached { get; set; }
         bool IsAttacking { get; set; }
         bool IsStop { get; }

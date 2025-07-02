@@ -12,7 +12,13 @@ namespace Shabon.Bubble
     /// </summary>
     public class BubbleMono : MonoBehaviour, IBubbleMono, IBubbleBuildSetter
     {
-        // 攻撃位置に到達している
+        // 息が吹かれているか
+        public bool IsBreathing
+        {
+            get { return _isBreathing; }
+            set { _isBreathing = value; }
+        }
+        // 攻撃位置に到達している   
         public bool IsReached
         {
             get { return _isReached; }
@@ -43,6 +49,7 @@ namespace Shabon.Bubble
         protected BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
         protected IAreaChecker _waitAreaChecker = null!;
         protected int _bubbleScore;
+        protected bool _isBreathing = false;         
         protected bool _isReached = false;
         private bool _isAttacking = false;
         protected bool _isStop = false;
@@ -57,7 +64,8 @@ namespace Shabon.Bubble
             // 停止中だったら動かない
             if (_isStop) return;
 
-            _bubbleMover.MoveForward();
+            // 息が吹かれてるときは前進しないように
+            if (_isBreathing == false) _bubbleMover.MoveForward();
 
             // waitArea
             if (_waitAreaChecker.IsInArea(transform.position))

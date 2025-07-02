@@ -55,34 +55,6 @@ namespace Shabon.Bubble
         }
 
         /// <summary>
-        /// 息を吹かれたときの処理を作成
-        /// </summary>
-        protected override void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
-        {
-            bubbleSetter.OnBreath += (arg) =>
-            {
-                // 到達してないときかつ動かないとき
-                if (!(bubbleMono.IsReached || bubbleMono.IsStop))
-                {
-                    // 息を吹いている状態にする
-                    if (bubbleMono is BreathBubbleMono breathBubbleMono)
-                    {
-                        breathBubbleMono.IsBreathing = true;
-                    }
-
-                    // 息が吹かれた時のアニメーションを再生
-                    bubbleView.PlayBreath();
-                    bubbleView.SetHighlight(HighLightType.Breathed);
-
-                    // Playerと逆の方向
-                    Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
-                    moveDirection.y = 0;
-                    bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
-                }
-            };
-        }
-
-        /// <summary>
         /// Clapされた時の処理
         /// </summary>
         protected override void SetOnClap(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)

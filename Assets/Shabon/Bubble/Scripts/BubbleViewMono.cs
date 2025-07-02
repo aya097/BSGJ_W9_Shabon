@@ -91,7 +91,7 @@ namespace Shabon.Bubble
 
 
         // 息吹かれたときのアニメーションを再生するメソッド
-        public void PlayBreath()
+        public void PlayBreath(IBubbleMono bubbleMono)
         {
             // Breathは毎フレーム呼ばれるから修正
             _breathDisposable?.Dispose();
@@ -100,6 +100,7 @@ namespace Shabon.Bubble
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
+                    bubbleMono.IsBreathing = false;
                 });
 
             Play(BubbleAnimationEnum.Breath);
