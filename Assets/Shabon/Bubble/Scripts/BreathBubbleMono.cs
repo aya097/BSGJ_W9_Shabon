@@ -11,17 +11,11 @@ namespace Shabon.Bubble
     public class BreathBubbleMono : BubbleMono
     {
         public event Action? OnDead;
-        public bool IsBreathing
-        {
-            get { return _isBreathing; }
-            set { _isBreathing = value; }
-        }
 
         private float _requiredBreathTime;
         private float _breathResetInterval;
         private float _breathTimer = 0f;
         private float lastBreathTime = 0f;
-        private bool _isBreathing = false;
 
         protected override void Update()
         {

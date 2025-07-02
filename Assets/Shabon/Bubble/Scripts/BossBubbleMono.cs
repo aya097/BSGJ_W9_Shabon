@@ -10,14 +10,8 @@ namespace Shabon.Bubble
     public class BossBubbleMono : BubbleMono, IBubbleMono
     {
         public event Action<IEnumerable<BubbleType>>? OnSpawn;
-        public bool IsBreathing
-        {
-            get { return _isBreathing; }
-            set { _isBreathing = value; }
-        }
 
         public int BossHitPoint => _bossHitPoint;
-        private bool _isBreathing = false;
         private bool _isBack = false;
         private Vector3 _basePosition;
         private int _bossHitPoint;
