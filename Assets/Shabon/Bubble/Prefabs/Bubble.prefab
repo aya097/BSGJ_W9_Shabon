@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bubbleAnimator: {fileID: 6709187165724229972}
   _spriteRenderer: {fileID: 2338278414559877131}
+  cureEffect: {fileID: 5123487092924600915}
 --- !u!1 &1869999410950600678
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bubbleAnimator: {fileID: 2303769695889295307}
   _spriteRenderer: {fileID: 3369368968591772406}
+  cureEffect: {fileID: 5123487092924600915}
 --- !u!1 &5123487092924600915
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,3 +918,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bubbleAnimator: {fileID: 6906204988997953849}
   _spriteRenderer: {fileID: 6421015826853147177}
+  cureEffect: {fileID: 5123487092924600915}
