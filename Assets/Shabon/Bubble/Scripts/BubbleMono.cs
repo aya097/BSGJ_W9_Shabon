@@ -64,7 +64,8 @@ namespace Shabon.Bubble
             // 停止中だったら動かない
             if (_isStop) return;
 
-            _bubbleMover.MoveForward();
+            // 息が吹かれてるときは前進しないように
+            if (_isBreathing == false) _bubbleMover.MoveForward();
 
             // waitArea
             if (_waitAreaChecker.IsInArea(transform.position))
