@@ -108,6 +108,9 @@ namespace Shabon.Bubble
             // スコア増やす
             _deathParams.Score.Increase(100);   // todo 仮
 
+            // DirtValueを減らす
+            _deathParams.Dirt.Decrease(1); // Clapで1減らす
+
             // コンボリセット
             // _deathParams.Combo.Reset();
             // _deathParams.Combo.Increase();
