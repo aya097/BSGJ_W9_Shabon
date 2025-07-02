@@ -36,6 +36,10 @@ namespace Shabon.Score
             if (IsAssertMinusNum(value)) return;
 
             _dirtNum -= value;
+            if (_dirtNum < 0)
+            {
+                _dirtNum = 0;
+            }
         }
 
         // 引数は正の数

@@ -57,12 +57,12 @@ public class DirtEffectCollectorMono : MonoBehaviour
     // 汚れを一つ減らす
     private void DecreaseDirtEffects()
     {
-        // 1段階目の汚れエフェクトをランダムで減らす
-        if (RandomDecrease(firstDirtEffects)) return;
-        // 2段階目の汚れエフェクトをランダムで減らす
-        if (RandomDecrease(secondDirtEffects)) return;
         // 3段階目の汚れエフェクトをランダムで減らす
         if (RandomDecrease(thirdDirtEffects)) return;
+        // 2段階目の汚れエフェクトをランダムで減らす
+        if (RandomDecrease(secondDirtEffects)) return;
+        // 1段階目の汚れエフェクトをランダムで減らす
+        if (RandomDecrease(firstDirtEffects)) return;
     }
     // ランダムで汚れエフェクトを一つ減らす、もし減らせなければfalse
     private bool RandomDecrease(List<DirtEffectViewMono> dirtEffects)
