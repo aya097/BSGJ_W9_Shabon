@@ -38,12 +38,18 @@ namespace Shabon.Bubble
             }
         }
 
-        public override void SetBuildParam(IBubbleMover bubbleMover, BubbleDeath bubbleDeath, IAreaChecker areaChecker, IBubbleData bubbleData)
+        public override void SetBuildParam(
+            IBubbleMover bubbleMover,
+            BubbleDeath bubbleDeath,
+            IAreaChecker areaChecker,
+            IBubbleData bubbleData,
+            BubbleCluster bubbleCluster
+        )
         {
-            base.SetBuildParam(bubbleMover, bubbleDeath, areaChecker, bubbleData);
             
             _requiredBreathTime = bubbleData.RequiredBreathTime;
             _breathResetInterval = bubbleData.BreathResetInterval;
+            base.SetBuildParam(bubbleMover, bubbleDeath, areaChecker, bubbleData, bubbleCluster);
         }
 
 
