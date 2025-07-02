@@ -981,6 +981,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coolTime: {fileID: 284104733}
+  _backLight: {fileID: 1740267567}
+  _frontLight: {fileID: 425513089}
 --- !u!1 &257971150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,10 +1175,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 2
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &284104734
@@ -1939,7 +1941,7 @@ GameObject:
   - component: {fileID: 425513092}
   - component: {fileID: 425513091}
   m_Layer: 5
-  m_Name: Kira
+  m_Name: FrontLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7358,7 +7360,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674582239}
-  m_LocalRotation: {x: 0.08715578, y: 0.0000000076194, z: 0.00000008709011, w: -0.9961947}
+  m_LocalRotation: {x: -0.014039228, y: -0.086017616, z: -0.98318547, w: 0.16046904}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
