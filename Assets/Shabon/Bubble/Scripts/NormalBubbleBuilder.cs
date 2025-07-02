@@ -108,16 +108,16 @@ namespace Shabon.Bubble
                 if (!(bubbleMono.IsReached || bubbleMono.IsStop))
                 {
                     bubbleMono.IsBreathing = true;
-                    
-                    // 息が吹かれた時のアニメーションを再生
-                    bubbleView.PlayBreath();
-                    bubbleView.SetHighlight(HighLightType.Breathed);
 
+                    // 息が吹かれた時のアニメーションを再生
+                    bubbleView.PlayBreath(bubbleMono);
+                    bubbleView.SetHighlight(HighLightType.Breathed);
 
                     // Playerと逆の方向
                     Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
                     moveDirection.y = 0;
                     bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
+                    
                 }
             };
         }
