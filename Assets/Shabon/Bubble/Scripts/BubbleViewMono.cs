@@ -30,6 +30,9 @@ namespace Shabon.Bubble
         [SerializeField] protected Animator _bubbleAnimator = null!;
         [SerializeField] protected SpriteRenderer _spriteRenderer = null!;
 
+        [Header("Clapされたときのエフェクト")]
+        [SerializeField] protected GameObject cureEffect = null!;
+
         protected BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
         protected Color _originalColor;
@@ -37,6 +40,7 @@ namespace Shabon.Bubble
         void Awake()
         {
             _originalColor = _spriteRenderer.color;
+            cureEffect.SetActive(false);
         }
 
 
@@ -127,6 +131,9 @@ namespace Shabon.Bubble
                 {
                     callback?.Invoke();
                 }).AddTo(this);
+
+            // CureEffectを再生
+            cureEffect.SetActive(true);
         }
 
 
