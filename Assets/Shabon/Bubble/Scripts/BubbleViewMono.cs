@@ -3,6 +3,8 @@ using System;
 using R3;
 using R3.Triggers;
 using UnityEngine;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Bubble
 {
@@ -41,6 +43,13 @@ namespace Shabon.Bubble
         {
             _originalColor = _spriteRenderer.color;
             cureEffect.SetActive(false);
+
+            Vector3 startPosition = transform.localPosition;
+            LMotion.Create(startPosition.y, startPosition.y + 0.03f, 0.8f)
+                .WithEase(Ease.InOutSine)
+                .WithLoops(-1, LoopType.Yoyo)
+                .BindToLocalPositionY(transform)
+                .AddTo(gameObject);
         }
 
 
