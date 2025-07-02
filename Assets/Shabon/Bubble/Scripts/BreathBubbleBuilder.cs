@@ -64,12 +64,8 @@ namespace Shabon.Bubble
                 // 到達してないときかつ動かないとき
                 if (!(bubbleMono.IsReached || bubbleMono.IsStop))
                 {
-                    // 息を吹いている状態にする
-                    if (bubbleMono is BreathBubbleMono breathBubbleMono)
-                    {
-                        breathBubbleMono.IsBreathing = true;
-                    }
-
+                    bubbleMono.IsBreathing = true;
+                    
                     // 息が吹かれた時のアニメーションを再生
                     bubbleView.PlayBreath();
                     bubbleView.SetHighlight(HighLightType.Breathed);
