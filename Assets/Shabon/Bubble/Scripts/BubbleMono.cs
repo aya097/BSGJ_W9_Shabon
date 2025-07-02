@@ -42,14 +42,22 @@ namespace Shabon.Bubble
         protected IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
         protected BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
         protected IAreaChecker _waitAreaChecker = null!;
+        protected BubbleCluster _bubbleCluster = null!; // 追加
         protected int _bubbleScore;
         protected bool _isReached = false;
         private bool _isAttacking = false;
         protected bool _isStop = false;
         private bool _isClapable = false;
 
+        //Bubble同士の距離
+        private float _bubbleRadius = 0.2f;
+        // ズレる速さ
+        private float _separateSpeed = 3.0f;
+
         protected virtual void Update()
         {
+            // ★常に重なり解消を先に実行
+            SeparateIfOverlapping();
 
             // 到達したら移動しない
             if (_isReached) return;
@@ -67,6 +75,24 @@ namespace Shabon.Bubble
             }
         }
 
+        private void SeparateIfOverlapping()
+        {
+            if (_bubbleCluster == null) return;
+
+            foreach (var other in _bubbleCluster.Bubbles)
+            {
+                if (ReferenceEquals(other, this)) continue;
+                Vector3 dir = transform.position - other.Transform.position;
+                float dist = dir.magnitude;
+                if (dist < _bubbleRadius * 2f && dist > 0.01f)
+                {
+                    // 常に左右（x方向）のみ押し出す
+                    Vector3 pushDir = dir.x > 0 ? Vector3.right : Vector3.left;
+                    transform.position += pushDir * _separateSpeed * Time.deltaTime;
+                }
+            }
+        }
+
         /// <summary>
         /// ビルドの際にパラメータを注ぐ用のクラス
         /// </summary>
@@ -74,12 +100,15 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover,
             BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,
-            IBubbleData bubbleData)
+            IBubbleData bubbleData,
+            BubbleCluster bubbleCluster
+        )
         {
             _bubbleMover = bubbleMover;
             _bubbleDeath = bubbleDeath;
             _waitAreaChecker = areaChecker;
             _bubbleScore = bubbleData.BubbleScore;
+            _bubbleCluster = bubbleCluster;
         }
 
         /// <summary>

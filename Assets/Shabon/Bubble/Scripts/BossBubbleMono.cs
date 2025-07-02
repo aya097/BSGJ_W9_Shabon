@@ -70,13 +70,16 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover,
             BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,
-            IBubbleData bubbleData)
+            IBubbleData bubbleData,
+            BubbleCluster bubbleCluster
+        )
         {
-            base.SetBuildParam(bubbleMover, bubbleDeath, areaChecker, bubbleData);
-
             _bossHitPoint = bubbleData.BossHitPoint;
             _bubbleSpawnInterval = bubbleData.BubbleSpawnInterval;
             _bubbleSpawnNum = bubbleData.BubbleSpawnNum;
+
+            base.SetBuildParam(bubbleMover, bubbleDeath, areaChecker, bubbleData, bubbleCluster);
+
         }
 
         public void Back()
