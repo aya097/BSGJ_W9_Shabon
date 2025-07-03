@@ -54,6 +54,24 @@ namespace Shabon.Bubble
             SetOnDead(bubbleMono, bubbleDeath, bubbleViewMono);
         }
 
+
+        protected override void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
+        {
+            bubbleSetter.OnBreath += (arg) =>
+                {
+                    // 到達してないときかつ動かないとき
+                    if (!(bubbleMono.IsReached || bubbleMono.IsStop))
+                    {
+                        bubbleMono.IsBreathing = true;
+
+                        // 息が吹かれた時のアニメーションを再生
+                        bubbleView.PlayBreath(bubbleMono);
+                        bubbleView.SetHighlight(HighLightType.Breathed);
+                    }
+                };
+        }
+
+
         /// <summary>
         /// Clapされた時の処理
         /// </summary>
