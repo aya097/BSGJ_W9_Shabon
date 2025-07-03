@@ -15,7 +15,7 @@ namespace Shabon.Bubble
         private readonly float _forwardVelocity;
 
         private Vector3 _separateSpeed = Vector3.zero; // 横移動の速さ
-        private float _decreaseSpeed = 0.1f; // 横移動の減速速度
+        private float _decreaseSpeed = 0.5f; // 横移動の減速速度
 
         public NormalBubbleMover(Transform transform, float forwardVelocity, Transform targetTransform)
         {

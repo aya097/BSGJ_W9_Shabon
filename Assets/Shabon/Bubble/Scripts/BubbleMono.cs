@@ -63,14 +63,14 @@ namespace Shabon.Bubble
 
         protected virtual void Update()
         {
-            // ★常に重なり解消を先に実行
-            SeparateIfOverlapping();
-
             // 到達したら移動しない
             if (_isReached) return;
 
             // 停止中だったら動かない
             if (_isStop) return;
+
+            // ★常に重なり解消を先に実行
+            SeparateIfOverlapping();
 
             // 息が吹かれてるときは前進しないように
             if (_isBreathing == false) _bubbleMover.MoveForward();
