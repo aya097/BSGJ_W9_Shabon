@@ -33,13 +33,15 @@ namespace Shabon.Param
         // interface
         public BoxArea GetArea(BubbleSpawnedAreaType areaType)
         {
-            var area = bubbleSpawnedAreas.Where(b => b.AreaType == areaType).FirstOrDefault().Area;
+            var areas = bubbleSpawnedAreas.Where(b => b.AreaType == areaType);
 
-            if (area == null)
+            if (!areas.Any())
             {
                 Debug.LogWarning("未設定のBubbleSpawnedAreaです");
                 return new(Vector3.zero, Vector3.zero);
             }
+            // ランダムに選択
+            var area = areas.ElementAt(UnityEngine.Random.Range(0, areas.Count())).Area;
 
             return new BoxArea(area.gameObject.transform.position, area.size);
         }
@@ -68,6 +70,8 @@ namespace Shabon.Param
     public enum BubbleSpawnedAreaType
     {
         Area0,
+        Area1,
+        Area2,
     };
 
     [Serializable]
