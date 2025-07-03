@@ -35,14 +35,21 @@ namespace Shabon.Bubble
         [Header("Clapされたときのエフェクト")]
         [SerializeField] protected GameObject cureEffect = null!;
 
+        [Header("影")]
+        [SerializeField] protected GameObject shadow = null!;
+
         protected BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
         protected Color _originalColor;
+        private Vector3 _originalShadowScale;
+        private float _originalShadowDistance; // 影の元の距離
 
         void Awake()
         {
             _originalColor = _spriteRenderer.color;
             cureEffect.SetActive(false);
+            _originalShadowScale = shadow.transform.localScale;
+            _originalShadowDistance = Mathf.Abs(shadow.transform.localPosition.y);
 
             Vector3 startPosition = transform.localPosition;
             LMotion.Create(startPosition.y, startPosition.y + 0.03f, 0.8f)
@@ -50,6 +57,23 @@ namespace Shabon.Bubble
                 .WithLoops(-1, LoopType.Yoyo)
                 .BindToLocalPositionY(transform)
                 .AddTo(gameObject);
+        }
+
+        void Update()
+        {
+            // 影の位置を調整
+            // 真下にRaycastして、ヒットした位置に影を配置
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Stage")))
+            {
+                // ヒットした位置に影を配置
+                float shadowYPos = hit.point.y + 0.01f; // 少し上に配置
+                shadow.transform.position = new Vector3(transform.position.x, shadowYPos, transform.position.z);
+
+                // 距離に応じてサイズ変更
+                float distance = (transform.position - hit.point).magnitude;
+                shadow.transform.localScale = _originalShadowScale * distance / _originalShadowDistance * 1.5f;
+            }
         }
 
 
@@ -127,6 +151,9 @@ namespace Shabon.Bubble
                 {
                     callback?.Invoke();
                 }).AddTo(this);
+
+            // 影をなくす
+            shadow.SetActive(false);
         }
 
         // Clapされたときのアニメーション
@@ -144,6 +171,8 @@ namespace Shabon.Bubble
 
             // CureEffectを再生
             cureEffect.SetActive(true);
+            // 影をなくす
+            shadow.SetActive(false);
         }
 
 
