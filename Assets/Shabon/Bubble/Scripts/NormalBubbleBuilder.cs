@@ -116,8 +116,9 @@ namespace Shabon.Bubble
                     // Playerと逆の方向
                     Vector3 moveDirection = bubbleTransform.position - _playerTransform.PlayerTransform.position;
                     moveDirection.y = 0;
-                    bubbleMover.MoveByBreath(moveDirection.normalized * arg.Strength);
-                    
+                    moveDirection = moveDirection.normalized * arg.Strength / (bubbleTransform.position - arg.Position).magnitude;  // Breathの強さに比例、距離に反比例
+                    bubbleMover.MoveByBreath(moveDirection);
+
                 }
             };
         }
