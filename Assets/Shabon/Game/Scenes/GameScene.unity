@@ -3651,7 +3651,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 87
+    m_Bits: 215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6725,7 +6725,7 @@ GameObject:
   - component: {fileID: 1576578905}
   - component: {fileID: 1576578904}
   - component: {fileID: 1576578903}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
