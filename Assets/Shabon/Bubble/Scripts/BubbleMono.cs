@@ -50,7 +50,7 @@ namespace Shabon.Bubble
         protected IAreaChecker _waitAreaChecker = null!;
         protected BubbleCluster _bubbleCluster = null!; // 追加
         protected int _bubbleScore;
-        protected bool _isBreathing = false;         
+        protected bool _isBreathing = false;
         protected bool _isReached = false;
         private bool _isAttacking = false;
         protected bool _isStop = false;
@@ -59,7 +59,7 @@ namespace Shabon.Bubble
         //Bubble同士の距離
         private float _bubbleRadius = 0.2f;
         // ズレる速さ
-        private float _separateSpeed = 3.0f;
+        private float _separateForce = 5.0f;
 
         protected virtual void Update()
         {
@@ -96,8 +96,10 @@ namespace Shabon.Bubble
                 {
                     // 常に左右（x方向）のみ押し出す
                     Vector3 pushDir = dir.x > 0 ? Vector3.right : Vector3.left;
-                    transform.position += pushDir * _separateSpeed * Time.deltaTime;
+                    _bubbleMover.AddForce(pushDir * _separateForce * Time.deltaTime);
                 }
+
+                _bubbleMover.UpdateSeparate();
             }
         }
 

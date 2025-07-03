@@ -6,6 +6,9 @@ namespace Shabon.Bubble
         void MoveForward();
         void MoveByBreath(Vector3 direction);
 
+        void UpdateSeparate();
+        void AddForce(Vector3 force);
+
         // Boss
         void MoveBackward(Vector3 basePosition) { }
 
