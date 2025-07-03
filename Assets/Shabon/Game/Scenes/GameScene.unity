@@ -9300,13 +9300,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breath
       objectReference: {fileID: 0}
+    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ebafaba453e5e40e58eefa3ef1a1b3fb, type: 2}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.01
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalPosition.z
