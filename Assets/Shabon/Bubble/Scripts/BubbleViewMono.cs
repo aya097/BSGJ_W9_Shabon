@@ -35,6 +35,9 @@ namespace Shabon.Bubble
         [Header("Clapされたときのエフェクト")]
         [SerializeField] protected GameObject cureEffect = null!;
 
+        [Header("影")]
+        [SerializeField] protected GameObject shadow = null!;
+
         protected BubbleAnimationEnum _currentAnimation = BubbleAnimationEnum.Idle;
         private IDisposable? _breathDisposable = null!;
         protected Color _originalColor;
@@ -127,6 +130,9 @@ namespace Shabon.Bubble
                 {
                     callback?.Invoke();
                 }).AddTo(this);
+
+            // 影をなくす
+            shadow.SetActive(false);
         }
 
         // Clapされたときのアニメーション
@@ -144,6 +150,8 @@ namespace Shabon.Bubble
 
             // CureEffectを再生
             cureEffect.SetActive(true);
+            // 影をなくす
+            shadow.SetActive(false);
         }
 
 
