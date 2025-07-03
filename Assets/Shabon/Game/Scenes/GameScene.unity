@@ -9300,6 +9300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breath
       objectReference: {fileID: 0}
+    - target: {fileID: 5260326140287049436, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_Color.a
       value: 1
