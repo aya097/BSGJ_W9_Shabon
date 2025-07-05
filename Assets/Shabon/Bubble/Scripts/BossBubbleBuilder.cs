@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using R3;
+using Shabon.Game;
 using Shabon.Param;
 using Shabon.Score;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Shabon.Bubble
         private readonly List<IDisposable> _presenterObservable = new();
         private readonly IBubbleSpawner _bubbleSpawner;
 
+        private float _bossBattleStartTime = 0f;
+
         [Inject]
         public BossBubbleBuilder(
             IPlayerTransform playerTransform,
@@ -44,6 +47,11 @@ namespace Shabon.Bubble
             _bubbleSpawner = bubbleSpawner;
         }
 
+        public void SetBossBattleStartTime(float time)
+        {
+            _bossBattleStartTime = time;
+        }
+
         /// <summary>
         /// 個性を付与するメソッド
         /// </summary>
@@ -60,14 +68,14 @@ namespace Shabon.Bubble
 
             if (bubbleViewMono is BossBubbleViewMono bossBubbleView)
                 SetOnSpawn(bubbleSetter, bubbleMono, bossBubbleView);
-            
+
         }
-        
+
         protected override void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
         {
             bubbleSetter.OnBreath += (arg) =>
             {
-                
+
             };
         }
 
@@ -85,6 +93,9 @@ namespace Shabon.Bubble
                     bubbleMono.DecreaseHp(1);
                     if (bubbleMono.BossHitPoint == 0)
                     {
+                        // ボス撃破時
+                        float bossBattleTime = Time.time - _bossBattleStartTime;
+                        ResultData.BossBattleTime = bossBattleTime;
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         return;
                     }

@@ -18,6 +18,8 @@ namespace Shabon.Clap
         private float _currentTime = 0f;
         private readonly CompositeDisposable _disposable = new();
 
+        public int ClapCount { get; private set; } = 0;
+
         [Inject]
         public ClapModel(IBubbleHandler bubbleHandler)
         {
@@ -31,6 +33,7 @@ namespace Shabon.Clap
                 _bubbleHandler.ApplyClap(strength);
                 _canClap = false; // Clapを使用不可に設定
                 _currentTime = 0f;
+                ClapCount++;
 
                 // 0からCoolTimeまでCoolTime秒かけて遷移
                 LMotion.Create(0f, CoolTime, CoolTime)

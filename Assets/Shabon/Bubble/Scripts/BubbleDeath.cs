@@ -73,7 +73,11 @@ namespace Shabon.Bubble
             return bubbleType switch
             {
                 BubbleType.Normal => new NormalBubbleDeath(destroyBubble, deathParams),
+
+                BubbleType.Breath => new NormalBubbleDeath(destroyBubble, deathParams),
+
                 BubbleType.Armor => new NormalBubbleDeath(destroyBubble, deathParams), 
+
 
                 _ => new NormalBubbleDeath(destroyBubble, deathParams)
             };
@@ -105,11 +109,10 @@ namespace Shabon.Bubble
 
         public void Clap()
         {
-            // スコア増やす
             _deathParams.Score.Increase(100);   // todo 仮
 
             // DirtValueを減らす
-            _deathParams.Dirt.Decrease(1); // Clapで1減らす
+            _deathParams.Dirt.DecreaseByClap(1); // Clapによる減少
 
             // コンボリセット
             // _deathParams.Combo.Reset();

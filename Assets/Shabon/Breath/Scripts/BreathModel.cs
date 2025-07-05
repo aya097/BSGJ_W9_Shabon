@@ -15,6 +15,8 @@ namespace Shabon.Breath
         private float _maxDegree = 60f; // 正面を0度として
         private Vector3 _currentDirection;  // 現在の向き
 
+        public float TotalBreathTime { get; private set; } = 0f;
+        public float TotalBreathStrength { get; private set; } = 0f;
         [Inject]
         public BreathModel(IBubbleHandler bubbleHandler)
         {
@@ -30,6 +32,11 @@ namespace Shabon.Breath
         /// <param name="strength"></param>
         public void ApplyBreath(float strength)
         {
+            if (strength > 0)
+            {
+                TotalBreathStrength += strength * Time.deltaTime;
+                TotalBreathTime += Time.deltaTime;
+            }
             _bubbleHandler.ApplyBreath(_currentDirection, _originPosition, strength);
         }
 

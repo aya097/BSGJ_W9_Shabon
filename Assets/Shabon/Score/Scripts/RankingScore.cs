@@ -11,7 +11,8 @@ namespace Shabon.Score
     public static class RankingScore
     {
 
-        private static readonly string FilePath = Path.Combine(Application.persistentDataPath, "Ranking.json");
+        private static readonly string FilePath = Path.Combine(Application.dataPath, "Shabon/Score/Scripts/Ranking.json");
+
 
         /// <summary>
         /// スコアを保存するメソッド
