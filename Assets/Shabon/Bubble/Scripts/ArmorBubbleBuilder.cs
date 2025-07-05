@@ -8,9 +8,9 @@ using VContainer;
 namespace Shabon.Bubble
 {
     /// <summary>
-    /// BreathBubbleの個性を付与するクラス
+    /// ArmorBubbleの個性を付与するクラス
     /// </summary>
-    public class BreathBubbleBuilder : NormalBubbleBuilder
+    public class ArmorBubbleBuilder : NormalBubbleBuilder
     {
         private readonly IPlayerTransform _playerTransform;
         private readonly BubbleCluster _bubbleCluster;
@@ -20,7 +20,7 @@ namespace Shabon.Bubble
         private readonly IScoreValue _scoreValue;
 
         [Inject]
-        public BreathBubbleBuilder(
+        public ArmorBubbleBuilder(
             IPlayerTransform playerTransform,
             BubbleCluster bubbleCluster,
             IDirtValue dirtValue,
@@ -47,7 +47,7 @@ namespace Shabon.Bubble
 
             DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
             BubbleDeath bubbleDeath = new BubbleDeath(
-                BubbleType.Breath,
+                BubbleType.Armor,
                 deathParams,
                 () => { DestroyBubble(bubbleMono); });
 
@@ -79,7 +79,7 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnClap += _ =>
             {
-                Debug.Log("BreathBubbleはClapは無効");
+                Debug.Log("ArmorBubbleはClapは無効");
                 // memo: ここでclapが効いてないようなアニメーション再生？
             };
         }
@@ -89,9 +89,9 @@ namespace Shabon.Bubble
         /// <summary>
         private void SetOnDead(IBubbleMono bubbleMono, BubbleDeath bubbleDeath, BubbleViewMono bubbleView)
         {
-            if (bubbleMono is BreathBubbleMono breathBubbleMono)
+            if (bubbleMono is ArmorBubbleMono armorBubbleMono)
             {
-                breathBubbleMono.OnDead += () =>
+                armorBubbleMono.OnDead += () =>
                 {
                     bubbleMono.Stop();
                     bubbleView.SetHighlight(HighLightType.Attack);

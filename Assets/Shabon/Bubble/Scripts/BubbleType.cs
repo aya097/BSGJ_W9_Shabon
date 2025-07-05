@@ -6,7 +6,7 @@ namespace Shabon.Bubble
         None,
         Normal,
         Quick,
-        Breath,
+        Armor,
         Boss
     }
 }
