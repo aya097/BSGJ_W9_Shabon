@@ -27,7 +27,11 @@ namespace Shabon.Ui
         public void Spawn(int comboNum)
         {
             var pos = GetRandomPosition();
-            var combo = GameObject.Instantiate(_comboViewParam.ComboPrefab, pos, Quaternion.identity, _comboParent.ComboParent);
+            
+            var combo = GameObject.Instantiate(_comboViewParam.ComboPrefab, _comboParent.ComboParent);
+            RectTransform rect = combo.GetComponent<RectTransform>();
+            rect.anchoredPosition = pos;
+
             combo.SetCombo(comboNum);   // コンボ数を設定
             GameObject.Destroy(combo.gameObject, 1f);
         }
@@ -36,10 +40,10 @@ namespace Shabon.Ui
         private Vector2 GetRandomPosition()
         {
             var area = _comboParent.ComboArea.GetComponent<RectTransform>();
-            float minX = Screen.width - area.position.x - area.sizeDelta.x / 2;
-            float maxX = Screen.width - area.position.x + area.sizeDelta.x / 2;
-            float minY = Screen.height - area.position.y - area.sizeDelta.y / 2;
-            float maxY = Screen.height - area.position.y + area.sizeDelta.y / 2;
+            float minX = area.position.x - area.sizeDelta.x / 2;
+            float maxX = area.position.x + area.sizeDelta.x / 2;
+            float minY = area.position.y - area.sizeDelta.y / 2;
+            float maxY = area.position.y + area.sizeDelta.y / 2;
             float randX = Random.Range(minX, maxX);
             float randY = Random.Range(minY, maxY);
 
