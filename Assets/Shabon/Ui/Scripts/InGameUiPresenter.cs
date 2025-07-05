@@ -45,14 +45,15 @@ namespace Shabon.Ui
                 })
             );
 
-            // コンボが0以外に変化したら生成
+            // コンボ完了でUIに反映（spawn）
             _disposables.Add(
-                Observable.EveryValueChanged(bubbleCombo, b => b.ComboNum)
-                .Subscribe(value =>
+                Observable.EveryValueChanged(bubbleCombo, b => b.IsCombo)
+                .Subscribe(isCombo =>
                 {
-                    if (value != 0)
+                    if (isCombo == false && bubbleCombo.ComboNum > 0)
                     {
-                        comboSpawner.Spawn(value);
+                        comboSpawner.Spawn(bubbleCombo.ComboNum);
+                        bubbleCombo.Reset();
                     }
                 })
             );
