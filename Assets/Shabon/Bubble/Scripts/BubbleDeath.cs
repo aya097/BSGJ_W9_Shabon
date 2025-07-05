@@ -113,7 +113,7 @@ namespace Shabon.Bubble
 
             // コンボリセット
             // _deathParams.Combo.Reset();
-            // _deathParams.Combo.Increase();
+            _deathParams.Combo.Increase();
 
             // destroy
             _destroyBubble.Invoke();
