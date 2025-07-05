@@ -8,7 +8,7 @@ namespace Shabon.Bubble
     /// <summary>
     /// 通常バブル（ボスバブルではない）の動きやイベントを管理するための派生クラス
     /// </summary>
-    public class BreathBubbleMono : BubbleMono
+    public class ArmorBubbleMono : BubbleMono
     {
         public event Action? OnDead;
 

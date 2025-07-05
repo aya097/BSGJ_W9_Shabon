@@ -92,7 +92,7 @@ namespace Shabon.Bubble
             return bubbleType switch
             {
                 BubbleType.Normal => _objectResolver.Resolve<NormalBubbleBuilder>(),
-                BubbleType.Breath => _objectResolver.Resolve<BreathBubbleBuilder>(),
+                BubbleType.Armor => _objectResolver.Resolve<ArmorBubbleBuilder>(),
                 BubbleType.Boss => _objectResolver.Resolve<BossBubbleBuilder>(),
                 BubbleType.Quick => _objectResolver.Resolve<NormalBubbleBuilder>(),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(bubbleType), bubbleType, "未対応のBubbleTypeです") // defaultの処理

@@ -119,7 +119,7 @@ namespace Shabon.Bubble
 
         void SetIncreasingDirtValue(int value);
 
-        // BreathBubble
+        // ArmorBubble
         float RequiredBreathTime { get => 0.0f; }
         float BreathResetInterval { get => 0.0f; }
 
@@ -129,11 +129,11 @@ namespace Shabon.Bubble
         int BubbleSpawnNum { get => 0; }
     }
 
-    // BreathBubble固有のパラメータ
+    // ArmorBubble固有のパラメータ
     [Serializable]
-    public class BreathBubbleData : BubbleData, IBubbleData
+    public class ArmorBubbleData : BubbleData, IBubbleData
     {
-        [Header("----- BreathBubble固有のパラメータ -----")]
+        [Header("----- ArmorBubble固有のパラメータ -----")]
         [Header("倒すために息を吹く時間(s)")]
         [Min(0)]
         [SerializeField] float requiredBreathTime;
