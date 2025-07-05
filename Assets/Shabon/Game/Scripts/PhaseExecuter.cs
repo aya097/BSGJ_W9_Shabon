@@ -11,6 +11,8 @@ using VContainer.Unity;
 using R3;
 using Shabon.Utility;
 using Shabon.Param;
+using Shabon.Clap;
+using Shabon.Breath;
 
 namespace Shabon.Game
 {
@@ -30,11 +32,14 @@ namespace Shabon.Game
         private readonly IScoreValue _scoreValue;  // スコア値
         private readonly IBubbleCombo _bubbleCombo; // コンボ値
         private readonly BubbleCluster _bubbleCluster;
+        private readonly ClapModel _clapModel;
+        private readonly BreathModel _breathModel;
 
 
         private double _currentTime;    // 現在の時間
         private double _phaseUpdatedTime;   // フェーズが更新された時間
         private int _bubbleCount;   // バブルの生成数
+        private float _bossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
 
         private List<PhaseEvent> _eventList = new();
 
@@ -45,7 +50,10 @@ namespace Shabon.Game
             IDirtValue dirtValue,
             IScoreValue scoreValue,
             IBubbleCombo bubbleCombo,
-            BubbleCluster bubbleCluster)
+            BubbleCluster bubbleCluster,
+            ClapModel clapModel,
+            BreathModel breathModel
+        )
         {
             _gamePhases = gamePhases;
             _bubbleSpawner = bubbleSpawner;
@@ -53,6 +61,8 @@ namespace Shabon.Game
             _scoreValue = scoreValue;
             _bubbleCombo = bubbleCombo;
             _bubbleCluster = bubbleCluster;
+            _clapModel = clapModel;
+            _breathModel = breathModel;
 
             // 初期化
             _currentTime = 0;
@@ -129,7 +139,15 @@ namespace Shabon.Game
                     {
                         if (isEnd)
                         {
-                            ResultData.SaveResults(_dirtValue.DirtNum, _scoreValue.ScoreNum, _bubbleCombo.MaxNum);
+                            ResultData.SaveResults(
+                                _dirtValue.DirtNum,
+                                _scoreValue.ScoreNum,
+                                _bubbleCombo.MaxNum,
+                                _clapModel.ClapCount,
+                                (_dirtValue as DirtValue)?.DecreaseCount ?? 0,
+                                _breathModel.TotalBreathTime,
+                                _breathModel.TotalBreathStrength
+                            );
                             SceneTransition.Transition(SceneName.ResultScene);
                             // スコアを保存
                             RankingScore.SaveScore(_scoreValue.ScoreNum);
@@ -220,6 +238,12 @@ namespace Shabon.Game
             }
 
             return BubbleType.Normal; // デフォルトはNormalバブル
+        }
+
+        void StartBossPhase()
+        {
+            _bossBattleStartTime = Time.time;
+            // ボスバブル生成など
         }
     }
 }

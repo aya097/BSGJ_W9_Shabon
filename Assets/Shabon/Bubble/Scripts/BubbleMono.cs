@@ -48,7 +48,7 @@ namespace Shabon.Bubble
         protected IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
         protected BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
         protected IAreaChecker _waitAreaChecker = null!;
-        protected BubbleCluster _bubbleCluster = null!; // 追加
+        protected BubbleCluster _bubbleCluster = null!;
         protected int _bubbleScore;
         protected bool _isBreathing = false;
         protected bool _isReached = false;
@@ -69,7 +69,7 @@ namespace Shabon.Bubble
             // 停止中だったら動かない
             if (_isStop) return;
 
-            // ★常に重なり解消を先に実行
+            // 常に重なり解消を先に実行
             SeparateIfOverlapping();
 
             // 息が吹かれてるときは前進しないように
