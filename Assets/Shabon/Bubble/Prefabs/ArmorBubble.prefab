@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8030548506767296775}
   - component: {fileID: -4593445064888892722}
   m_Layer: 0
-  m_Name: BreathBubble
+  m_Name: ArmorBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 6770031338508284626}
   - component: {fileID: 6789635469589096341}
   m_Layer: 0
-  m_Name: BreathView
+  m_Name: ArmorView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
