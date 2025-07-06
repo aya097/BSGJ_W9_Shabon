@@ -1,5 +1,6 @@
 #nullable enable
-
+using System.Collections.Generic;
+using System.Linq;
 using Shabon.Param;
 using UnityEngine;
 using VContainer;
@@ -27,12 +28,13 @@ namespace Shabon.Ui
         public void Spawn(int comboNum)
         {
             var pos = GetRandomPosition();
-            
+
             var combo = GameObject.Instantiate(_comboViewParam.ComboPrefab, _comboParent.ComboParent);
             RectTransform rect = combo.GetComponent<RectTransform>();
             rect.anchoredPosition = pos;
 
-            combo.SetCombo(comboNum);   // コンボ数を設定
+            string evaluationText = GetComboEvaluation(comboNum);
+            combo.SetCombo(comboNum, evaluationText);   // コンボ数を設定
             GameObject.Destroy(combo.gameObject, 1f);
         }
 
@@ -48,6 +50,21 @@ namespace Shabon.Ui
             float randY = Random.Range(minY, maxY);
 
             return new Vector2(randX, randY);
+        }
+        
+        /// <summary>
+        /// コンボ数に対応した評価テキストをgetするメソッド
+        /// </summary>
+        /// <param name="comboNum"></param>
+        private string GetComboEvaluation(int comboNum)
+        {
+            ComboEvaluationPair comboEvaluationPair
+                = _comboViewParam.ComboEvaluationPairs
+                    .Where(cep => cep.ComboNum >= comboNum)
+                    .OrderBy(cep => cep.ComboNum)
+                    .FirstOrDefault();
+
+            return comboEvaluationPair.ComboEvaluation.ToString();
         }
     }
 }
