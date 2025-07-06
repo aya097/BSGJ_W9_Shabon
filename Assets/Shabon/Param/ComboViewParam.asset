@@ -13,3 +13,10 @@ MonoBehaviour:
   m_Name: ComboViewParam
   m_EditorClassIdentifier: 
   comboPrefab: {fileID: 4305650503684473298, guid: 4652cb5deccb148bc9e67c7db90b822d, type: 3}
+  comboEvaluationPairs:
+  - comboEvaluation: 0
+    comboNum: 2
+  - comboEvaluation: 1
+    comboNum: 5
+  - comboEvaluation: 2
+    comboNum: 8

@@ -6,6 +6,7 @@ namespace Shabon.Bubble
     {
         int ComboNum { get; }
         int MaxNum { get; }
+        bool IsCombo { get; }
         void Increase();
         void Reset();
     }
