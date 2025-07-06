@@ -53,16 +53,19 @@ namespace Shabon.Ui
         }
         
         /// <summary>
-        /// コンボ数に対応した評価テキストをgetするメソッド
+        /// コンボ数に対応した評価テキスト(ex. Good)を変えずメソッド
         /// </summary>
         /// <param name="comboNum"></param>
         private string GetComboEvaluation(int comboNum)
         {
             ComboEvaluationPair comboEvaluationPair
                 = _comboViewParam.ComboEvaluationPairs
-                    .Where(cep => cep.ComboNum >= comboNum)
-                    .OrderBy(cep => cep.ComboNum)
+                    .Where(cep => cep.ComboNum <= comboNum)
+                    .OrderByDescending(cep => cep.ComboNum)
                     .FirstOrDefault();
+
+            // 最低評価より下のスコアなら評価なし
+            if (comboEvaluationPair == null) return "";
 
             return comboEvaluationPair.ComboEvaluation.ToString();
         }
