@@ -12,7 +12,7 @@ namespace Shabon.Ui
         [SerializeField] ComboViewMono comboPrefab = null!;
 
         [Header("評価に対応したコンボ数")]
-        [SerializeField] private List<ComboEvaluationPair> comboEvaluationPairs;
+        [SerializeField] private List<ComboEvaluationPair> comboEvaluationPairs = null!;
 
         // ゲッター
         public ComboViewMono ComboPrefab
