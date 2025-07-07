@@ -74,10 +74,7 @@ namespace Shabon.Bubble
             {
                 BubbleType.Normal => new NormalBubbleDeath(destroyBubble, deathParams),
 
-                BubbleType.Breath => new NormalBubbleDeath(destroyBubble, deathParams),
-
                 BubbleType.Armor => new NormalBubbleDeath(destroyBubble, deathParams), 
-
 
                 _ => new NormalBubbleDeath(destroyBubble, deathParams)
             };
