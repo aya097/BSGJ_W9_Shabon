@@ -30,7 +30,7 @@ namespace Shabon.Game
         {
             // Game
             builder.Register<GamePhases>(Lifetime.Scoped).As<IGamePhases>();
-            builder.RegisterEntryPoint<PhaseExecutor>(Lifetime.Scoped).AsSelf();
+            builder.RegisterEntryPoint<PhaseExecutor>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
 
 
             // Bubble

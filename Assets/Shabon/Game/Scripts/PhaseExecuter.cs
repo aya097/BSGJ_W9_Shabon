@@ -20,8 +20,13 @@ namespace Shabon.Game
     /// <summary>
     /// ゲームのフェーズを実行するクラス
     /// </summary>
-    public class PhaseExecutor : ITickable
+    public class PhaseExecutor : ITickable, IGameState
     {
+        // 現在の状態
+        public GameState CurrentState => _currentState;
+        private GameState _currentState = GameState.None;
+
+
         public double CurrentTime => _currentTime; // 現在の時間を公開
         public double LastPhaseUpdateTime => _phaseUpdatedTime; // 最後にフェーズが更新された時間
         public double FinishedTime => _phaseUpdatedTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime; // フェーズ終了時間を計算
@@ -72,11 +77,12 @@ namespace Shabon.Game
             _bubbleCount = 0;
 
             // チュートリアル実行
+            _currentState = GameState.Tutorial;
             tutorialFacilitator.StartTutorial(() =>
             {
+                _currentState = GameState.Game;
                 StartPhase();
             });
-
         }
 
         // フェーズ開始
