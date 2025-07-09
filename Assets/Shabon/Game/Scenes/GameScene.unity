@@ -11185,8 +11185,11 @@ MonoBehaviour:
   - AreaType: 0
     Area: {fileID: 8742683603224083007}
   - AreaType: 0
-    Area: {fileID: 770572810}
+    Area: {fileID: 8742683603224083007}
   - AreaType: 0
+
+    Area: {fileID: 8742683603224083007}
+
     Area: {fileID: 2016672945}
   - AreaType: 1
     Area: {fileID: 2006806149}
@@ -11194,6 +11197,7 @@ MonoBehaviour:
     Area: {fileID: 1136150297}
   - AreaType: 4
     Area: {fileID: 458418445}
+
   comboParent: {fileID: 1286815462}
   comboArea: {fileID: 1213574522}
   playerTransform: {fileID: 811416298}

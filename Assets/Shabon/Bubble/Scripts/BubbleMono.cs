@@ -57,7 +57,7 @@ namespace Shabon.Bubble
         //Bubble同士の距離
         private float _bubbleRadius = 0.2f;
         // ズレる速さ
-        private float _separateForce = 5.0f;
+        private float _separateForce = 1.5f;
 
         protected virtual void Update()
         {
