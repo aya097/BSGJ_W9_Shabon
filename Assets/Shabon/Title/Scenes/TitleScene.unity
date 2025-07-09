@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 15804440}
   - component: {fileID: 15804439}
   m_Layer: 5
-  m_Name: PrologueCanvas
+  m_Name: Prologue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,9 +208,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15804438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1662977128}
@@ -222,13 +222,13 @@ RectTransform:
   - {fileID: 1959567398}
   - {fileID: 1407923905}
   - {fileID: 1015927790}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 966475022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &184844675
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &966475018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,7 +714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a302d923c044236abc488b7b4c624d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleImage: {fileID: 660003824}
   startButton: {fileID: 1000229606}
+  prologue: {fileID: 15804438}
+  prologuePlayableDirecctor: {fileID: 2102416753}
 --- !u!114 &966475019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +793,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 15804442}
   - {fileID: 660003819}
   - {fileID: 1000229605}
   m_Father: {fileID: 0}
@@ -2129,7 +2133,7 @@ GameObject:
   - component: {fileID: 2102416754}
   - component: {fileID: 2102416753}
   m_Layer: 0
-  m_Name: Prologue
+  m_Name: PrologueDirector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2145,7 +2149,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: a928cae695d54a04b81264783f47d041, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -2344,4 +2348,3 @@ SceneRoots:
   - {fileID: 2082196288}
   - {fileID: 2118859570}
   - {fileID: 2102416754}
-  - {fileID: 15804442}
