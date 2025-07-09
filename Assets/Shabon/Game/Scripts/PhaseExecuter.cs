@@ -78,9 +78,6 @@ namespace Shabon.Game
         // フェーズ開始
         void StartPhase()
         {
-            // フェーズ更新時間を更新
-            _phaseUpdatedTime = _currentTime;
-
             // 最初の敵生成
             SubscribeSpawnBubble();
 
@@ -91,7 +88,6 @@ namespace Shabon.Game
         // 敵を生成するイベントを登録
         void SubscribeSpawnBubble()
         {
-            Debug.Log($"CurrentTime{_currentTime}");
             // 次の生成時間
             double nextTime = _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval;
 
@@ -133,7 +129,6 @@ namespace Shabon.Game
                 finishedTime,
                 () =>
                 {
-                    Debug.Log($"FinishTime{_currentTime}");
                     // 次のフェーズに
                     bool isEnd = _gamePhases.Proceed();
                     // 敵がいなくなるのを待つ
@@ -144,7 +139,6 @@ namespace Shabon.Game
                     {
                         if (isEnd)
                         {
-                            Debug.Log($"Finish!!!{_currentTime}");
                             ResultData.SaveResults(
                                 _dirtValue.DirtNum,
                                 _scoreValue.ScoreNum,
@@ -161,7 +155,6 @@ namespace Shabon.Game
                         }
                         else
                         {
-                            Debug.Log($"NextPhase!!!{_currentTime}");
                             StartPhase();   // 次のフェーズ
                         }
                     });

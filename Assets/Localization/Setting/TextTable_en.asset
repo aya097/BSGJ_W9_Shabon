@@ -70,6 +70,19 @@ MonoBehaviour:
     m_Localized: GUID:de7e7b9528132364f9062897c5ad75c2
     m_Metadata:
       m_Items: []
+  - m_Id: 8699891567484928
+    m_Localized: 'I am Boskas.
+
+      I''ll be taking care of you from now on.
+
+      Please
+      protect this house from all kinds of dirt!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8700666448371712
+    m_Localized: I hear you're good at magic.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

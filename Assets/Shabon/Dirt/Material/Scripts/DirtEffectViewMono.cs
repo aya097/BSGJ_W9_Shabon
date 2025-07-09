@@ -43,6 +43,7 @@ namespace Shabon.Dirt
 
         public void Disable()
         {
+            Debug.Log("Disable bubble");
             IsActive = false;
             // 徐々に暗くする
             _disappearMotion = LMotion.Create(image.color.a, 0f, disappearTime)
