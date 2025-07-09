@@ -40,13 +40,11 @@ namespace Shabon.Bubble
         }
         public int BubbleScore => _bubbleScore;
         public Transform? Transform => transform;
-        public BubbleDeath Death => _bubbleDeath;
         public event Action? OnReach;
         public event Action<OnClapArg>? OnClap;
         public event Action<OnBreathArg>? OnBreath;
 
         protected IBubbleMover _bubbleMover = null!;  // バブルを動かすクラス
-        protected BubbleDeath _bubbleDeath = null!;   // バブルの割れる処理
         protected IAreaChecker _waitAreaChecker = null!;
         protected BubbleCluster _bubbleCluster = null!;
         protected int _bubbleScore;
@@ -59,7 +57,7 @@ namespace Shabon.Bubble
         //Bubble同士の距離
         private float _bubbleRadius = 0.2f;
         // ズレる速さ
-        private float _separateForce = 5.0f;
+        private float _separateForce = 5f;
 
         protected virtual void Update()
         {
@@ -108,14 +106,12 @@ namespace Shabon.Bubble
         /// </summary>
         public virtual void SetBuildParam(
             IBubbleMover bubbleMover,
-            BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,
             IBubbleData bubbleData,
             BubbleCluster bubbleCluster
         )
         {
             _bubbleMover = bubbleMover;
-            _bubbleDeath = bubbleDeath;
             _waitAreaChecker = areaChecker;
             _bubbleScore = bubbleData.BubbleScore;
             _bubbleCluster = bubbleCluster;

@@ -13,14 +13,20 @@ using Shabon.Utility;
 using Shabon.Param;
 using Shabon.Clap;
 using Shabon.Breath;
+using Shabon.Tutorial;
 
 namespace Shabon.Game
 {
     /// <summary>
     /// ゲームのフェーズを実行するクラス
     /// </summary>
-    public class PhaseExecutor : ITickable
+    public class PhaseExecutor : ITickable, IGameState
     {
+        // 現在の状態
+        public GameState CurrentState => _currentState;
+        private GameState _currentState = GameState.None;
+
+
         public double CurrentTime => _currentTime; // 現在の時間を公開
         public double LastPhaseUpdateTime => _phaseUpdatedTime; // 最後にフェーズが更新された時間
         public double FinishedTime => _phaseUpdatedTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime; // フェーズ終了時間を計算
@@ -52,7 +58,8 @@ namespace Shabon.Game
             IBubbleCombo bubbleCombo,
             BubbleCluster bubbleCluster,
             ClapModel clapModel,
-            BreathModel breathModel
+            BreathModel breathModel,
+            TutorialFacilitator tutorialFacilitator
         )
         {
             _gamePhases = gamePhases;
@@ -69,10 +76,19 @@ namespace Shabon.Game
             _phaseUpdatedTime = 0;
             _bubbleCount = 0;
 
+            // チュートリアル実行
+            _currentState = GameState.Tutorial;
+            tutorialFacilitator.StartTutorial(() =>
+            {
+                _currentState = GameState.Game;
 
+                // 使用したデータを削除
+                _dirtValue.Reset();
+                _clapModel.Reset();
+                _breathModel.Reset();
 
-            StartPhase();
-
+                StartPhase();
+            });
         }
 
         // フェーズ開始
@@ -91,7 +107,6 @@ namespace Shabon.Game
         // 敵を生成するイベントを登録
         void SubscribeSpawnBubble()
         {
-            Debug.Log($"CurrentTime{_currentTime}");
             // 次の生成時間
             double nextTime = _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval;
 
@@ -133,7 +148,6 @@ namespace Shabon.Game
                 finishedTime,
                 () =>
                 {
-                    Debug.Log($"FinishTime{_currentTime}");
                     // 次のフェーズに
                     bool isEnd = _gamePhases.Proceed();
                     // 敵がいなくなるのを待つ
@@ -144,7 +158,6 @@ namespace Shabon.Game
                     {
                         if (isEnd)
                         {
-                            Debug.Log($"Finish!!!{_currentTime}");
                             ResultData.SaveResults(
                                 _dirtValue.DirtNum,
                                 _scoreValue.ScoreNum,
@@ -161,7 +174,6 @@ namespace Shabon.Game
                         }
                         else
                         {
-                            Debug.Log($"NextPhase!!!{_currentTime}");
                             StartPhase();   // 次のフェーズ
                         }
                     });
@@ -238,8 +250,6 @@ namespace Shabon.Game
                 sum += spawningRatio.Ratio;
                 if (rand <= sum)
                 {
-                    // Debug.Log($"選択されるバブルの割合: ランダム{rand}, 選択されたバブル{spawningRatio.Type}, 合計値{sum}");
-
                     return spawningRatio.Type; // 選択されたバブルタイプを返す
                 }
             }

@@ -67,7 +67,7 @@ namespace Shabon.Bubble
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
-            bubbleSetter.SetBuildParam(bubbleMover, bubbleDeath, _waitAreaChecker, bubbleData, _bubbleCluster);
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
 
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
@@ -102,6 +102,43 @@ namespace Shabon.Bubble
         /// </summary>
         protected virtual void SetOnBreath(IBubbleMono bubbleMono, IBubbleBuildSetter bubbleSetter, IBubbleMover bubbleMover, Transform bubbleTransform, BubbleViewMono bubbleView)
         {
+
+
+            // // 4秒かけて-1.3f〜1.3fの間でランダムな位置に横移動しつつ、前進も行う
+            // float randomX = UnityEngine.Random.Range(-1.3f, 1.3f);
+            // var moveTime = 4f;
+            // var elapsed = 0f;
+
+            // bubbleMono.Transform.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(MoveSideAndForwardCoroutine());
+
+            // System.Collections.IEnumerator MoveSideAndForwardCoroutine()
+            // {
+            //     Vector3 startPos = bubbleMono.Transform.position;
+            //     Vector3 targetPos = startPos + bubbleMono.Transform.right * randomX;
+
+            //     while (elapsed < moveTime)
+            //     {
+            //         elapsed += Time.deltaTime;
+            //         float t = Mathf.Clamp01(elapsed / moveTime);
+
+            //         // 横移動
+            //         Vector3 sidePos = Vector3.Lerp(startPos, targetPos, t);
+
+            //         // デフォルトの速度で進む
+            //         Vector3 forwardDir = (_playerTransform.PlayerTransform.position - bubbleMono.Transform.position).normalized;
+            //         forwardDir.y = 0;
+            //         float forwardSpeed = (bubbleMover is NormalBubbleMover normalMover)
+            //             ? typeof(NormalBubbleMover).GetField("_forwardVelocity", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(normalMover) as float? ?? 0f
+            //             : 0f;
+
+            //         sidePos += forwardDir * forwardSpeed * elapsed;
+
+            //         bubbleMono.Transform.position = sidePos;
+            //         yield return null;
+            //     }
+            // }
+
+            // 通常の息処理
             bubbleSetter.OnBreath += (arg) =>
             {
                 // 到達してないときかつ動かないとき

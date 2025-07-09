@@ -72,6 +72,8 @@ namespace Shabon.Param
         Area0,
         Area1,
         Area2,
+        Tutorial0,
+        Tutorial1,
     };
 
     [Serializable]

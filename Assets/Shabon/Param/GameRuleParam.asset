@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePhaseDataList:
   - bubblesPerSpawn: 1
-    spawnBubbleInterval: 2
+    spawnBubbleInterval: 3
     spawningBubbles:
     - type: 1
       ratio: 4
