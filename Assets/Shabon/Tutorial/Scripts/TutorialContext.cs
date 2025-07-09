@@ -57,7 +57,7 @@ namespace Shabon.Tutorial
 
 
             // 一定時間後に自爆
-            Observable.Timer(TimeSpan.FromSeconds(6f))
+            Observable.Timer(TimeSpan.FromSeconds(9.4f))
                 .Subscribe(_ =>
                 {
                     _bubbleCluster.Bubbles.ElementAt(0).InvokeOnReach();
