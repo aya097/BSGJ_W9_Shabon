@@ -67,14 +67,6 @@ MonoBehaviour:
     m_Key: TitleScene/TitleCanvas/TitlePicture
     m_Metadata:
       m_Items: []
-  - m_Id: 8699891567484928
-    m_Key: TitleScene/PrologueCanvas/prologue_scene_04/Text
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8700666448371712
-    m_Key: TitleScene/PrologueCanvas/prologue_scene_08/Text
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

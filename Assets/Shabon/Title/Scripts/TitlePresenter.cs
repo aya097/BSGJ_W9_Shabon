@@ -1,6 +1,5 @@
 #nullable enable
 
-using UnityEngine;
 using Shabon.Utility;
 using VContainer;
 using VContainer.Unity;
@@ -20,12 +19,11 @@ namespace Shabon.Title
 
             // View -> Model
 
-            // プロローグが終われば、シーン遷移
-            titleViewMono.ProloguePlayableDirecctor.stopped +=
-                director => SceneTransition.Transition(SceneName.GameScene);
-
-            // ボタン押されたら、プロローグ開始
-            titleViewMono.StartButton.onClick.AddListener(titleViewMono.StartPrologue);
+            // スタートボタンを押して、シーン遷移
+            titleViewMono.StartButton.onClick.AddListener(() =>
+            {
+                SceneTransition.Transition(SceneName.GameScene);
+            });
         }
 
         // このクラスを生成するためのエントリーポイント
