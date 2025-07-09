@@ -5,6 +5,7 @@ using System.Linq;
 using R3;
 using Shabon.Breath;
 using Shabon.Bubble;
+using Shabon.Clap;
 using Shabon.Input;
 using UnityEngine;
 
@@ -70,13 +71,14 @@ namespace Shabon.Tutorial
             {
                 _bubbleAttacked = true;
                 Debug.Log("Tutorial: うわあ！屋敷が汚れちゃった！！");
-            }
-
-            // 攻撃後にClapすれば
-            if (_inputManager.GetClap() && _bubbleAttacked)
-            {
                 IsFinish = true;
             }
+
+            // // 攻撃後にClapすれば
+            // if (_inputManager.GetClap() && _bubbleAttacked)
+            // {
+            //     IsFinish = true;
+            // }
         }
         public void OnComplete()
         {
@@ -165,6 +167,91 @@ namespace Shabon.Tutorial
                     IsFinish = true;
                 }
             }
+        }
+        public void OnComplete()
+        {
+
+        }
+    }
+
+    public class ClapThirdSpawn : ITutorialContext
+    {
+        public bool IsFinish { get; private set; }
+
+        private readonly TutorialBubbleSpawner _tutorialBubbleSpawner = null!;
+        private readonly BubbleCluster _bubbleCluster = null!;
+        private readonly IInputManager _inputManager = null!;
+        private readonly ClapModel _clapModel = null!;
+        private bool _ableClap = false;
+
+        public ClapThirdSpawn(TutorialBubbleSpawner tutorialBubbleSpawner,
+            BubbleCluster bubbleCluster,
+            IInputManager inputManager,
+            ClapModel clapModel)
+        {
+            _tutorialBubbleSpawner = tutorialBubbleSpawner;
+            _bubbleCluster = bubbleCluster;
+            _inputManager = inputManager;
+            _clapModel = clapModel;
+        }
+        public void OnStart()
+        {
+            // bubbleをスポーン
+            _tutorialBubbleSpawner.Spawn(Bubble.BubbleType.Normal, Param.BubbleSpawnedAreaType.Tutorial1);
+
+            Observable.Timer(TimeSpan.FromSeconds(2f))
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Tutorial: またバブルがやってきたよ！");
+                });
+
+
+            // 一定時間後にさっきのバブルも動かす
+            Observable.Timer(TimeSpan.FromSeconds(2f))
+                .Subscribe(_ =>
+                {
+                    _bubbleCluster.Bubbles.ElementAt(0).Resume();
+                    Debug.Log("Tutorial: 引きつけて一気に倒してやろう！！");
+                });
+            Observable.Timer(TimeSpan.FromSeconds(5f))
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Tutorial: 手をかまえて！！！");
+                });
+            // いい感じの位置で停止
+            Observable.Timer(TimeSpan.FromSeconds(9f))
+                .Subscribe(_ =>
+                {
+                    _ableClap = true;
+                    _bubbleCluster.Bubbles.ElementAt(0).Stop();
+                    _bubbleCluster.Bubbles.ElementAt(1).Stop();
+                    Debug.Log("Tutorial: 今だ！！手を叩いて！！");
+                });
+
+        }
+        public void Update()
+        {
+            if (_ableClap)
+            {
+                // Clap
+                if (_inputManager.GetClap())
+                {
+                    _ableClap = false;
+                    _clapModel.ApplyClap(1f);
+                    Observable.Timer(TimeSpan.FromSeconds(2f))
+                        .Subscribe(_ =>
+                        {
+                            Debug.Log("Tutorial: やった！倒せたぞ！屋敷もキレイになったね！");
+                        });
+                    Observable.Timer(TimeSpan.FromSeconds(5f))
+                        .Subscribe(_ =>
+                        {
+                            Debug.Log("Tutorial: この調子でがんばりたまえ！ハッハッハッ！");
+                            IsFinish = true;
+                        });
+                }
+            }
+
         }
         public void OnComplete()
         {

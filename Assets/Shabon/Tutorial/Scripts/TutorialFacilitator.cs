@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Shabon.Breath;
 using Shabon.Bubble;
+using Shabon.Clap;
 using Shabon.Input;
 using VContainer;
 using VContainer.Unity;
@@ -35,7 +36,8 @@ namespace Shabon.Tutorial
             BubbleCluster bubbleCluster,
             IInputManager inputManager,
             BreathModel breathModel,
-            BreathGetterViewMono breathGetterViewMono)
+            BreathGetterViewMono breathGetterViewMono,
+            ClapModel clapModel)
         {
 
             _isInTutorial = false;
@@ -43,6 +45,8 @@ namespace Shabon.Tutorial
             // チュートリアル生成
             tutorialContexts.Add(new FirstSpawn(bubbleSpawner, bubbleCluster, inputManager));
             tutorialContexts.Add(new BreathSecondSpawn(bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
+            tutorialContexts.Add(new ClapThirdSpawn(bubbleSpawner, bubbleCluster, inputManager, clapModel));
+
         }
 
         // チュートリアルを開始する

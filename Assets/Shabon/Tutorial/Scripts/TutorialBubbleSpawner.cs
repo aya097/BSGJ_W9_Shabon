@@ -116,6 +116,17 @@ namespace Shabon.Tutorial
 
             };
 
+            // OnClap
+            bubbleSetter.OnClap += _ =>
+            {
+                bubbleViewMono.SetHighlight(HighLightType.Claped);
+                bubbleViewMono.PlayClap(() =>
+                {
+                    DestroyBubble(bubbleMono);
+                    _dirtValue.DecreaseByClap(4);
+                });
+            };
+
 
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
