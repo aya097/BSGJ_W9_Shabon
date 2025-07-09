@@ -62,6 +62,15 @@ namespace Shabon.Score
             _dirtNum = value;
         }
 
+        public void Reset()
+        {
+            _dirtNum = 0;
+            DecreaseCount = 0;
+            ClapDecreaseCount = 0;
+            TotalIncrease = 0;
+            TotalDecrease = 0;
+        }
+
         static bool IsAssertMinusNum(int value)
         {
             if (value < 0)

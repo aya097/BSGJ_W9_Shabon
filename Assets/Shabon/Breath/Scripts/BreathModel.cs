@@ -1,6 +1,7 @@
 using UnityEngine;
 using Shabon.Bubble;
 using VContainer;
+using System.Threading.Tasks;
 
 namespace Shabon.Breath
 {
@@ -24,6 +25,12 @@ namespace Shabon.Breath
             _bubbleHandler = bubbleHandler;
 
             _currentDirection = new Vector3(0, 0, 1f);
+        }
+
+        public void Reset()
+        {
+            TotalBreathStrength = 0;
+            TotalBreathTime = 0;
         }
 
         /// <summary>

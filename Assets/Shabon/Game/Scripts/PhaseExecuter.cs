@@ -81,6 +81,12 @@ namespace Shabon.Game
             tutorialFacilitator.StartTutorial(() =>
             {
                 _currentState = GameState.Game;
+
+                // 使用したデータを削除
+                _dirtValue.Reset();
+                _clapModel.Reset();
+                _breathModel.Reset();
+
                 StartPhase();
             });
         }
