@@ -30,7 +30,7 @@ namespace Shabon.Clap
             foreach (var bubble in hitBubbles)
             {
                 notHitBubbles.Remove(bubble);
-                
+
                 // ArmorBubbleはクラップできないため、clapableはfalse
                 if (bubble is ArmorBubbleMono)
                 {
@@ -41,7 +41,7 @@ namespace Shabon.Clap
                     // ヒットしたバブルはIsClapableをtrueにする
                     bubble.IsClapable = true;
                 }
-                
+
             }
             // ヒットしてないバブルのIsClapableをfalseにする
             foreach (var bubble in notHitBubbles)

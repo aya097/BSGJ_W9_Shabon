@@ -11,6 +11,7 @@ using VContainer.Unity;
 using Shabon.SelfDebug;
 using Shabon.Menu;
 using Shabon.Ui;
+using Shabon.Tutorial;
 
 namespace Shabon.Game
 {
@@ -93,6 +94,9 @@ namespace Shabon.Game
             // DirtEffect
             builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<DirtEffectCollectorMono>();
+
+            // Tutorial
+            builder.RegisterEntryPoint<TutorialFacilitator>(Lifetime.Scoped).AsSelf();
 
             // NormalBubbleBuilderを登録
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();
