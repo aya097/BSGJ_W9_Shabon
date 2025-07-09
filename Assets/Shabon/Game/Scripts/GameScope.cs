@@ -11,6 +11,7 @@ using VContainer.Unity;
 using Shabon.SelfDebug;
 using Shabon.Menu;
 using Shabon.Ui;
+using Shabon.Tutorial;
 
 namespace Shabon.Game
 {
@@ -29,7 +30,7 @@ namespace Shabon.Game
         {
             // Game
             builder.Register<GamePhases>(Lifetime.Scoped).As<IGamePhases>();
-            builder.RegisterEntryPoint<PhaseExecutor>(Lifetime.Scoped).AsSelf();
+            builder.RegisterEntryPoint<PhaseExecutor>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
 
 
             // Bubble
@@ -43,7 +44,6 @@ namespace Shabon.Game
             builder.Register<BubbleMono>(Lifetime.Scoped);
             builder.Register<ArmorBubbleMono>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<WaitingAreaCheckerMono>().As<IAreaChecker>();
-            builder.Register<BubbleChain>(Lifetime.Scoped).As<IBubbleChain>();
             builder.RegisterEntryPoint<BubbleCombo>(Lifetime.Scoped);
 
             // Param
@@ -93,6 +93,10 @@ namespace Shabon.Game
             // DirtEffect
             builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<DirtEffectCollectorMono>();
+
+            // Tutorial
+            builder.RegisterEntryPoint<TutorialFacilitator>(Lifetime.Scoped).AsSelf();
+            builder.Register<TutorialBubbleSpawner>(Lifetime.Scoped);
 
             // NormalBubbleBuilderを登録
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();

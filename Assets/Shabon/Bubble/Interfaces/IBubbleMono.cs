@@ -11,7 +11,6 @@ namespace Shabon.Bubble
         bool IsClapable { get; set; }
         int BubbleScore { get; }
         Transform Transform { get; }
-        public BubbleDeath Death { get; }
         void InvokeOnReach();
         void InvokeOnClap(OnClapArg arg);
         void InvokeOnBreath(OnBreathArg arg);

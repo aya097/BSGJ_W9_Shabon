@@ -21,20 +21,16 @@ MonoBehaviour:
     - type: 2
       ratio: 2
     - type: 3
-      ratio: 1
+      ratio: 0
     maxBabbleOnField: 30
     phaseLengthTime: 40
     phaseDelayTime: 0
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
-    - type: 1
+    - type: 4
       ratio: 4
-    - type: 2
-      ratio: 2
-    - type: 3
-      ratio: 1
-    maxBabbleOnField: 30
+    maxBabbleOnField: 1
     phaseLengthTime: 40
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
