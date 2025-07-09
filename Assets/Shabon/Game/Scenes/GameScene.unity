@@ -4124,7 +4124,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  gameRuleParam: {fileID: 11400000, guid: 6249e51209e284e00bf060a0c1807386, type: 2}
+  gameRuleParam: {fileID: 11400000, guid: f68ecee4daa544c659168b203349818d, type: 2}
   bubbleParam: {fileID: 11400000, guid: 49f80587834de324da74662bbf2b7919, type: 2}
   comboViewParam: {fileID: 11400000, guid: d7acd768c01604a98a06fb439fa13197, type: 2}
   dirtViewParam: {fileID: 11400000, guid: 28dc1ce63fab041c687abc84aef31b48, type: 2}
@@ -10126,6 +10126,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005818949}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2006806147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2006806148}
+  - component: {fileID: 2006806149}
+  m_Layer: 0
+  m_Name: BubbleSpawningArea (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2006806148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006806147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3, z: 1.62}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6851577923102896280}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2006806149
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006806147}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2016672943
 GameObject:
   m_ObjectHideFlags: 0
@@ -10870,6 +10923,7 @@ Transform:
   - {fileID: 3976985196115716126}
   - {fileID: 770572809}
   - {fileID: 2016672944}
+  - {fileID: 2006806148}
   - {fileID: 1977096673}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11026,6 +11080,8 @@ MonoBehaviour:
     Area: {fileID: 770572810}
   - AreaType: 0
     Area: {fileID: 2016672945}
+  - AreaType: 1
+    Area: {fileID: 2006806149}
   comboParent: {fileID: 1286815462}
   comboArea: {fileID: 1213574522}
   playerTransform: {fileID: 811416298}
