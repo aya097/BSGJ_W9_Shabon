@@ -26,11 +26,18 @@ namespace Shabon.Tutorial
         // チュートリアルが終了したときに呼ぶ
         private Action? _onComplete;
 
+        // チュートリアルに必要なクラス
+        private readonly TutorialBubbleSpawner _bubbleSpawner = null!;
+
         [Inject]
-        public TutorialFacilitator()
+        public TutorialFacilitator(TutorialBubbleSpawner tutorialBubbleSpawner)
         {
+            _bubbleSpawner = tutorialBubbleSpawner;
+
             _isInTutorial = false;
 
+            // チュートリアル生成
+            tutorialContexts.Add(new FirstSpawn(_bubbleSpawner));
         }
 
         // チュートリアルを開始する

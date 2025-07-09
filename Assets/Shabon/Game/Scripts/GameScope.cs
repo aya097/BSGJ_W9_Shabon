@@ -44,7 +44,6 @@ namespace Shabon.Game
             builder.Register<BubbleMono>(Lifetime.Scoped);
             builder.Register<ArmorBubbleMono>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<WaitingAreaCheckerMono>().As<IAreaChecker>();
-            builder.Register<BubbleChain>(Lifetime.Scoped).As<IBubbleChain>();
             builder.RegisterEntryPoint<BubbleCombo>(Lifetime.Scoped);
 
             // Param
@@ -97,6 +96,7 @@ namespace Shabon.Game
 
             // Tutorial
             builder.RegisterEntryPoint<TutorialFacilitator>(Lifetime.Scoped).AsSelf();
+            builder.Register<TutorialBubbleSpawner>(Lifetime.Scoped);
 
             // NormalBubbleBuilderを登録
             builder.Register<NormalBubbleBuilder>(Lifetime.Scoped).As<IBubbleBuilder>();

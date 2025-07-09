@@ -4,6 +4,7 @@ using System.Linq;
 using R3;
 using Shabon.Bubble;
 using Shabon.Param;
+using Shabon.Score;
 using UnityEngine;
 using VContainer;
 
@@ -18,18 +19,23 @@ namespace Shabon.Tutorial
 
         private readonly IBubbleParam _bubbleParam;
         private readonly BubbleCluster _bubbleCluster;
+        private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleSpawnedArea _bubbleSpawnedArea;
+
+
 
         [Inject]
         public TutorialBubbleSpawner(
             IPlayerTransform playerTransform,
             IBubbleParam bubbleParam,
             BubbleCluster bubbleCluster,
+            IAreaChecker waitAreaChecker,
             IBubbleSpawnedArea bubbleSpawnedArea)
         {
             _playerTransform = playerTransform;
             _bubbleParam = bubbleParam;
             _bubbleCluster = bubbleCluster;
+            _waitAreaChecker = waitAreaChecker;
             _bubbleSpawnedArea = bubbleSpawnedArea;
         }
 
@@ -52,12 +58,14 @@ namespace Shabon.Tutorial
             // 選択されたViewのみActiveにする
             bubbleViewMono.gameObject.SetActive(true);
 
+            Build(bubbleMono, bubbleMono, bubbleData, bubbleViewMono);
+
             // Clusterに追加
             _bubbleCluster.Add(bubbleMono);
         }
 
         // ビルド
-        public void Build(
+        private void Build(
             IBubbleBuildSetter bubbleSetter,
             IBubbleMono bubbleMono,
             IBubbleData bubbleData,
@@ -65,7 +73,6 @@ namespace Shabon.Tutorial
         {
             // BubbleMoverの生成
             IBubbleMover bubbleMover = new NormalBubbleMover(bubbleMono.Transform, bubbleData.ForwardVelocity, _playerTransform.PlayerTransform);
-
 
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
@@ -80,6 +87,8 @@ namespace Shabon.Tutorial
                         bubbleViewMono.SetHighlight(HighLightType.None);
                     }
                 }).AddTo(bubbleViewMono);
+
+            bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
         }
 
         private Vector3 DecideSpawningPosition(BoxArea boxArea)
