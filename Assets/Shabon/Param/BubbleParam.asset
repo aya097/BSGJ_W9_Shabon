@@ -59,7 +59,7 @@ MonoBehaviour:
         bubbleType: 3
         bubblePrefab: {fileID: -4593445064888892722, guid: 0afc96797dca2c041aea38182f4a5a7c, type: 3}
         bubbleSpawnedArea: 0
-        forwardVelocity: 0.5
+        forwardVelocity: 0.1
         zoneWaitingTime: 2
         increasingDirtValue: 1
         bubbleScore: 100
