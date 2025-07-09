@@ -231,7 +231,7 @@ namespace Shabon.Game
                 sum += spawningRatio.Ratio;
                 if (rand <= sum)
                 {
-                    Debug.Log($"選択されるバブルの割合: ランダム{rand}, 選択されたバブル{spawningRatio.Type}, 合計値{sum}");
+                    // Debug.Log($"選択されるバブルの割合: ランダム{rand}, 選択されたバブル{spawningRatio.Type}, 合計値{sum}");
 
                     return spawningRatio.Type; // 選択されたバブルタイプを返す
                 }

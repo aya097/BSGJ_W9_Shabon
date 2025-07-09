@@ -35,6 +35,7 @@ public class DirtEffectCollectorMono : MonoBehaviour
         currentDirt += secondDirtEffects.Where(dirt => dirt.IsActive).Count();
         currentDirt += thirdDirtEffects.Where(dirt => dirt.IsActive).Count();
 
+
         // エフェクトの方が少ない場合追加
         if (currentDirt < dirtNum)
         {
