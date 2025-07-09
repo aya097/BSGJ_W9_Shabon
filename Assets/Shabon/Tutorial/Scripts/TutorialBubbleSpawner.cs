@@ -98,20 +98,38 @@ namespace Shabon.Tutorial
                    });
            };
 
+            // OnBreath
+            bubbleSetter.OnBreath += (arg) =>
+            {
+
+                bubbleMono.IsBreathing = true;
+
+                // 息が吹かれた時のアニメーションを再生
+                bubbleViewMono.PlayBreath(bubbleMono);
+                bubbleViewMono.SetHighlight(HighLightType.Breathed);
+
+                // Playerと逆の方向
+                Vector3 moveDirection = bubbleMono.Transform.position - _playerTransform.PlayerTransform.position;
+                moveDirection.y = 0;
+                moveDirection = moveDirection.normalized * arg.Strength / (bubbleMono.Transform.position - arg.Position).magnitude;  // Breathの強さに比例、距離に反比例
+                bubbleMover.MoveByBreath(moveDirection);
+
+            };
+
 
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
-                 .Subscribe(clapable =>
-                 {
-                     if (clapable)
+                     .Subscribe(clapable =>
                      {
-                         bubbleViewMono.SetHighlight(HighLightType.Clapable);
-                     }
-                     else
-                     {
-                         bubbleViewMono.SetHighlight(HighLightType.None);
-                     }
-                 }).AddTo(bubbleViewMono);
+                         if (clapable)
+                         {
+                             bubbleViewMono.SetHighlight(HighLightType.Clapable);
+                         }
+                         else
+                         {
+                             bubbleViewMono.SetHighlight(HighLightType.None);
+                         }
+                     }).AddTo(bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
         }

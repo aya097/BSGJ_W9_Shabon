@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Shabon.Breath;
 using Shabon.Bubble;
 using Shabon.Input;
 using VContainer;
@@ -32,13 +33,16 @@ namespace Shabon.Tutorial
         [Inject]
         public TutorialFacilitator(TutorialBubbleSpawner bubbleSpawner,
             BubbleCluster bubbleCluster,
-            IInputManager inputManager)
+            IInputManager inputManager,
+            BreathModel breathModel,
+            BreathGetterViewMono breathGetterViewMono)
         {
 
             _isInTutorial = false;
 
             // チュートリアル生成
             tutorialContexts.Add(new FirstSpawn(bubbleSpawner, bubbleCluster, inputManager));
+            tutorialContexts.Add(new BreathSecondSpawn(bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
         }
 
         // チュートリアルを開始する
