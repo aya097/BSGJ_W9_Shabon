@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Shabon.Bubble;
+using Shabon.Input;
 using VContainer;
 using VContainer.Unity;
 
@@ -26,18 +28,17 @@ namespace Shabon.Tutorial
         // チュートリアルが終了したときに呼ぶ
         private Action? _onComplete;
 
-        // チュートリアルに必要なクラス
-        private readonly TutorialBubbleSpawner _bubbleSpawner = null!;
 
         [Inject]
-        public TutorialFacilitator(TutorialBubbleSpawner tutorialBubbleSpawner)
+        public TutorialFacilitator(TutorialBubbleSpawner bubbleSpawner,
+            BubbleCluster bubbleCluster,
+            IInputManager inputManager)
         {
-            _bubbleSpawner = tutorialBubbleSpawner;
 
             _isInTutorial = false;
 
             // チュートリアル生成
-            tutorialContexts.Add(new FirstSpawn(_bubbleSpawner));
+            tutorialContexts.Add(new FirstSpawn(bubbleSpawner, bubbleCluster, inputManager));
         }
 
         // チュートリアルを開始する

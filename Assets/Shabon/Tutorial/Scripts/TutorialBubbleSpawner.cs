@@ -21,6 +21,7 @@ namespace Shabon.Tutorial
         private readonly BubbleCluster _bubbleCluster;
         private readonly IAreaChecker _waitAreaChecker;
         private readonly IBubbleSpawnedArea _bubbleSpawnedArea;
+        private readonly IDirtValue _dirtValue = null!;
 
 
 
@@ -30,13 +31,15 @@ namespace Shabon.Tutorial
             IBubbleParam bubbleParam,
             BubbleCluster bubbleCluster,
             IAreaChecker waitAreaChecker,
-            IBubbleSpawnedArea bubbleSpawnedArea)
+            IBubbleSpawnedArea bubbleSpawnedArea,
+            IDirtValue dirtValue)
         {
             _playerTransform = playerTransform;
             _bubbleParam = bubbleParam;
             _bubbleCluster = bubbleCluster;
             _waitAreaChecker = waitAreaChecker;
             _bubbleSpawnedArea = bubbleSpawnedArea;
+            _dirtValue = dirtValue;
         }
 
         // スポーン
@@ -74,19 +77,41 @@ namespace Shabon.Tutorial
             // BubbleMoverの生成
             IBubbleMover bubbleMover = new NormalBubbleMover(bubbleMono.Transform, bubbleData.ForwardVelocity, _playerTransform.PlayerTransform);
 
+            // OnReach
+            bubbleSetter.OnReach += () =>
+           {
+               bubbleMono.IsReached = true;
+               // 待機時間後にdestroy
+               Observable.Timer(System.TimeSpan.FromSeconds(2f))
+                   .Subscribe(_ =>
+                   {
+                       if ((bubbleMono as MonoBehaviour) != null)
+                       {
+                           bubbleMono.IsAttacking = true;
+                           bubbleViewMono.SetHighlight(HighLightType.Attack);
+                           bubbleViewMono.PlayAttack(() =>
+                            {
+                                _dirtValue.Increase(4);
+                                DestroyBubble(bubbleMono);
+                            });
+                       }
+                   });
+           };
+
+
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
-                .Subscribe(clapable =>
-                {
-                    if (clapable)
-                    {
-                        bubbleViewMono.SetHighlight(HighLightType.Clapable);
-                    }
-                    else
-                    {
-                        bubbleViewMono.SetHighlight(HighLightType.None);
-                    }
-                }).AddTo(bubbleViewMono);
+                 .Subscribe(clapable =>
+                 {
+                     if (clapable)
+                     {
+                         bubbleViewMono.SetHighlight(HighLightType.Clapable);
+                     }
+                     else
+                     {
+                         bubbleViewMono.SetHighlight(HighLightType.None);
+                     }
+                 }).AddTo(bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
         }
