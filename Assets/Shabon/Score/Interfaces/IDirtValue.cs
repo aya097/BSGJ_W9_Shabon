@@ -6,6 +6,7 @@ namespace Shabon.Score
         void Increase(int value);
 
         void Set(int value);
+        void Reset();
         int DecreaseCount { get; }
         int TotalIncrease { get; }
         int TotalDecrease { get; }

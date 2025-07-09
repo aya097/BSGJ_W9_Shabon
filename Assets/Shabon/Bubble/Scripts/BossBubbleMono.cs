@@ -62,7 +62,6 @@ namespace Shabon.Bubble
 
         public override void SetBuildParam(
             IBubbleMover bubbleMover,
-            BubbleDeath bubbleDeath,
             IAreaChecker areaChecker,
             IBubbleData bubbleData,
             BubbleCluster bubbleCluster
@@ -72,7 +71,7 @@ namespace Shabon.Bubble
             _bubbleSpawnInterval = bubbleData.BubbleSpawnInterval;
             _bubbleSpawnNum = bubbleData.BubbleSpawnNum;
 
-            base.SetBuildParam(bubbleMover, bubbleDeath, areaChecker, bubbleData, bubbleCluster);
+            base.SetBuildParam(bubbleMover, areaChecker, bubbleData, bubbleCluster);
 
         }
 
@@ -103,10 +102,10 @@ namespace Shabon.Bubble
                 } while (randomBubbleType == BubbleType.None);
                 bubbleTypeList.Add(randomBubbleType);
             }
-            
+
             OnSpawn?.Invoke(bubbleTypeList);
         }
-        
+
     }
 }
 

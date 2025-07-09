@@ -47,6 +47,11 @@ namespace Shabon.Clap
 
         }
 
+        public void Reset()
+        {
+            ClapCount = 0;
+        }
+
         private void ResetClap()
         {
             _canClap = true;

@@ -55,7 +55,7 @@ namespace Shabon.Bubble
                 {
                     var bubble = nearbyBubbles.FirstOrDefault();
                     ExecuteBubbleChain(bubble, chainRadius);    // todo めっちゃ仮
-                    bubble.Death.InvokeDeath(BubbleDeathType.Chain);    // 一番前を割る
+                    // bubble.Death.InvokeDeath(BubbleDeathType.Chain);    // 一番前を割る
                 });
             }
             else
