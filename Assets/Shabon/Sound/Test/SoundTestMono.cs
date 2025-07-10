@@ -19,11 +19,11 @@ namespace Shabon.Sound
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.D))
             {
-                c = SoundPlayerMono.Instance.PlaySe(SeTypeEnum.bubbleSE);
+                // c = SoundPlayerMono.Instance.PlaySe(SeTypeEnum.bubbleSE);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.F))
             {
-                d = SoundPlayerMono.Instance.PlaySe(SeTypeEnum.clapSE);
+                // d = SoundPlayerMono.Instance.PlaySe(SeTypeEnum.clapSE);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.G))
             {
