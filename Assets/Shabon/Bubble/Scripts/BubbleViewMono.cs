@@ -43,6 +43,7 @@ namespace Shabon.Bubble
         private IDisposable? _breathDisposable = null!;
         protected Color _originalColor;
         private Vector3 _originalShadowScale;
+        private BubbleType _bubbleType = BubbleType.None;
         private float _originalShadowDistance; // 影の元の距離
 
         private SoundToken _breathedToken = null!;
@@ -77,6 +78,10 @@ namespace Shabon.Bubble
                 float distance = (transform.position - hit.point).magnitude;
                 shadow.transform.localScale = _originalShadowScale * distance / _originalShadowDistance * 1.5f;
             }
+        }
+        public void SetBubbleType(BubbleType bubbleType)
+        {
+            _bubbleType = bubbleType;
         }
 
 
@@ -134,8 +139,10 @@ namespace Shabon.Bubble
 
             // サウンドを再生
             if (_breathedToken == null)
-                _breathedToken = SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.NormalBubbleBreathed) ?? null!;
-
+            {
+                var seType = GetBreathedSe(_bubbleType);
+                _breathedToken = SoundPlayerMono.Instance?.PlaySe(seType) ?? null!;
+            }
             _breathDisposable = Observable.Timer(TimeSpan.FromSeconds(0.1f))
                 .Subscribe(_ =>
                 {
@@ -197,6 +204,17 @@ namespace Shabon.Bubble
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
             }
+        }
+
+        protected SeTypeEnum GetBreathedSe(BubbleType bubbleType)
+        {
+            return bubbleType switch
+            {
+                BubbleType.Normal => SeTypeEnum.NormalBubbleBreathed,
+                BubbleType.Quick => SeTypeEnum.QuickBubbleBreathed,
+                BubbleType.Boss => SeTypeEnum.BossBubbleBreathed,
+                _ => SeTypeEnum.NormalBubbleBreathed
+            };
         }
 
         void OnDestroy()
