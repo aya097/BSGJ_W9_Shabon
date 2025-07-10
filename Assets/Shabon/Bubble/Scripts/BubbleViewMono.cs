@@ -79,6 +79,10 @@ namespace Shabon.Bubble
                 shadow.transform.localScale = _originalShadowScale * distance / _originalShadowDistance * 1.5f;
             }
         }
+        public void SetOrder(int order = 1)
+        {
+            _spriteRenderer.sortingOrder = order;
+        }
         public void SetBubbleType(BubbleType bubbleType)
         {
             _bubbleType = bubbleType;
