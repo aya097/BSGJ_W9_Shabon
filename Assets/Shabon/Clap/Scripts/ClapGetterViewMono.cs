@@ -31,16 +31,9 @@ namespace Shabon.Clap
             {
                 notHitBubbles.Remove(bubble);
 
-                // ArmorBubbleはクラップできないため、clapableはfalse
-                if (bubble is ArmorBubbleMono)
-                {
-                    bubble.IsClapable = false;
-                }
-                else
-                {
-                    // ヒットしたバブルはIsClapableをtrueにする
-                    bubble.IsClapable = true;
-                }
+                // ヒットしたバブルはIsClapableをtrueにする
+                bubble.IsClapable = true;
+
 
             }
             // ヒットしてないバブルのIsClapableをfalseにする

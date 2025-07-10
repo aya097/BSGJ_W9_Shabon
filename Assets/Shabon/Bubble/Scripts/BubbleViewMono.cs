@@ -179,6 +179,13 @@ namespace Shabon.Bubble
         // Clapされたときのアニメーション
         public virtual void PlayClap(Action? callback = null)
         {
+            // Armorはまだないので 
+            if (_bubbleType == BubbleType.Armor)
+            {
+                SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.ArmorBubbleClaped);
+                return;
+            }
+
             // Breathをリセット
             _breathDisposable?.Dispose();
 

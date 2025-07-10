@@ -73,6 +73,7 @@ namespace Shabon.Bubble
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
                 .Subscribe(clapable =>
                 {
+                    if (bubbleData.BubbleType == BubbleType.Armor) return;
                     if (clapable)
                     {
                         bubbleViewMono.SetHighlight(HighLightType.Clapable);
