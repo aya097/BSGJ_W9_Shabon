@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using LitMotion;
+using LitMotion.Extensions;
 using R3;
 using Shabon.Param;
 using Shabon.Score;
@@ -67,6 +69,9 @@ namespace Shabon.Bubble
             // Reachの処理
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
+            // 広がる処理
+            SpreadBubble(bubbleMono, bubbleViewMono);
+
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
 
             // プレゼンター処理？
@@ -98,6 +103,29 @@ namespace Shabon.Bubble
                 _ => new NormalBubbleMover(transform, forwardVelocity, _playerTransform.PlayerTransform) // もし該当がなければNormalを返しておく
             };
         }
+
+        /// <summary>
+        /// バブルが最初に広がる処理
+        /// </summary>
+        private void SpreadBubble(IBubbleMono bubbleMono, BubbleViewMono viewMono)
+        {
+            // 移動する目的地(x)
+            float targetPosition = UnityEngine.Random.Range(-1.5f, 1.5f);
+
+            // n秒後に実行（ポータルから出たときに動きたい）
+            Observable.EveryUpdate()
+                .Where(_ => bubbleMono.Transform.position.z < 0.95f)
+                .Take(1)
+                .Subscribe(_ =>
+                {
+                    // 0.5秒で移動する
+                    LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
+                        .BindToPositionX(bubbleMono.Transform)
+                        .AddTo(viewMono);
+                })
+                .AddTo(viewMono);   // 寿命管理のため
+        }
+
         /// <summary>
         /// 息を吹かれたときの処理を作成
         /// </summary>
