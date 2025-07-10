@@ -181,10 +181,10 @@ namespace Shabon.Bubble
         }
 
         // Clapされたときのアニメーション
-        public virtual void PlayClap(Action? callback = null)
+        public virtual void PlayClap(Action? callback = null, bool isDead = true)
         {
-            // Armorはまだないので 
-            if (_bubbleType == BubbleType.Armor)
+            // Armor用、やられなければ
+            if (!isDead)
             {
                 SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.ArmorBubbleClaped);
                 return;

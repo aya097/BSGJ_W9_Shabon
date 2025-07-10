@@ -43,7 +43,7 @@ namespace Shabon.Bubble
                 }).AddTo(this);
         }
 
-        public override void PlayClap(Action? callback = null)
+        public override void PlayClap(Action? callback = null, bool isDead = true)
         {
             // Breathをリセット
             //_breathDisposable?.Dispose();
