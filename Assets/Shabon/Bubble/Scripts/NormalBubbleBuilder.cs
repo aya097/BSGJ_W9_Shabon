@@ -7,6 +7,7 @@ using LitMotion.Extensions;
 using R3;
 using Shabon.Param;
 using Shabon.Score;
+using Unity.Mathematics;
 using UnityEngine;
 using VContainer;
 
@@ -110,7 +111,8 @@ namespace Shabon.Bubble
         private void SpreadBubble(IBubbleMono bubbleMono, BubbleViewMono viewMono)
         {
             // 移動する目的地(x)
-            float targetPosition = UnityEngine.Random.Range(-1.5f, 1.5f);
+
+            float targetPosition = UnityEngine.Random.Range(0, 1.5f) * Mathf.Sign(bubbleMono.Transform.position.x);
 
             // n秒後に実行（ポータルから出たときに動きたい）
             Observable.EveryUpdate()
@@ -120,6 +122,7 @@ namespace Shabon.Bubble
                 {
                     // 0.5秒で移動する
                     LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
+                        .WithEase(Ease.OutSine)
                         .BindToPositionX(bubbleMono.Transform)
                         .AddTo(viewMono);
                 })
