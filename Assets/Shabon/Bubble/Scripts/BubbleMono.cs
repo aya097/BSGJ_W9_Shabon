@@ -61,6 +61,14 @@ namespace Shabon.Bubble
 
         protected virtual void Update()
         {
+            // ステージからはみ出ないようにする
+            if (Mathf.Abs(transform.position.x) > 1.75f)    // 今回適当にきめた
+            {
+                var pos = transform.position;
+                pos.x = 1.6f * Mathf.Sign(pos.x);
+                transform.position = pos;
+            }
+
             // 到達したら移動しない
             if (_isReached) return;
 
