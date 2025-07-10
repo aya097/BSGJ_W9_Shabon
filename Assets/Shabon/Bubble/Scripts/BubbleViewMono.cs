@@ -5,6 +5,7 @@ using R3.Triggers;
 using UnityEngine;
 using LitMotion;
 using LitMotion.Extensions;
+using Shabon.Sound;
 
 namespace Shabon.Bubble
 {
@@ -43,6 +44,8 @@ namespace Shabon.Bubble
         protected Color _originalColor;
         private Vector3 _originalShadowScale;
         private float _originalShadowDistance; // 影の元の距離
+
+        private SoundToken _breathedToken = null!;
 
         void Awake()
         {
@@ -129,11 +132,21 @@ namespace Shabon.Bubble
             // Breathは毎フレーム呼ばれるから修正
             _breathDisposable?.Dispose();
 
+            // サウンドを再生
+            if (_breathedToken == null)
+                _breathedToken = SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.NormalBubbleBreathed) ?? null!;
+
             _breathDisposable = Observable.Timer(TimeSpan.FromSeconds(0.1f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
                     bubbleMono.IsBreathing = false;
+                    // サウンド中止
+                    if (_breathedToken != null)
+                    {
+                        SoundPlayerMono.Instance?.StopSound(_breathedToken);
+                        _breathedToken = null!;
+                    }
                 });
 
             Play(BubbleAnimationEnum.Breath);
@@ -184,6 +197,15 @@ namespace Shabon.Bubble
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
             }
+        }
+
+        void OnDestroy()
+        {
+            if (_breathedToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_breathedToken);
+            }
+            _breathDisposable?.Dispose();
         }
     }
 }
