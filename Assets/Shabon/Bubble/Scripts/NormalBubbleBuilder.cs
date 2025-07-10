@@ -73,6 +73,7 @@ namespace Shabon.Bubble
             // 広がる処理
             SpreadBubble(bubbleMono, bubbleViewMono);
 
+
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
 
             // プレゼンター処理？
@@ -120,6 +121,8 @@ namespace Shabon.Bubble
                 .Take(1)
                 .Subscribe(_ =>
                 {
+                    // 描画を優先する
+                    viewMono.SetOrder();
                     // 0.5秒で移動する
                     LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
                         .WithEase(Ease.OutSine)
