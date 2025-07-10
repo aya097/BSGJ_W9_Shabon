@@ -80,7 +80,7 @@ namespace Shabon.Bubble
             bubbleSetter.OnClap += _ =>
             {
                 Debug.Log("ArmorBubbleはClapは無効");
-                bubbleView.PlayClap();
+                bubbleView.PlayClap(() => { }, false);
             };
         }
 
