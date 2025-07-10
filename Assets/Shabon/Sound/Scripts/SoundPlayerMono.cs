@@ -88,7 +88,7 @@ namespace Shabon.Sound
             return token;
         }
         // Se再生
-        public SoundToken PlaySe(SeTypeEnum seType)
+        public SoundToken PlaySe(SeTypeEnum seType, bool isLoop = false)
         {
             // Seが存在するか確認
             var seInfo = soundParam.SeInfo.Where(i => i.SeType == seType).FirstOrDefault();
@@ -105,6 +105,7 @@ namespace Shabon.Sound
 
             // 再生可能な場合
             source.clip = seInfo.Clip;
+            source.loop = isLoop;
             source.Play();
 
             var token = IssueToken();   // トークン生成
