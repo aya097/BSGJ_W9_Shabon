@@ -2053,13 +2053,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434867177}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.20000002}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1749620103051473687}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &434867179
 VFXRenderer:
   serializedVersion: 1
@@ -2120,7 +2120,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: Angle
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -10653,6 +10656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breath
       objectReference: {fileID: 0}
+    - target: {fileID: 1335407172461007704, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: breathEffect
+      value: 
+      objectReference: {fileID: 434867180}
     - target: {fileID: 5260326140287049436, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -10691,7 +10698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9997224
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalRotation.x
@@ -10699,7 +10706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.023559738
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalRotation.z
@@ -10711,7 +10718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 2.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

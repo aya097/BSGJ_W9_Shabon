@@ -5,6 +5,7 @@ using R3;
 using Shabon.Bubble;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.VFX;
 using VContainer;
 namespace Shabon.Breath
 {
@@ -14,6 +15,7 @@ namespace Shabon.Breath
     public class BreathViewMono : MonoBehaviour
     {
         [SerializeField] Transform originTransform = null!; // 原点の位置
+        [SerializeField] VisualEffect breathEffect = null!;
         [Inject]
         public void Initialize(BreathModel breath)
         {
@@ -25,6 +27,11 @@ namespace Shabon.Breath
                 .Subscribe((direction) =>
                 {
                     originTransform.LookAt(breath.Position + direction);
+                    // VFXに反映
+                    // 向きは変えない
+                    breathEffect.transform.rotation = Quaternion.identity;
+                    float angle = -originTransform.eulerAngles.y / 180f * Mathf.PI;
+                    breathEffect.SetFloat("Angle", angle);
                 })
                 .AddTo(this);
             // 座標がかわったら更新
@@ -34,6 +41,21 @@ namespace Shabon.Breath
                    originTransform.position = position;
                })
                .AddTo(this);
+
+            // 息を吹いたら
+            Observable.EveryValueChanged(breath, b => b.Strength)
+                .Subscribe((strength) =>
+                {
+                    if (strength > 0)
+                    {
+                        breathEffect.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        breathEffect.gameObject.SetActive(false);
+                    }
+                })
+                .AddTo(this);
         }
 
     }
