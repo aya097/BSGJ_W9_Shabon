@@ -10560,6 +10560,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_ResetSeedOnPlay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
       value: 4
       objectReference: {fileID: 0}

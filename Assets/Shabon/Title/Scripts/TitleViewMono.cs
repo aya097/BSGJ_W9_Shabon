@@ -1,5 +1,6 @@
 #nullable enable
 
+using Shabon.Sound;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -20,6 +21,14 @@ namespace Shabon.Title
         public Button StartButton => startButton;
         public PlayableDirector ProloguePlayableDirecctor => prologuePlayableDirecctor;
 
+
+        // BGM停止用
+        private SoundToken _bgmToken = null!;
+        void Start()
+        {
+            // BGM再生
+            _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.TitleBGM) ?? null!;
+        }
         // プロローグを再生するメソッド
         public void StartPrologue()
         {
@@ -30,6 +39,15 @@ namespace Shabon.Title
             // プロローグの準備
             prologue.SetActive(true);
             prologuePlayableDirecctor.Play();
+        }
+
+        void OnDestroy()
+        {
+            // BGM止める
+            if (_bgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+            }
         }
     }
 }

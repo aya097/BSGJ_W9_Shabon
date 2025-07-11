@@ -65,7 +65,8 @@ namespace Shabon.Sound
 
         // Bgm再生
         public SoundToken PlayBgm(BgmTypeEnum bgmType)
-        {            // Bgmが存在するか確認
+        {
+            // Bgmが存在するか確認
             var bgmInfo = soundParam.BgmInfo.Where(i => i.BgmType == bgmType).FirstOrDefault();
             if (bgmInfo == null)
             {
@@ -89,8 +90,6 @@ namespace Shabon.Sound
         // Se再生
         public SoundToken PlaySe(SeTypeEnum seType, bool isLoop = false)
         {
-            Debug.Log(seSources.Where(s => s.isPlaying).Count());
-
             // Seが存在するか確認
             var seInfo = soundParam.SeInfo.Where(i => i.SeType == seType).FirstOrDefault();
             if (seInfo == null)
