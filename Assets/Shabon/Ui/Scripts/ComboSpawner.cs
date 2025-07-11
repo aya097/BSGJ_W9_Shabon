@@ -4,6 +4,8 @@ using System.Linq;
 using Shabon.Param;
 using UnityEngine;
 using VContainer;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Ui
 {
@@ -32,11 +34,23 @@ namespace Shabon.Ui
             RectTransform rect = combo.GetComponent<RectTransform>();
             rect.anchoredPosition = pos;
 
+            // 出現モーション
+            combo.transform.localScale = Vector3.zero;
+            LMotion.Create(Vector3.zero, Vector3.one, 0.5f)
+                .WithEase(Ease.OutBack) 
+                .BindToLocalScale(combo.transform) 
+                .AddTo(combo); 
+
             // コンボ数に対応した評価を取得
             ComboEvaluationGroup comboEvaluationGroup = GetComboEvaluationGroup(comboNum);
             combo.SetCombo(comboNum, comboEvaluationGroup);   // コンボ数を設定
 
-            GameObject.Destroy(combo.gameObject, 1f);
+            // 消滅モーション
+            LMotion.Create(Vector3.one, Vector3.zero, 0.4f)
+            .WithEase(Ease.InBack) 
+            .WithOnComplete(() => GameObject.Destroy(combo.gameObject))
+            .WithDelay(1.0f)
+            .BindToLocalScale(combo.transform);
         }
 
         // スポーンする場所をランダムに決定
