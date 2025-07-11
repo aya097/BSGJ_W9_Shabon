@@ -4,6 +4,8 @@ using System.Linq;
 using Shabon.Param;
 using UnityEngine;
 using VContainer;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Ui
 {
@@ -21,21 +23,34 @@ namespace Shabon.Ui
             _comboViewParam = comboViewParam;
             _comboParent = comboParent;
             GetRandomPosition();
-
         }
 
         // コンボ
         public void Spawn(int comboNum)
-        {
+        {   
+            // 画面のランダムな位置にコンボを表示
             var pos = GetRandomPosition();
-
             var combo = GameObject.Instantiate(_comboViewParam.ComboPrefab, _comboParent.ComboParent);
             RectTransform rect = combo.GetComponent<RectTransform>();
             rect.anchoredPosition = pos;
 
-            string evaluationText = GetComboEvaluation(comboNum);
-            combo.SetCombo(comboNum, evaluationText);   // コンボ数を設定
-            GameObject.Destroy(combo.gameObject, 1f);
+            // 出現モーション
+            combo.transform.localScale = Vector3.zero;
+            LMotion.Create(Vector3.zero, Vector3.one, 0.5f)
+                .WithEase(Ease.OutBack) 
+                .BindToLocalScale(combo.transform) 
+                .AddTo(combo); 
+
+            // コンボ数に対応した評価を取得
+            ComboEvaluationGroup comboEvaluationGroup = GetComboEvaluationGroup(comboNum);
+            combo.SetCombo(comboNum, comboEvaluationGroup);   // コンボ数を設定
+
+            // 消滅モーション
+            LMotion.Create(Vector3.one, Vector3.zero, 0.4f)
+            .WithEase(Ease.InBack) 
+            .WithOnComplete(() => GameObject.Destroy(combo.gameObject))
+            .WithDelay(1.0f)
+            .BindToLocalScale(combo.transform);
         }
 
         // スポーンする場所をランダムに決定
@@ -56,18 +71,15 @@ namespace Shabon.Ui
         /// コンボ数に対応した評価テキスト(ex. Good)を変えずメソッド
         /// </summary>
         /// <param name="comboNum"></param>
-        private string GetComboEvaluation(int comboNum)
+        private ComboEvaluationGroup GetComboEvaluationGroup(int comboNum)
         {
-            ComboEvaluationPair comboEvaluationPair
-                = _comboViewParam.ComboEvaluationPairs
+            ComboEvaluationGroup comboEvaluationGroup
+                = _comboViewParam.ComboEvaluationGroups
                     .Where(cep => cep.ComboNum <= comboNum)
                     .OrderByDescending(cep => cep.ComboNum)
                     .FirstOrDefault();
 
-            // 最低評価より下のスコアなら評価なし
-            if (comboEvaluationPair == null) return "";
-
-            return comboEvaluationPair.ComboEvaluation.ToString();
+            return comboEvaluationGroup;
         }
     }
 }

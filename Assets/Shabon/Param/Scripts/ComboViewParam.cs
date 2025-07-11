@@ -11,24 +11,24 @@ namespace Shabon.Ui
         [Header("コンボのプレハブ")]
         [SerializeField] ComboViewMono comboPrefab = null!;
 
-        [Header("評価に対応したコンボ数")]
-        [SerializeField] private List<ComboEvaluationPair> comboEvaluationPairs = null!;
+        [Header("その他パラメータ")]
+        [SerializeField] private List<ComboEvaluationGroup> comboEvaluationGroups = null!;
 
-        // ゲッター
+        // Getter
         public ComboViewMono ComboPrefab
         {
             get { return comboPrefab; }
         }
-        public IEnumerable<ComboEvaluationPair> ComboEvaluationPairs
+        public IEnumerable<ComboEvaluationGroup> ComboEvaluationGroups
         {
-            get { return comboEvaluationPairs; }
+            get { return comboEvaluationGroups; }
         }
     }
 
     public interface IComboViewParam
     {
         ComboViewMono ComboPrefab { get; }
-        IEnumerable<ComboEvaluationPair> ComboEvaluationPairs { get; }
+        IEnumerable<ComboEvaluationGroup> ComboEvaluationGroups { get; }
     }
 
     /// <summary>
@@ -45,15 +45,25 @@ namespace Shabon.Ui
     /// コンボ評価と対応するコンボ数のペアを管理するクラス
     /// </summary>
     [Serializable]
-    public class ComboEvaluationPair
-    {
+    public class ComboEvaluationGroup
+    {   
+        [Header("コンボの評価")]
         [SerializeField] ComboEvaluation comboEvaluation;
-        [SerializeField] int comboNum;
+        
+        [Header("コンボの評価テキストの色")]
+        [SerializeField] Color textColor;
 
+        [Header("コンボ数")]
+        [SerializeField] int comboNum;
+        
         // Getter
         public ComboEvaluation ComboEvaluation
         {
             get { return comboEvaluation; }
+        }
+        public Color TextColor
+        {
+            get { return textColor; }
         }
         public int ComboNum
         {

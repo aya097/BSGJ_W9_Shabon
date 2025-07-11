@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: ComboViewParam
   m_EditorClassIdentifier: 
   comboPrefab: {fileID: 4305650503684473298, guid: 4652cb5deccb148bc9e67c7db90b822d, type: 3}
-  comboEvaluationPairs:
+  comboEvaluationGroups:
   - comboEvaluation: 0
-    comboNum: 2
+    textColor: {r: 0.4117647, g: 0.4117647, b: 0.7058824, a: 1}
+    comboNum: 0
   - comboEvaluation: 1
-    comboNum: 5
+    textColor: {r: 0.27450982, g: 0.64705884, b: 0.41960785, a: 1}
+    comboNum: 3
   - comboEvaluation: 2
-    comboNum: 8
+    textColor: {r: 0.7058824, g: 0.6862745, b: 0.3647059, a: 1}
+    comboNum: 5
