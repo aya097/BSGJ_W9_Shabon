@@ -10539,30 +10539,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breath
       objectReference: {fileID: 0}
-    - target: {fileID: 5260326140287049436, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: m_Color.a
+    - target: {fileID: 3771667374231759127, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: m_Color.b
+    - target: {fileID: 3771667374231759127, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771667374231759127, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771667374231759127, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771667374231759127, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Name
+      value: CollisionAngle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Name
+      value: myAngle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[3].m_Name
+      value: myAlpha
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[3].m_Value
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: m_Color.g
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Overridden
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: m_Color.r
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Overridden
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5562487170767368152, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ebafaba453e5e40e58eefa3ef1a1b3fb, type: 2}
+    - target: {fileID: 4170713436644748272, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[3].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144038288925924975, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10602,6 +10642,14 @@ PrefabInstance:
     - target: {fileID: 8518952031887815470, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812856986145115123, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812856986145115123, guid: 2da83d320d95746d687d53f70388b7fa, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
