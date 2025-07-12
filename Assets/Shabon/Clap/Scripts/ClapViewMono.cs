@@ -3,6 +3,7 @@
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
+using UnityEditor.Rendering;
 using UnityEngine;
 using VContainer;
 
@@ -13,12 +14,11 @@ namespace Shabon.Clap
     /// </summary>
     public class ClapViewMono : MonoBehaviour
     {
-        [Header("床のうねりについて")]
+        [Header("画面のエフェクトについて")]
         [SerializeField] private bool waveEnable = true;
-        [SerializeField] private Material waveMaterial = null!;
-        [SerializeField] private GameObject wavedObject = null!;
-        [SerializeField] private float waveRadius;
-        [SerializeField] private float waveDuration;
+        [SerializeField] private SpriteRenderer waveEffect = null!;
+        [SerializeField] private float maxRadius = 1f;
+        [SerializeField] private float waveSpeed = 0.5f;
 
         [Header("輪っかについて")]
         [SerializeField] private bool ringEnable = true;
@@ -27,6 +27,14 @@ namespace Shabon.Clap
         [SerializeField] private Ease ringEase;
         [SerializeField] private float ringRadius;
         [SerializeField] private float ringDuration;
+
+        [Header("光について")]
+        [SerializeField] private bool lightEnable = true;
+        [SerializeField] private GameObject lightObject = null!;
+        [SerializeField] private Material lightMaterial = null!;
+        [SerializeField] private Ease lightEase;
+        [SerializeField] private float lightRadius;
+        [SerializeField] private float lightDuration;
 
         [Inject]
         public void Initialize(ClapModel clapModel)
@@ -46,12 +54,20 @@ namespace Shabon.Clap
         {
             if (waveEnable)
             {
-                float radiusRatio = waveRadius / wavedObject.transform.localScale.x;
                 // 0から半径（全体の大きさに対する割合）まで変化
-                LMotion.Create(0f, radiusRatio, waveDuration)
+                LMotion.Create(0f, 1f, waveSpeed)
                     .WithEase(Ease.Linear)
-                    .WithOnComplete(() => SetWave(0f))
-                    .Bind(value => SetWave(value))
+                    .WithOnComplete(() =>
+                    {
+                        SetWave(0f);
+                        LMotion.Create(0.3f, 2f, waveSpeed * 1.7f)
+                        .WithEase(Ease.Linear)
+                        .WithOnComplete(() => SetWave(0f))
+                        .Bind(value => SetWave(value * maxRadius))
+                        .AddTo(this);
+                    }
+                    )
+                    .Bind(value => SetWave(value * maxRadius))
                     .AddTo(this);
             }
 
@@ -70,11 +86,29 @@ namespace Shabon.Clap
                     .BindToColorA(ringRenderer)
                     .AddTo(this);
             }
+
+            if (lightEnable)
+            {
+                // ライトの半径
+                LMotion.Create(0f, lightRadius, lightDuration)
+                .WithEase(lightEase)
+                .WithOnComplete(() => SetLight(0f))
+                .Bind(value => SetLight(value))
+                .AddTo(this);
+            }
         }
 
         private void SetWave(float radius)
         {
-            waveMaterial.SetFloat("_Radius", radius);
+            if (radius == 0)
+            {
+                waveEffect.gameObject.SetActive(false);
+            }
+            else
+            {
+                waveEffect.gameObject.SetActive(true);
+            }
+            waveEffect.material.SetFloat("_Radius", radius);
         }
 
         private void SetRing(float radius)
@@ -82,5 +116,21 @@ namespace Shabon.Clap
             ringObject.transform.localScale = Vector3.one * radius;
         }
 
+        private void SetLight(float radius)
+        {
+            if (radius == 0)
+            {
+                lightObject.gameObject.SetActive(false);
+            }
+            else
+            {
+                lightObject.gameObject.SetActive(true);
+            }
+            var scale = lightObject.transform.localScale;
+            scale.x = radius;
+            scale.z = radius;
+            lightObject.transform.localScale = scale;
+            lightMaterial.SetFloat("_alpha", 1.1f - radius / lightRadius);
+        }
     }
 }
