@@ -15,7 +15,8 @@ namespace Shabon.Bubble
         Clap,
         Breath,
         Attack,
-        Spawn
+        Spawn, // ボスバブル専用
+        Guard // 鎧バブル専用
     }
     public enum HighLightType
     {
