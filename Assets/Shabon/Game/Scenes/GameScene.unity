@@ -3462,12 +3462,12 @@ GameObject:
   - component: {fileID: 682231109}
   - component: {fileID: 682231108}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &682231108
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3529,12 +3529,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 682231106}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: -2.5}
-  m_LocalScale: {x: 2, y: 0.15, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0}
+  m_LocalScale: {x: 2, y: 0.3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2053351955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688390767
 GameObject:
@@ -10697,6 +10697,7 @@ Transform:
   m_Children:
   - {fileID: 688390768}
   - {fileID: 1610577178}
+  - {fileID: 682231110}
   m_Father: {fileID: 1707381002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2053351956
@@ -10720,8 +10721,9 @@ MonoBehaviour:
   ringEase: 29
   ringRadius: 2.5
   ringDuration: 1
-  lightEnable: 1
+  lightEnable: 0
   lightObject: {fileID: 682231106}
+  lightMaterial: {fileID: 2100000, guid: f90991b79992943b6812bce68eeac13b, type: 2}
   lightEase: 29
   lightRadius: 2
   lightDuration: 1
@@ -11613,4 +11615,3 @@ SceneRoots:
   - {fileID: 864198486}
   - {fileID: 614466399}
   - {fileID: 718196063}
-  - {fileID: 682231110}

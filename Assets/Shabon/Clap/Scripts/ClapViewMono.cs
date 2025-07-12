@@ -31,6 +31,7 @@ namespace Shabon.Clap
         [Header("光について")]
         [SerializeField] private bool lightEnable = true;
         [SerializeField] private GameObject lightObject = null!;
+        [SerializeField] private Material lightMaterial = null!;
         [SerializeField] private Ease lightEase;
         [SerializeField] private float lightRadius;
         [SerializeField] private float lightDuration;
@@ -129,6 +130,7 @@ namespace Shabon.Clap
             scale.x = radius;
             scale.z = radius;
             lightObject.transform.localScale = scale;
+            lightMaterial.SetFloat("_alpha", 1.1f - radius / lightRadius);
         }
     }
 }
