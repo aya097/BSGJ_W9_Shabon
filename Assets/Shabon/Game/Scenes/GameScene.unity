@@ -10625,11 +10625,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cdfbc22a62143fb9231f86673e2b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveEnable: 0
-  waveMaterial: {fileID: 2100000, guid: 771c1a01e61a94deb9ce564d5d03e4b1, type: 2}
-  wavedObject: {fileID: 0}
-  waveRadius: 2
-  waveDuration: 1
+  waveEnable: 1
+  waveEffect: {fileID: 1610577177}
+  maxRadius: 1.3
+  waveSpeed: 0.4
   ringEnable: 1
   ringObject: {fileID: 688390767}
   ringEase: 29
