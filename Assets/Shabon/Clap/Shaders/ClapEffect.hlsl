@@ -1,13 +1,13 @@
-void scale_uv_height_one_float(float2 uv, float2 size, out float2 output)
+void scale_uv_height_one_float(float2 uv, float2 size, float2 center, out float2 output)
 {
-    uv -= 0.5;
+    uv -= center;
     output = float2(uv.x * size.x / size.y, uv.y);
 }
 
-void rescale_uv_height_one_float(float2 uv, float2 size, out float2 output)
+void rescale_uv_height_one_float(float2 uv, float2 size, float2 center, out float2 output)
 {
     output = float2(uv.x * size.y / size.x, uv.y);
-    output += 0.5;
+    output += center;
 }
 
 // scaled_uvはスクリーン座標、中心(0,0)

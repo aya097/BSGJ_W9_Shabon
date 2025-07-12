@@ -3,6 +3,7 @@
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
+using UnityEditor.Rendering;
 using UnityEngine;
 using VContainer;
 
@@ -48,7 +49,16 @@ namespace Shabon.Clap
                 // 0から半径（全体の大きさに対する割合）まで変化
                 LMotion.Create(0f, 1f, waveSpeed)
                     .WithEase(Ease.Linear)
-                    .WithOnComplete(() => SetWave(0f))
+                    .WithOnComplete(() =>
+                    {
+                        SetWave(0f);
+                        LMotion.Create(0.3f, 1f, waveSpeed * 0.7f)
+                        .WithEase(Ease.Linear)
+                        .WithOnComplete(() => SetWave(0f))
+                        .Bind(value => SetWave(value * maxRadius))
+                        .AddTo(this);
+                    }
+                    )
                     .Bind(value => SetWave(value * maxRadius))
                     .AddTo(this);
             }
