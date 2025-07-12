@@ -28,6 +28,13 @@ namespace Shabon.Clap
         [SerializeField] private float ringRadius;
         [SerializeField] private float ringDuration;
 
+        [Header("光について")]
+        [SerializeField] private bool lightEnable = true;
+        [SerializeField] private GameObject lightObject = null!;
+        [SerializeField] private Ease lightEase;
+        [SerializeField] private float lightRadius;
+        [SerializeField] private float lightDuration;
+
         [Inject]
         public void Initialize(ClapModel clapModel)
         {
@@ -78,6 +85,16 @@ namespace Shabon.Clap
                     .BindToColorA(ringRenderer)
                     .AddTo(this);
             }
+
+            if (lightEnable)
+            {
+                // ライトの半径
+                LMotion.Create(0f, lightRadius, lightDuration)
+                .WithEase(lightEase)
+                .WithOnComplete(() => SetLight(0f))
+                .Bind(value => SetLight(value))
+                .AddTo(this);
+            }
         }
 
         private void SetWave(float radius)
@@ -98,5 +115,20 @@ namespace Shabon.Clap
             ringObject.transform.localScale = Vector3.one * radius;
         }
 
+        private void SetLight(float radius)
+        {
+            if (radius == 0)
+            {
+                lightObject.gameObject.SetActive(false);
+            }
+            else
+            {
+                lightObject.gameObject.SetActive(true);
+            }
+            var scale = lightObject.transform.localScale;
+            scale.x = radius;
+            scale.z = radius;
+            lightObject.transform.localScale = scale;
+        }
     }
 }
