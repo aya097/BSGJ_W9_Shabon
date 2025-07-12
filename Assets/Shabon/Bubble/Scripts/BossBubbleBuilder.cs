@@ -94,7 +94,7 @@ namespace Shabon.Bubble
                     if (bubbleMono.BossHitPoint == 0)
                     {
                         // ボス撃破時
-                        float bossBattleTime = Time.time - _bossBattleStartTime;
+                        float bossBattleTime = Time.time - PhaseExecutor.BossBattleStartTime;
                         ResultData.BossBattleTime = bossBattleTime;
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         return;
