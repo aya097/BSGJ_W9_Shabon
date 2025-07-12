@@ -47,7 +47,7 @@ namespace Shabon.Game
         private double _currentTime;    // 現在の時間
         private double _phaseUpdatedTime;   // フェーズが更新された時間
         private int _bubbleCount;   // バブルの生成数
-        private float _bossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
+        public static float BossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
 
         private List<PhaseEvent> _eventList = new();
 
@@ -138,6 +138,13 @@ namespace Shabon.Game
                         {
                             // ランダムにBubbleスポーン
                             BubbleType bubbleType = SelectSpawningBubble(_gamePhases.GetCurrentPhaseData().SpawningBubbles);
+
+                            // ボスバブルが初めて出現したタイミングで_bossBattleStartTimeをセット
+                            if (bubbleType == BubbleType.Boss && BossBattleStartTime == 0f)
+                            {
+                                BossBattleStartTime = Time.time;
+                            }
+
                             _bubbleSpawner.Spawn(bubbleType);
                         }
                     }
@@ -167,6 +174,13 @@ namespace Shabon.Game
                     {
                         if (isEnd)
                         {
+                            // ボスバトル時間を計算
+                            float bossBattleTime = 0f;
+                            if (BossBattleStartTime > 0f)
+                            {
+                                bossBattleTime = (float)(_currentTime - BossBattleStartTime);
+                            }
+
                             ResultData.SaveResults(
                                 _dirtValue.DirtNum,
                                 _scoreValue.ScoreNum,
@@ -174,7 +188,8 @@ namespace Shabon.Game
                                 _clapModel.ClapCount,
                                 (_dirtValue as DirtValue)?.DecreaseCount ?? 0,
                                 _breathModel.TotalBreathTime,
-                                _breathModel.TotalBreathStrength
+                                _breathModel.TotalBreathStrength,
+                                ResultData.BossBattleTime
                             );
                             SceneTransition.Transition(SceneName.ResultScene);
                             // スコアを保存
@@ -266,10 +281,6 @@ namespace Shabon.Game
             return BubbleType.Normal; // デフォルトはNormalバブル
         }
 
-        void StartBossPhase()
-        {
-            _bossBattleStartTime = Time.time;
-            // ボスバブル生成など
-        }
+
     }
 }
