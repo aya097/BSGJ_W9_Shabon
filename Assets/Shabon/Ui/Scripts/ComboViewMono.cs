@@ -15,10 +15,11 @@ namespace Shabon.Ui
         [SerializeField] TMP_Text comboEvaluationText = null!; // コンボの評価を表示する用のテキスト
 
         // コンボの情報を設定
-        public void SetCombo(int comboNum, string evaluationText)
+        public void SetCombo(int comboNum, ComboEvaluationGroup comboEvaluationGroup)
         {
-            comboEvaluationText.text = evaluationText;
-            comboText.text = $"COMBO {comboNum}";
+            comboEvaluationText.text = comboEvaluationGroup.ComboEvaluation.ToString() + '!';
+            comboEvaluationText.color = comboEvaluationGroup.TextColor;
+            comboText.text = $"{comboNum}";
         }
 
     }

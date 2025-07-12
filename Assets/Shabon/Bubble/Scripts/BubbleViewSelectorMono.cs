@@ -25,9 +25,10 @@ namespace Shabon.Bubble
             // もしなければデフォルトを返す
             if (bubbleView == null)
             {
+                defaultView.SetBubbleType(bubbleType);
                 return defaultView;
             }
-
+            bubbleView.SetBubbleType(bubbleType);
             return bubbleView;
         }
     }

@@ -47,8 +47,19 @@ namespace Shabon.Sound
     }
     public enum SeTypeEnum
     {
-        bubbleSE,
-        clapSE,
+        // NormalBubble
+        NormalBubbleBreathed,
+        // QuickBubble
+        QuickBubbleBreathed,
+        // ArmorBubble
+        ArmorBubbleClaped,
+        // BossBubble
+        BossBubbleBreathed,
+        // Breath
+        BreathStrong,
+        BreathWeak,
+        // Clap
+        ClapFull
     }
 
 }

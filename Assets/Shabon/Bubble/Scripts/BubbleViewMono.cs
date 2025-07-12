@@ -5,6 +5,7 @@ using R3.Triggers;
 using UnityEngine;
 using LitMotion;
 using LitMotion.Extensions;
+using Shabon.Sound;
 
 namespace Shabon.Bubble
 {
@@ -42,7 +43,10 @@ namespace Shabon.Bubble
         private IDisposable? _breathDisposable = null!;
         protected Color _originalColor;
         private Vector3 _originalShadowScale;
+        private BubbleType _bubbleType = BubbleType.None;
         private float _originalShadowDistance; // 影の元の距離
+
+        private SoundToken _breathedToken = null!;
 
         void Awake()
         {
@@ -74,6 +78,14 @@ namespace Shabon.Bubble
                 float distance = (transform.position - hit.point).magnitude;
                 shadow.transform.localScale = _originalShadowScale * distance / _originalShadowDistance * 1.5f;
             }
+        }
+        public void SetOrder(int order = 1)
+        {
+            _spriteRenderer.sortingOrder = order;
+        }
+        public void SetBubbleType(BubbleType bubbleType)
+        {
+            _bubbleType = bubbleType;
         }
 
 
@@ -129,11 +141,23 @@ namespace Shabon.Bubble
             // Breathは毎フレーム呼ばれるから修正
             _breathDisposable?.Dispose();
 
+            // サウンドを再生
+            if (_breathedToken == null)
+            {
+                var seType = GetBreathedSe(_bubbleType);
+                _breathedToken = SoundPlayerMono.Instance?.PlaySe(seType) ?? null!;
+            }
             _breathDisposable = Observable.Timer(TimeSpan.FromSeconds(0.1f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
                     bubbleMono.IsBreathing = false;
+                    // サウンド中止
+                    if (_breathedToken != null)
+                    {
+                        SoundPlayerMono.Instance?.StopSound(_breathedToken);
+                        _breathedToken = null!;
+                    }
                 });
 
             Play(BubbleAnimationEnum.Breath);
@@ -157,8 +181,15 @@ namespace Shabon.Bubble
         }
 
         // Clapされたときのアニメーション
-        public virtual void PlayClap(Action? callback = null)
+        public virtual void PlayClap(Action? callback = null, bool isDead = true)
         {
+            // Armor用、やられなければ
+            if (!isDead)
+            {
+                SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.ArmorBubbleClaped);
+                return;
+            }
+
             // Breathをリセット
             _breathDisposable?.Dispose();
 
@@ -184,6 +215,26 @@ namespace Shabon.Bubble
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
             }
+        }
+
+        protected SeTypeEnum GetBreathedSe(BubbleType bubbleType)
+        {
+            return bubbleType switch
+            {
+                BubbleType.Normal => SeTypeEnum.NormalBubbleBreathed,
+                BubbleType.Quick => SeTypeEnum.QuickBubbleBreathed,
+                BubbleType.Boss => SeTypeEnum.BossBubbleBreathed,
+                _ => SeTypeEnum.NormalBubbleBreathed
+            };
+        }
+
+        void OnDestroy()
+        {
+            if (_breathedToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_breathedToken);
+            }
+            _breathDisposable?.Dispose();
         }
     }
 }

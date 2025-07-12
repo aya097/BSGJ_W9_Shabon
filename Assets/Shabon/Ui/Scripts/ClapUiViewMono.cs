@@ -1,4 +1,5 @@
 #nullable enable
+using Shabon.Sound;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +33,7 @@ namespace Shabon.Ui
             {
                 _backLight.SetActive(true);
                 _frontLight.SetActive(true);
+                SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.ClapFull);
             }
             // クールタイム中はAnimationを止める
             else

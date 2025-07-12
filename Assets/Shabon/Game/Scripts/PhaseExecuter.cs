@@ -14,6 +14,8 @@ using Shabon.Param;
 using Shabon.Clap;
 using Shabon.Breath;
 using Shabon.Tutorial;
+using System.Media;
+using Shabon.Sound;
 
 namespace Shabon.Game
 {
@@ -88,6 +90,13 @@ namespace Shabon.Game
                 _breathModel.Reset();
 
                 StartPhase();
+
+                // BGM再生
+                Observable.TimerFrame(1).
+                    Subscribe(_ =>
+                    {
+                        SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM);
+                    });
             });
         }
 

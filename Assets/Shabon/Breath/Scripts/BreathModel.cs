@@ -10,11 +10,13 @@ namespace Shabon.Breath
     {
         public Vector3 Direction => _currentDirection;
         public Vector3 Position => _originPosition;
+        public float Strength => _strength;
 
         private readonly IBubbleHandler _bubbleHandler; // バブル操作を管理するハンドラー
         private Vector3 _originPosition;    // 息の発生位置
         private float _maxDegree = 60f; // 正面を0度として
         private Vector3 _currentDirection;  // 現在の向き
+        private float _strength = 0;    // 現在の息の強さ
 
         public float TotalBreathTime { get; private set; } = 0f;
         public float TotalBreathStrength { get; private set; } = 0f;
@@ -45,6 +47,7 @@ namespace Shabon.Breath
                 TotalBreathTime += Time.deltaTime;
             }
             _bubbleHandler.ApplyBreath(_currentDirection, _originPosition, strength);
+            _strength = strength;
         }
 
         /// <summary>
