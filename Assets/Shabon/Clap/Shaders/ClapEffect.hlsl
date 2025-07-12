@@ -17,6 +17,8 @@ void distort_uv_float(float2 scaled_uv, float width, float radius, float distort
     // radius-width以上radius以下の部分を歪ませる
     float condition = smoothstep(radius - width , radius, r);
     condition *= 1 - condition;
+    float theta = r * 10 + radius * 10 + scaled_uv.x * 10;
+    scaled_uv += float2(sin(theta),cos(theta)) * 0.001 * (1 - step(radius - width, r));
     output = float3(scaled_uv.x , scaled_uv.y + condition * distort, condition);
 }
 

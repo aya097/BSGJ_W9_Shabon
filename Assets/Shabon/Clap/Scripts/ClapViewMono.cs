@@ -52,7 +52,7 @@ namespace Shabon.Clap
                     .WithOnComplete(() =>
                     {
                         SetWave(0f);
-                        LMotion.Create(0.3f, 1f, waveSpeed * 0.7f)
+                        LMotion.Create(0.3f, 2f, waveSpeed * 1.7f)
                         .WithEase(Ease.Linear)
                         .WithOnComplete(() => SetWave(0f))
                         .Bind(value => SetWave(value * maxRadius))
