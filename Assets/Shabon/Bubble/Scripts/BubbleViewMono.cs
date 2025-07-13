@@ -15,7 +15,8 @@ namespace Shabon.Bubble
         Clap,
         Breath,
         Attack,
-        Spawn
+        Spawn, // ボスバブル専用
+        Guard // 鎧バブル専用
     }
     public enum HighLightType
     {
@@ -24,6 +25,7 @@ namespace Shabon.Bubble
         Claped,
         Attack,
         Breathed,
+        Guard
     }
     /// <summary>
     /// Bubbleの見た目を管理するクラス
@@ -45,11 +47,15 @@ namespace Shabon.Bubble
         private Vector3 _originalShadowScale;
         private BubbleType _bubbleType = BubbleType.None;
         private float _originalShadowDistance; // 影の元の距離
+        private int _originalOrderInLayer;
+        private SpriteRenderer _shadowSpriteRenderer;
 
         private SoundToken _breathedToken = null!;
 
-        void Awake()
+        protected virtual void Awake()
         {
+            _shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
+            _originalOrderInLayer = _spriteRenderer.sortingOrder;
             _originalColor = _spriteRenderer.color;
             cureEffect.SetActive(false);
             _originalShadowScale = shadow.transform.localScale;
@@ -63,8 +69,12 @@ namespace Shabon.Bubble
                 .AddTo(gameObject);
         }
 
-        void Update()
+        protected virtual void Update()
         {
+            // プレイヤーに近い(zが小さい)bubbleほど、手前に表示させるように
+            _spriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _originalOrderInLayer;
+            _shadowSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _originalOrderInLayer;
+
             // 影の位置を調整
             // 真下にRaycastして、ヒットした位置に影を配置
             RaycastHit hit;
@@ -99,7 +109,7 @@ namespace Shabon.Bubble
             }
             else if (highLightType == HighLightType.Claped)
             {
-                SetDarkness(0f);
+                SetDarkness(0.1f);
                 TurnOffHighlight();
             }
             else if (highLightType == HighLightType.Attack)
@@ -110,6 +120,10 @@ namespace Shabon.Bubble
             else if (highLightType == HighLightType.Breathed)
             {
                 SetDarkness(0f);
+            }
+            else if(highLightType == HighLightType.Guard)
+            {
+                SetDarkness(-1.0f);
             }
             else if (highLightType == HighLightType.None)
             {
@@ -168,9 +182,8 @@ namespace Shabon.Bubble
         {
             // Breathをリセット
             _breathDisposable?.Dispose();
-
             Play(BubbleAnimationEnum.Attack);
-            Observable.Timer(TimeSpan.FromSeconds(0.7f))
+            Observable.Timer(TimeSpan.FromSeconds(0.71f))
                 .Subscribe(_ =>
                 {
                     callback?.Invoke();
@@ -187,6 +200,13 @@ namespace Shabon.Bubble
             if (!isDead)
             {
                 SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.ArmorBubbleClaped);
+                Play(BubbleAnimationEnum.Guard);
+                Observable.Timer(TimeSpan.FromSeconds(0.8f))
+                    .Subscribe(_ =>
+                    {
+                        Play(BubbleAnimationEnum.Idle);
+                        callback?.Invoke();
+                    }).AddTo(this);
                 return;
             }
 
@@ -194,7 +214,7 @@ namespace Shabon.Bubble
             _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Clap);
-            Observable.Timer(TimeSpan.FromSeconds(0.9f))
+            Observable.Timer(TimeSpan.FromSeconds(0.7f))
                 .Subscribe(_ =>
                 {
                     callback?.Invoke();
