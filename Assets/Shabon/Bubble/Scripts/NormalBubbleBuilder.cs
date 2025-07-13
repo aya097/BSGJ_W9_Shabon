@@ -71,6 +71,8 @@ namespace Shabon.Bubble
             SetOnReach(bubbleSetter, bubbleMono, bubbleData, bubbleDeath, bubbleViewMono);
 
             // 広がる処理
+            // 最初は背景より後ろに描画
+            bubbleViewMono.SetSortingLayer("Back");
             SpreadBubble(bubbleMono, bubbleViewMono);
 
 
@@ -122,7 +124,7 @@ namespace Shabon.Bubble
                 .Subscribe(_ =>
                 {
                     // 描画を優先する
-                    viewMono.SetOrder();
+                    viewMono.SetSortingLayer("Bubble");
                     // 0.5秒で移動する
                     LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
                         .WithEase(Ease.OutSine)

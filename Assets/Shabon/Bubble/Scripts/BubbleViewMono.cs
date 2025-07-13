@@ -48,7 +48,7 @@ namespace Shabon.Bubble
         private BubbleType _bubbleType = BubbleType.None;
         private float _originalShadowDistance; // 影の元の距離
         private int _originalOrderInLayer;
-        private SpriteRenderer _shadowSpriteRenderer;
+        private SpriteRenderer _shadowSpriteRenderer = null!;
 
         private SoundToken _breathedToken = null!;
 
@@ -93,6 +93,12 @@ namespace Shabon.Bubble
         {
             _spriteRenderer.sortingOrder = order;
         }
+        public virtual void SetSortingLayer(string sortingLayerName)
+        {
+            _shadowSpriteRenderer.sortingLayerName = sortingLayerName;
+            _spriteRenderer.sortingLayerName = sortingLayerName;
+
+        }
         public void SetBubbleType(BubbleType bubbleType)
         {
             _bubbleType = bubbleType;
@@ -121,7 +127,7 @@ namespace Shabon.Bubble
             {
                 SetDarkness(0f);
             }
-            else if(highLightType == HighLightType.Guard)
+            else if (highLightType == HighLightType.Guard)
             {
                 SetDarkness(-1.0f);
             }

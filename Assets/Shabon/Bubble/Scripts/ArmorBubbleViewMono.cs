@@ -43,6 +43,11 @@ namespace Shabon.Bubble
             _headSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _headOriginalOrderInLayer;
             base.Update();
         }
+        public override void SetSortingLayer(string sortingLayerName)
+        {
+            base.SetSortingLayer(sortingLayerName);
+            _headSpriteRenderer.sortingLayerName = sortingLayerName;
+        }
 
         protected override void Play(BubbleAnimationEnum animation)
         {
