@@ -214,7 +214,7 @@ namespace Shabon.Bubble
             _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Clap);
-            Observable.Timer(TimeSpan.FromSeconds(1.0f))
+            Observable.Timer(TimeSpan.FromSeconds(0.7f))
                 .Subscribe(_ =>
                 {
                     callback?.Invoke();
