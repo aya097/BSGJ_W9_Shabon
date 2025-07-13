@@ -67,6 +67,11 @@ namespace Shabon.Bubble
                     callback?.Invoke();
                 }).AddTo(this);
         }
+        public override void SetSortingLayer(string sortingLayerName)
+        {
+            base.SetSortingLayer(sortingLayerName);
+            _decorationSpriteRenderer.sortingLayerName = sortingLayerName;
+        }
 
         protected override void Play(BubbleAnimationEnum animation)
         {
