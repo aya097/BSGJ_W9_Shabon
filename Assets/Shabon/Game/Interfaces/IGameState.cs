@@ -5,6 +5,8 @@ namespace Shabon.Game
         None,
         Tutorial,
         Game,
+        Win,
+        Lose,
     }
 
     /// <summary>
