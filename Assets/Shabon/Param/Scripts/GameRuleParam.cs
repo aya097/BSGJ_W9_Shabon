@@ -19,6 +19,10 @@ namespace Shabon.Param
         [SerializeField] float sumBubbleScoreMultiplier;
         [SerializeField] float bubbleCountScoreMultiplier;
 
+        [Header("ゲームオーバー条件")]
+        [Header("この値になったらゲームオーバー")]
+        [SerializeField] int maxDirtValue;
+
 
         // Getter
         public IEnumerable<IGamePhaseData> GetGamePhaseDataList()
@@ -33,6 +37,10 @@ namespace Shabon.Param
         {
             get { return bubbleCountScoreMultiplier; }
         }
+        public int MaxDirtValue
+        {
+            get { return maxDirtValue; }
+        }
 
     }
 
@@ -41,6 +49,7 @@ namespace Shabon.Param
         IEnumerable<IGamePhaseData> GetGamePhaseDataList();
         float SumBubbleScoreMultiplier { get; }
         float BubbleCountScoreMultiplier { get; }
+        int MaxDirtValue { get; }
     }
 
     /// <summary>

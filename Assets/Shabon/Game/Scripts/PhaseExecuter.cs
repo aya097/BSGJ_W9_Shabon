@@ -22,7 +22,7 @@ namespace Shabon.Game
     /// <summary>
     /// ゲームのフェーズを実行するクラス
     /// </summary>
-    public class PhaseExecutor : ITickable, IGameState
+    public class PhaseExecutor : ITickable, IGameState, IDisposable
     {
         // 現在の状態
         public GameState CurrentState => _currentState;
@@ -42,6 +42,8 @@ namespace Shabon.Game
         private readonly BubbleCluster _bubbleCluster;
         private readonly ClapModel _clapModel;
         private readonly BreathModel _breathModel;
+        private readonly IGameRuleParam _gameRuleParam;
+
 
 
         private double _currentTime;    // 現在の時間
@@ -50,6 +52,8 @@ namespace Shabon.Game
         public static float BossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
 
         private List<PhaseEvent> _eventList = new();
+        private List<IDisposable> _disposables = new();
+
 
         [Inject]
         public PhaseExecutor(
@@ -61,7 +65,8 @@ namespace Shabon.Game
             BubbleCluster bubbleCluster,
             ClapModel clapModel,
             BreathModel breathModel,
-            TutorialFacilitator tutorialFacilitator
+            TutorialFacilitator tutorialFacilitator,
+            IGameRuleParam gameRuleParam
         )
         {
             _gamePhases = gamePhases;
@@ -72,6 +77,7 @@ namespace Shabon.Game
             _bubbleCluster = bubbleCluster;
             _clapModel = clapModel;
             _breathModel = breathModel;
+            _gameRuleParam = gameRuleParam;
 
             // 初期化
             _currentTime = 0;
@@ -111,6 +117,18 @@ namespace Shabon.Game
 
             // フェーズの終了を設定
             SubscribeFinishPhase();
+
+            // ゲームオーバー条件
+            _disposables.Add(Observable.EveryValueChanged(_dirtValue, d => d.DirtNum)
+                .Subscribe(dirtNum =>
+                {
+                    if (dirtNum >= _gameRuleParam.MaxDirtValue)
+                    {
+                        // ゲームオーバー
+                        _currentState = GameState.Lose;
+                    }
+                })
+            );
         }
 
         // 敵を生成するイベントを登録
@@ -191,10 +209,11 @@ namespace Shabon.Game
                                 _breathModel.TotalBreathStrength,
                                 ResultData.BossBattleTime
                             );
-                            SceneTransition.Transition(SceneName.ResultScene);
                             // スコアを保存
                             RankingScore.SaveScore(_scoreValue.ScoreNum);
 
+                            // 勝った
+                            _currentState = GameState.Win;
                         }
                         else
                         {
@@ -281,6 +300,12 @@ namespace Shabon.Game
             return BubbleType.Normal; // デフォルトはNormalバブル
         }
 
-
+        void IDisposable.Dispose()
+        {
+            foreach (var disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
+        }
     }
 }
