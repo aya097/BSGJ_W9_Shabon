@@ -6507,6 +6507,10 @@ MonoBehaviour:
   breathTimeText: {fileID: 1875452314}
   calorieText: {fileID: 1655909485}
   bossBattleTimeText: {fileID: 236946643}
+  winMansion: {fileID: 53474808}
+  loseMansion: {fileID: 866370158}
+  winBoss: {fileID: 1914216119}
+  loseBoss: {fileID: 587651595}
 --- !u!1001 &1060505271
 PrefabInstance:
   m_ObjectHideFlags: 0

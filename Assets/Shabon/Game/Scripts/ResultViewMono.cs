@@ -21,6 +21,12 @@ namespace Shabon.Game
         [SerializeField] TMP_Text calorieText = null!;
         [SerializeField] TMP_Text bossBattleTimeText = null!;
 
+        [Header("タペストリーのボスと屋敷")]
+        [SerializeField] private GameObject winMansion = null!;
+        [SerializeField] private GameObject loseMansion = null!;
+        [SerializeField] private GameObject winBoss = null!;
+        [SerializeField] private GameObject loseBoss = null!;
+
 
 
 
@@ -28,9 +34,31 @@ namespace Shabon.Game
         {
             Close();
         }
-        public void Open()
+        public void Open(GameState gameState)
         {
             SetData();
+
+            if (gameState == GameState.Win)
+            {
+                winMansion.SetActive(true);
+                loseMansion.SetActive(false);
+                winBoss.SetActive(false);
+                loseBoss.SetActive(true);
+            }
+            else if (gameState == GameState.Lose)
+            {
+                winMansion.SetActive(false);
+                loseMansion.SetActive(true);
+                winBoss.SetActive(true);
+                loseBoss.SetActive(false);
+            }
+            else
+            {
+                winMansion.SetActive(false);
+                loseMansion.SetActive(false);
+                winBoss.SetActive(false);
+                loseBoss.SetActive(false);
+            }
             resultCanvas.SetActive(true);
         }
         public void Close()
