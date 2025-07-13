@@ -50,6 +50,9 @@ TagManager:
   - name: Bubble
     uniqueID: 2023461773
     locked: 0
+  - name: Effect
+    uniqueID: 3140247879
+    locked: 0
   - name: PostProcess
     uniqueID: 3285457879
     locked: 0
