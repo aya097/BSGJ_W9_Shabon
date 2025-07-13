@@ -35,3 +35,4 @@ MonoBehaviour:
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
   bubbleCountScoreMultiplier: 1
+  maxDirtValue: 10

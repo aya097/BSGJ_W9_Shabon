@@ -188,5 +188,15 @@
             "FinalBreathTime": 11.200728416442871,
             "FinalBreathStrengthSum": 11.140534400939942,
             "BossBattleTime": 42.38582992553711
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 1940,
+            "FinalCombo": 3,
+            "FinalClapCount": 11,
+            "FinalDirtDecreaseCount": 18,
+            "FinalBreathTime": 29.773576736450197,
+            "FinalBreathStrengthSum": 29.773576736450197,
+            "BossBattleTime": 42.325645446777347
         }
     ]
