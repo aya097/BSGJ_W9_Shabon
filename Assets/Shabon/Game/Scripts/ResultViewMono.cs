@@ -1,3 +1,4 @@
+#nullable enable
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -10,37 +11,46 @@ namespace Shabon.Game
     /// </summary>
     public class ResultViewMono : MonoBehaviour
     {
-        [SerializeField] Button titleButton = null!;
-        [SerializeField] TMP_Text dirtText = null!;
+        [SerializeField] private GameObject resultCanvas = null!;
         [SerializeField] TMP_Text scoreText = null!;
+        [SerializeField] TMP_Text dirtText = null!;
         [SerializeField] TMP_Text comboText = null!;
         [SerializeField] TMP_Text clapCountText = null!;
         [SerializeField] TMP_Text dirtDecreaseCountText = null!;
         [SerializeField] TMP_Text breathTimeText = null!;
-        [SerializeField] TMP_Text breathStrengthSumText = null!;
+        [SerializeField] TMP_Text calorieText = null!;
         [SerializeField] TMP_Text bossBattleTimeText = null!;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+
+
+
+        void Awake()
+        {
+            Close();
+        }
+        public void Open()
+        {
+            SetData();
+            resultCanvas.SetActive(true);
+        }
+        public void Close()
+        {
+            resultCanvas.SetActive(false);
+        }
+
+        void SetData()
         {
             ResultData.LoadResults();
 
             // ResultDataからデータを取得してUIに表示
-            dirtText.text = $"Dirt: {ResultData.FinalDirt}";
-            scoreText.text = $"Score: {ResultData.FinalScore}";
-            comboText.text = $"Combo: {ResultData.FinalCombo}";
-            clapCountText.text = $"ClapCount: {ResultData.FinalClapCount}";
-            dirtDecreaseCountText.text = $"DirtDecreaseCount: {ResultData.FinalDirtDecreaseCount}";
-            breathTimeText.text = $"BreathTime: {ResultData.FinalBreathTime:F2} sec";
-            breathStrengthSumText.text = $"BreathStrengthIntegral: {ResultData.FinalBreathStrengthSum:F2}";
-            bossBattleTimeText.text = $"BossBattleTime: {ResultData.BossBattleTime:F2} sec";
-
-            titleButton.onClick.AddListener(() =>
-            {
-                SceneTransition.Transition(SceneName.TitleScene);
-            });
+            scoreText.text = $"{ResultData.FinalScore}";
+            dirtText.text = $"{ResultData.FinalDirt}";
+            comboText.text = $"{ResultData.FinalCombo}コンボ";
+            clapCountText.text = $"{ResultData.FinalClapCount}回";
+            dirtDecreaseCountText.text = $"{ResultData.FinalDirtDecreaseCount}回";
+            breathTimeText.text = $"{(int)ResultData.FinalBreathTime}秒";
+            // calorieText.text = $"{ResultData.FinalBreathStrengthSum:F2}";
+            bossBattleTimeText.text = $"{(int)ResultData.BossBattleTime}秒";
         }
-
-
     }
 }
