@@ -932,16 +932,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a302d923c044236abc488b7b4c624d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleBack: {fileID: 409293844}
+  titleLogo: {fileID: 1300623020}
   bubble0: {fileID: 1220138517}
   bubble0MoveAmount: 50
   bubble0Duration: 2
   bubble1: {fileID: 2113976403}
   bubble1MoveAmount: 30
   bubble1Duration: 3
-  titleImage: {fileID: 0}
-  startButton: {fileID: 1000229606}
   prologue: {fileID: 15804438}
-  prologuePlayableDirecctor: {fileID: 2102416753}
+  prologuePlayableDirector: {fileID: 2102416753}
 --- !u!114 &966475019
 MonoBehaviour:
   m_ObjectHideFlags: 0

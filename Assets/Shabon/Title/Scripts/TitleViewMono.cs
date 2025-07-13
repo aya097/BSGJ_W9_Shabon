@@ -15,25 +15,22 @@ namespace Shabon.Title
     public class TitleViewMono : MonoBehaviour
     {
         [Header("タイトル")]
+        [SerializeField] private GameObject titleBack = null!;
+        [SerializeField] private GameObject titleLogo = null!;
         [SerializeField] private Image bubble0 = null!;
         [SerializeField] private float bubble0MoveAmount;
         [SerializeField] private float bubble0Duration;
         [SerializeField] private Image bubble1 = null!;
         [SerializeField] private float bubble1MoveAmount;
         [SerializeField] private float bubble1Duration;
-        // [SerializeField] private Image bubble1 = null!;
-        // [SerializeField] private Image bubble2 = null!;
-        // [SerializeField] private Image bubble3 = null!;
 
         [Header("プロローグ")]
-        [SerializeField] private RawImage titleImage = null!;
-        [SerializeField] private Button startButton = null!;
         [SerializeField] private GameObject prologue = null!;
-        [SerializeField] private PlayableDirector prologuePlayableDirecctor = null!;
+        [SerializeField] private PlayableDirector prologuePlayableDirector = null!;
 
         // ゲッター
-        public Button StartButton => startButton;
-        public PlayableDirector ProloguePlayableDirecctor => prologuePlayableDirecctor;
+
+        public PlayableDirector ProloguePlayableDirector => prologuePlayableDirector;
 
 
         // BGM停止用
@@ -54,7 +51,8 @@ namespace Shabon.Title
                 .WithEase(Ease.OutQuad)
                 .WithDelay(0.5f, DelayType.EveryLoop)
                 .WithLoops(-1, LoopType.Flip)
-                .BindToAnchoredPosition3DY(bubble0.GetComponent<RectTransform>());
+                .BindToAnchoredPosition3DY(bubble0.GetComponent<RectTransform>())
+                .AddTo(this);
 
             _originalBubble1Position = bubble1.GetComponent<RectTransform>().anchoredPosition;
 
@@ -62,18 +60,18 @@ namespace Shabon.Title
                 .WithEase(Ease.OutQuad)
                 .WithDelay(0.5f, DelayType.EveryLoop)
                 .WithLoops(-1, LoopType.Flip)
-                .BindToAnchoredPosition3DY(bubble1.GetComponent<RectTransform>());
+                .BindToAnchoredPosition3DY(bubble1.GetComponent<RectTransform>())
+                .AddTo(this);
         }
         // プロローグを再生するメソッド
         public void StartPrologue()
         {
-            // 初期UIを非表示に
-            titleImage.enabled = false;
-            startButton.gameObject.SetActive(false);
+            titleBack.SetActive(false);
+            titleLogo.SetActive(false);
 
             // プロローグの準備
             prologue.SetActive(true);
-            prologuePlayableDirecctor.Play();
+            prologuePlayableDirector.Play();
         }
 
         void OnDestroy()
