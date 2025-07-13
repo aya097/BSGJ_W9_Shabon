@@ -8,8 +8,11 @@ namespace Shabon.Bubble
 {
     public class ArmorBubbleViewMono : BubbleViewMono
     {
+        [Header("頭部のview")]
         [SerializeField] private Animator _bubbleHeadAnimator = null!;
         [SerializeField] private SpriteRenderer _headSpriteRenderer = null!;
+
+        private int _headOriginalOrderInLayer;
 
         protected override void TurnOnHighlight()
         {
@@ -26,6 +29,18 @@ namespace Shabon.Bubble
         {
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
             _headSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
+        }
+
+        protected override void Awake()
+        {
+            _headOriginalOrderInLayer = _headSpriteRenderer.sortingOrder;
+            base.Awake();
+        }
+
+        override protected void Update()
+        {
+            _headSpriteRenderer.sortingOrder = (int)(-transform.position.z * 100) + _headOriginalOrderInLayer;
+            base.Update();
         }
 
         protected override void Play(BubbleAnimationEnum animation)
