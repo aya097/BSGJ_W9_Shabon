@@ -71,9 +71,9 @@ namespace Shabon.Bubble
 
         protected virtual void Update()
         {
-            // プレイヤーに近い(zが大きい)bubbleほど、手前に表示させるように
-            _spriteRenderer.sortingOrder = (int)(-transform.position.z * 100) + _originalOrderInLayer;
-            _shadowSpriteRenderer.sortingOrder = (int)(-transform.position.z * 100) + _originalOrderInLayer;
+            // プレイヤーに近い(zが小さい)bubbleほど、手前に表示させるように
+            _spriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _originalOrderInLayer;
+            _shadowSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _originalOrderInLayer;
 
             // 影の位置を調整
             // 真下にRaycastして、ヒットした位置に影を配置

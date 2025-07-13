@@ -39,7 +39,8 @@ namespace Shabon.Bubble
 
         override protected void Update()
         {
-            _headSpriteRenderer.sortingOrder = (int)(-transform.position.z * 100) + _headOriginalOrderInLayer;
+            // プレイヤーに近い(zが小さい)bubbleほど、手前に表示させるように
+            _headSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _headOriginalOrderInLayer;
             base.Update();
         }
 
