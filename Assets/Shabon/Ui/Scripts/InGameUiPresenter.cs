@@ -26,7 +26,7 @@ namespace Shabon.Ui
         // リザルトからタイトルへ遷移できるか
         private bool _ableTransitionTitle = false;
         // 遷移を許可する時間
-        private float _waitTransitionTime = 3f;
+        private float _waitTransitionTime = 10f;
         [Inject]
         public InGameUiPresenter(
             // Model
@@ -114,9 +114,15 @@ namespace Shabon.Ui
                     if (state == GameState.Win || state == GameState.Lose)
                     {
                         // 不要なUiを非表示
-                        dirtValueViewMono.Close();
-                        clapUiViewMono.Close();
-                        resultViewMono.Open(state);
+                        float delayTime = (state == GameState.Win) ? 0f : 1f;
+                        Observable.Timer(TimeSpan.FromSeconds(delayTime))
+                        .Subscribe(_ =>
+                        {
+                            dirtValueViewMono.Close();
+                            clapUiViewMono.Close();
+                            resultViewMono.Open(state);
+                        });
+
 
                         // 遷移まで待機
                         Observable.Timer(TimeSpan.FromSeconds(_waitTransitionTime))
