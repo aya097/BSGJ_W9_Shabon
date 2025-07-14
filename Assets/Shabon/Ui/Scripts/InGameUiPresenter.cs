@@ -113,7 +113,11 @@ namespace Shabon.Ui
                 {
                     if (state == GameState.Win || state == GameState.Lose)
                     {
+                        // 不要なUiを非表示
+                        dirtValueViewMono.Close();
+                        clapUiViewMono.Close();
                         resultViewMono.Open(state);
+
                         // 遷移まで待機
                         Observable.Timer(TimeSpan.FromSeconds(_waitTransitionTime))
                             .Subscribe(_ =>

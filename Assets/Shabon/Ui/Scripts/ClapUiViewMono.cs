@@ -1,4 +1,5 @@
 #nullable enable
+using NUnit.Framework;
 using Shabon.Sound;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Shabon.Ui
     /// </summary>
     public class ClapUiViewMono : MonoBehaviour
     {
+        [SerializeField] private GameObject view = null!;
         [SerializeField] private Image _coolTime = null!;
         [SerializeField] private GameObject _backLight = null!;
         [SerializeField] private GameObject _frontLight = null!;
@@ -41,6 +43,16 @@ namespace Shabon.Ui
                 _backLight.SetActive(false);
                 _frontLight.SetActive(false);
             }
+        }
+
+        public void Open()
+        {
+            view.SetActive(true);
+        }
+
+        public void Close()
+        {
+            view.SetActive(false);
         }
     }
 }
