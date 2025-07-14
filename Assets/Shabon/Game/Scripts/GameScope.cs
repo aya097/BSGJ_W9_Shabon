@@ -90,6 +90,7 @@ namespace Shabon.Game
             builder.RegisterComponentInHierarchy<ClapUiViewMono>();
             builder.RegisterComponentInHierarchy<ClockViewMono>();
             builder.RegisterComponentInHierarchy<ResultViewMono>();
+            builder.RegisterComponentInHierarchy<ScoreUiViewMono>();
 
             // DirtEffect
             builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();

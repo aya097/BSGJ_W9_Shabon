@@ -35,12 +35,14 @@ namespace Shabon.Ui
             PhaseExecutor phaseExecutor,
             ClapModel clapModel,
             IGameRuleParam gameRuleParam,
+            IScoreValue scoreValue,
             // View
             DirtValueViewMono dirtValueViewMono,
             ComboSpawner comboSpawner,   // ViewではないがViewを生成する
             ClockViewMono clockViewMono,
             ClapUiViewMono clapUiViewMono,
             ResultViewMono resultViewMono,
+            ScoreUiViewMono scoreUiViewMono,
             IInputManager inputManager
         )
         {
@@ -66,6 +68,16 @@ namespace Shabon.Ui
             );
 
             // Model -> View
+            // Score更新
+            _disposables.Add(
+                Observable.EveryValueChanged(scoreValue, s => s.ScoreNum)
+                    .Subscribe(value =>
+                    {
+                        // スコア設定
+                        scoreUiViewMono.SetScore(value, scoreValue.IsIncrease);
+                    })
+            );
+
             // 汚れ値をUiに反映
             _disposables.Add(
                 Observable.EveryValueChanged(dirtValue, d => d.DirtNum)
