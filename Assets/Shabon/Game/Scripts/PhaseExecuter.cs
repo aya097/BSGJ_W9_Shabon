@@ -230,6 +230,15 @@ namespace Shabon.Game
             _currentTime += Time.deltaTime; // 現在の時間を更新
 
             InvokeEvent();
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.O))
+            {
+                _currentState = GameState.Lose;
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.C))
+            {
+                _currentState = GameState.Win;
+            }
         }
 
         // 呼び出し時間がきているイベントを呼び出す
