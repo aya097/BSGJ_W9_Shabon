@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using R3;
 using Shabon.Dirt;
+using Shabon.Param;
 using Shabon.Score;
 using UnityEngine;
 using VContainer;
@@ -11,16 +12,23 @@ public class DirtEffectCollectorMono : MonoBehaviour
     [SerializeField] private List<DirtEffectViewMono> firstDirtEffects = new();     // 一段階目の汚れエフェクト
     [SerializeField] private List<DirtEffectViewMono> secondDirtEffects = new();    // 二段階目の汚れエフェクト
     [SerializeField] private List<DirtEffectViewMono> thirdDirtEffects = new();     // 三段階目の汚れエフェクト
+    [SerializeField] private DirtEffectViewMono finalDirtEffect = null!;    // 最後に表示するエフェクト
 
 
     [Inject]
-    private void Initialize(IDirtValue dirtValue)
+    private void Initialize(IDirtValue dirtValue, IGameRuleParam gameRuleParam)
     {
         Observable.EveryValueChanged(dirtValue, d => d.DirtNum)
             .Subscribe(dirtNum =>
             {
                 // 汚れの段階が変わったらエフェクトを更新
                 UpdateDirtEffects(dirtValue);
+
+                // 汚れが最大になったら
+                if (dirtNum == gameRuleParam.MaxDirtValue)
+                {
+                    finalDirtEffect.Enable();
+                }
             })
             .AddTo(this);
     }

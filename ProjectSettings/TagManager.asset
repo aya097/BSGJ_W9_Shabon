@@ -38,14 +38,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: DirtSeal
     uniqueID: 2314493575
     locked: 0
   - name: Ui
     uniqueID: 1063771567
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Bubble
+    uniqueID: 2023461773
+    locked: 0
+  - name: Effect
+    uniqueID: 3140247879
+    locked: 0
+  - name: PostProcess
+    uniqueID: 3285457879
     locked: 0
   m_RenderingLayers:
   - Default

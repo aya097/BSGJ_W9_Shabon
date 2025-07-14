@@ -9,6 +9,7 @@ namespace Shabon.Ui
     /// </summary>
     public class DirtValueViewMono : MonoBehaviour
     {
+        [SerializeField] private GameObject view = null!;
         [SerializeField] private Material viewMaterial = null!;
         private float _value; // 現在表示してる値
 
@@ -29,6 +30,15 @@ namespace Shabon.Ui
             _value = currentValue / range;
             // fillImage.fillAmount = _value;
             viewMaterial.SetFloat("_Ratio", 1 - _value);
+        }
+
+        public void Open()
+        {
+            view.SetActive(true);
+        }
+        public void Close()
+        {
+            view.SetActive(false);
         }
     }
 }

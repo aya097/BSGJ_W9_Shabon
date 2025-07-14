@@ -89,6 +89,7 @@ namespace Shabon.Game
             builder.Register<ComboSpawner>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<ClapUiViewMono>();
             builder.RegisterComponentInHierarchy<ClockViewMono>();
+            builder.RegisterComponentInHierarchy<ResultViewMono>();
 
             // DirtEffect
             builder.RegisterInstance(dirtViewParam).AsImplementedInterfaces();
