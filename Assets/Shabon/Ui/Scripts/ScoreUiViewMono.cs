@@ -11,6 +11,7 @@ namespace Shabon.Ui
 {
     public class ScoreUiViewMono : MonoBehaviour
     {
+        [SerializeField] GameObject view = null!;
         [SerializeField] TMP_Text scoreText = null!;
         [SerializeField] Color increaseColor;
         [SerializeField] Color decreaseColor;
@@ -28,6 +29,11 @@ namespace Shabon.Ui
         {
             _originalColor = scoreText.color;
             _originalSize = scoreText.fontSize;
+        }
+
+        public void Close()
+        {
+            view.SetActive(false);
         }
 
         public void SetScore(int score, bool isUp)

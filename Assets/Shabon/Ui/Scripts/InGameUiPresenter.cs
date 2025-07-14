@@ -130,6 +130,7 @@ namespace Shabon.Ui
                         Observable.Timer(TimeSpan.FromSeconds(delayTime))
                         .Subscribe(_ =>
                         {
+                            scoreUiViewMono.Close();
                             dirtValueViewMono.Close();
                             clapUiViewMono.Close();
                             resultViewMono.Open(state);

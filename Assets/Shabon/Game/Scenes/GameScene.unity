@@ -7051,6 +7051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbda00117f714a0f92ffdec4dc8b106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  view: {fileID: 215891751}
   scoreText: {fileID: 695456359}
   increaseColor: {r: 0.14097545, g: 0.8419779, b: 0.9056604, a: 1}
   decreaseColor: {r: 0.3679245, g: 0.21430176, b: 0.057271272, a: 1}
