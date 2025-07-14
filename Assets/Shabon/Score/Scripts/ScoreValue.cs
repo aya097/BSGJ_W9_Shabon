@@ -13,8 +13,13 @@ namespace Shabon.Score
         {
             get { return _scoreNum; }
         }
+        public bool IsIncrease
+        {
+            get { return _isIncrease; }
+        }
 
         private int _scoreNum;
+        private bool _isIncrease;
 
         // 引数は正の数
         public ScoreValue(int value = 0)
@@ -35,6 +40,7 @@ namespace Shabon.Score
             if (IsAssertMinusNum(value)) return;
 
             _scoreNum += value;
+            _isIncrease = true;
         }
 
         // 引数は正の数
@@ -43,6 +49,7 @@ namespace Shabon.Score
             if (IsAssertMinusNum(value)) return;
 
             _scoreNum -= value;
+            _isIncrease = false;
         }
 
         // 引数は正の数
