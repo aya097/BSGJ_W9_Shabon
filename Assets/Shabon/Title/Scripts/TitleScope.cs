@@ -14,7 +14,7 @@ namespace Shabon.Title
         protected override void Configure(IContainerBuilder builder)
         {
             // Model
-            // まだない
+            builder.Register<TitleModel>(Lifetime.Scoped);
 
             // View
             builder.RegisterComponentInHierarchy<TitleViewMono>();

@@ -1,5 +1,7 @@
 #nullable enable
 
+using UnityEngine;
+
 namespace Shabon.Title
 {
     public enum TitleState
@@ -8,6 +10,11 @@ namespace Shabon.Title
         Start,
         Language,
         Prologue,
+    }
+    public enum Language
+    {
+        Japanese,
+        English,
     }
     /// <summary>
     /// タイトルの状態を管理するクラス
@@ -31,13 +38,13 @@ namespace Shabon.Title
         }
 
         // 言語を設定する
-        public void SetLanguage()
+        public void SetLanguage(Language language)
         {
-
+            Debug.Log(language);
         }
 
-        // プロローグスタート
-        public void StartPrologue()
+        // 言語確定
+        public void DecideLanguage()
         {
             _currentState = TitleState.Prologue;
         }

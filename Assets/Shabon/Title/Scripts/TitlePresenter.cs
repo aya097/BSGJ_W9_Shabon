@@ -7,6 +7,7 @@ using VContainer.Unity;
 using Shabon.Input;
 using R3;
 using System;
+using System.Collections.Generic;
 
 namespace Shabon.Title
 {
@@ -15,12 +16,27 @@ namespace Shabon.Title
     /// </summary>
     public class TitlePresenter : IInitializable, IDisposable
     {
-        IDisposable _disposable;
+        private List<IDisposable> _disposables = new();
+
+        // ブレスした時間
+        private float _breathContinuousTime = 0f;
         [Inject]
-        public TitlePresenter(TitleViewMono titleViewMono, IInputManager inputManager)
+        public TitlePresenter(TitleViewMono titleViewMono, IInputManager inputManager, TitleModel titleModel)
         {
             // Model -> View
-            // 今回はなし
+            _disposables.Add(Observable.EveryValueChanged(titleModel, t => t.CurrentState)
+                .Subscribe(state =>
+                {
+                    if (state == TitleState.Language)
+                    {
+
+                    }
+                    else if (state == TitleState.Prologue)
+                    {
+                        titleViewMono.StartPrologue();
+                    }
+                })
+            );
 
             // View -> Model
 
@@ -28,15 +44,53 @@ namespace Shabon.Title
             titleViewMono.ProloguePlayableDirector.stopped +=
                 director => SceneTransition.Transition(SceneName.GameScene);
 
-            // 入力されたら押されたら、プロローグ開始
-            _disposable = Observable.EveryUpdate()
+
+            // 入力取得
+            _disposables.Add(Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    if (inputManager.GetClap())
+                    bool isClap = inputManager.GetClap();
+                    float horizontal = inputManager.GetHorizontalDirection();
+                    float breath = inputManager.GetBreath();
+                    // Start
+                    if (titleModel.CurrentState == TitleState.Start)
                     {
-                        titleViewMono.StartPrologue();
+                        // Clapされればゲーム開始
+                        if (isClap)
+                        {
+                            titleModel.StartGame();
+                        }
                     }
-                });
+                    // 言語選択
+                    // 英語と日本語を切り替え
+                    else if (titleModel.CurrentState == TitleState.Language)
+                    {
+                        if (horizontal >= 0.2)
+                        {
+                            titleModel.SetLanguage(Language.English);
+                        }
+                        else if (horizontal <= -0.2)
+                        {
+                            titleModel.SetLanguage(Language.Japanese);
+                        }
+                        // 息をした時間を加算
+                        if (breath > 0)
+                        {
+                            _breathContinuousTime += Time.deltaTime;
+                        }
+                        else
+                        {
+                            _breathContinuousTime = 0;
+                        }
+                        // 1秒連続で吹いたら
+                        if (_breathContinuousTime > 1)
+                        {
+                            titleModel.DecideLanguage();
+                        }
+
+                    }
+                })
+            );
         }
 
         // このクラスを生成するためのエントリーポイント
@@ -47,7 +101,10 @@ namespace Shabon.Title
 
         void IDisposable.Dispose()
         {
-            _disposable.Dispose();
+            foreach (var _disposable in _disposables)
+            {
+                _disposable.Dispose();
+            }
         }
     }
 }
