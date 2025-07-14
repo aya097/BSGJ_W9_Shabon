@@ -113,6 +113,9 @@ namespace Shabon.Input
 
         void IDisposable.Dispose()
         {
+#if UNITY_WEBGL
+            return;
+#endif
             _isRunning = false;
             _thread0.Join();
             _thread1.Join();
