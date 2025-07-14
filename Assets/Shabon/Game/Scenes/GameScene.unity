@@ -6859,10 +6859,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 384039901}
-  - {fileID: 1854592685}
   - {fileID: 327817661}
   - {fileID: 1679996666}
+  - {fileID: 384039901}
+  - {fileID: 1854592685}
   - {fileID: 1307471262}
   m_Father: {fileID: 1157026590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6957,7 +6957,14 @@ MonoBehaviour:
   calorieText: {fileID: 1655909485}
   bossBattleTimeText: {fileID: 236946643}
   filter: {fileID: 1854592684}
-  filterTime: 1
+  winText: {fileID: 758520580}
+  winBackText: {fileID: 327817662}
+  loseText: {fileID: 34205819}
+  loseBackText: {fileID: 1679996667}
+  filterGameOverTime: 2
+  showingGameOverTextTime: 3
+  filterClearTime: 0.3
+  showingClearTextTime: 3
   downTime: 0.7
   downEase: 24
   winMansion: {fileID: 53474808}
