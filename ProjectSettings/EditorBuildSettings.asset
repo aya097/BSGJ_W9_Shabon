@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Shabon/Game/Scenes/ResultScene.unity
     guid: 529100197352a4971b8ae95525a8749d
   - enabled: 0
-    path: Assets/Ranking/RankingScene.unity
+    path: Assets/Ranking/Scene/RankingScene.unity
     guid: 48eb03299189a4bddb7fb6985f882764
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 43120edd4c19f784fa8573a5118e6d4b, type: 2}

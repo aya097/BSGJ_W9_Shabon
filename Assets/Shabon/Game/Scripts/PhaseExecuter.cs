@@ -190,7 +190,14 @@ namespace Shabon.Game
                                 _breathModel.TotalBreathTime,
                                 _breathModel.TotalBreathStrength,
                                 ResultData.BossBattleTime
+
+
                             );
+
+
+                            RankingSceneDataGenerator.GenerateRankingSceneData();
+
+
                             SceneTransition.Transition(SceneName.ResultScene);
                             // スコアを保存
                             RankingScore.SaveScore(_scoreValue.ScoreNum);
