@@ -2375,7 +2375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &384039901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6416,6 +6416,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 384039901}
+  - {fileID: 1854592685}
   m_Father: {fileID: 1157026590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6499,6 +6500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resultCanvas: {fileID: 384039900}
+  resultText: {fileID: 2073039763}
   scoreText: {fileID: 608115598}
   dirtText: {fileID: 23940738}
   comboText: {fileID: 1848328848}
@@ -6507,6 +6509,10 @@ MonoBehaviour:
   breathTimeText: {fileID: 1875452314}
   calorieText: {fileID: 1655909485}
   bossBattleTimeText: {fileID: 236946643}
+  filter: {fileID: 1854592684}
+  filterTime: 1
+  downTime: 0.7
+  downEase: 24
   winMansion: {fileID: 53474808}
   loseMansion: {fileID: 866370158}
   winBoss: {fileID: 1914216119}
@@ -12311,7 +12317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1854592684
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12375,12 +12381,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854592683}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -2}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalRotation: {x: -0.08715578, y: -0, z: -0, w: 0.9961947}
+  m_LocalPosition: {x: -187.06148, y: -182.86238, z: -922.05853}
+  m_LocalScale: {x: 18.706148, y: 9.353075, z: 9.353075}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1006566365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1875452312
 GameObject:
@@ -14850,4 +14856,3 @@ SceneRoots:
   - {fileID: 864198486}
   - {fileID: 614466399}
   - {fileID: 718196063}
-  - {fileID: 1854592685}

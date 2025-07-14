@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Shabon.Utility;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Game
 {
@@ -11,7 +13,9 @@ namespace Shabon.Game
     /// </summary>
     public class ResultViewMono : MonoBehaviour
     {
+        [Header("テキスト")]
         [SerializeField] private GameObject resultCanvas = null!;
+        [SerializeField] private GameObject resultText = null!;
         [SerializeField] TMP_Text scoreText = null!;
         [SerializeField] TMP_Text dirtText = null!;
         [SerializeField] TMP_Text comboText = null!;
@@ -21,6 +25,14 @@ namespace Shabon.Game
         [SerializeField] TMP_Text calorieText = null!;
         [SerializeField] TMP_Text bossBattleTimeText = null!;
 
+        [Header("ぼかしフィルタ")]
+        [SerializeField] private SpriteRenderer filter = null!;
+
+        [Header("遷移時間")]
+        [SerializeField] private float filterTime = 1f;
+        [SerializeField] private float downTime = 0.5f;
+        [SerializeField] private Ease downEase;
+
         [Header("タペストリーのボスと屋敷")]
         [SerializeField] private GameObject winMansion = null!;
         [SerializeField] private GameObject loseMansion = null!;
@@ -28,7 +40,7 @@ namespace Shabon.Game
         [SerializeField] private GameObject loseBoss = null!;
 
 
-
+        private
 
         void Awake()
         {
@@ -59,11 +71,31 @@ namespace Shabon.Game
                 winBoss.SetActive(false);
                 loseBoss.SetActive(false);
             }
+            resultCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 1200f);
             resultCanvas.SetActive(true);
+            // ぼかしをかける
+            filter.gameObject.SetActive(true);
+            LMotion.Create(0.1f, 2f, filterTime)
+                .WithOnComplete(() =>
+                {
+                    // タペストリーを下ろす
+                    LMotion.Create(1200f, 0f, downTime)
+                        .WithEase(downEase)
+                        .WithOnComplete(() => resultText.SetActive(true))   // テキスト表示
+                        .BindToAnchoredPositionY(resultCanvas.GetComponent<RectTransform>())
+                        .AddTo(this);
+                })
+                .Bind(value =>
+                {
+                    filter.material.SetFloat("_TexelInterval", value);
+                }).
+                AddTo(this);
         }
         public void Close()
         {
             resultCanvas.SetActive(false);
+            resultText.SetActive(false);
+            filter.gameObject.SetActive(false);
         }
 
         void SetData()
