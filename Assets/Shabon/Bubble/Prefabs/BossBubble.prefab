@@ -426,8 +426,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 3369368968591772406}
   cureEffect: {fileID: 4834141094323550097}
   shadow: {fileID: 8732836277304679541}
-  _bubbleDecorationAnimator: {fileID: 9168382257494830634}
-  _decorationSpriteRenderer: {fileID: 6495526106838865195}
+  _bubbleOrnamentAnimator: {fileID: 9168382257494830634}
+  _ornamentSpriteRenderer: {fileID: 6495526106838865195}
 --- !u!1 &8056303673793374022
 GameObject:
   m_ObjectHideFlags: 0

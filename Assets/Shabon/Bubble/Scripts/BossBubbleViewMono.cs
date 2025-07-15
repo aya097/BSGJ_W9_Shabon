@@ -8,24 +8,27 @@ namespace Shabon.Bubble
 {
     public class BossBubbleViewMono : BubbleViewMono
     {
-        [SerializeField] private Animator _bubbleDecorationAnimator = null!;
-        [SerializeField] private SpriteRenderer _decorationSpriteRenderer = null!;
+        [Header("装飾品のview")]
+        [SerializeField] private Animator _bubbleOrnamentAnimator = null!;
+        [SerializeField] private SpriteRenderer _ornamentSpriteRenderer = null!;
+
+        private int _ornamentOriginalOrderInLayer;
 
         protected override void TurnOnHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 1f);
-            _decorationSpriteRenderer.material.SetFloat("_HighLightFlag", 1f);
+            _ornamentSpriteRenderer.material.SetFloat("_HighLightFlag", 1f);
         }
         protected override void TurnOffHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
-            _decorationSpriteRenderer.material.SetFloat("_HighLightFlag", 0f);
+            _ornamentSpriteRenderer.material.SetFloat("_HighLightFlag", 0f);
         }
         // メイド
         protected override void SetDarkness(float value)
         {
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
-            _decorationSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
+            _ornamentSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
 
         }
 
@@ -70,7 +73,7 @@ namespace Shabon.Bubble
         public override void SetSortingLayer(string sortingLayerName)
         {
             base.SetSortingLayer(sortingLayerName);
-            _decorationSpriteRenderer.sortingLayerName = sortingLayerName;
+            _ornamentSpriteRenderer.sortingLayerName = sortingLayerName;
         }
 
         protected override void Play(BubbleAnimationEnum animation)
@@ -79,8 +82,21 @@ namespace Shabon.Bubble
             {
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
-                _bubbleDecorationAnimator.SetTrigger(animation.ToString());
+                _bubbleOrnamentAnimator.SetTrigger(animation.ToString());
             }
+        }
+
+        protected override void Awake()
+        {
+            _ornamentOriginalOrderInLayer = _ornamentSpriteRenderer.sortingOrder;
+            base.Awake();
+        }
+
+        protected override void Update()
+        {
+            // プレイヤーに近い(zが小さい)bubbleほど、手前に表示させるように
+            _ornamentSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _ornamentOriginalOrderInLayer;
+            base.Update();
         }
     }
 }
