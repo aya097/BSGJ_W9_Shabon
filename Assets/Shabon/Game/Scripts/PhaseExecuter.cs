@@ -216,12 +216,8 @@ namespace Shabon.Game
 
                             RankingSceneDataGenerator.GenerateRankingSceneData();
 
-
-                            SceneTransition.Transition(SceneName.ResultScene);
-
-
                             // スコアを保存
-                            RankingScore.SaveScore(_scoreValue.ScoreNum);
+                            // RankingScore.SaveScore(_scoreValue.ScoreNum);
 
                             // 勝った
                             _currentState = GameState.Win;

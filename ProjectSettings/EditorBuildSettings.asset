@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Shabon/Game/Scenes/GameScene.unity
     guid: e31089e52d1164383b0f57b7e0524f84
-  - enabled: 1
+  - enabled: 0
     path: Assets/Shabon/Game/Scenes/ResultScene.unity
     guid: 529100197352a4971b8ae95525a8749d
   - enabled: 0
