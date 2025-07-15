@@ -11,6 +11,9 @@ namespace Shabon.Ui
     {
         [SerializeField] private GameObject view = null!;
         [SerializeField] private Material viewMaterial = null!;
+        [SerializeField] private Image cleanImage = null!;
+        [SerializeField] private RectTransform awaEffect = null!;
+        private readonly Vector2 _awaRange = new Vector2(-400, 400);
         private float _value; // 現在表示してる値
 
         /// <summary>
@@ -28,8 +31,15 @@ namespace Shabon.Ui
             }
 
             _value = currentValue / range;
-            // fillImage.fillAmount = _value;
             viewMaterial.SetFloat("_Ratio", 1 - _value);
+
+            cleanImage.fillAmount = 1 - _value;
+
+            // 泡エフェクト
+            var awaPos = awaEffect.anchoredPosition;
+
+            awaPos.x = _awaRange.x * _value + _awaRange.y * (1 - _value);
+            awaEffect.anchoredPosition = awaPos;
         }
 
         public void Open()

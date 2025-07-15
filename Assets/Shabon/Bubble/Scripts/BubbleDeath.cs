@@ -74,7 +74,7 @@ namespace Shabon.Bubble
             {
                 BubbleType.Normal => new NormalBubbleDeath(destroyBubble, deathParams),
 
-                BubbleType.Armor => new NormalBubbleDeath(destroyBubble, deathParams), 
+                BubbleType.Armor => new NormalBubbleDeath(destroyBubble, deathParams),
 
                 _ => new NormalBubbleDeath(destroyBubble, deathParams)
             };
@@ -123,8 +123,6 @@ namespace Shabon.Bubble
         {
             // 汚れ値増やす
             _deathParams.Dirt.Increase(1);      // todo 仮
-            // 汚れ値増やす（ここだけで加算！）
-            _deathParams.Dirt.Increase(1);
 
             // destroy
             _destroyBubble.Invoke();

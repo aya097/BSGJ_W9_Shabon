@@ -128,11 +128,10 @@ namespace Shabon.Bubble
                     viewMono.SetSortingLayer("Bubble");
                     // 0.5秒で移動する
                     LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
+                        .WithOnComplete(() => bubbleMono.IsSeparatable = true)
                         .WithEase(Ease.OutSine)
                         .BindToPositionX(bubbleMono.Transform)
                         .AddTo(viewMono);
-                    // 反発開始
-                    bubbleMono.IsSeparatable = true;
                 })
                 .AddTo(viewMono);   // 寿命管理のため
         }
