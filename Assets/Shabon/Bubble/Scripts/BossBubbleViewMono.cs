@@ -38,7 +38,7 @@ namespace Shabon.Bubble
             // _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Attack);
-            Observable.Timer(TimeSpan.FromSeconds(1.0f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
@@ -52,18 +52,18 @@ namespace Shabon.Bubble
             //_breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Clap);
-            Observable.Timer(TimeSpan.FromSeconds(0.6f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
-                    callback?.Invoke();
                     Play(BubbleAnimationEnum.Idle);
+                    callback?.Invoke();
                 }).AddTo(this);
         }
 
         public void PlaySpawn(Action? callback = null)
         {
             Play(BubbleAnimationEnum.Spawn);
-            Observable.Timer(TimeSpan.FromSeconds(1.0f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
