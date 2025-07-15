@@ -86,6 +86,13 @@ namespace Shabon.Bubble
             }
         }
 
+        // animatorのボスHP変数にセットするメソッド
+        public void SetBossHp(int bossHp)
+        {
+            _bubbleAnimator.SetInteger("BossHp", bossHp);
+            _bubbleOrnamentAnimator.SetInteger("BossHp", bossHp);
+        }
+
         protected override void Awake()
         {
             _ornamentOriginalOrderInLayer = _ornamentSpriteRenderer.sortingOrder;

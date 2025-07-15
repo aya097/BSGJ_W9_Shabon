@@ -88,9 +88,14 @@ namespace Shabon.Bubble
 
                 bubbleMono.Stop();
                 bubbleView.SetHighlight(HighLightType.Claped);
+                bubbleMono.DecreaseHp(1);
+                // animatorに反映させる
+                if (bubbleView is BossBubbleViewMono bossBubbleView)
+                    bossBubbleView.SetBossHp(bubbleMono.BossHitPoint);
+
                 bubbleView.PlayClap(() =>
                 {
-                    bubbleMono.DecreaseHp(1);
+                    
                     if (bubbleMono.BossHitPoint == 0)
                     {
                         // ボス撃破時
