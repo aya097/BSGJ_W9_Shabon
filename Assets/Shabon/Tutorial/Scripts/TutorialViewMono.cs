@@ -1,4 +1,6 @@
 #nullable enable
+using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -31,7 +33,25 @@ namespace Shabon.Tutorial
         [SerializeField] private GameObject view = null!;
         [SerializeField] private TMP_Text tutorialText = null!;
         [SerializeField] private LocalizeStringEvent localizeString = null!;
+        [SerializeField] private float windowSpeed = 0.5f;
 
+        public void Open()
+        {
+            LMotion.Create(0f, 1f, windowSpeed)
+                .BindToLocalScaleX(view.transform)
+                .AddTo(this);
+
+            view.SetActive(true);
+        }
+
+        public void Close()
+        {
+            LMotion.Create(1f, 0f, windowSpeed)
+                .WithOnComplete(() => view.SetActive(false))
+                .BindToLocalScaleX(view.transform)
+                .AddTo(this);
+
+        }
 
         public void SetText(TutorialText tutorialText)
         {

@@ -9,6 +9,7 @@ using Shabon.Game;
 using Shabon.Input;
 using Shabon.Param;
 using Shabon.Score;
+using Shabon.Tutorial;
 using Shabon.Utility;
 using UnityEngine;
 using VContainer;
@@ -43,7 +44,8 @@ namespace Shabon.Ui
             ClapUiViewMono clapUiViewMono,
             ResultViewMono resultViewMono,
             ScoreUiViewMono scoreUiViewMono,
-            IInputManager inputManager
+            IInputManager inputManager,
+            TutorialViewMono tutorialViewMono
         )
         {
             // View -> Model
@@ -118,12 +120,25 @@ namespace Shabon.Ui
                 })
             );
 
-            // リザルト表示
+
             _disposables.Add(
                 Observable.EveryValueChanged(phaseExecutor, p => p.CurrentState)
                 .Subscribe(state =>
                 {
-                    if (state == GameState.Win || state == GameState.Lose)
+                    // チュートリアル開始
+                    if (state == GameState.Tutorial)
+                    {
+                        scoreUiViewMono.Close();
+                        tutorialViewMono.Open();
+                    }
+                    // ゲーム開始
+                    else if (state == GameState.Game)
+                    {
+                        scoreUiViewMono.Open();
+                        tutorialViewMono.Open();
+                    }
+                    // リザルト表示
+                    else if (state == GameState.Win || state == GameState.Lose)
                     {
                         // 不要なUiを非表示
                         float delayTime = (state == GameState.Win) ? 0f : 1f;

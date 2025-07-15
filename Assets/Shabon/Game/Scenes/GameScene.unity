@@ -6730,7 +6730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877518083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8170,7 +8170,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:e4f90ef8371243842b4a09eebfbec959
     m_TableEntryReference:
-      m_KeyId: 105454792794117
+      m_KeyId: 0
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -15714,7 +15714,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 1063771567
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2113211013
 MonoBehaviour:
@@ -15731,6 +15731,7 @@ MonoBehaviour:
   view: {fileID: 877518082}
   tutorialText: {fileID: 1115651595}
   localizeString: {fileID: 1115651597}
+  windowSpeed: 0.5
 --- !u!1 &1744472955115909095
 GameObject:
   m_ObjectHideFlags: 0

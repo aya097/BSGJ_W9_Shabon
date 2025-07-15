@@ -31,6 +31,10 @@ namespace Shabon.Ui
             _originalSize = scoreText.fontSize;
         }
 
+        public void Open()
+        {
+            view.SetActive(false);
+        }
         public void Close()
         {
             view.SetActive(false);
