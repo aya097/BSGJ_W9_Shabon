@@ -37,15 +37,16 @@ namespace Shabon.Tutorial
             IInputManager inputManager,
             BreathModel breathModel,
             BreathGetterViewMono breathGetterViewMono,
-            ClapModel clapModel)
+            ClapModel clapModel,
+            TutorialViewMono tutorialViewMono)
         {
 
             _isInTutorial = false;
 
             // チュートリアル生成
-            tutorialContexts.Add(new FirstSpawn(bubbleSpawner, bubbleCluster, inputManager));
-            tutorialContexts.Add(new BreathSecondSpawn(bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
-            tutorialContexts.Add(new ClapThirdSpawn(bubbleSpawner, bubbleCluster, inputManager, clapModel));
+            tutorialContexts.Add(new FirstSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager));
+            tutorialContexts.Add(new BreathSecondSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
+            tutorialContexts.Add(new ClapThirdSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, clapModel));
 
         }
 
