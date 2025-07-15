@@ -50,7 +50,7 @@ MonoBehaviour:
         zoneWaitingTime: 2
         increasingDirtValue: 1
         bubbleScore: 2000
-        bossHitPoint: 3
+        bossHitPoint: 6
         bubbleSpawnInterval: 10
         bubbleSpawnNum: 2
     - rid: 8908890939933851725
