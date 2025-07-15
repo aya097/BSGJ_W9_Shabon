@@ -73,6 +73,7 @@ namespace Shabon.Bubble
             // 広がる処理
             // 最初は背景より後ろに描画
             bubbleViewMono.SetSortingLayer("Back");
+            bubbleMono.IsSeparatable = false;  // 広がるまで停止
             SpreadBubble(bubbleMono, bubbleViewMono);
 
 
@@ -130,6 +131,8 @@ namespace Shabon.Bubble
                         .WithEase(Ease.OutSine)
                         .BindToPositionX(bubbleMono.Transform)
                         .AddTo(viewMono);
+                    // 反発開始
+                    bubbleMono.IsSeparatable = true;
                 })
                 .AddTo(viewMono);   // 寿命管理のため
         }

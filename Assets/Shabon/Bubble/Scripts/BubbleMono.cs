@@ -32,6 +32,12 @@ namespace Shabon.Bubble
         }
         // 停止させられているか
         public bool IsStop => _isStop;
+        // 反発し合うか
+        public bool IsSeparatable
+        {
+            get { return _isSeparatable; }
+            set { _isSeparatable = value; }
+        }
         // Clapできるか？
         public bool IsClapable
         {
@@ -52,6 +58,7 @@ namespace Shabon.Bubble
         protected bool _isReached = false;
         private bool _isAttacking = false;
         protected bool _isStop = false;
+        protected bool _isSeparatable = false;
         private bool _isClapable = false;
 
         //Bubble同士の距離
@@ -76,8 +83,10 @@ namespace Shabon.Bubble
             if (_isStop) return;
 
             // 常に重なり解消を先に実行
-            SeparateIfOverlapping();
-
+            if (_isSeparatable)
+            {
+                SeparateIfOverlapping();
+            }
             // 息が吹かれてるときは前進しないように
             if (_isBreathing == false) _bubbleMover.MoveForward();
 

@@ -44,9 +44,9 @@ namespace Shabon.Tutorial
             _isInTutorial = false;
 
             // チュートリアル生成
-            tutorialContexts.Add(new FirstSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager));
-            tutorialContexts.Add(new BreathSecondSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
-            tutorialContexts.Add(new ClapThirdSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, clapModel));
+            // tutorialContexts.Add(new FirstSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager));
+            // tutorialContexts.Add(new BreathSecondSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
+            // tutorialContexts.Add(new ClapThirdSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, clapModel));
 
         }
 

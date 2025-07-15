@@ -8,6 +8,7 @@ namespace Shabon.Bubble
         bool IsReached { get; set; }
         bool IsAttacking { get; set; }
         bool IsStop { get; }
+        bool IsSeparatable { get; set; }
         bool IsClapable { get; set; }
         int BubbleScore { get; }
         Transform Transform { get; }
