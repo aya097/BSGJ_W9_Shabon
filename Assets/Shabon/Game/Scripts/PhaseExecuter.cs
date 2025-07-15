@@ -85,26 +85,36 @@ namespace Shabon.Game
             _phaseUpdatedTime = 0;
             _bubbleCount = 0;
 
-            // チュートリアル実行
-            _currentState = GameState.Tutorial;
-            tutorialFacilitator.StartTutorial(() =>
-            {
-                _currentState = GameState.Game;
 
-                // 使用したデータを削除
-                _dirtValue.Reset();
-                _clapModel.Reset();
-                _breathModel.Reset();
 
-                StartPhase();
+            // BGM再生
+            Observable.TimerFrame(1).
+                Subscribe(_ =>
+                {
+                    _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
+                });
 
-                // BGM再生
-                Observable.TimerFrame(1).
-                    Subscribe(_ =>
+            // チュートリアル開始
+            Observable.TimerFrame(10)
+                .Subscribe(_ =>
+                {
+                    // チュートリアル実行
+                    _currentState = GameState.Tutorial;
+                    tutorialFacilitator.StartTutorial(() =>
                     {
-                        _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
+                        _currentState = GameState.Game;
+
+                        // 使用したデータを削除
+                        _dirtValue.Reset();
+                        _clapModel.Reset();
+                        _breathModel.Reset();
+
+                        StartPhase();
+
                     });
-            });
+
+
+                });
         }
 
         // フェーズ開始

@@ -35,11 +35,15 @@ namespace Shabon.Tutorial
         private readonly BubbleCluster _bubbleCluster = null!;
         private readonly IInputManager _inputManager = null!;
         private bool _bubbleAttacked = false;
+        private TutorialViewMono _tutorialViewMono = null!;
 
-        public FirstSpawn(TutorialBubbleSpawner tutorialBubbleSpawner,
+        public FirstSpawn(
+            TutorialViewMono tutorialViewMono,
+            TutorialBubbleSpawner tutorialBubbleSpawner,
             BubbleCluster bubbleCluster,
             IInputManager inputManager)
         {
+            _tutorialViewMono = tutorialViewMono;
             _tutorialBubbleSpawner = tutorialBubbleSpawner;
             _bubbleCluster = bubbleCluster;
             _inputManager = inputManager;
@@ -52,6 +56,7 @@ namespace Shabon.Tutorial
             Observable.Timer(TimeSpan.FromSeconds(2f))
                 .Subscribe(_ =>
                 {
+                    _tutorialViewMono.SetText(TutorialText.bubble_coming0);
                     Debug.Log("Tutorial: バブルがやってきたよ！");
                 });
 
@@ -70,6 +75,7 @@ namespace Shabon.Tutorial
             if (_bubbleCluster.Bubbles.Count() == 0 && !_bubbleAttacked)
             {
                 _bubbleAttacked = true;
+                _tutorialViewMono.SetText(TutorialText.dirty_mansion);
                 Debug.Log("Tutorial: うわあ！屋敷が汚れちゃった！！");
                 IsFinish = true;
             }
@@ -95,14 +101,19 @@ namespace Shabon.Tutorial
         private readonly IInputManager _inputManager = null!;
         private readonly BreathModel _breathModel = null!;
         private readonly BreathGetterViewMono _breathGetterViewMono = null!;
+        private TutorialViewMono _tutorialViewMono = null!;
+
         private bool _ableBreath = false;
 
-        public BreathSecondSpawn(TutorialBubbleSpawner tutorialBubbleSpawner,
+        public BreathSecondSpawn(
+            TutorialViewMono tutorialViewMono,
+            TutorialBubbleSpawner tutorialBubbleSpawner,
             BubbleCluster bubbleCluster,
             IInputManager inputManager,
             BreathModel breathModel,
             BreathGetterViewMono breathGetterViewMono)
         {
+            _tutorialViewMono = tutorialViewMono;
             _tutorialBubbleSpawner = tutorialBubbleSpawner;
             _bubbleCluster = bubbleCluster;
             _inputManager = inputManager;
@@ -118,6 +129,7 @@ namespace Shabon.Tutorial
                 .Subscribe(_ =>
                 {
                     Debug.Log("Tutorial: また来た！");
+                    _tutorialViewMono.SetText(TutorialText.bubble_coming1);
                 });
 
 
@@ -126,6 +138,7 @@ namespace Shabon.Tutorial
                 .Subscribe(_ =>
                 {
                     _bubbleCluster.Bubbles.ElementAt(0).Stop();
+                    _tutorialViewMono.SetText(TutorialText.blow_air);
                     Debug.Log("Tutorial: 今度は息を吹いて遠ざけて！");
 
                 });
@@ -151,11 +164,13 @@ namespace Shabon.Tutorial
                 // バブルに向いていなければ
                 if (_breathGetterViewMono.GetBubbleMonos().Count() == 0)
                 {
+                    _tutorialViewMono.SetText(TutorialText.to_bubble);
                     Debug.Log("Tutorial: バブルに向けて！");
                 }
                 else
                 {
                     _breathModel.ApplyBreath(amount);
+                    _tutorialViewMono.SetText(TutorialText.now_blow);
                     Debug.Log("Tutorial: 今だ！息を吹いて！！");
                 }
 
@@ -163,7 +178,9 @@ namespace Shabon.Tutorial
                 if (_bubbleCluster.Bubbles.ElementAt(0).Transform.position.z > 0.9f)
                 {
                     _ableBreath = false;
+                    _tutorialViewMono.SetText(TutorialText.nice_blow);
                     Debug.Log("Tutorial: いいね！");
+                    _breathModel.ApplyBreath(0);
                     IsFinish = true;
                 }
             }
@@ -182,13 +199,18 @@ namespace Shabon.Tutorial
         private readonly BubbleCluster _bubbleCluster = null!;
         private readonly IInputManager _inputManager = null!;
         private readonly ClapModel _clapModel = null!;
+        private TutorialViewMono _tutorialViewMono = null!;
+
         private bool _ableClap = false;
 
-        public ClapThirdSpawn(TutorialBubbleSpawner tutorialBubbleSpawner,
+        public ClapThirdSpawn(
+            TutorialViewMono tutorialViewMono,
+            TutorialBubbleSpawner tutorialBubbleSpawner,
             BubbleCluster bubbleCluster,
             IInputManager inputManager,
             ClapModel clapModel)
         {
+            _tutorialViewMono = tutorialViewMono;
             _tutorialBubbleSpawner = tutorialBubbleSpawner;
             _bubbleCluster = bubbleCluster;
             _inputManager = inputManager;
@@ -202,6 +224,7 @@ namespace Shabon.Tutorial
             Observable.Timer(TimeSpan.FromSeconds(2f))
                 .Subscribe(_ =>
                 {
+                    _tutorialViewMono.SetText(TutorialText.bubble_coming2);
                     Debug.Log("Tutorial: またバブルがやってきたよ！");
                 });
 
@@ -211,20 +234,23 @@ namespace Shabon.Tutorial
                 .Subscribe(_ =>
                 {
                     _bubbleCluster.Bubbles.ElementAt(0).Resume();
+                    _tutorialViewMono.SetText(TutorialText.lure_bubble);
                     Debug.Log("Tutorial: 引きつけて一気に倒してやろう！！");
                 });
             Observable.Timer(TimeSpan.FromSeconds(5f))
                 .Subscribe(_ =>
                 {
+                    _tutorialViewMono.SetText(TutorialText.prepare_hand);
                     Debug.Log("Tutorial: 手をかまえて！！！");
                 });
             // いい感じの位置で停止
-            Observable.Timer(TimeSpan.FromSeconds(9f))
+            Observable.Timer(TimeSpan.FromSeconds(9.5f))
                 .Subscribe(_ =>
                 {
                     _ableClap = true;
                     _bubbleCluster.Bubbles.ElementAt(0).Stop();
                     _bubbleCluster.Bubbles.ElementAt(1).Stop();
+                    _tutorialViewMono.SetText(TutorialText.now_clap);
                     Debug.Log("Tutorial: 今だ！！手を叩いて！！");
                 });
 
@@ -241,11 +267,13 @@ namespace Shabon.Tutorial
                     Observable.Timer(TimeSpan.FromSeconds(2f))
                         .Subscribe(_ =>
                         {
+                            _tutorialViewMono.SetText(TutorialText.clean_mansion);
                             Debug.Log("Tutorial: やった！倒せたぞ！屋敷もキレイになったね！");
                         });
                     Observable.Timer(TimeSpan.FromSeconds(5f))
                         .Subscribe(_ =>
                         {
+                            _tutorialViewMono.SetText(TutorialText.thanks);
                             Debug.Log("Tutorial: この調子でがんばりたまえ！ハッハッハッ！");
                             IsFinish = true;
                         });
