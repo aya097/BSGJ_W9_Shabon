@@ -58,5 +58,95 @@
             "FinalBreathTime": 0.0,
             "FinalBreathStrengthSum": 0.0,
             "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 10,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "FinalDirtDecreaseCount": 0,
+            "FinalBreathTime": 0.0,
+            "FinalBreathStrengthSum": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 11,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "FinalDirtDecreaseCount": 0,
+            "FinalBreathTime": 0.0,
+            "FinalBreathStrengthSum": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 12,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "FinalDirtDecreaseCount": 0,
+            "FinalBreathTime": 0.0,
+            "FinalBreathStrengthSum": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 13,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "FinalDirtDecreaseCount": 0,
+            "FinalBreathTime": 0.0,
+            "FinalBreathStrengthSum": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 13,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "FinalDirtDecreaseCount": 0,
+            "FinalBreathTime": 0.0,
+            "FinalBreathStrengthSum": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 1960,
+            "FinalCombo": 5,
+            "FinalClapCount": 8,
+            "FinalDirtDecreaseCount": 18,
+            "FinalBreathTime": 16.17484474182129,
+            "FinalBreathStrengthSum": 16.17484474182129,
+            "BossBattleTime": 135.71853637695313
+        },
+        {
+            "FinalDirt": 10,
+            "FinalScore": 130,
+            "FinalCombo": 1,
+            "FinalClapCount": 1,
+            "FinalDirtDecreaseCount": 1,
+            "FinalBreathTime": 1.642311692237854,
+            "FinalBreathStrengthSum": 1.642311692237854,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 11,
+            "FinalScore": 130,
+            "FinalCombo": 1,
+            "FinalClapCount": 1,
+            "FinalDirtDecreaseCount": 1,
+            "FinalBreathTime": 1.642311692237854,
+            "FinalBreathStrengthSum": 1.642311692237854,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 11,
+            "FinalScore": 130,
+            "FinalCombo": 1,
+            "FinalClapCount": 1,
+            "FinalDirtDecreaseCount": 1,
+            "FinalBreathTime": 1.642311692237854,
+            "FinalBreathStrengthSum": 1.642311692237854,
+            "BossBattleTime": -1.0
         }
     ]

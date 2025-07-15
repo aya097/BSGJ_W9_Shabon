@@ -53,6 +53,7 @@ namespace Shabon.Game
 
         private List<PhaseEvent> _eventList = new();
         private List<IDisposable> _disposables = new();
+        private SoundToken? _bgmToken;
 
 
         [Inject]
@@ -101,7 +102,7 @@ namespace Shabon.Game
                 Observable.TimerFrame(1).
                     Subscribe(_ =>
                     {
-                        SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM);
+                        _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
                     });
             });
         }
@@ -321,6 +322,12 @@ namespace Shabon.Game
 
         void IDisposable.Dispose()
         {
+            // BGMとめる
+            if (_bgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+            }
+
             foreach (var disposable in _disposables)
             {
                 disposable.Dispose();
