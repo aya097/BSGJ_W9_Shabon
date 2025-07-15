@@ -164,6 +164,7 @@ namespace Shabon.Tutorial
                 {
                     _ableBreath = false;
                     Debug.Log("Tutorial: いいね！");
+                    _breathModel.ApplyBreath(0);
                     IsFinish = true;
                 }
             }
@@ -219,7 +220,7 @@ namespace Shabon.Tutorial
                     Debug.Log("Tutorial: 手をかまえて！！！");
                 });
             // いい感じの位置で停止
-            Observable.Timer(TimeSpan.FromSeconds(9f))
+            Observable.Timer(TimeSpan.FromSeconds(9.5f))
                 .Subscribe(_ =>
                 {
                     _ableClap = true;
