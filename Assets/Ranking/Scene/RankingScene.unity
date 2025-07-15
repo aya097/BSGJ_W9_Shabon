@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1658088}
   - component: {fileID: 1658087}
   m_Layer: 5
-  m_Name: DirtDecreaseCountOne
+  m_Name: DirtValueCountSumOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -792,7 +792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 913, y: -1136}
+  m_AnchoredPosition: {x: 913, y: -1230.7}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &331842527
@@ -907,8 +907,8 @@ GameObject:
   - component: {fileID: 366781380}
   - component: {fileID: 366781385}
   - component: {fileID: 366781384}
-  - component: {fileID: 366781387}
   - component: {fileID: 366781388}
+  - component: {fileID: 366781389}
   m_Layer: 5
   m_Name: TmpView
   m_TagString: Untagged
@@ -974,19 +974,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366781379}
   m_CullTransparentMesh: 1
---- !u!114 &366781387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366781379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b896a4b0dda41dd969ae3908d03ce7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rankText: {fileID: 64901250}
 --- !u!114 &366781388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,12 +988,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breathTimeRankText: {fileID: 498260459}
   bossBattleTimeRankText: {fileID: 1335126976}
-  breathStrengthSumRankText: {fileID: 603551729}
-  dirtDecreaseCountRankText: {fileID: 1658087}
+  calorieRankText: {fileID: 603551729}
+  dirtValueCountSumRankText: {fileID: 1658087}
   comboRankText: {fileID: 2107638772}
   dirtRankText: {fileID: 325690137}
   clapRankText: {fileID: 1111635425}
-  swiper: {fileID: 2045173279}
+--- !u!114 &366781389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366781379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b896a4b0dda41dd969ae3908d03ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rankText: {fileID: 64901250}
 --- !u!1 &470563141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,7 +1367,7 @@ GameObject:
   - component: {fileID: 603551730}
   - component: {fileID: 603551729}
   m_Layer: 5
-  m_Name: 'BreathStrengthIntegralOne '
+  m_Name: 'Calorie One '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1603,7 +1602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 1019, y: -1160}
+  m_AnchoredPosition: {x: 1019, y: -1190}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &663326495
@@ -2377,7 +2376,7 @@ GameObject:
   - component: {fileID: 1210010497}
   - component: {fileID: 1210010496}
   m_Layer: 5
-  m_Name: BreathStrengthIntegral
+  m_Name: 'Calorie '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2399,7 +2398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 732, y: -1162}
+  m_AnchoredPosition: {x: 1118, y: -1162}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1210010496
@@ -2422,7 +2421,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "BreathStrength\n     Integral\t"
+  m_text: 'Calorie
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2535,7 +2536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 1040, y: -1243}
+  m_AnchoredPosition: {x: 814, y: -1243}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215623613
@@ -2558,7 +2559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "DirtValue\t"
+  m_text: "LastDirtValue\t"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2671,7 +2672,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 833, y: -1136.0004}
+  m_AnchoredPosition: {x: 1167, y: -1230.7}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1226811521
@@ -3059,7 +3060,7 @@ GameObject:
   - component: {fileID: 1555607321}
   - component: {fileID: 1555607320}
   m_Layer: 5
-  m_Name: DirtDecreaseCount
+  m_Name: DirtValueCountSum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3104,7 +3105,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "DirtDecrease\n      Count "
+  m_text: 'DirtValue
+
+    CountSum'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

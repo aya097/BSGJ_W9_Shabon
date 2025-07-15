@@ -10,8 +10,8 @@ namespace Shabon.Game
     {
         [SerializeField] TMP_Text breathTimeRankText = null!;
         [SerializeField] TMP_Text bossBattleTimeRankText = null!;
-        [SerializeField] TMP_Text breathStrengthSumRankText = null!;
-        [SerializeField] TMP_Text dirtDecreaseCountRankText = null!;
+        [SerializeField] TMP_Text calorieRankText = null!;
+        [SerializeField] TMP_Text dirtValueCountSumRankText = null!;
         [SerializeField] TMP_Text comboRankText = null!;
         [SerializeField] TMP_Text dirtRankText = null!;
         [SerializeField] TMP_Text clapRankText = null!;
@@ -21,8 +21,8 @@ namespace Shabon.Game
             float yOffset = -1800f;
             FixTextPosition(breathTimeRankText, yOffset);
             FixTextPosition(bossBattleTimeRankText, yOffset);
-            FixTextPosition(breathStrengthSumRankText, yOffset);
-            FixTextPosition(dirtDecreaseCountRankText, yOffset);
+            FixTextPosition(calorieRankText, yOffset);
+            FixTextPosition(dirtValueCountSumRankText, yOffset);
             FixTextPosition(comboRankText, yOffset);
             FixTextPosition(dirtRankText, yOffset);
             FixTextPosition(clapRankText, yOffset);
@@ -30,13 +30,31 @@ namespace Shabon.Game
             string rankingPath = Path.Combine(Application.dataPath, "Ranking/Scripts/RankingSceneData.json");
             if (File.Exists(rankingPath))
             {
-                string json = File.ReadAllText(rankingPath);
-                RankingSceneData rankingData = JsonUtility.FromJson<RankingSceneData>(json);
+                string json = "";
+                try
+                {
+                    json = File.ReadAllText(rankingPath);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"RankingSceneData.json の読み込みに失敗しました: {e}");
+                    return;
+                }
+                RankingSceneData rankingData = null!;
+                try
+                {
+                    rankingData = JsonUtility.FromJson<RankingSceneData>(json);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"RankingSceneData.json のパースに失敗しました: {e}");
+                    return;
+                }
 
                 breathTimeRankText.text = BuildRankingText(rankingData.FinalBreathTimeRanking);
                 bossBattleTimeRankText.text = BuildRankingText(rankingData.BossBattleTimeRanking);
-                breathStrengthSumRankText.text = BuildRankingText(rankingData.FinalBreathStrengthSumRanking);
-                dirtDecreaseCountRankText.text = BuildRankingText(rankingData.FinalDirtDecreaseCountRanking);
+                calorieRankText.text = BuildRankingText(rankingData.CalorieRanking, "kcal");
+                dirtValueCountSumRankText.text = BuildRankingText(rankingData.DirtValueCountSumRanking, " times");
                 comboRankText.text = BuildRankingText(rankingData.FinalComboRanking);
                 dirtRankText.text = BuildRankingText(rankingData.FinalDirtRanking);
                 clapRankText.text = BuildRankingText(rankingData.FinalClapCountRanking);
@@ -56,7 +74,7 @@ namespace Shabon.Game
         }
 
         // タイトル行なし
-        private string BuildRankingText<T>(List<T> scores)
+        private string BuildRankingText<T>(List<T> scores, string unit = "")
         {
             string[] colors = { "#FFE066", "#FFFFFF", "#B87333" }; // 金・銀・銅
             int[] sizes = { 36, 36, 36 };
@@ -65,7 +83,12 @@ namespace Shabon.Game
             for (int i = 0; i < 3; i++)
             {
                 string value = (scores != null && i < scores.Count) ? scores[i]?.ToString() ?? "---" : "---";
-                lines.Add($"<color={colors[i]}><size={sizes[i]}>{i + 1}: {value}</size></color>");
+                // 少数の場合は1桁まで
+                if (scores != null && i < scores.Count && scores[i] is float f)
+                {
+                    value = f.ToString("0.0");
+                }
+                lines.Add($"<color={colors[i]}><size={sizes[i]}>{i + 1}: {value}{unit}</size></color>");
             }
             return string.Join("\n", lines);
         }
@@ -76,9 +99,9 @@ namespace Shabon.Game
             public List<int> FinalDirtRanking;
             public List<int> FinalComboRanking;
             public List<int> FinalClapCountRanking;
-            public List<int> FinalDirtDecreaseCountRanking;
+            public List<int> DirtValueCountSumRanking;
             public List<float> FinalBreathTimeRanking;
-            public List<float> FinalBreathStrengthSumRanking;
+            public List<float> CalorieRanking;
             public List<float> BossBattleTimeRanking;
         }
     }

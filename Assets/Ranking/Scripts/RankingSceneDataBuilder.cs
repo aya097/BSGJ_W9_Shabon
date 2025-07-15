@@ -1,18 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
-public class RankingSceneDataGenerator
+public static class RankingSceneDataBuilder
 {
-    [MenuItem("Tools/Generate RankingSceneData")]
-    public static void GenerateRankingSceneData()
+    public static void Generate(string resultPath, string rankingPath)
     {
-        // ResultData.jsonのパスを定義
-        string resultPath = Path.Combine(Application.dataPath, "Shabon/Game/Scripts/ResultData.json");
-        string rankingPath = Path.Combine(Application.dataPath, "Ranking/Scripts/RankingSceneData.json");
-
         if (!File.Exists(resultPath))
         {
             Debug.LogError("ResultData.json が見つかりません");
@@ -30,7 +24,6 @@ public class RankingSceneDataGenerator
             return;
         }
 
-        // JSON配列としてパース
         ResultDataListWrapper results = null!;
         try
         {
@@ -47,25 +40,22 @@ public class RankingSceneDataGenerator
             return;
         }
 
-        // 各項目ごとに値を抽出
-        var dirtList = results.Results.Select(r => r.FinalDirt).OrderBy(x => x).ToList(); // 0も含める
+        var dirtList = results.Results.Select(r => r.FinalDirt).OrderBy(x => x).ToList();
         var comboList = results.Results.Select(r => r.FinalCombo).Where(x => x != 0).OrderByDescending(x => x).ToList();
-        var clapList = results.Results.Select(r => r.FinalClapCount).Where(x => x != 0).OrderBy(x => x).ToList(); // 昇順
-        var dirtValueCountSumList = results.Results.Select(r => r.DirtValueCountSum).Where(x => x != 0).OrderBy(x => x).ToList();
-        var breathTimeList = results.Results.Select(r => r.FinalBreathTime).Where(x => x != 0f).OrderBy(x => x).ToList(); // 昇順
+        var clapList = results.Results.Select(r => r.FinalClapCount).Where(x => x != 0).OrderBy(x => x).ToList();
+        var dirtValueCountSumList = results.Results.Select(r => r.FinalDirtDecreaseCount).Where(x => x != 0).OrderByDescending(x => x).ToList();
+        var breathTimeList = results.Results.Select(r => r.FinalBreathTime).Where(x => x != 0f).OrderBy(x => x).ToList();
         var calorieList = results.Results
             .Select(r =>
             {
-                // 息を吹く: (秒→分→kcal)
                 float breathCalorie = (r.FinalBreathStrengthSum / 60f) * 2f;
-                // Clap: 1回0.15kcal（10〜20kcal/100回の中間値）
                 float clapCalorie = r.FinalClapCount * 0.15f;
                 return breathCalorie + clapCalorie;
             })
             .Where(x => x != 0f)
             .OrderByDescending(x => x)
             .ToList();
-        var bossBattleTimeList = results.Results.Select(r => r.BossBattleTime).Where(x => x != 0f).OrderBy(x => x).ToList(); // 昇順
+        var bossBattleTimeList = results.Results.Select(r => r.BossBattleTime).Where(x => x != 0f).OrderBy(x => x).ToList();
 
         var rankingData = new RankingSceneData
         {
@@ -82,7 +72,6 @@ public class RankingSceneDataGenerator
         try
         {
             File.WriteAllText(rankingPath, outputJson);
-            Debug.Log("RankingSceneData.json を生成しました");
         }
         catch (System.Exception e)
         {
@@ -96,7 +85,7 @@ public class RankingSceneDataGenerator
         public int FinalDirt;
         public int FinalCombo;
         public int FinalClapCount;
-        public int DirtValueCountSum;
+        public int FinalDirtDecreaseCount;
         public float FinalBreathTime;
         public float FinalBreathStrengthSum;
         public float BossBattleTime;

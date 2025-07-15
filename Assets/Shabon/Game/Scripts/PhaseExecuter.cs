@@ -200,16 +200,13 @@ namespace Shabon.Game
                             }
 
                             ResultData.SaveResults(
-                                _dirtValue.DirtNum,
-                                _scoreValue.ScoreNum,
-                                _bubbleCombo.MaxNum,
-                                _clapModel.ClapCount,
-                                (_dirtValue as DirtValue)?.DecreaseCount ?? 0,
-                                _breathModel.TotalBreathTime,
-                                _breathModel.TotalBreathStrength,
-                                ResultData.BossBattleTime
-
-
+                                _dirtValue.DirtNum,                       // FinalDirt
+                                _bubbleCombo.MaxNum,                      // FinalCombo
+                                _clapModel.ClapCount,                     // FinalClapCount
+                                (_dirtValue as DirtValue)?.IncreaseCount ?? 0, // DirtValueCountSum（増加回数）
+                                _breathModel.TotalBreathTime,             // FinalBreathTime
+                                _breathModel.TotalBreathStrength,         // Calorie計算用
+                                bossBattleTime                            // BossBattleTime
                             );
 
 

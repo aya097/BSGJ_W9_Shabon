@@ -13,5 +13,7 @@ namespace Shabon.Score
         int ClapDecreaseCount { get; }
 
         void DecreaseByClap(int value);
+        int IncreaseCount { get; }
+
     }
 }

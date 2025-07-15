@@ -173,9 +173,12 @@ namespace Shabon.Game
             comboText.text = $"{ResultData.FinalCombo}コンボ";
             clapCountText.text = $"{ResultData.FinalClapCount}回";
             dirtDecreaseCountText.text = $"{ResultData.FinalDirtDecreaseCount}回";
-            breathTimeText.text = $"{(int)ResultData.FinalBreathTime}秒";
+            // breathTimeText.text = $"{(int)ResultData.FinalBreathTime}秒";
             // calorieText.text = $"{ResultData.FinalBreathStrengthSum:F2}";
-            bossBattleTimeText.text = $"{(int)ResultData.BossBattleTime}秒";
+            // bossBattleTimeText.text = $"{(int)ResultData.BossBattleTime}秒";
+            breathTimeText.text = $"{ResultData.FinalBreathTime:0.0}秒";
+            calorieText.text = $"{ResultData.FinalBreathStrengthSum * 2f:0.0} kcal";
+            bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";
         }
     }
 }

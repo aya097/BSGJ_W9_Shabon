@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Shabon.Score
 {
+
+
     /// <summary>
     /// スコアの値を扱うクラス、正の数のみ扱う
     /// </summary>
@@ -27,13 +29,15 @@ namespace Shabon.Score
 
         public int TotalIncrease { get; private set; } = 0; // 累計増加量
         public int TotalDecrease { get; private set; } = 0; // 累計減少量
+        public int IncreaseCount { get; private set; } = 0; // 増加回数
 
         // 引数は正の数
         public void Increase(int value)
         {
             if (IsAssertMinusNum(value)) return;
             _dirtNum += value;
-            TotalIncrease += value; // 増加量を加算
+            TotalIncrease += value;
+            IncreaseCount++; // 増加回数を加算
         }
 
 
@@ -69,6 +73,7 @@ namespace Shabon.Score
             ClapDecreaseCount = 0;
             TotalIncrease = 0;
             TotalDecrease = 0;
+            IncreaseCount = 0; // リセット
         }
 
         static bool IsAssertMinusNum(int value)
@@ -82,4 +87,5 @@ namespace Shabon.Score
             return false;
         }
     }
+
 }
