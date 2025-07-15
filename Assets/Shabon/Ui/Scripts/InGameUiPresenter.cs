@@ -135,7 +135,7 @@ namespace Shabon.Ui
                     else if (state == GameState.Game)
                     {
                         scoreUiViewMono.Open();
-                        tutorialViewMono.Open();
+                        tutorialViewMono.Close();
                     }
                     // リザルト表示
                     else if (state == GameState.Win || state == GameState.Lose)

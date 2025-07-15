@@ -87,7 +87,7 @@ namespace Shabon.Game
                 {
                     // パース失敗時は空配列
 
-                    Debug.LogError($"ファイル読み込みに失敗しました: {e}");
+                    Debug.LogWarning($"ファイル読み込みに失敗しました: {e}");
                     results = new List<ResultDataModel>();
                 }
             }

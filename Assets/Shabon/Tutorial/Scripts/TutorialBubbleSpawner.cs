@@ -127,20 +127,31 @@ namespace Shabon.Tutorial
                 });
             };
 
+            // ポータルから出てくる処理
+            bubbleViewMono.SetSortingLayer("Back");
+            Observable.EveryUpdate()
+                .Where(_ => bubbleMono.Transform.position.z < 0.95f)
+                .Take(1)
+                .Subscribe(_ =>
+                {
+                    // 描画を優先する
+                    bubbleViewMono.SetSortingLayer("Bubble");
+                }).AddTo(bubbleViewMono);
+
 
             // プレゼンター処理？
             Observable.EveryValueChanged(bubbleMono, b => b.IsClapable)
-                     .Subscribe(clapable =>
-                     {
-                         if (clapable)
-                         {
-                             bubbleViewMono.SetHighlight(HighLightType.Clapable);
-                         }
-                         else
-                         {
-                             bubbleViewMono.SetHighlight(HighLightType.None);
-                         }
-                     }).AddTo(bubbleViewMono);
+                .Subscribe(clapable =>
+                {
+                    if (clapable)
+                    {
+                        bubbleViewMono.SetHighlight(HighLightType.Clapable);
+                    }
+                    else
+                    {
+                        bubbleViewMono.SetHighlight(HighLightType.None);
+                    }
+                }).AddTo(bubbleViewMono);
 
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
         }
