@@ -11,6 +11,7 @@ namespace Shabon.Ui
     {
         [SerializeField] private GameObject view = null!;
         [SerializeField] private Material viewMaterial = null!;
+        [SerializeField] private Image cleanImage = null!;
         private float _value; // 現在表示してる値
 
         /// <summary>
@@ -30,6 +31,8 @@ namespace Shabon.Ui
             _value = currentValue / range;
             // fillImage.fillAmount = _value;
             viewMaterial.SetFloat("_Ratio", 1 - _value);
+
+            cleanImage.fillAmount = 1 - _value;
         }
 
         public void Open()

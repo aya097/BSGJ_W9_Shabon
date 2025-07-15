@@ -160,5 +160,77 @@
             "FinalBreathTime": 0.0,
             "Calorie": 0.0,
             "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 10,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 10,
+            "FinalBreathTime": 0.7006292343139648,
+            "Calorie": 0.023354308679699899,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 10,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 10,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 12,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 12,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 14,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 14,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 16,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 16,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 18,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 18,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 20,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 20,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 10,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 10,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
         }
     ]
