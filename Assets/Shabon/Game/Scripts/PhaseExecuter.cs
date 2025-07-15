@@ -126,6 +126,7 @@ namespace Shabon.Game
                     {
                         // ゲームオーバー
                         _currentState = GameState.Lose;
+                        SaveData();
                     }
                 })
             );
@@ -199,19 +200,8 @@ namespace Shabon.Game
                                 bossBattleTime = (float)(_currentTime - BossBattleStartTime);
                             }
 
-                            ResultData.SaveResults(
-                                _dirtValue.DirtNum,
-                                _scoreValue.ScoreNum,
-                                _bubbleCombo.MaxNum,
-                                _clapModel.ClapCount,
-                                (_dirtValue as DirtValue)?.DecreaseCount ?? 0,
-                                _breathModel.TotalBreathTime,
-                                _breathModel.TotalBreathStrength,
-                                ResultData.BossBattleTime
 
-
-                            );
-
+                            SaveData(bossBattleTime);
 
 
                             RankingSceneDataGenerator.GenerateRankingSceneData();
@@ -231,6 +221,19 @@ namespace Shabon.Game
             ));
         }
 
+        private void SaveData(float bossBattleTime = -1)
+        {
+            ResultData.SaveResults(
+                                _dirtValue.DirtNum,
+                                _scoreValue.ScoreNum,
+                                _bubbleCombo.MaxNum,
+                                _clapModel.ClapCount,
+                                _dirtValue.DecreaseCount,
+                                _breathModel.TotalBreathTime,
+                                _breathModel.TotalBreathStrength,
+                                bossBattleTime
+                            );
+        }
 
         void ITickable.Tick()
         {
