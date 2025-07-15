@@ -49,17 +49,15 @@ namespace Shabon.Game
 
         void osu()
         {
-            // DirtValuewp減らした回数
-            int decreaseForIncrease = _dirtValue.ClapDecreaseCount;
-
+            int dirtValueCountSum = _dirtValue.IncreaseCount; // 増加した回数
             ResultData.SaveResults(
-                _dirtValue.DirtNum,
-                _scoreValue.ScoreNum,
-                _bubbleCombo.ComboNum,
-                _clapModel.ClapCount,
-                decreaseForIncrease,
-                _breathModel.TotalBreathTime,
-                _breathModel.TotalBreathStrength
+                _dirtValue.DirtNum,                       // FinalDirt
+                _bubbleCombo.ComboNum,                    // FinalCombo
+                _clapModel.ClapCount,                     // FinalClapCount
+                dirtValueCountSum,                        // DirtValueCountSum（増加回数）
+                _breathModel.TotalBreathTime,             // FinalBreathTime
+                _breathModel.TotalBreathStrength,         // Calorie計算用
+                0                                         // BossBattleTime
             );
             SceneManager.LoadScene("ResultScene");
         }

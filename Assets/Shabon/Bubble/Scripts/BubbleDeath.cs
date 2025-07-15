@@ -109,6 +109,7 @@ namespace Shabon.Bubble
             _deathParams.Score.Increase(100);   // todo 仮
 
             // DirtValueを減らす
+            // DirtValueを減らす（増加はしない！）
             _deathParams.Dirt.DecreaseByClap(1); // Clapによる減少
 
             // コンボリセット
@@ -122,6 +123,8 @@ namespace Shabon.Bubble
         {
             // 汚れ値増やす
             _deathParams.Dirt.Increase(1);      // todo 仮
+            // 汚れ値増やす（ここだけで加算！）
+            _deathParams.Dirt.Increase(1);
 
             // destroy
             _destroyBubble.Invoke();

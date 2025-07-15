@@ -27,7 +27,14 @@ namespace Shabon.Score
             scores.Add(score);
             scores.Sort((a, b) => b.CompareTo(a)); // 降順にソート
 
-            File.WriteAllText(FilePath, JsonUtility.ToJson(new ScoreData(scores)));
+            try
+            {
+                File.WriteAllText(FilePath, JsonUtility.ToJson(new ScoreData(scores)));
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"スコア保存時にエラー: {e}");
+            }
         }
 
         /// <summary>
@@ -43,9 +50,17 @@ namespace Shabon.Score
                 return new List<int>();
             }
 
-            string json = File.ReadAllText(FilePath);
-            ScoreData? data = JsonUtility.FromJson<ScoreData>(json);
-            return data?.Scores ?? new List<int>();
+            try
+            {
+                string json = File.ReadAllText(FilePath);
+                ScoreData? data = JsonUtility.FromJson<ScoreData>(json);
+                return data?.Scores ?? new List<int>();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"スコア読み込み時にエラー: {e}");
+                return new List<int>();
+            }
         }
 
         [System.Serializable]
