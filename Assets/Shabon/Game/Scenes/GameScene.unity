@@ -1976,6 +1976,7 @@ MonoBehaviour:
   view: {fileID: 675717042}
   viewMaterial: {fileID: 2100000, guid: c87f71c42fafe4c8b98bda6b89f2b909, type: 2}
   cleanImage: {fileID: 1639268931}
+  awaEffect: {fileID: 1088999492}
 --- !u!1 &284104731
 GameObject:
   m_ObjectHideFlags: 0
