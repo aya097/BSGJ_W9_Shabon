@@ -53,6 +53,7 @@ namespace Shabon.Game
 
         private List<PhaseEvent> _eventList = new();
         private List<IDisposable> _disposables = new();
+        private SoundToken? _bgmToken;
 
 
         [Inject]
@@ -101,7 +102,7 @@ namespace Shabon.Game
                 Observable.TimerFrame(1).
                     Subscribe(_ =>
                     {
-                        SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM);
+                        _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
                     });
             });
         }
@@ -126,6 +127,7 @@ namespace Shabon.Game
                     {
                         // ゲームオーバー
                         _currentState = GameState.Lose;
+                        SaveData();
                     }
                 })
             );
@@ -199,6 +201,7 @@ namespace Shabon.Game
                                 bossBattleTime = (float)(_currentTime - BossBattleStartTime);
                             }
 
+
                             ResultData.SaveResults(
                                 _dirtValue.DirtNum,                       // FinalDirt
                                 _bubbleCombo.MaxNum,                      // FinalCombo
@@ -210,15 +213,13 @@ namespace Shabon.Game
                             );
 
 
+                            SaveData(bossBattleTime);
+
 
                             RankingSceneDataGenerator.GenerateRankingSceneData();
 
-
-                            SceneTransition.Transition(SceneName.ResultScene);
-
-
                             // スコアを保存
-                            RankingScore.SaveScore(_scoreValue.ScoreNum);
+                            // RankingScore.SaveScore(_scoreValue.ScoreNum);
 
                             // 勝った
                             _currentState = GameState.Win;
@@ -232,6 +233,19 @@ namespace Shabon.Game
             ));
         }
 
+        private void SaveData(float bossBattleTime = -1)
+        {
+            ResultData.SaveResults(
+                                _dirtValue.DirtNum,
+                                _scoreValue.ScoreNum,
+                                _bubbleCombo.MaxNum,
+                                _clapModel.ClapCount,
+                                _dirtValue.DecreaseCount,
+                                _breathModel.TotalBreathTime,
+                                _breathModel.TotalBreathStrength,
+                                bossBattleTime
+                            );
+        }
 
         void ITickable.Tick()
         {
@@ -319,6 +333,12 @@ namespace Shabon.Game
 
         void IDisposable.Dispose()
         {
+            // BGMとめる
+            if (_bgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+            }
+
             foreach (var disposable in _disposables)
             {
                 disposable.Dispose();
