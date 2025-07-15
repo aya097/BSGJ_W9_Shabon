@@ -33,7 +33,7 @@ namespace Shabon.Ui
 
         public void Open()
         {
-            view.SetActive(false);
+            view.SetActive(true);
         }
         public void Close()
         {
