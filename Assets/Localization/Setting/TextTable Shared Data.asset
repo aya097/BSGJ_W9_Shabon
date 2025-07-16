@@ -75,6 +75,58 @@ MonoBehaviour:
     m_Key: TitleScene/PrologueCanvas/prologue_scene_08/Text
     m_Metadata:
       m_Items: []
+  - m_Id: 11397062829531136
+    m_Key: tutorial_bubble_coming0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114048
+    m_Key: tutorial_dirty_mansion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114049
+    m_Key: tutorial_bubble_coming1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114050
+    m_Key: tutorial_blow_air
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114051
+    m_Key: tutorial_to_bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114052
+    m_Key: tutorial_now_blow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114053
+    m_Key: tutorial_nice_blow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114054
+    m_Key: tutorial_bubble_coming2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114055
+    m_Key: tutorial_lure_bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114056
+    m_Key: tutorial_prepare_hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114057
+    m_Key: tutorial_now_clap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114058
+    m_Key: tutorial_clean_mansion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114059
+    m_Key: tutorial_thanks
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

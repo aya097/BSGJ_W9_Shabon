@@ -78,6 +78,58 @@ MonoBehaviour:
     m_Localized: "\u541B\u306F\u9B54\u6CD5\u304C\u5F97\u610F\u3089\u3057\u3044\u306A"
     m_Metadata:
       m_Items: []
+  - m_Id: 11397062829531136
+    m_Localized: "\u30D0\u30D6\u30EB\u304C\u3084\u3063\u3066\u304D\u305F\u3088\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114048
+    m_Localized: "\u3046\u308F\u3042\uFF01\u5C4B\u6577\u304C\u6C5A\u308C\u3061\u3083\u3063\u305F\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114049
+    m_Localized: "\u307E\u305F\u6765\u305F\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114050
+    m_Localized: "\u4ECA\u5EA6\u306F\u606F\u3092\u5439\u3044\u3066\u9060\u3056\u3051\u3066\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114051
+    m_Localized: "\u30D0\u30D6\u30EB\u306B\u5411\u3051\u3066\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114052
+    m_Localized: "\u4ECA\u3060\uFF01\u606F\u3092\u5439\u3044\u3066\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114053
+    m_Localized: "\u3044\u3044\u306D\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114054
+    m_Localized: "\u307E\u305F\u30D0\u30D6\u30EB\u304C\u3084\u3063\u3066\u304D\u305F\u3088\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114055
+    m_Localized: "\u5F15\u304D\u3064\u3051\u3066\u4E00\u6C17\u306B\u5012\u3057\u3066\u3084\u308D\u3046\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114056
+    m_Localized: "\u624B\u3092\u304B\u307E\u3048\u3066\uFF01\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114057
+    m_Localized: "\u4ECA\u3060\uFF01\uFF01\u624B\u3092\u53E9\u3044\u3066\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114058
+    m_Localized: "\u3084\u3063\u305F\uFF01\u5012\u305B\u305F\u305E\uFF01\u5C4B\u6577\u3082\u30AD\u30EC\u30A4\u306B\u306A\u3063\u305F\u306D\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114059
+    m_Localized: "\u3053\u306E\u8ABF\u5B50\u3067\u304C\u3093\u3070\u308A\u305F\u307E\u3048\uFF01\u30CF\u30C3\u30CF\u30C3\u30CF\u30C3\uFF01"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
