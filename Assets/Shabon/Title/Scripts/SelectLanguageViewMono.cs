@@ -34,6 +34,17 @@ namespace Shabon.Title
                 .WithEase(awayEase)
                 .BindToAnchoredPositionY(startTransform)
                 .AddTo(this);
+            // フィルタ大きくする
+            var filterTransform = filterView.GetComponent<RectTransform>();
+            LMotion.Create(Vector3.zero, Vector3.one * 3, awayTime)
+                .WithEase(awayEase)
+                .WithOnComplete(() =>
+                {
+                    japaneseText.gameObject.SetActive(true);
+                    englishText.gameObject.SetActive(true);
+                })
+                .BindToLocalScale(filterTransform)
+                .AddTo(this);
         }
     }
 }
