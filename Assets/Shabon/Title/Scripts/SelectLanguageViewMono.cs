@@ -3,6 +3,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Shabon.Title
 {
@@ -21,6 +22,7 @@ namespace Shabon.Title
 
         [SerializeField] private GameObject japaneseFilter = null!;
         [SerializeField] private GameObject englishFilter = null!;
+        [SerializeField] private Image windIcon = null!;
 
         public void Open()
         {
@@ -44,9 +46,24 @@ namespace Shabon.Title
                 {
                     japaneseText.gameObject.SetActive(true);
                     englishText.gameObject.SetActive(true);
+                    windIcon.gameObject.SetActive(true);
                 })
                 .BindToLocalScale(filterTransform)
                 .AddTo(this);
+        }
+
+        public void Close()
+        {
+            japaneseText.gameObject.SetActive(false);
+            englishText.gameObject.SetActive(false);
+            windIcon.gameObject.SetActive(false);
+            japaneseFilter.SetActive(false);
+            englishFilter.SetActive(false);
+        }
+
+        public void SetBreath(float breath)
+        {
+            windIcon.fillAmount = Mathf.Min(breath, 1);
         }
 
         public void SetLanguage(Language language)

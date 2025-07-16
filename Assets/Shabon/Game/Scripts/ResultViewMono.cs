@@ -161,6 +161,7 @@ namespace Shabon.Game
         {
             clapIcon.SetActive(isActive);
         }
+
         public void Close()
         {
             resultCanvas.SetActive(false);

@@ -36,6 +36,7 @@ namespace Shabon.Title
                     }
                     else if (state == TitleState.Prologue)
                     {
+                        selectLanguageViewMono.Close();
                         titleViewMono.StartPrologue();
                     }
                 })
@@ -94,6 +95,7 @@ namespace Shabon.Title
                         {
                             _breathContinuousTime = 0;
                         }
+                        selectLanguageViewMono.SetBreath(_breathContinuousTime);
                         // 1秒連続で吹いたら
                         if (_breathContinuousTime > 1)
                         {
