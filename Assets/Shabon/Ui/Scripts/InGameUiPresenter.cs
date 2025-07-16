@@ -157,6 +157,7 @@ namespace Shabon.Ui
                             .Subscribe(_ =>
                             {
                                 _ableTransitionTitle = true;
+                                resultViewMono.SetClap(true);
                             });
                     }
                 })

@@ -1,13 +1,25 @@
 {
     "FinalDirtRanking": [
+        0,
+        0,
         0
     ],
     "FinalComboRanking": [],
-    "FinalClapCountRanking": [],
-    "DirtValueCountSumRanking": [],
-    "FinalBreathTimeRanking": [
-        9.187233924865723
+    "FinalClapCountRanking": [
+        1,
+        5
     ],
-    "CalorieRanking": [],
+    "DirtValueCountSumRanking": [
+        1
+    ],
+    "FinalBreathTimeRanking": [
+        5.413459777832031,
+        9.187233924865723,
+        13.872664451599121
+    ],
+    "CalorieRanking": [
+        0.75,
+        0.15000000596046449
+    ],
     "BossBattleTimeRanking": []
 }
