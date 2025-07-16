@@ -20,6 +20,7 @@ namespace Shabon.Title
             builder.RegisterComponentInHierarchy<TitleViewMono>();
             builder.Register<InputManager>(Lifetime.Scoped).As<IInputManager>();
             builder.Register<SerialInput>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<SelectLanguageViewMono>();
 
             // Presenter
             builder.RegisterEntryPoint<TitlePresenter>(Lifetime.Scoped);
