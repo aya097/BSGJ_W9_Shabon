@@ -110,7 +110,6 @@ namespace Shabon.Game
                         _breathModel.Reset();
 
                         StartPhase();
-
                     });
 
 

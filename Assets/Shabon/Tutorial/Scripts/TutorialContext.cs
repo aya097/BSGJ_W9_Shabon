@@ -234,10 +234,14 @@ namespace Shabon.Tutorial
                 .Subscribe(_ =>
                 {
                     _bubbleCluster.Bubbles.ElementAt(0).Resume();
-                    _tutorialViewMono.SetText(TutorialText.lure_bubble);
-                    Debug.Log("Tutorial: 引きつけて一気に倒してやろう！！");
                 });
-            Observable.Timer(TimeSpan.FromSeconds(5f))
+            Observable.Timer(TimeSpan.FromSeconds(4f))
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Tutorial: 引きつけて一気に倒してやろう！！");
+                    _tutorialViewMono.SetText(TutorialText.lure_bubble);
+                });
+            Observable.Timer(TimeSpan.FromSeconds(7f))
                 .Subscribe(_ =>
                 {
                     _tutorialViewMono.SetText(TutorialText.prepare_hand);
