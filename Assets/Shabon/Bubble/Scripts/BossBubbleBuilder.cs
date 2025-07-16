@@ -26,6 +26,7 @@ namespace Shabon.Bubble
         private readonly IBubbleSpawner _bubbleSpawner;
 
         private float _bossBattleStartTime = 0f;
+        protected override bool EnableSpreading => false;
 
         [Inject]
         public BossBubbleBuilder(
