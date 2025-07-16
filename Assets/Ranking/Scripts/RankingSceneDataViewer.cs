@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Networking; // 追加
 
 namespace Shabon.Game
 {
@@ -27,19 +28,34 @@ namespace Shabon.Game
             FixTextPosition(dirtRankText, yOffset);
             FixTextPosition(clapRankText, yOffset);
 
-            string rankingPath = Path.Combine(Application.dataPath, "Ranking/Scripts/RankingSceneData.json");
-            if (File.Exists(rankingPath))
+            string rankingPath = System.IO.Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
+            StartCoroutine(LoadRankingData(rankingPath));
+        }
+
+        private System.Collections.IEnumerator LoadRankingData(string path)
+        {
+            string url = path;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            url = "jar:file://" + url;
+#elif UNITY_IOS && !UNITY_EDITOR
+            url = "file://" + url;
+#elif UNITY_STANDALONE_OSX && !UNITY_EDITOR
+            url = "file://" + url;
+#elif UNITY_STANDALONE_WIN && !UNITY_EDITOR
+            url = "file:///" + url;
+#endif
+
+            using (var request = UnityWebRequest.Get(url))
             {
-                string json = "";
-                try
+                yield return request.SendWebRequest();
+
+                if (request.result != UnityWebRequest.Result.Success)
                 {
-                    json = File.ReadAllText(rankingPath);
+                    Debug.LogError("RankingSceneData.json の読み込みに失敗しました: " + request.error);
+                    yield break;
                 }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"RankingSceneData.json の読み込みに失敗しました: {e}");
-                    return;
-                }
+
+                string json = request.downloadHandler.text;
                 RankingSceneData rankingData = null!;
                 try
                 {
@@ -48,7 +64,7 @@ namespace Shabon.Game
                 catch (System.Exception e)
                 {
                     Debug.LogError($"RankingSceneData.json のパースに失敗しました: {e}");
-                    return;
+                    yield break;
                 }
 
                 breathTimeRankText.text = BuildRankingText(rankingData.FinalBreathTimeRanking);
@@ -88,6 +104,12 @@ namespace Shabon.Game
                 {
                     value = f.ToString("0.0");
                 }
+                // 0や負値は "---" にする
+                if (value == "0" || value == "-1" || value == "-1.0")
+                {
+                    value = "---";
+                }
+                // ★ ここでlinesに追加
                 lines.Add($"<color={colors[i]}><size={sizes[i]}>{i + 1}: {value}{unit}</size></color>");
             }
             return string.Join("\n", lines);

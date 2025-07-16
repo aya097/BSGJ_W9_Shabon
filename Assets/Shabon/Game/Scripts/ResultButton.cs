@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -59,6 +60,19 @@ namespace Shabon.Game
                 _breathModel.TotalBreathStrength,         // Calorie計算用
                 0                                         // BossBattleTime
             );
+
+            RankingScore.SaveScore(_scoreValue.ScoreNum);
+
+            // ★ランキングデータも自動生成
+            string resultPath = Path.Combine(Application.persistentDataPath, "ResultData.json");
+            string rankingPath = Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
+            if (!File.Exists(resultPath))
+            {
+                // 初回はStreamingAssetsから
+                resultPath = Path.Combine(Application.streamingAssetsPath, "ResultData.json");
+            }
+            RankingSceneDataBuilder.Generate(resultPath, rankingPath);
+
             SceneManager.LoadScene("ResultScene");
         }
     }

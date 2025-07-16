@@ -113,7 +113,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _Ratio: 1
+    - _Ratio: 0.9
     m_Colors:
     - _Clear: {r: 0.23921569, g: 0.7058824, b: 1, a: 0}
     - _Dirt: {r: 0.7921569, g: 0.67058825, b: 0.6, a: 0.48235294}
