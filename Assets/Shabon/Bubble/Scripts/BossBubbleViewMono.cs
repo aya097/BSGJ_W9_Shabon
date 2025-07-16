@@ -8,11 +8,22 @@ namespace Shabon.Bubble
 {
     public class BossBubbleViewMono : BubbleViewMono
     {
-        [Header("装飾品のview")]
-        [SerializeField] private Animator _bubbleOrnamentAnimator = null!;
-        [SerializeField] private SpriteRenderer _ornamentSpriteRenderer = null!;
+        [Header("スポーン時のエフェクト")]
+        [SerializeField] protected GameObject spawnEffect = null!;
+
+        [Header("装飾品関係")]
+        [SerializeField] protected Animator _bubbleOrnamentAnimator = null!;
+        [SerializeField] protected SpriteRenderer _ornamentSpriteRenderer = null!;
 
         private int _ornamentOriginalOrderInLayer;
+
+        protected override bool EnableFloatMotion => false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _ornamentOriginalOrderInLayer = _ornamentSpriteRenderer.sortingOrder;
+        }
 
         protected override void TurnOnHighlight()
         {
@@ -63,9 +74,11 @@ namespace Shabon.Bubble
         public void PlaySpawn(Action? callback = null)
         {
             Play(BubbleAnimationEnum.Spawn);
-            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+            spawnEffect.SetActive(true);
+            Observable.Timer(TimeSpan.FromSeconds(1.0f))
                 .Subscribe(_ =>
                 {
+                    spawnEffect.SetActive(false);
                     Play(BubbleAnimationEnum.Idle);
                     callback?.Invoke();
                 }).AddTo(this);
@@ -91,12 +104,6 @@ namespace Shabon.Bubble
         {
             _bubbleAnimator.SetInteger("BossHp", bossHp);
             _bubbleOrnamentAnimator.SetInteger("BossHp", bossHp);
-        }
-
-        protected override void Awake()
-        {
-            _ornamentOriginalOrderInLayer = _ornamentSpriteRenderer.sortingOrder;
-            base.Awake();
         }
 
         protected override void Update()
