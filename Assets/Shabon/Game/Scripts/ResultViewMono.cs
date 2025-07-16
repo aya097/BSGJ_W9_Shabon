@@ -55,6 +55,8 @@ namespace Shabon.Game
         [SerializeField] private GameObject winBoss = null!;
         [SerializeField] private GameObject loseBoss = null!;
 
+        [Header("Clapアイコン")]
+        [SerializeField] private GameObject clapIcon = null!;
 
 
         void Awake()
@@ -153,6 +155,11 @@ namespace Shabon.Game
                         .AddTo(this);
                 })
                 .AddTo(this);
+        }
+
+        public void SetClap(bool isActive)
+        {
+            clapIcon.SetActive(isActive);
         }
         public void Close()
         {
