@@ -21,7 +21,10 @@ namespace Shabon.Title
         // ブレスした時間
         private float _breathContinuousTime = 0f;
         [Inject]
-        public TitlePresenter(TitleViewMono titleViewMono, IInputManager inputManager, TitleModel titleModel)
+        public TitlePresenter(TitleViewMono titleViewMono,
+        IInputManager inputManager,
+         TitleModel titleModel,
+          SelectLanguageViewMono selectLanguageViewMono)
         {
             // Model -> View
             _disposables.Add(Observable.EveryValueChanged(titleModel, t => t.CurrentState)
@@ -29,7 +32,7 @@ namespace Shabon.Title
                 {
                     if (state == TitleState.Language)
                     {
-
+                        selectLanguageViewMono.Open();
                     }
                     else if (state == TitleState.Prologue)
                     {
