@@ -26,6 +26,8 @@ namespace Shabon.Bubble
         private readonly IScoreValue _scoreValue;
         private readonly List<IDisposable> _presenterObservable = new();
 
+        protected virtual bool EnableSpreading => true;
+
         [Inject]
         public NormalBubbleBuilder(
             IPlayerTransform playerTransform,
@@ -76,7 +78,6 @@ namespace Shabon.Bubble
             bubbleMono.IsSeparatable = false;  // 広がるまで停止
             SpreadBubble(bubbleMono, bubbleViewMono);
 
-
             bubbleSetter.SetBuildParam(bubbleMover, _waitAreaChecker, bubbleData, _bubbleCluster);
 
             // プレゼンター処理？
@@ -126,12 +127,17 @@ namespace Shabon.Bubble
                 {
                     // 描画を優先する
                     viewMono.SetSortingLayer("Bubble");
-                    // 0.5秒で移動する
-                    LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
-                        .WithOnComplete(() => bubbleMono.IsSeparatable = true)
-                        .WithEase(Ease.OutSine)
-                        .BindToPositionX(bubbleMono.Transform)
-                        .AddTo(viewMono);
+
+                    // 散らばりを許すなら
+                    if (EnableSpreading)
+                    {
+                        // 0.5秒で移動する
+                        LMotion.Create(bubbleMono.Transform.position.x, targetPosition, 0.5f)
+                            .WithOnComplete(() => bubbleMono.IsSeparatable = true)
+                            .WithEase(Ease.OutSine)
+                            .BindToPositionX(bubbleMono.Transform)
+                            .AddTo(viewMono);
+                    }
                 })
                 .AddTo(viewMono);   // 寿命管理のため
         }
