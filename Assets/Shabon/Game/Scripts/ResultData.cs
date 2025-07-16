@@ -35,7 +35,9 @@ namespace Shabon.Game
         public static float FinalBreathStrengthSum { get; set; }
         public static float BossBattleTime { get; set; }
 
-        private static readonly string FilePath = Path.Combine(Application.dataPath, "Shabon/Game/Scripts/ResultData.json");
+        private static readonly string FileName = "ResultData.json";
+        private static readonly string PersistentPath = Path.Combine(Application.persistentDataPath, FileName);
+        private static readonly string StreamingPath = Path.Combine(Application.streamingAssetsPath, FileName);
 
 
         /// <summary>
@@ -73,11 +75,11 @@ namespace Shabon.Game
 
             // 既存データを読み込む
             List<ResultDataModel> results = new();
-            if (File.Exists(FilePath))
+            if (File.Exists(PersistentPath))
             {
                 try
                 {
-                    string json = File.ReadAllText(FilePath);
+                    string json = File.ReadAllText(PersistentPath);
                     if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
                     {
                         results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
@@ -101,7 +103,7 @@ namespace Shabon.Game
             string onlyArray = arrayJson.Substring(start, end - start + 1);
 
             // ディレクトリがなければ作成
-            var dir = Path.GetDirectoryName(FilePath);
+            var dir = Path.GetDirectoryName(PersistentPath);
             if (!Directory.Exists(dir))
             {
                 try
@@ -116,7 +118,7 @@ namespace Shabon.Game
 
             try
             {
-                File.WriteAllText(FilePath, onlyArray);
+                File.WriteAllText(PersistentPath, onlyArray);
             }
             catch (System.Exception e)
             {
@@ -129,27 +131,22 @@ namespace Shabon.Game
         /// </summary>
         public static void LoadResults()
         {
-            if (!File.Exists(FilePath)) return;
-            try
+            string path = PersistentPath;
+            if (!File.Exists(path))
+                path = StreamingPath;
+            string json = File.Exists(path) ? File.ReadAllText(path) : "";
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
+            if (results != null && results.Count > 0)
             {
-                string json = File.ReadAllText(FilePath);
-                if (string.IsNullOrWhiteSpace(json)) return;
-                var results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
-                if (results != null && results.Count > 0)
-                {
-                    var model = results[results.Count - 1]; // 最新
-                    FinalDirt = model.FinalDirt;
-                    FinalCombo = model.FinalCombo;
-                    FinalClapCount = model.FinalClapCount;
-                    FinalDirtIncreaseCount = model.DirtValueCountSum;
-                    FinalBreathTime = model.FinalBreathTime;
-                    FinalBreathStrengthSum = model.Calorie; // Calorieは合計値
-                    BossBattleTime = model.BossBattleTime;
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"ファイル読み込みに失敗しました: {e}");
+                var model = results[results.Count - 1]; // 最新
+                FinalDirt = model.FinalDirt;
+                FinalCombo = model.FinalCombo;
+                FinalClapCount = model.FinalClapCount;
+                FinalDirtIncreaseCount = model.DirtValueCountSum;
+                FinalBreathTime = model.FinalBreathTime;
+                FinalBreathStrengthSum = model.Calorie; // Calorieは合計値
+                BossBattleTime = model.BossBattleTime;
             }
         }
     }

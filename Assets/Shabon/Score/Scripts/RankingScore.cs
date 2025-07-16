@@ -11,7 +11,9 @@ namespace Shabon.Score
     public static class RankingScore
     {
 
-        private static readonly string FilePath = Path.Combine(Application.dataPath, "Shabon/Score/Scripts/Ranking.json");
+        private static readonly string FileName = "Ranking.json";
+        private static readonly string PersistentPath = Path.Combine(Application.persistentDataPath, FileName);
+        private static readonly string StreamingPath = Path.Combine(Application.streamingAssetsPath, FileName);
 
 
         /// <summary>
@@ -19,17 +21,14 @@ namespace Shabon.Score
         /// </summary>
         public static void SaveScore(int score)
         {
-#if UNITY_WEBGL
-            return;
-#endif
-            Debug.Log($"Saving Score: {score}");
             List<int> scores = LoadScores();
             scores.Add(score);
-            scores.Sort((a, b) => b.CompareTo(a)); // 降順にソート
+            scores.Sort((a, b) => b.CompareTo(a)); // 降順
 
             try
             {
-                File.WriteAllText(FilePath, JsonUtility.ToJson(new ScoreData(scores)));
+                Debug.Log($"[RankingScore] Save to: {PersistentPath}");
+                File.WriteAllText(PersistentPath, JsonUtility.ToJson(new ScoreData(scores)));
             }
             catch (System.Exception e)
             {
@@ -42,25 +41,42 @@ namespace Shabon.Score
         /// </summary>
         public static List<int> LoadScores()
         {
-#if UNITY_WEBGL
-            return new List<int>();
-#endif
-            if (!File.Exists(FilePath))
+            string path = PersistentPath;
+            if (!File.Exists(path))
             {
-                return new List<int>();
+                // persistentDataPathに無ければStreamingAssetsから初期データを読む
+                path = StreamingPath;
             }
 
+            List<int> scores = new List<int>();
             try
             {
-                string json = File.ReadAllText(FilePath);
-                ScoreData? data = JsonUtility.FromJson<ScoreData>(json);
-                return data?.Scores ?? new List<int>();
+                string json;
+#if UNITY_ANDROID && !UNITY_EDITOR
+                string url = "jar:file://" + path;
+                using (var request = UnityEngine.Networking.UnityWebRequest.Get(url))
+                {
+                    var op = request.SendWebRequest();
+                    while (!op.isDone) { }
+                    if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+                        json = request.downloadHandler.text;
+                    else
+                        return scores;
+                }
+#else
+                json = File.Exists(path) ? File.ReadAllText(path) : "";
+#endif
+                if (!string.IsNullOrEmpty(json))
+                {
+                    ScoreData? data = JsonUtility.FromJson<ScoreData>(json);
+                    scores = data?.Scores ?? new List<int>();
+                }
             }
             catch (System.Exception e)
             {
                 Debug.LogError($"スコア読み込み時にエラー: {e}");
-                return new List<int>();
             }
+            return scores;
         }
 
         [System.Serializable]

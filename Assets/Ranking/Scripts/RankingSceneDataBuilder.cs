@@ -43,7 +43,7 @@ public static class RankingSceneDataBuilder
         var dirtList = results.Results.Select(r => r.FinalDirt).OrderBy(x => x).ToList();
         var comboList = results.Results.Select(r => r.FinalCombo).Where(x => x != 0).OrderByDescending(x => x).ToList();
         var clapList = results.Results.Select(r => r.FinalClapCount).Where(x => x != 0).OrderBy(x => x).ToList();
-        var dirtValueCountSumList = results.Results.Select(r => r.FinalDirtDecreaseCount).Where(x => x != 0).OrderByDescending(x => x).ToList();
+        var dirtValueCountSumList = results.Results.Select(r => r.DirtValueCountSum).Where(x => x != 0).OrderBy(x => x).ToList();
         var breathTimeList = results.Results.Select(r => r.FinalBreathTime).Where(x => x != 0f).OrderBy(x => x).ToList();
         var calorieList = results.Results
             .Select(r =>
@@ -55,7 +55,11 @@ public static class RankingSceneDataBuilder
             .Where(x => x != 0f)
             .OrderByDescending(x => x)
             .ToList();
-        var bossBattleTimeList = results.Results.Select(r => r.BossBattleTime).Where(x => x != 0f).OrderBy(x => x).ToList();
+        var bossBattleTimeList = results.Results
+            .Select(r => r.BossBattleTime)
+            .Where(x => x > 0f) // 0より大きい値のみ
+            .OrderBy(x => x)
+            .ToList();
 
         var rankingData = new RankingSceneData
         {
@@ -85,7 +89,7 @@ public static class RankingSceneDataBuilder
         public int FinalDirt;
         public int FinalCombo;
         public int FinalClapCount;
-        public int FinalDirtDecreaseCount;
+        public int DirtValueCountSum;
         public float FinalBreathTime;
         public float FinalBreathStrengthSum;
         public float BossBattleTime;
