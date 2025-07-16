@@ -25,6 +25,7 @@ namespace Shabon.Title
     public class TitleModel
     {
         public TitleState CurrentState => _currentState;
+        public Language CurrentLanguage => _currentLanguage;
 
         private TitleState _currentState = TitleState.None;
 

@@ -16,9 +16,11 @@ namespace Shabon.Title
         [SerializeField] private GameObject filterView = null!;
         [SerializeField] private TMP_Text japaneseText = null!;
         [SerializeField] private TMP_Text englishText = null!;
-
         [SerializeField] private float awayTime;
         [SerializeField] private Ease awayEase;
+
+        [SerializeField] private GameObject japaneseFilter = null!;
+        [SerializeField] private GameObject englishFilter = null!;
 
         public void Open()
         {
@@ -45,6 +47,24 @@ namespace Shabon.Title
                 })
                 .BindToLocalScale(filterTransform)
                 .AddTo(this);
+        }
+
+        public void SetLanguage(Language language)
+        {
+            if (language == Language.Japanese)
+            {
+                japaneseText.gameObject.GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+                englishText.gameObject.GetComponent<RectTransform>().localScale = Vector3.one;
+                japaneseFilter.SetActive(true);
+                englishFilter.SetActive(false);
+            }
+            else if (language == Language.English)
+            {
+                japaneseText.gameObject.GetComponent<RectTransform>().localScale = Vector3.one;
+                englishText.gameObject.GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+                japaneseFilter.SetActive(false);
+                englishFilter.SetActive(true);
+            }
         }
     }
 }

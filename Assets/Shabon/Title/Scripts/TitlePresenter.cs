@@ -40,6 +40,15 @@ namespace Shabon.Title
                     }
                 })
             );
+            _disposables.Add(Observable.EveryValueChanged(titleModel, t => t.CurrentLanguage)
+                .Subscribe(language =>
+                {
+                    if (titleModel.CurrentState == TitleState.Language)
+                    {
+                        selectLanguageViewMono.SetLanguage(language);
+                    }
+                })
+            );
 
             // View -> Model
 
