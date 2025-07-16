@@ -2,24 +2,43 @@
     "FinalDirtRanking": [
         0,
         0,
-        0
-    ],
-    "FinalComboRanking": [],
-    "FinalClapCountRanking": [
-        1,
-        5
-    ],
-    "DirtValueCountSumRanking": [
+        0,
+        0,
+        0,
         1
     ],
+    "FinalComboRanking": [
+        8
+    ],
+    "FinalClapCountRanking": [
+        1,
+        1,
+        2,
+        5,
+        12
+    ],
+    "DirtValueCountSumRanking": [
+        1,
+        3,
+        4,
+        6
+    ],
     "FinalBreathTimeRanking": [
+        2.6496119499206545,
         5.413459777832031,
         9.187233924865723,
-        13.872664451599121
+        13.872664451599121,
+        14.50131607055664,
+        36.81243133544922
     ],
     "CalorieRanking": [
+        1.8000000715255738,
         0.75,
+        0.30000001192092898,
+        0.15000000596046449,
         0.15000000596046449
     ],
-    "BossBattleTimeRanking": []
+    "BossBattleTimeRanking": [
+        243.72262573242188
+    ]
 }
