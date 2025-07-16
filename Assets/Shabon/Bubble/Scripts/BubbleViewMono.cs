@@ -50,6 +50,8 @@ namespace Shabon.Bubble
         private int _originalOrderInLayer;
         private SpriteRenderer _shadowSpriteRenderer = null!;
 
+        protected virtual bool EnableFloatMotion => true;
+
         private SoundToken _breathedToken = null!;
 
         protected virtual void Awake()
@@ -61,12 +63,15 @@ namespace Shabon.Bubble
             _originalShadowScale = shadow.transform.localScale;
             _originalShadowDistance = Mathf.Abs(shadow.transform.localPosition.y);
 
-            Vector3 startPosition = transform.localPosition;
-            LMotion.Create(startPosition.y, startPosition.y + 0.03f, 0.8f)
-                .WithEase(Ease.InOutSine)
-                .WithLoops(-1, LoopType.Yoyo)
-                .BindToLocalPositionY(transform)
-                .AddTo(gameObject);
+            if (EnableFloatMotion)
+            {
+                Vector3 startPosition = transform.localPosition;
+                LMotion.Create(startPosition.y, startPosition.y + 0.03f, 0.8f)
+                    .WithEase(Ease.InOutSine)
+                    .WithLoops(-1, LoopType.Yoyo)
+                    .BindToLocalPositionY(transform)
+                    .AddTo(gameObject);
+            }
         }
 
         protected virtual void Update()

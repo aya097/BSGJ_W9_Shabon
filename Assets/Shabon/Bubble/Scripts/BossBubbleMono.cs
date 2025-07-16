@@ -21,7 +21,7 @@ namespace Shabon.Bubble
 
         void Awake()
         {
-            _basePosition = gameObject.transform.position;
+            _basePosition = new Vector3(0, gameObject.transform.position.y, 0.9f);
         }
 
         protected override void Update()

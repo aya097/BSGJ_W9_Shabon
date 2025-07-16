@@ -8,24 +8,38 @@ namespace Shabon.Bubble
 {
     public class BossBubbleViewMono : BubbleViewMono
     {
-        [SerializeField] private Animator _bubbleDecorationAnimator = null!;
-        [SerializeField] private SpriteRenderer _decorationSpriteRenderer = null!;
+        [Header("スポーン時のエフェクト")]
+        [SerializeField] protected GameObject spawnEffect = null!;
+
+        [Header("装飾品関係")]
+        [SerializeField] protected Animator _bubbleOrnamentAnimator = null!;
+        [SerializeField] protected SpriteRenderer _ornamentSpriteRenderer = null!;
+
+        private int _ornamentOriginalOrderInLayer;
+
+        protected override bool EnableFloatMotion => false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _ornamentOriginalOrderInLayer = _ornamentSpriteRenderer.sortingOrder;
+        }
 
         protected override void TurnOnHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 1f);
-            _decorationSpriteRenderer.material.SetFloat("_HighLightFlag", 1f);
+            _ornamentSpriteRenderer.material.SetFloat("_HighLightFlag", 1f);
         }
         protected override void TurnOffHighlight()
         {
             _spriteRenderer.material.SetFloat("_HighLightFlag", 0f);
-            _decorationSpriteRenderer.material.SetFloat("_HighLightFlag", 0f);
+            _ornamentSpriteRenderer.material.SetFloat("_HighLightFlag", 0f);
         }
         // メイド
         protected override void SetDarkness(float value)
         {
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
-            _decorationSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
+            _ornamentSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
 
         }
 
@@ -35,7 +49,7 @@ namespace Shabon.Bubble
             // _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Attack);
-            Observable.Timer(TimeSpan.FromSeconds(1.0f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
@@ -49,20 +63,22 @@ namespace Shabon.Bubble
             //_breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Clap);
-            Observable.Timer(TimeSpan.FromSeconds(0.6f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
-                    callback?.Invoke();
                     Play(BubbleAnimationEnum.Idle);
+                    callback?.Invoke();
                 }).AddTo(this);
         }
 
         public void PlaySpawn(Action? callback = null)
         {
             Play(BubbleAnimationEnum.Spawn);
+            spawnEffect.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(1.0f))
                 .Subscribe(_ =>
                 {
+                    spawnEffect.SetActive(false);
                     Play(BubbleAnimationEnum.Idle);
                     callback?.Invoke();
                 }).AddTo(this);
@@ -70,7 +86,7 @@ namespace Shabon.Bubble
         public override void SetSortingLayer(string sortingLayerName)
         {
             base.SetSortingLayer(sortingLayerName);
-            _decorationSpriteRenderer.sortingLayerName = sortingLayerName;
+            _ornamentSpriteRenderer.sortingLayerName = sortingLayerName;
         }
 
         protected override void Play(BubbleAnimationEnum animation)
@@ -79,8 +95,22 @@ namespace Shabon.Bubble
             {
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
-                _bubbleDecorationAnimator.SetTrigger(animation.ToString());
+                _bubbleOrnamentAnimator.SetTrigger(animation.ToString());
             }
+        }
+
+        // animatorのボスHP変数にセットするメソッド
+        public void SetBossHp(int bossHp)
+        {
+            _bubbleAnimator.SetInteger("BossHp", bossHp);
+            _bubbleOrnamentAnimator.SetInteger("BossHp", bossHp);
+        }
+
+        protected override void Update()
+        {
+            // プレイヤーに近い(zが小さい)bubbleほど、手前に表示させるように
+            _ornamentSpriteRenderer.sortingOrder = (int)(-transform.position.z * 10000) + _ornamentOriginalOrderInLayer;
+            base.Update();
         }
     }
 }
