@@ -31,8 +31,8 @@ namespace Shabon.Breath
                     // 向きは変えない
                     breathEffect.transform.rotation = Quaternion.identity;
                     float angle = -originTransform.eulerAngles.y / 180f * Mathf.PI;
-                    breathEffect.SetFloat("myAngle", angle);
-                    breathEffect.SetFloat("CollisionAngle", angle);
+                    // breathEffect.SetFloat("myAngle", angle);
+                    // breathEffect.SetFloat("CollisionAngle", angle);
                 })
                 .AddTo(this);
             // 座標がかわったら更新

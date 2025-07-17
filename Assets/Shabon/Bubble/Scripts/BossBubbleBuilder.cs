@@ -96,7 +96,6 @@ namespace Shabon.Bubble
 
                 bubbleView.PlayClap(() =>
                 {
-                    
                     if (bubbleMono.BossHitPoint == 0)
                     {
                         // ボス撃破時
@@ -105,7 +104,6 @@ namespace Shabon.Bubble
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         return;
                     }
-
                     bubbleMono.Resume();
                 });
 

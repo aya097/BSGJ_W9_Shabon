@@ -11,9 +11,9 @@ namespace Shabon.Score
     public static class RankingScore
     {
 
-        private static readonly string FileName = "Ranking.json";
-        private static readonly string PersistentPath = Path.Combine(Application.persistentDataPath, FileName);
-        private static readonly string StreamingPath = Path.Combine(Application.streamingAssetsPath, FileName);
+        // ↓必ずStreamingAssetsに保存
+        private static readonly string PersistentPath = Application.dataPath + "/StreamingAssets/Ranking.json";
+        private static readonly string StreamingPath = Application.dataPath + "/StreamingAssets/Ranking.json";
 
 
         /// <summary>

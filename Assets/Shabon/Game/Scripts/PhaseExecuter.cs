@@ -55,6 +55,7 @@ namespace Shabon.Game
         private List<IDisposable> _disposables = new();
         private SoundToken? _bgmToken;
 
+        private bool _isResultSaved = false; // 既に保存したかどうか
 
         [Inject]
         public PhaseExecutor(
@@ -188,92 +189,73 @@ namespace Shabon.Game
         void SubscribeFinishPhase()
         {
             double finishedTime = _currentTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime;
-            // フェーズの終了を登録
             _eventList.Add(new PhaseEvent(
                 finishedTime,
                 () =>
                 {
-                    // 次のフェーズに
-                    // ★ここで保存処理を呼ぶ
-                    int dirtValueCountSum = _dirtValue.IncreaseCount;
-                    ResultData.SaveResults(
-                        _dirtValue.DirtNum,
-                        _bubbleCombo.ComboNum,
-                        _clapModel.ClapCount,
-                        dirtValueCountSum,
-                        _breathModel.TotalBreathTime,
-                        _breathModel.TotalBreathStrength,
-                        0 // BossBattleTimeは必要に応じて
-                    );
-
-                    Shabon.Score.RankingScore.SaveScore(_scoreValue.ScoreNum);
-
-                    // ランキングデータも自動生成
-                    string resultPath = System.IO.Path.Combine(Application.persistentDataPath, "ResultData.json");
-                    string rankingSceneDataPath = System.IO.Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
-                    string rankingScorePath = System.IO.Path.Combine(Application.streamingAssetsPath, "Ranking.json");
-                    if (!System.IO.File.Exists(resultPath))
-                    {
-                        resultPath = System.IO.Path.Combine(Application.streamingAssetsPath, "ResultData.json");
-                    }
-
-                    // ランキングスコア保存
-                    var scores = Shabon.Score.RankingScore.LoadScores();
-                    try
-                    {
-                        System.IO.File.WriteAllText(rankingScorePath, UnityEngine.JsonUtility.ToJson(new { Scores = scores }));
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.LogError($"Ranking.json の書き込みに失敗しました: {e}");
-                    }
-
-                    // ランキングシーンデータ保存
-                    RankingSceneDataBuilder.Generate(resultPath, rankingSceneDataPath);
-
-                    // 以降は元の処理
                     bool isEnd = _gamePhases.Proceed();
-                    // 敵がいなくなるのを待つ
                     Observable.EveryUpdate()
-                    .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })   // バブルがいなくなるまで待機
-                    .Take(1)                                                    // 一度だけ実行
+                    .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })
+                    .Take(1)
                     .Subscribe(_ =>
                     {
                         if (isEnd)
                         {
-                            // ボスバトル時間を計算
                             float bossBattleTime = 0f;
                             if (BossBattleStartTime > 0f)
                             {
                                 bossBattleTime = (float)(_currentTime - BossBattleStartTime);
                             }
-                            SaveData(bossBattleTime);
-                            // スコアを保存
-                            // RankingScore.SaveScore(_scoreValue.ScoreNum);
 
-                            // 勝った
+                            SaveData(bossBattleTime); // ★ここで一度だけ保存
+
+                            // ★ランキングデータも生成
+                            string resultPath = System.IO.Path.Combine(Application.streamingAssetsPath, "ResultData.json");
+                            string rankingPath = System.IO.Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
+                            RankingSceneDataBuilder.Generate(resultPath, rankingPath);
+
                             _currentState = GameState.Win;
                         }
                         else
                         {
-                            StartPhase();   // 次のフェーズ
+                            StartPhase();
                         }
                     });
                 }
             ));
+
+            // ボスバブル撃破時のイベントを登録
+            _disposables.Add(
+                Observable.EveryUpdate()
+                    .Subscribe(_ =>
+                    {
+                        // ボスバブルが存在しない && BossBattleStartTimeがセットされている場合
+                        bool bossAlive = _bubbleCluster.Bubbles.Any(b => b is Shabon.Bubble.BossBubbleMono);
+                        if (!bossAlive && BossBattleStartTime > 0f)
+                        {
+                            float bossBattleTime = Time.time - BossBattleStartTime;
+                            SaveData(bossBattleTime);
+                        }
+                    })
+            );
         }
 
         private void SaveData(float bossBattleTime = -1)
         {
+            if (_isResultSaved) return; // ★すでに保存済みなら何もしない
+
             ResultData.SaveResults(
-                                _dirtValue.DirtNum,
-                                _bubbleCombo.MaxNum,
-                                _clapModel.ClapCount,
-                                _dirtValue.IncreaseCount,
-                                _breathModel.TotalBreathTime,
-                                _breathModel.TotalBreathStrength,
-                                bossBattleTime
-                            );
+                _dirtValue.DirtNum,
+                _scoreValue.ScoreNum,
+                _bubbleCombo.ComboNum,
+                _clapModel.ClapCount,
+                _dirtValue.IncreaseCount,
+                _breathModel.TotalBreathTime,
+                _breathModel.TotalBreathStrength,
+                bossBattleTime
+            );
+            RankingScore.SaveScore(_scoreValue.ScoreNum);
+            _isResultSaved = true; // ★保存済みにする
         }
 
         void ITickable.Tick()

@@ -9,6 +9,7 @@ namespace Shabon.Game
     public class ResultDataModel
     {
         public int FinalDirt;
+        public int FinalScore; // ★追加
         public int FinalCombo;
         public int FinalClapCount;
         public int DirtValueCountSum;
@@ -33,24 +34,25 @@ namespace Shabon.Game
         public static int FinalDirtIncreaseCount { get; set; }
         public static float FinalBreathTime { get; set; }
         public static float FinalBreathStrengthSum { get; set; }
+        public static float FinalCalorie { get; set; }
         public static float BossBattleTime { get; set; }
 
-        private static readonly string FileName = "ResultData.json";
-        private static readonly string PersistentPath = Path.Combine(Application.persistentDataPath, FileName);
-        private static readonly string StreamingPath = Path.Combine(Application.streamingAssetsPath, FileName);
-
+        // ↓必ずStreamingAssetsに保存
+        private static readonly string PersistentPath = Application.dataPath + "/StreamingAssets/ResultData.json";
+        private static readonly string StreamingPath = Application.dataPath + "/StreamingAssets/ResultData.json";
 
         /// <summary>
         /// データを保存するメソッド（追記方式）
         /// </summary>
         public static void SaveResults(
-            int dirt, int combo, int clapCount = 0,
+            int dirt, int score, int combo, int clapCount = 0,
             int dirtValueCountSum = 0,
             float breathTime = 0, float breathStrengthSum = 0,
             float bossBattleTime = 0
         )
         {
             FinalDirt = dirt;
+            FinalScore = score;
             FinalCombo = combo;
             FinalClapCount = clapCount;
             FinalDirtIncreaseCount = dirtValueCountSum;
@@ -65,6 +67,7 @@ namespace Shabon.Game
             var model = new ResultDataModel
             {
                 FinalDirt = dirt,
+                FinalScore = score,
                 FinalCombo = combo,
                 FinalClapCount = clapCount,
                 DirtValueCountSum = dirtValueCountSum,
@@ -82,38 +85,46 @@ namespace Shabon.Game
                     string json = File.ReadAllText(PersistentPath);
                     if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
                     {
-                        results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
+                        results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results ?? new List<ResultDataModel>();
                     }
                 }
                 catch (System.Exception e)
                 {
-                    // パース失敗時は空配列
-
-                    Debug.LogWarning($"ファイル読み込みに失敗しました: {e}");
-                    results = new List<ResultDataModel>();
+                    Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
                 }
             }
+
+            // ★直前のデータと同じ場合は保存しない
+            if (results.Count > 0)
+            {
+                var last = results[results.Count - 1];
+                if (IsSameResult(last, model))
+                {
+                    Debug.Log("同じリザルトデータのため保存しません");
+                    return;
+                }
+            }
+
+            // ★同じデータがすでに存在する場合は追加しない（全件チェック）
+            if (results.Exists(r => IsSameResult(r, model)))
+            {
+                Debug.Log("既に同じデータが保存されているため追加しません");
+                return;
+            }
+
             results.Add(model);
 
             // 配列として保存
             string arrayJson = JsonUtility.ToJson(new ResultDataList { Results = results }, true);
-            // JsonUtility.ToJsonで配列部分だけ抜き出す
             int start = arrayJson.IndexOf('[');
             int end = arrayJson.LastIndexOf(']');
             string onlyArray = arrayJson.Substring(start, end - start + 1);
 
-            // ディレクトリがなければ作成
             var dir = Path.GetDirectoryName(PersistentPath);
             if (!Directory.Exists(dir))
             {
-                try
-                {
-                    Directory.CreateDirectory(dir);
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"ディレクトリ作成に失敗しました: {e}");
-                }
+                try { Directory.CreateDirectory(dir!); }
+                catch (System.Exception e) { Debug.LogWarning($"ディレクトリ作成失敗: {e}"); }
             }
 
             try
@@ -122,7 +133,7 @@ namespace Shabon.Game
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"ファイル書き込みに失敗しました: {e}");
+                Debug.LogWarning($"ResultData.jsonの書き込みに失敗: {e}");
             }
         }
 
@@ -141,13 +152,28 @@ namespace Shabon.Game
             {
                 var model = results[results.Count - 1]; // 最新
                 FinalDirt = model.FinalDirt;
+                FinalScore = model.FinalScore; // ★追加
                 FinalCombo = model.FinalCombo;
                 FinalClapCount = model.FinalClapCount;
                 FinalDirtIncreaseCount = model.DirtValueCountSum;
                 FinalBreathTime = model.FinalBreathTime;
-                FinalBreathStrengthSum = model.Calorie; // Calorieは合計値
+                FinalBreathStrengthSum = model.Calorie; // ←ここはCalorieではなくbreathStrengthSumを保存したい場合は修正
+                FinalCalorie = model.Calorie;
                 BossBattleTime = model.BossBattleTime;
             }
+        }
+
+        // ★追加: データ比較用
+        private static bool IsSameResult(ResultDataModel a, ResultDataModel b)
+        {
+            return a.FinalDirt == b.FinalDirt &&
+                   a.FinalScore == b.FinalScore &&
+                   a.FinalCombo == b.FinalCombo &&
+                   a.FinalClapCount == b.FinalClapCount &&
+                   a.DirtValueCountSum == b.DirtValueCountSum &&
+                   Mathf.Approximately(a.FinalBreathTime, b.FinalBreathTime) &&
+                   Mathf.Approximately(a.Calorie, b.Calorie) &&
+                   Mathf.Approximately(a.BossBattleTime, b.BossBattleTime);
         }
     }
 }

@@ -34,6 +34,38 @@ namespace Shabon.Game
 
         private System.Collections.IEnumerator LoadRankingData(string path)
         {
+#if UNITY_EDITOR || UNITY_STANDALONE
+            // エディタ・PCビルド時は直接読み込み
+            string json = "";
+            try
+            {
+                json = System.IO.File.ReadAllText(path);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("RankingSceneData.json の読み込みに失敗しました: " + e);
+                yield break;
+            }
+            RankingSceneData rankingData = null!;
+            try
+            {
+                rankingData = JsonUtility.FromJson<RankingSceneData>(json);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"RankingSceneData.json のパースに失敗しました: {e}");
+                yield break;
+            }
+            breathTimeRankText.text = BuildRankingText(rankingData.FinalBreathTimeRanking);
+            bossBattleTimeRankText.text = BuildRankingText(rankingData.BossBattleTimeRanking);
+            calorieRankText.text = BuildRankingText(rankingData.CalorieRanking, "kcal");
+            dirtValueCountSumRankText.text = BuildRankingText(rankingData.DirtValueCountSumRanking, " times");
+            comboRankText.text = BuildRankingText(rankingData.FinalComboRanking);
+            dirtRankText.text = BuildRankingText(rankingData.FinalDirtRanking);
+            clapRankText.text = BuildRankingText(rankingData.FinalClapCountRanking);
+            yield break;
+#else
+            // モバイルやWebGLはUnityWebRequest
             string url = path;
 #if UNITY_ANDROID && !UNITY_EDITOR
             url = "jar:file://" + url;
@@ -45,11 +77,11 @@ namespace Shabon.Game
             url = "file:///" + url;
 #endif
 
-            using (var request = UnityWebRequest.Get(url))
+            using (var request = UnityEngine.Networking.UnityWebRequest.Get(url))
             {
                 yield return request.SendWebRequest();
 
-                if (request.result != UnityWebRequest.Result.Success)
+                if (request.result != UnityEngine.Networking.UnityWebRequest.Result.Success)
                 {
                     Debug.LogError("RankingSceneData.json の読み込みに失敗しました: " + request.error);
                     yield break;
@@ -75,6 +107,7 @@ namespace Shabon.Game
                 dirtRankText.text = BuildRankingText(rankingData.FinalDirtRanking);
                 clapRankText.text = BuildRankingText(rankingData.FinalClapCountRanking);
             }
+#endif
         }
 
         // RectTransformを上中央揃え＆Y位置を指定

@@ -24,42 +24,33 @@ public static class RankingSceneDataBuilder
             return;
         }
 
-        ResultDataListWrapper results = null!;
+        // JSON配列としてパース
+        List<ResultDataModel> results = null!;
         try
         {
-            results = JsonUtility.FromJson<ResultDataListWrapper>("{\"Results\":" + json + "}");
+            // JsonUtilityは配列直パースできないのでラップ
+            results = JsonUtility.FromJson<ResultDataListWrapper>("{\"Results\":" + json + "}").Results;
         }
         catch (System.Exception e)
         {
             Debug.LogError($"ResultData.json のパースに失敗しました: {e}");
             return;
         }
-        if (results == null || results.Results == null)
+        if (results == null)
         {
             Debug.LogError("ResultData.json のパースに失敗しました");
             return;
         }
 
-        var dirtList = results.Results.Select(r => r.FinalDirt).OrderBy(x => x).ToList();
-        var comboList = results.Results.Select(r => r.FinalCombo).Where(x => x != 0).OrderByDescending(x => x).ToList();
-        var clapList = results.Results.Select(r => r.FinalClapCount).Where(x => x != 0).OrderBy(x => x).ToList();
-        var dirtValueCountSumList = results.Results.Select(r => r.DirtValueCountSum).Where(x => x != 0).OrderBy(x => x).ToList();
-        var breathTimeList = results.Results.Select(r => r.FinalBreathTime).Where(x => x != 0f).OrderBy(x => x).ToList();
-        var calorieList = results.Results
-            .Select(r =>
-            {
-                float breathCalorie = (r.FinalBreathStrengthSum / 60f) * 2f;
-                float clapCalorie = r.FinalClapCount * 0.15f;
-                return breathCalorie + clapCalorie;
-            })
-            .Where(x => x != 0f)
-            .OrderByDescending(x => x)
-            .ToList();
-        var bossBattleTimeList = results.Results
-            .Select(r => r.BossBattleTime)
-            .Where(x => x > 0f) // 0より大きい値のみ
-            .OrderBy(x => x)
-            .ToList();
+        // 各項目ごとに値が存在するものだけ抽出・ソート
+        var dirtList = results.Where(r => r != null && HasField(r, "FinalDirt")).Select(r => r.FinalDirt).Distinct().OrderBy(x => x).ToList();
+
+        var comboList = results.Where(r => r != null && HasField(r, "FinalCombo")).Select(r => r.FinalCombo).Where(x => x != 0).Distinct().OrderByDescending(x => x).ToList();
+        var clapList = results.Where(r => r != null && HasField(r, "FinalClapCount")).Select(r => r.FinalClapCount).Where(x => x != 0).Distinct().OrderByDescending(x => x).ToList();
+        var dirtValueCountSumList = results.Where(r => r != null && HasField(r, "DirtValueCountSum")).Select(r => r.DirtValueCountSum).Where(x => x != 0).Distinct().OrderByDescending(x => x).ToList();
+        var breathTimeList = results.Where(r => r != null && HasField(r, "FinalBreathTime")).Select(r => r.FinalBreathTime).Where(x => x > 0f).Distinct().OrderByDescending(x => x).ToList();
+        var calorieList = results.Where(r => r != null && HasField(r, "Calorie")).Select(r => r.Calorie).Where(x => x > 0f).Distinct().OrderByDescending(x => x).ToList();
+        var bossBattleTimeList = results.Where(r => r != null && HasField(r, "BossBattleTime")).Select(r => r.BossBattleTime).Where(x => x > 0f).Distinct().OrderBy(x => x).ToList();
 
         var rankingData = new RankingSceneData
         {
@@ -83,6 +74,18 @@ public static class RankingSceneDataBuilder
         }
     }
 
+    // フィールドが存在するか判定
+    private static bool HasField(ResultDataModel model, string fieldName)
+    {
+        var field = typeof(ResultDataModel).GetField(fieldName);
+        if (field == null) return false;
+        // デフォルト値判定（int:0, float:0f）
+        var value = field.GetValue(model);
+        if (field.FieldType == typeof(int)) return true;
+        if (field.FieldType == typeof(float)) return true;
+        return value != null;
+    }
+
     [System.Serializable]
     private class ResultDataModel
     {
@@ -91,7 +94,7 @@ public static class RankingSceneDataBuilder
         public int FinalClapCount;
         public int DirtValueCountSum;
         public float FinalBreathTime;
-        public float FinalBreathStrengthSum;
+        public float Calorie;
         public float BossBattleTime;
     }
 
