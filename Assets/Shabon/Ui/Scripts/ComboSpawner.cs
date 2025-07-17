@@ -35,7 +35,6 @@ namespace Shabon.Ui
             rect.anchoredPosition = pos;
 
             // 出現モーション
-            combo.transform.localScale = Vector3.zero;
             LMotion.Create(Vector3.zero, Vector3.one, 0.5f)
                 .WithEase(Ease.OutBack) 
                 .BindToLocalScale(combo.transform) 

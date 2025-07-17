@@ -14,6 +14,12 @@ namespace Shabon.Ui
         [SerializeField] TMP_Text comboText = null!;    // コンボ数を記入するテキスト
         [SerializeField] TMP_Text comboEvaluationText = null!; // コンボの評価を表示する用のテキスト
 
+        // Instanciateして親オブジェクトのスケール反映された後にスケール0にする
+        void Start()
+        {
+            transform.localScale = Vector3.zero;
+        }
+
         // コンボの情報を設定
         public void SetCombo(int comboNum, ComboEvaluationGroup comboEvaluationGroup)
         {

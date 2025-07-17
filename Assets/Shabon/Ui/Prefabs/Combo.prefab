@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8280153100523938662}
   - component: {fileID: 1349201526433835821}
   - component: {fileID: 7767013606282324149}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CombNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7732260083773093851}
   - component: {fileID: 4305650503684473298}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Combo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 6633880976683509551}
   - component: {fileID: 2741831796840291966}
   - component: {fileID: 5943622283414467014}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ComboText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 8267408441865220191}
   - component: {fileID: 7445337459651804878}
   - component: {fileID: 6665862154943845975}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EvaluationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
