@@ -27,7 +27,8 @@ namespace Shabon.Game
         // 現在の状態
         public GameState CurrentState => _currentState;
         private GameState _currentState = GameState.None;
-
+        public int CurrentPhase => _currentPhase;
+        public int _currentPhase = -1;
 
         public double CurrentTime => _currentTime; // 現在の時間を公開
         public double LastPhaseUpdateTime => _phaseUpdatedTime; // 最後にフェーズが更新された時間
@@ -119,6 +120,8 @@ namespace Shabon.Game
         // フェーズ開始
         void StartPhase()
         {
+            _currentPhase = _gamePhases.CurrentPhaseNum;
+
             // フェーズ更新時間を更新
             _phaseUpdatedTime = _currentTime;
 

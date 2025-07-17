@@ -18,9 +18,16 @@ namespace Shabon.Ui
         [SerializeField] private float duration = 1;
         [SerializeField] private Ease ease;
 
-        public void SetPhase(int phaseNum)
+        public void SetPhase(string phaseStr)
         {
-            phaseText.text = "Phase " + phaseNum.ToString();
+            if (phaseStr == "Final")
+            {
+                phaseText.text = "Final Phase";
+            }
+            else
+            {
+                phaseText.text = "Phase " + phaseStr;
+            }
             LMotion.Create(1500f, 0f, duration)
                     .WithEase(ease)
                     .BindToAnchoredPosition3DY(view.GetComponent<RectTransform>());

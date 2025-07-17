@@ -8689,8 +8689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   view: {fileID: 206884022}
   phaseText: {fileID: 1381100796}
-  duration: 1
-  ease: 14
+  duration: 0.5
+  ease: 4
 --- !u!1 &1163247500
 GameObject:
   m_ObjectHideFlags: 0
@@ -10353,8 +10353,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294963130
+  m_fontColor: {r: 0.7311321, g: 0.9361437, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
