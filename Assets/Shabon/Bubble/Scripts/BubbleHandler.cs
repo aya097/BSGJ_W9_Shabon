@@ -50,7 +50,7 @@ namespace Shabon.Bubble
             // 同時に倒した数に応じてスコアを増加
             if (defeatedCount > 0)
             {
-                _scoreValue.Increase(defeatedCount * 10);
+                _scoreValue.Increase(defeatedCount * defeatedCount * 100);
             }
         }
     }

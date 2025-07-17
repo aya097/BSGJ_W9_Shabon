@@ -27,7 +27,8 @@ namespace Shabon.Game
         // 現在の状態
         public GameState CurrentState => _currentState;
         private GameState _currentState = GameState.None;
-
+        public int CurrentPhase => _currentPhase;
+        public int _currentPhase = -1;
 
         public double CurrentTime => _currentTime; // 現在の時間を公開
         public double LastPhaseUpdateTime => _phaseUpdatedTime; // 最後にフェーズが更新された時間
@@ -53,7 +54,8 @@ namespace Shabon.Game
 
         private List<PhaseEvent> _eventList = new();
         private List<IDisposable> _disposables = new();
-        private SoundToken? _bgmToken;
+        private SoundToken? _normalBgmToken;
+        private SoundToken? _bossBgmToken;
 
         private bool _isResultSaved = false; // 既に保存したかどうか
 
@@ -92,7 +94,7 @@ namespace Shabon.Game
             Observable.TimerFrame(1).
                 Subscribe(_ =>
                 {
-                    _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
+                    _normalBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
                 });
 
             // チュートリアル開始
@@ -120,6 +122,9 @@ namespace Shabon.Game
         // フェーズ開始
         void StartPhase()
         {
+            // 現在のフェーズ
+            _currentPhase = _gamePhases.CurrentPhaseNum;
+
             // フェーズ更新時間を更新
             _phaseUpdatedTime = _currentTime;
 
@@ -141,6 +146,17 @@ namespace Shabon.Game
                     }
                 })
             );
+
+            // ボス戦の場合
+            if (_currentPhase == _gamePhases.MaxPhaseNum - 1)
+            {
+                // サウンド止める
+                if (_normalBgmToken != null)
+                {
+                    SoundPlayerMono.Instance?.StopSound(_normalBgmToken);
+                }
+                _bossBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.Boss);
+            }
         }
 
         // 敵を生成するイベントを登録
@@ -159,6 +175,7 @@ namespace Shabon.Game
                 nextTime,
                 () =>
                 {
+                    Debug.Log($"{nextTime},バブルがスポーン");
                     _bubbleCount++;
                     // 一度の生成数だけバブルを生成
                     for (int i = 0; i < _gamePhases.GetCurrentPhaseData().BubblesPerSpawn; i++)
@@ -193,6 +210,11 @@ namespace Shabon.Game
                 finishedTime,
                 () =>
                 {
+
+
+                    Debug.Log($"{finishedTime},{_gamePhases.CurrentPhaseNum}");
+                    // 次のフェーズに
+
                     bool isEnd = _gamePhases.Proceed();
                     Observable.EveryUpdate()
                     .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })
@@ -345,9 +367,13 @@ namespace Shabon.Game
         void IDisposable.Dispose()
         {
             // BGMとめる
-            if (_bgmToken != null)
+            if (_normalBgmToken != null)
             {
-                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+                SoundPlayerMono.Instance?.StopSound(_normalBgmToken);
+            }
+            if (_bossBgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_bossBgmToken);
             }
 
             foreach (var disposable in _disposables)

@@ -61,7 +61,7 @@ namespace Shabon.Bubble
             base.Build(bubbleSetter, bubbleMono, bubbleData, bubbleViewMono);
 
             // Deadの処理
-            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
+            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo, bubbleData.BubbleScore);
             BubbleDeath bubbleDeath = new BubbleDeath(
                 BubbleType.Boss,
                 deathParams,
@@ -96,6 +96,7 @@ namespace Shabon.Bubble
 
                 bubbleView.PlayClap(() =>
                 {
+
                     if (bubbleMono.BossHitPoint == 0)
                     {
                         // ボス撃破時
@@ -104,6 +105,10 @@ namespace Shabon.Bubble
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         return;
                     }
+
+
+                    _bubbleCombo.Increase(isBossClapped: true);
+
                     bubbleMono.Resume();
                 });
 

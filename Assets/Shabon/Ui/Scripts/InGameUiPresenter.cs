@@ -11,6 +11,7 @@ using Shabon.Param;
 using Shabon.Score;
 using Shabon.Tutorial;
 using Shabon.Utility;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -45,7 +46,8 @@ namespace Shabon.Ui
             ResultViewMono resultViewMono,
             ScoreUiViewMono scoreUiViewMono,
             IInputManager inputManager,
-            TutorialViewMono tutorialViewMono
+            TutorialViewMono tutorialViewMono,
+            PhaseViewMono phaseViewMono
         )
         {
             // View -> Model
@@ -80,6 +82,25 @@ namespace Shabon.Ui
                     })
             );
 
+            // フェーズの切り替わり
+            _disposables.Add(
+                Observable.EveryValueChanged(phaseExecutor, p => p.CurrentPhase)
+                    .Subscribe(phase =>
+                    {
+                        if (phase >= 0)
+                        {
+                            if (phase + 1 == phaseExecutor.GamePhases.MaxPhaseNum)
+                            {
+                                phaseViewMono.SetPhase("Final");
+                            }
+                            else
+                            {
+                                phaseViewMono.SetPhase((phase + 1).ToString());
+                            }
+                        }
+                    })
+            );
+
             // 汚れ値をUiに反映
             _disposables.Add(
                 Observable.EveryValueChanged(dirtValue, d => d.DirtNum)
@@ -96,7 +117,7 @@ namespace Shabon.Ui
                 {
                     if (isCombo == false && bubbleCombo.ComboNum > 0)
                     {
-                        comboSpawner.Spawn(bubbleCombo.ComboNum);
+                        comboSpawner.Spawn(bubbleCombo.ComboNum, bubbleCombo.IsBossClapped);
                         bubbleCombo.Reset();
                     }
                 })

@@ -44,6 +44,8 @@ namespace Shabon.Sound
     {
         TitleBGM,
         InGameBGM,
+        Prologue,
+        Boss
     }
     public enum SeTypeEnum
     {
@@ -59,7 +61,9 @@ namespace Shabon.Sound
         BreathStrong,
         BreathWeak,
         // Clap
-        ClapFull
+        ClapFull,
+        Clap,
+        BubbleAttack
     }
 
 }

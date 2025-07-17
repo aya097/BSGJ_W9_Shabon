@@ -11,6 +11,8 @@ namespace Shabon.Game
     /// </summary>
     public class GamePhases : IGamePhases
     {
+        public int MaxPhaseNum => _gameRuleParam.GetGamePhaseDataList().Count();
+
         public int CurrentPhaseNum => _currentPhaseNum; // 現在のフェーズ番号
         private int _currentPhaseNum;
 
