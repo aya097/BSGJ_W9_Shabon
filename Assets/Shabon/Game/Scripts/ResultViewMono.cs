@@ -147,12 +147,17 @@ namespace Shabon.Game
             // タペストリー下ろす(テキストを見せ終わったら)
             Observable.Timer(TimeSpan.FromSeconds(filterTime + showingTime))
                 .Subscribe(_ =>
-                {
+                {   // タペストリー
                     LMotion.Create(1200f, 0f, downTime)
                         .WithEase(downEase)
                         .WithOnComplete(() => resultText.SetActive(true))   // テキスト表示
                         .BindToAnchoredPositionY(resultCanvas.GetComponent<RectTransform>())
                         .AddTo(this);
+                    // 後ろの文字消す
+                    winBackText.gameObject.SetActive(false);
+                    loseBackText.gameObject.SetActive(false);
+                    winText.gameObject.SetActive(false);
+                    loseText.gameObject.SetActive(false);
                 })
                 .AddTo(this);
         }
