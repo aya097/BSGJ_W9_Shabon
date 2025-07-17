@@ -94,23 +94,33 @@ namespace Shabon.Bubble
                 if (bubbleView is BossBubbleViewMono bossBubbleView)
                     bossBubbleView.SetBossHp(bubbleMono.BossHitPoint);
 
+                bool isBossDown = false;
+                if (bubbleMono.BossHitPoint == 0) isBossDown = true;
                 bubbleView.PlayClap(() =>
                 {
 
-                    if (bubbleMono.BossHitPoint == 0)
+                    if (isBossDown)
                     {
                         // ボス撃破時
                         float bossBattleTime = Time.time - PhaseExecutor.BossBattleStartTime;
                         ResultData.BossBattleTime = bossBattleTime;
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                        foreach (IBubbleMono bubble in _bubbleCluster.Bubbles)
+                        {
+                            if (bubble is ArmorBubbleMono armorBubble)
+                            {
+                                armorBubble.InvokeOnDead();
+                                continue;
+                            }
+                            bubble.InvokeOnClap(new OnClapArg(100.0f));
+                        }
                         return;
                     }
-
 
                     _bubbleCombo.Increase(isBossClapped: true);
 
                     bubbleMono.Resume();
-                });
+                }, isBossDown);
 
             };
         }

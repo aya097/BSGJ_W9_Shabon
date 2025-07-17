@@ -61,21 +61,33 @@ namespace Shabon.Bubble
         {
             // Breathをリセット
             //_breathDisposable?.Dispose();
+            if (!isDead)
+            {
+                Play(BubbleAnimationEnum.Clap);
+                Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                    .Subscribe(_ =>
+                    {
+                        Play(BubbleAnimationEnum.Idle);
+                        callback?.Invoke();
+                    }).AddTo(this);
 
-            Play(BubbleAnimationEnum.Clap);
-            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                return;
+            }
+
+            Play(BubbleAnimationEnum.Down);
+            Observable.Timer(TimeSpan.FromSeconds(2.8f))
                 .Subscribe(_ =>
                 {
-                    Play(BubbleAnimationEnum.Idle);
                     callback?.Invoke();
                 }).AddTo(this);
+            shadow.SetActive(false);
         }
 
         public void PlaySpawn(Action? callback = null)
         {
             Play(BubbleAnimationEnum.Spawn);
             spawnEffect.SetActive(true);
-            Observable.Timer(TimeSpan.FromSeconds(1.0f))
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>
                 {
                     spawnEffect.SetActive(false);
@@ -95,7 +107,16 @@ namespace Shabon.Bubble
             {
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
-                _bubbleOrnamentAnimator.SetTrigger(animation.ToString());
+                Debug.Log(animation.ToString());
+                if (animation == BubbleAnimationEnum.Down)
+                {
+                    Debug.Log("Boss撃破!!!!");
+                    _ornamentSpriteRenderer.enabled = false;
+                }
+                else
+                {
+                    _bubbleOrnamentAnimator.SetTrigger(animation.ToString());
+                }
             }
         }
 
