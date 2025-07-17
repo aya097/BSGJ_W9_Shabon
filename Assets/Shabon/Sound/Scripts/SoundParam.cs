@@ -59,7 +59,8 @@ namespace Shabon.Sound
         BreathStrong,
         BreathWeak,
         // Clap
-        ClapFull
+        ClapFull,
+        Clap
     }
 
 }

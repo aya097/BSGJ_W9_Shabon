@@ -32,3 +32,5 @@ MonoBehaviour:
     seType: 5
   - clip: {fileID: 8300000, guid: a9fd8a9fa1324412b86bf7e6d1a73d17, type: 3}
     seType: 6
+  - clip: {fileID: 8300000, guid: 4e2611ab9ed814435b88d5e1e18d071d, type: 3}
+    seType: 7

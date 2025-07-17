@@ -3,6 +3,7 @@
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
+using Shabon.Sound;
 using UnityEngine;
 using VContainer;
 
@@ -51,6 +52,9 @@ namespace Shabon.Clap
 
         private void Play()
         {
+            // 音声
+            SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.Clap);
+
             if (waveEnable)
             {
                 // 0から半径（全体の大きさに対する割合）まで変化
