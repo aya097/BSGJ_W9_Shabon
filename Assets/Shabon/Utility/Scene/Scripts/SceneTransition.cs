@@ -28,15 +28,27 @@ namespace Shabon.Utility
             {SceneName.ResultScene, "ResultScene"},
         };
 
-        public static void Transition(SceneName sceneName)
+        public static AsyncOperation Transition(SceneName sceneName, bool isAsync = false)
         {
             // SceneNameが登録されていなければ
             if (!_sceneDictionary.ContainsKey(sceneName))
             {
                 Debug.LogWarning($"{sceneName}は登録されていないシーンです。");
-                return;
+                return null!;
             }
-            SceneManager.LoadScene(_sceneDictionary[sceneName]);
+
+            // 非同期処理でのロードのみ戻り値返す
+            if (isAsync)
+            {
+                AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_sceneDictionary[sceneName]);
+                asyncOperation.allowSceneActivation = false;
+                return asyncOperation;
+            }
+            else
+            {
+                SceneManager.LoadScene(_sceneDictionary[sceneName]);
+                return null!;
+            }
         }
     }
 }

@@ -21,10 +21,12 @@ namespace Shabon.Title
         // ブレスした時間
         private float _breathContinuousTime = 0f;
         [Inject]
-        public TitlePresenter(TitleViewMono titleViewMono,
-        IInputManager inputManager,
-         TitleModel titleModel,
-          SelectLanguageViewMono selectLanguageViewMono)
+        public TitlePresenter(
+            TitleViewMono titleViewMono,
+            IInputManager inputManager,
+            TitleModel titleModel,
+            SelectLanguageViewMono selectLanguageViewMono,
+            AsyncSceneLoaderMono asyncSceneLoaderMono)
         {
             // Model -> View
             _disposables.Add(Observable.EveryValueChanged(titleModel, t => t.CurrentState)
@@ -55,7 +57,10 @@ namespace Shabon.Title
 
             // プロローグが終われば、シーン遷移
             titleViewMono.ProloguePlayableDirector.stopped +=
-                director => SceneTransition.Transition(SceneName.GameScene);
+                // director => SceneTransition.Transition(SceneName.GameScene);
+                director =>  asyncSceneLoaderMono.CanTransitionGameScene = true;
+;
+                
 
 
             // 入力取得

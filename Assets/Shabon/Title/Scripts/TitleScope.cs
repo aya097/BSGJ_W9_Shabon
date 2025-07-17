@@ -15,6 +15,7 @@ namespace Shabon.Title
         {
             // Model
             builder.Register<TitleModel>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<AsyncSceneLoaderMono>();
 
             // View
             builder.RegisterComponentInHierarchy<TitleViewMono>();
