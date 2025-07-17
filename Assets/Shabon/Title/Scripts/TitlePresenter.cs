@@ -37,8 +37,7 @@ namespace Shabon.Title
             TitleViewMono titleViewMono,
             IInputManager inputManager,
             TitleModel titleModel,
-            SelectLanguageViewMono selectLanguageViewMono,
-            AsyncSceneLoaderMono asyncSceneLoaderMono)
+            SelectLanguageViewMono selectLanguageViewMono)
         {
             // Model -> View
             _disposables.Add(Observable.EveryValueChanged(titleModel, t => t.CurrentState)
