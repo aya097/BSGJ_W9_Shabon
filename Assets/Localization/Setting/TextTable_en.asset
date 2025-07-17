@@ -67,10 +67,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 115541162778624
-    m_Localized: 'I am the master of this mansion, XX. Nice to meet you.
-
-      Please
-      protect this mansion from all kinds of filth!'
+    m_Localized: "I am the master of this mansion, BossCass. \nNice to meet you.\nPlease
+      protect this mansion from all kinds of filth!"
     m_Metadata:
       m_Items: []
   - m_Id: 8699891567484928
@@ -83,6 +81,58 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11613184942596096
     m_Localized: Bang!!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062829531136
+    m_Localized: It seems bubble have come!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114048
+    m_Localized: Wow! The mansion has become dirty...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114049
+    m_Localized: They've appeared again!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114050
+    m_Localized: This time, try driving them away with wind!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114051
+    m_Localized: Blow the wind into the bubble!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114052
+    m_Localized: Now! Breathe!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114053
+    m_Localized: Well done.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114054
+    m_Localized: It seems bubble have come again!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114055
+    m_Localized: "Attract the bubbles and clap them down in one go!\u3000"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114056
+    m_Localized: Hold your hands!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114057
+    m_Localized: ' Clap your hands!! Now!!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114058
+    m_Localized: ' Okay! We defeated it! We managed to keep clean!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11397062842114059
+    m_Localized: 'Keep up the good work! Ho ho ho! '
     m_Metadata:
       m_Items: []
   references:
