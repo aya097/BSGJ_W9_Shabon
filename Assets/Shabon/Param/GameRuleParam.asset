@@ -14,23 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePhaseDataList:
   - bubblesPerSpawn: 1
-    spawnBubbleInterval: 3
+    spawnBubbleInterval: 4
     spawningBubbles:
     - type: 1
       ratio: 4
     maxBabbleOnField: 30
-    phaseLengthTime: 30
-    phaseDelayTime: 5
+    phaseLengthTime: 20
+    phaseDelayTime: 0
   - bubblesPerSpawn: 1
-    spawnBubbleInterval: 2
+    spawnBubbleInterval: 3
     spawningBubbles:
     - type: 1
       ratio: 5
     - type: 2
       ratio: 2
-    maxBabbleOnField: 1
+    maxBabbleOnField: 30
     phaseLengthTime: 30
-    phaseDelayTime: 5
+    phaseDelayTime: 0
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
@@ -40,16 +40,16 @@ MonoBehaviour:
       ratio: 2
     - type: 3
       ratio: 1
-    maxBabbleOnField: 1
-    phaseLengthTime: 40
-    phaseDelayTime: 5
+    maxBabbleOnField: 30
+    phaseLengthTime: 30
+    phaseDelayTime: 0
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
     - type: 4
       ratio: 4
     maxBabbleOnField: 1
-    phaseLengthTime: 40
+    phaseLengthTime: 1
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
   bubbleCountScoreMultiplier: 1
