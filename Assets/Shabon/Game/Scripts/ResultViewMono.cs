@@ -7,6 +7,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using R3;
 using System;
+using UnityEngine.VFX;
 
 namespace Shabon.Game
 {
@@ -57,11 +58,14 @@ namespace Shabon.Game
 
         [Header("Clapアイコン")]
         [SerializeField] private GameObject clapIcon = null!;
+        [Header("エフェクト")]
+        [SerializeField] private VisualEffect shineEffect = null!;
 
 
         void Awake()
         {
             Close();
+            shineEffect.Stop();
             _fontSize = winText.fontSize;
         }
         public void Open(GameState gameState)
@@ -103,6 +107,7 @@ namespace Shabon.Game
 
             // ぼかしをかける
             filter.gameObject.SetActive(true);
+            shineEffect.Play();
             LMotion.Create(0.1f, 2f, filterTime)
                 .Bind(value =>
                 {
