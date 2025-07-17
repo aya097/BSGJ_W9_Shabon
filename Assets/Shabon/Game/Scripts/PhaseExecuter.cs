@@ -54,7 +54,8 @@ namespace Shabon.Game
 
         private List<PhaseEvent> _eventList = new();
         private List<IDisposable> _disposables = new();
-        private SoundToken? _bgmToken;
+        private SoundToken? _normalBgmToken;
+        private SoundToken? _bossBgmToken;
 
 
         [Inject]
@@ -92,7 +93,7 @@ namespace Shabon.Game
             Observable.TimerFrame(1).
                 Subscribe(_ =>
                 {
-                    _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
+                    _normalBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.InGameBGM) ?? null;
                 });
 
             // チュートリアル開始
@@ -120,6 +121,7 @@ namespace Shabon.Game
         // フェーズ開始
         void StartPhase()
         {
+            // 現在のフェーズ
             _currentPhase = _gamePhases.CurrentPhaseNum;
 
             // フェーズ更新時間を更新
@@ -143,6 +145,17 @@ namespace Shabon.Game
                     }
                 })
             );
+
+            // ボス戦の場合
+            if (_currentPhase == _gamePhases.MaxPhaseNum - 1)
+            {
+                // サウンド止める
+                if (_normalBgmToken != null)
+                {
+                    SoundPlayerMono.Instance?.StopSound(_normalBgmToken);
+                }
+                _bossBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.Boss);
+            }
         }
 
         // 敵を生成するイベントを登録
@@ -330,9 +343,13 @@ namespace Shabon.Game
         void IDisposable.Dispose()
         {
             // BGMとめる
-            if (_bgmToken != null)
+            if (_normalBgmToken != null)
             {
-                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+                SoundPlayerMono.Instance?.StopSound(_normalBgmToken);
+            }
+            if (_bossBgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_bossBgmToken);
             }
 
             foreach (var disposable in _disposables)
