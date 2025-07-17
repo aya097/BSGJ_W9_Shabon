@@ -15,8 +15,10 @@ MonoBehaviour:
   bgmInfo:
   - clip: {fileID: 8300000, guid: 7ec6e3c43dcdb42739e391a3793a2ca7, type: 3}
     bgmType: 0
-  - clip: {fileID: 8300000, guid: 50282353e2e0742e783e58927be17677, type: 3}
+  - clip: {fileID: 8300000, guid: 42414063e056c4c41a6bc0ff8fd35eb9, type: 3}
     bgmType: 1
+  - clip: {fileID: 8300000, guid: 50282353e2e0742e783e58927be17677, type: 3}
+    bgmType: 2
   seInfo:
   - clip: {fileID: 8300000, guid: e3301bc16ab5e4c0d86c2e48fa4d03ff, type: 3}
     seType: 0

@@ -43,7 +43,8 @@ namespace Shabon.Sound
     public enum BgmTypeEnum
     {
         TitleBGM,
-        InGameBGM,
+        PrologueBGM,
+        InGameBGM
     }
     public enum SeTypeEnum
     {
