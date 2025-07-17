@@ -11,6 +11,7 @@ using Shabon.Param;
 using Shabon.Score;
 using Shabon.Tutorial;
 using Shabon.Utility;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -45,7 +46,8 @@ namespace Shabon.Ui
             ResultViewMono resultViewMono,
             ScoreUiViewMono scoreUiViewMono,
             IInputManager inputManager,
-            TutorialViewMono tutorialViewMono
+            TutorialViewMono tutorialViewMono,
+            PhaseViewMono phaseViewMono
         )
         {
             // View -> Model
@@ -77,6 +79,25 @@ namespace Shabon.Ui
                     {
                         // スコア設定
                         scoreUiViewMono.SetScore(value, scoreValue.IsIncrease);
+                    })
+            );
+
+            // フェーズの切り替わり
+            _disposables.Add(
+                Observable.EveryValueChanged(phaseExecutor, p => p.CurrentPhase)
+                    .Subscribe(phase =>
+                    {
+                        if (phase >= 0)
+                        {
+                            if (phase + 1 == phaseExecutor.GamePhases.MaxPhaseNum)
+                            {
+                                phaseViewMono.SetPhase("Final");
+                            }
+                            else
+                            {
+                                phaseViewMono.SetPhase((phase + 1).ToString());
+                            }
+                        }
                     })
             );
 
