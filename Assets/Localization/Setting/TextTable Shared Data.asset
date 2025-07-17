@@ -64,15 +64,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 115541162778624
-    m_Key: TitleScene/TitleCanvas/TitlePicture
+    m_Key: Prologue_BossCass_selfintro
     m_Metadata:
       m_Items: []
   - m_Id: 8699891567484928
-    m_Key: TitleScene/PrologueCanvas/prologue_scene_04/Text
+    m_Key: Prologue_Player_nodding
     m_Metadata:
       m_Items: []
   - m_Id: 8700666448371712
-    m_Key: TitleScene/PrologueCanvas/prologue_scene_08/Text
+    m_Key: Prologue_BossCass_speak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11613184942596096
+    m_Key: prologue_SE_door_open
     m_Metadata:
       m_Items: []
   - m_Id: 11397062829531136
