@@ -67,13 +67,6 @@ namespace Shabon.Title
         // プロローグを再生するメソッド
         public void StartPrologue()
         {
-            // BGM止める
-            if (_bgmToken != null)
-            {
-                SoundPlayerMono.Instance?.StopSound(_bgmToken);
-                _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.PrologueBGM) ?? null!; // prologueのBGM再生
-            }
-
             titleBack.SetActive(false);
             titleLogo.SetActive(false);
 
