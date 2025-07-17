@@ -63,7 +63,8 @@ namespace Shabon.Sound
         BreathWeak,
         // Clap
         ClapFull,
-        Clap
+        Clap,
+        BubbleAttack
     }
 
 }

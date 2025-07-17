@@ -191,6 +191,8 @@ namespace Shabon.Bubble
         //攻撃するときのアニメーションを再生するメソッド
         public virtual void PlayAttack(Action? callback = null)
         {
+            // 再生
+            SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.BubbleAttack);
             // Breathをリセット
             _breathDisposable?.Dispose();
             Play(BubbleAnimationEnum.Attack);
