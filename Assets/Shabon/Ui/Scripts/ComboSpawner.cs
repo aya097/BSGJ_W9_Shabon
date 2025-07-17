@@ -26,7 +26,7 @@ namespace Shabon.Ui
         }
 
         // コンボ
-        public void Spawn(int comboNum)
+        public void Spawn(int comboNum, bool isBossClapped)
         {   
             // 画面のランダムな位置にコンボを表示
             var pos = GetRandomPosition();
@@ -41,8 +41,8 @@ namespace Shabon.Ui
                 .AddTo(combo); 
 
             // コンボ数に対応した評価を取得
-            ComboEvaluationGroup comboEvaluationGroup = GetComboEvaluationGroup(comboNum);
-            combo.SetCombo(comboNum, comboEvaluationGroup);   // コンボ数を設定
+            ComboEvaluationGroup comboEvaluationGroup = GetComboEvaluationGroup(comboNum, isBossClapped);
+            combo.SetCombo(comboNum, comboEvaluationGroup, isBossClapped);   // コンボ数を設定
 
             // 消滅モーション
             LMotion.Create(Vector3.one, Vector3.zero, 0.4f)
@@ -70,10 +70,19 @@ namespace Shabon.Ui
         /// コンボ数に対応した評価テキスト(ex. Good)を変えずメソッド
         /// </summary>
         /// <param name="comboNum"></param>
-        private ComboEvaluationGroup GetComboEvaluationGroup(int comboNum)
+        private ComboEvaluationGroup GetComboEvaluationGroup(int comboNum, bool isBossClapped)
         {
-            ComboEvaluationGroup comboEvaluationGroup
-                = _comboViewParam.ComboEvaluationGroups
+            ComboEvaluationGroup comboEvaluationGroup;
+            if (isBossClapped)
+            {
+                comboEvaluationGroup = _comboViewParam.ComboEvaluationGroups
+                    .OrderByDescending(cep => cep.ComboEvaluation)
+                    .FirstOrDefault();
+
+                return comboEvaluationGroup;
+            }
+
+            comboEvaluationGroup = _comboViewParam.ComboEvaluationGroups
                     .Where(cep => cep.ComboNum <= comboNum)
                     .OrderByDescending(cep => cep.ComboNum)
                     .FirstOrDefault();

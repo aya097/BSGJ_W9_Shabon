@@ -96,7 +96,7 @@ namespace Shabon.Ui
                 {
                     if (isCombo == false && bubbleCombo.ComboNum > 0)
                     {
-                        comboSpawner.Spawn(bubbleCombo.ComboNum);
+                        comboSpawner.Spawn(bubbleCombo.ComboNum, bubbleCombo.IsBossClapped);
                         bubbleCombo.Reset();
                     }
                 })

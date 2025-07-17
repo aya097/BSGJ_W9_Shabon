@@ -2,6 +2,7 @@
 
 using TMPro;
 using UnityEngine;
+using Shabon.Ui;
 
 
 namespace Shabon.Ui
@@ -13,6 +14,7 @@ namespace Shabon.Ui
     {
         [SerializeField] TMP_Text comboText = null!;    // コンボ数を記入するテキスト
         [SerializeField] TMP_Text comboEvaluationText = null!; // コンボの評価を表示する用のテキスト
+        [SerializeField] TMP_Text rawComboText = null!; // まんまcomboとかかれたテキスト
 
         // Instanciateして親オブジェクトのスケール反映された後にスケール0にする
         void Start()
@@ -21,11 +23,20 @@ namespace Shabon.Ui
         }
 
         // コンボの情報を設定
-        public void SetCombo(int comboNum, ComboEvaluationGroup comboEvaluationGroup)
+        public void SetCombo(int comboNum, ComboEvaluationGroup comboEvaluationGroup, bool isBossClapped)
         {
             comboEvaluationText.text = comboEvaluationGroup.ComboEvaluation.ToString() + '!';
             comboEvaluationText.color = comboEvaluationGroup.TextColor;
-            comboText.text = $"{comboNum}";
+            if (isBossClapped)
+            {
+                comboText.text = "";
+                rawComboText.text = "";
+            }
+            else
+            {
+                comboText.text = $"{comboNum}";
+                rawComboText.text = "combo";
+            }
         }
 
     }
