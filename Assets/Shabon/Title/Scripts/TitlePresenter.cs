@@ -68,9 +68,11 @@ namespace Shabon.Title
             // View -> Model
 
             // プロローグが終われば、シーン遷移
-            titleViewMono.ProloguePlayableDirector.stopped +=
-                // director => SceneTransition.Transition(SceneName.GameScene);
-                director =>  asyncSceneLoaderMono.CanTransitionGameScene = true;
+            titleViewMono.ProloguePlayableDirector.stopped += director =>
+                {
+                    SceneTransition.Transition(SceneName.GameScene);
+                    // asyncSceneLoaderMono.LoadGameScene();
+                };
 
 
             // 入力取得
