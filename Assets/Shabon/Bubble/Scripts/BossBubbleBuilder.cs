@@ -104,6 +104,15 @@ namespace Shabon.Bubble
                         float bossBattleTime = Time.time - PhaseExecutor.BossBattleStartTime;
                         ResultData.BossBattleTime = bossBattleTime;
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
+                        foreach (IBubbleMono bubble in _bubbleCluster.Bubbles)
+                        {
+                            if (bubble is ArmorBubbleMono armorBubble)
+                            {
+                                armorBubble.InvokeOnDead();
+                                continue;
+                            }
+                            bubble.InvokeOnClap(new OnClapArg(100.0f));
+                        }
                         return;
                     }
 
