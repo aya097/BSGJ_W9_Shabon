@@ -65,7 +65,7 @@ namespace Shabon.Game
         void Awake()
         {
             Close();
-            shineEffect.Stop();
+            shineEffect.gameObject.SetActive(false);
             _fontSize = winText.fontSize;
         }
         public void Open(GameState gameState)
@@ -107,7 +107,7 @@ namespace Shabon.Game
 
             // ぼかしをかける
             filter.gameObject.SetActive(true);
-            shineEffect.Play();
+            shineEffect.gameObject.SetActive(true);
             LMotion.Create(0.1f, 2f, filterTime)
                 .Bind(value =>
                 {
