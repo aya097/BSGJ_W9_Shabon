@@ -59,6 +59,7 @@ namespace Shabon.Title
             windIcon.gameObject.SetActive(false);
             japaneseFilter.SetActive(false);
             englishFilter.SetActive(false);
+            filterView.SetActive(false);
         }
 
         public void SetBreath(float breath)
