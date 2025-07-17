@@ -13,10 +13,13 @@ namespace Shabon.Bubble
         public int ComboNum => _comboCount;
         public int MaxNum => _comboMax;
         public bool IsCombo => _isCombo;
+        public bool IsBossClapped => _isBossClapped;
+
         private int _comboCount = 0;
         private int _comboMax = 0;
-        public bool _isCombo = false;
-        private float _comboActiveTime = 0.1f; // コンボ判定は一瞬だと思うので0.1sで設定
+        private bool _isCombo = false;
+        private bool _isBossClapped = false;
+        private float _comboActiveTime = 0.3f; // コンボ判定は一瞬だと思うので0.1sで設定
         private float _currentTime = 0;
 
         void ITickable.Tick()
@@ -33,12 +36,13 @@ namespace Shabon.Bubble
         /// <summary>
         /// コンボを加算
         /// </summary>
-        public void Increase()
+        public void Increase(bool isBossClapped = false)
         {
             // コンボ中でなければ、コンボを開始
             if (_isCombo == false) _isCombo = true;
 
             _comboCount++;
+            if (isBossClapped) _isBossClapped = true;
 
             // 最大コンボ数の取得
             if (_comboCount >= _comboMax)
@@ -54,6 +58,7 @@ namespace Shabon.Bubble
         {
             _currentTime = 0;
             _comboCount = 0;
+            _isBossClapped = false;
         }
     }
 

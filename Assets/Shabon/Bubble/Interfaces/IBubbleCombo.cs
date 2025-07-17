@@ -7,7 +7,8 @@ namespace Shabon.Bubble
         int ComboNum { get; }
         int MaxNum { get; }
         bool IsCombo { get; }
-        void Increase();
+        bool IsBossClapped { get; }
+        void Increase(bool isBossClapped=false);
         void Reset();
     }
 }

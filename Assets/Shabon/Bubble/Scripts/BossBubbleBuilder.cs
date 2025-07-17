@@ -106,6 +106,7 @@ namespace Shabon.Bubble
                         return;
                     }
 
+                    _bubbleCombo.Increase(isBossClapped:true);
                     bubbleMono.Resume();
                 });
 
