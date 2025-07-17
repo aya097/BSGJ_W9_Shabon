@@ -45,7 +45,7 @@ namespace Shabon.Bubble
         {
             base.Build(bubbleSetter, bubbleMono, bubbleData, bubbleViewMono);
 
-            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
+            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo, bubbleData.BubbleScore);
             BubbleDeath bubbleDeath = new BubbleDeath(
                 BubbleType.Armor,
                 deathParams,
@@ -79,11 +79,11 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnClap += _ =>
             {
-                bubbleView.SetHighlight(HighLightType.Claped); 
+                bubbleView.SetHighlight(HighLightType.Claped);
                 bubbleView.PlayClap(() =>
                 {
                     bubbleView.SetHighlight(HighLightType.Guard);
-                 }, false);
+                }, false);
             };
         }
 
