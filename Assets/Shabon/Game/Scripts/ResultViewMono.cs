@@ -7,6 +7,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using R3;
 using System;
+using UnityEngine.VFX;
 
 namespace Shabon.Game
 {
@@ -57,15 +58,31 @@ namespace Shabon.Game
 
         [Header("Clapアイコン")]
         [SerializeField] private GameObject clapIcon = null!;
+        [Header("エフェクト")]
+        [SerializeField] private VisualEffect shineEffect = null!;
 
 
         void Awake()
         {
             Close();
+            shineEffect.gameObject.SetActive(false);
             _fontSize = winText.fontSize;
         }
         public void Open(GameState gameState)
         {
+            // ★ここで保存
+            ResultData.SaveResults(
+                ResultData.FinalDirt,
+                ResultData.FinalScore,
+                ResultData.FinalCombo,
+                ResultData.FinalClapCount,
+                ResultData.FinalDirtIncreaseCount,
+                ResultData.FinalBreathTime,
+                ResultData.FinalBreathStrengthSum,
+                ResultData.BossBattleTime
+            );
+            Shabon.Score.RankingScore.SaveScore(ResultData.FinalScore);
+
             SetData();
 
             float filterTime = 0;
@@ -103,6 +120,7 @@ namespace Shabon.Game
 
             // ぼかしをかける
             filter.gameObject.SetActive(true);
+            shineEffect.gameObject.SetActive(true);
             LMotion.Create(0.1f, 2f, filterTime)
                 .Bind(value =>
                 {
@@ -147,12 +165,17 @@ namespace Shabon.Game
             // タペストリー下ろす(テキストを見せ終わったら)
             Observable.Timer(TimeSpan.FromSeconds(filterTime + showingTime))
                 .Subscribe(_ =>
-                {
+                {   // タペストリー
                     LMotion.Create(1200f, 0f, downTime)
                         .WithEase(downEase)
                         .WithOnComplete(() => resultText.SetActive(true))   // テキスト表示
                         .BindToAnchoredPositionY(resultCanvas.GetComponent<RectTransform>())
                         .AddTo(this);
+                    // 後ろの文字消す
+                    winBackText.gameObject.SetActive(false);
+                    loseBackText.gameObject.SetActive(false);
+                    winText.gameObject.SetActive(false);
+                    loseText.gameObject.SetActive(false);
                 })
                 .AddTo(this);
         }
@@ -178,15 +201,12 @@ namespace Shabon.Game
             // ResultDataからデータを取得してUIに表示
             scoreText.text = $"{ResultData.FinalScore}";
             dirtText.text = $"{ResultData.FinalDirt}";
+            dirtDecreaseCountText.text = $"{ResultData.FinalDirtIncreaseCount}回";
+            bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";
             comboText.text = $"{ResultData.FinalCombo}コンボ";
             clapCountText.text = $"{ResultData.FinalClapCount}回";
-            dirtDecreaseCountText.text = $"{ResultData.FinalDirtDecreaseCount}回";
-            // breathTimeText.text = $"{(int)ResultData.FinalBreathTime}秒";
-            // calorieText.text = $"{ResultData.FinalBreathStrengthSum:F2}";
-            // bossBattleTimeText.text = $"{(int)ResultData.BossBattleTime}秒";
             breathTimeText.text = $"{ResultData.FinalBreathTime:0.0}秒";
-            calorieText.text = $"{ResultData.FinalBreathStrengthSum * 2f:0.0} kcal";
-            bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";
+            calorieText.text = $"{ResultData.FinalCalorie:0.0} kcal";
         }
     }
 }

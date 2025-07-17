@@ -52,9 +52,9 @@ namespace Shabon.Game
                 if (timer > switchInterval)
                 {
                     timer = 0f;
-                    bool toRight = nextRight;
-                    nextRight = !nextRight;
-                    SlideToPanel((currentIndex + 1) % rankingPanels.Length, toRight);
+                    // 必ず右方向のみ
+                    int nextIndex = (currentIndex + 1) % rankingPanels.Length;
+                    SlideToPanel(nextIndex, true);
                 }
 
 #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
@@ -66,27 +66,22 @@ namespace Shabon.Game
                     else if (touch.phase == TouchPhase.Ended)
                     {
                         float dx = touch.position.x - touchStart.x;
-                        if (Mathf.Abs(dx) > 100)
+                        if (dx < -100) // 右スワイプのみ有効
                         {
-                            bool toRight = dx < 0;
-                            nextRight = !toRight;
-                            SlideToPanel((currentIndex + (toRight ? 1 : -1) + rankingPanels.Length) % rankingPanels.Length, toRight);
+                            int nextIndex = (currentIndex + 1) % rankingPanels.Length;
+                            SlideToPanel(nextIndex, true);
                             timer = 0f;
                         }
                     }
                 }
                 if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    nextRight = false;
-                    SlideToPanel((currentIndex + 1) % rankingPanels.Length, true);
+                    int nextIndex = (currentIndex + 1) % rankingPanels.Length;
+                    SlideToPanel(nextIndex, true);
                     timer = 0f;
                 }
-                if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    nextRight = true;
-                    SlideToPanel((currentIndex - 1 + rankingPanels.Length) % rankingPanels.Length, false);
-                    timer = 0f;
-                }
+                // 左矢印は無効化
+                // if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow)) { ... } ←削除またはコメントアウト
 #endif
             }
             else

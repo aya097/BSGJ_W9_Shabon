@@ -2,6 +2,7 @@
 
 using System;
 using Shabon.Score;
+using UnityEngine.SocialPlatforms;
 
 namespace Shabon.Bubble
 {
@@ -24,14 +25,17 @@ namespace Shabon.Bubble
         public IScoreValue Score { get; private set; }
         public IDirtValue Dirt { get; private set; }
         public IBubbleCombo Combo { get; private set; }
+        public int ScoreNum { get; private set; }
 
         public DeathParams(IScoreValue scoreValue,
             IDirtValue dirtValue,
-            IBubbleCombo bubbleCombo)
+            IBubbleCombo bubbleCombo,
+            int score)
         {
             Score = scoreValue;
             Dirt = dirtValue;
             Combo = bubbleCombo;
+            ScoreNum = score;
         }
     }
 
@@ -106,7 +110,7 @@ namespace Shabon.Bubble
 
         public void Clap()
         {
-            _deathParams.Score.Increase(100);   // todo 仮
+            _deathParams.Score.Increase(_deathParams.ScoreNum);   // todo 仮
 
             // DirtValueを減らす
             // DirtValueを減らす（増加はしない！）
@@ -129,12 +133,6 @@ namespace Shabon.Bubble
         }
         public void Chain()
         {
-            // スコア増やす and コンボ and 連鎖
-            _deathParams.Score.Increase(100);   // todo 仮
-
-            // コンボ増加
-            _deathParams.Combo.Increase();
-
             // destroy
             _destroyBubble.Invoke();
         }

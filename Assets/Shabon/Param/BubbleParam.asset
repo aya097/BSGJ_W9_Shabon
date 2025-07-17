@@ -29,7 +29,7 @@ MonoBehaviour:
         forwardVelocity: 0.3
         zoneWaitingTime: 2
         increasingDirtValue: 1
-        bubbleScore: 100
+        bubbleScore: 500
     - rid: 7383347596459508406
       type: {class: BubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
       data:
@@ -39,7 +39,7 @@ MonoBehaviour:
         forwardVelocity: 0.5
         zoneWaitingTime: 2
         increasingDirtValue: 1
-        bubbleScore: 200
+        bubbleScore: 750
     - rid: 7383347597461684939
       type: {class: BossBubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
       data:
@@ -47,21 +47,21 @@ MonoBehaviour:
         bubblePrefab: {fileID: 396618372284550946, guid: 07111e4fda58c4f789c09223b132b61b, type: 3}
         bubbleSpawnedArea: 1
         forwardVelocity: 0.2
-        zoneWaitingTime: 2
-        increasingDirtValue: 1
-        bubbleScore: 2000
-        bossHitPoint: 6
+        zoneWaitingTime: 1
+        increasingDirtValue: 3
+        bubbleScore: 10000
+        bossHitPoint: 3
         bubbleSpawnInterval: 10
-        bubbleSpawnNum: 2
+        bubbleSpawnNum: 5
     - rid: 8908890939933851725
       type: {class: ArmorBubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
       data:
         bubbleType: 3
         bubblePrefab: {fileID: -4593445064888892722, guid: 0afc96797dca2c041aea38182f4a5a7c, type: 3}
         bubbleSpawnedArea: 0
-        forwardVelocity: 0.1
+        forwardVelocity: 0.15
         zoneWaitingTime: 2
         increasingDirtValue: 1
-        bubbleScore: 100
-        requiredBreathTime: 3
+        bubbleScore: 1000
+        requiredBreathTime: 2
         breathResetInterval: 1

@@ -57,7 +57,7 @@ namespace Shabon.Bubble
             IBubbleMover bubbleMover = GetBubbleMover(bubbleMono.Transform, bubbleData);
 
             // Deadの処理
-            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo);
+            DeathParams deathParams = new DeathParams(_scoreValue, _dirtValue, _bubbleCombo, bubbleData.BubbleScore);
             BubbleDeath bubbleDeath = new BubbleDeath(
                 BubbleType.Normal,
                 deathParams,

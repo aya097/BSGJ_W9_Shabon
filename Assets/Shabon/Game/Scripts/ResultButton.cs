@@ -52,25 +52,21 @@ namespace Shabon.Game
         {
             int dirtValueCountSum = _dirtValue.IncreaseCount; // 増加した回数
             ResultData.SaveResults(
-                _dirtValue.DirtNum,                       // FinalDirt
-                _bubbleCombo.ComboNum,                    // FinalCombo
-                _clapModel.ClapCount,                     // FinalClapCount
-                dirtValueCountSum,                        // DirtValueCountSum（増加回数）
-                _breathModel.TotalBreathTime,             // FinalBreathTime
-                _breathModel.TotalBreathStrength,         // Calorie計算用
-                0                                         // BossBattleTime
+                _dirtValue.DirtNum,                // dirt
+                _scoreValue.ScoreNum,              // score
+                _bubbleCombo.ComboNum,             // combo
+                _clapModel.ClapCount,              // clapCount
+                dirtValueCountSum,                 // dirtValueCountSum
+                _breathModel.TotalBreathTime,      // breathTime
+                _breathModel.TotalBreathStrength,  // breathStrengthSum
+                ResultData.BossBattleTime          // bossBattleTime
             );
 
             RankingScore.SaveScore(_scoreValue.ScoreNum);
 
             // ★ランキングデータも自動生成
-            string resultPath = Path.Combine(Application.persistentDataPath, "ResultData.json");
+            string resultPath = Path.Combine(Application.streamingAssetsPath, "ResultData.json");
             string rankingPath = Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
-            if (!File.Exists(resultPath))
-            {
-                // 初回はStreamingAssetsから
-                resultPath = Path.Combine(Application.streamingAssetsPath, "ResultData.json");
-            }
             RankingSceneDataBuilder.Generate(resultPath, rankingPath);
 
             SceneManager.LoadScene("ResultScene");

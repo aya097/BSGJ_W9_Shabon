@@ -9,9 +9,9 @@ public class RankingSceneDataGenerator
     [MenuItem("Tools/Generate RankingSceneData")]
     public static void GenerateRankingSceneData()
     {
-        // ResultData.jsonのパスを定義
-        string resultPath = Path.Combine(Application.dataPath, "Shabon/Game/Scripts/ResultData.json");
-        string rankingPath = Path.Combine(Application.dataPath, "Ranking/Scripts/RankingSceneData.json");
+        string resultPath = Path.Combine(Application.streamingAssetsPath, "ResultData.json");
+        string rankingPath = Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
+        RankingSceneDataBuilder.Generate(resultPath, rankingPath);
 
         if (!File.Exists(resultPath))
         {
