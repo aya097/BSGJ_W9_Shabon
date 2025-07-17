@@ -52,7 +52,7 @@ MonoBehaviour:
         bubbleScore: 10000
         bossHitPoint: 3
         bubbleSpawnInterval: 10
-        bubbleSpawnNum: 3
+        bubbleSpawnNum: 5
     - rid: 8908890939933851725
       type: {class: ArmorBubbleData, ns: Shabon.Bubble, asm: Assembly-CSharp}
       data:
