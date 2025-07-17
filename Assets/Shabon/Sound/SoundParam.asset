@@ -17,6 +17,10 @@ MonoBehaviour:
     bgmType: 0
   - clip: {fileID: 8300000, guid: 50282353e2e0742e783e58927be17677, type: 3}
     bgmType: 1
+  - clip: {fileID: 8300000, guid: d874fdfb0b92a43e4a098b2ebff818d4, type: 3}
+    bgmType: 2
+  - clip: {fileID: 8300000, guid: 4a86e2be13a784857b55bc09006b195e, type: 3}
+    bgmType: 3
   seInfo:
   - clip: {fileID: 8300000, guid: e3301bc16ab5e4c0d86c2e48fa4d03ff, type: 3}
     seType: 0
@@ -32,3 +36,7 @@ MonoBehaviour:
     seType: 5
   - clip: {fileID: 8300000, guid: a9fd8a9fa1324412b86bf7e6d1a73d17, type: 3}
     seType: 6
+  - clip: {fileID: 8300000, guid: 4e2611ab9ed814435b88d5e1e18d071d, type: 3}
+    seType: 7
+  - clip: {fileID: 8300000, guid: ffe446f3ad2404070a8fc84db742d0e8, type: 3}
+    seType: 0

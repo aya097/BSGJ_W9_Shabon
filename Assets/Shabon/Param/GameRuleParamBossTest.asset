@@ -16,10 +16,19 @@ MonoBehaviour:
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
+    - type: 1
+      ratio: 1
+    maxBabbleOnField: 1
+    phaseLengthTime: 2
+    phaseDelayTime: 0
+  - bubblesPerSpawn: 1
+    spawnBubbleInterval: 2
+    spawningBubbles:
     - type: 4
       ratio: 1
     maxBabbleOnField: 1
-    phaseLengthTime: 30
+    phaseLengthTime: 100
     phaseDelayTime: 0
   sumBubbleScoreMultiplier: 1
   bubbleCountScoreMultiplier: 1
+  maxDirtValue: 10
