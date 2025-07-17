@@ -16,6 +16,7 @@ namespace Shabon.Bubble
         Breath,
         Attack,
         Spawn, // ボスバブル専用
+        Down,
         Guard // 鎧バブル専用
     }
     public enum HighLightType
