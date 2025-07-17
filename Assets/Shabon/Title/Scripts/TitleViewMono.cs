@@ -34,7 +34,8 @@ namespace Shabon.Title
 
 
         // BGM停止用
-        private SoundToken _bgmToken = null!;
+        private SoundToken _titleBgmToken = null!;
+        private SoundToken _prologueBgmToken = null!;
 
         // バブルアニメーション用
         private Vector3 _originalBubble0Position;
@@ -42,7 +43,7 @@ namespace Shabon.Title
         void Start()
         {
             // BGM再生
-            _bgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.TitleBGM) ?? null!;
+            _titleBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.TitleBGM) ?? null!;
 
             // バブルのアニメーション
             _originalBubble0Position = bubble0.GetComponent<RectTransform>().anchoredPosition;
@@ -79,14 +80,26 @@ namespace Shabon.Title
             // プロローグの準備
             prologue.SetActive(true);
             prologuePlayableDirector.Play();
+
+            // BGM切り替え
+            if (_titleBgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_titleBgmToken);
+            }
+            _prologueBgmToken = SoundPlayerMono.Instance?.PlayBgm(BgmTypeEnum.Prologue) ?? null!;
+
         }
 
         void OnDestroy()
         {
             // BGM止める
-            if (_bgmToken != null)
+            if (_titleBgmToken != null)
             {
-                SoundPlayerMono.Instance?.StopSound(_bgmToken);
+                SoundPlayerMono.Instance?.StopSound(_titleBgmToken);
+            }
+            if (_prologueBgmToken != null)
+            {
+                SoundPlayerMono.Instance?.StopSound(_prologueBgmToken);
             }
         }
     }
