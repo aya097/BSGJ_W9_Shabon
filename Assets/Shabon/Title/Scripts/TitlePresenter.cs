@@ -30,7 +30,7 @@ namespace Shabon.Title
         // ブレスした時間
         private float _breathContinuousTime = 0f;
         private List<Command> _skipInputCommand = new List<Command>();
-        private readonly List<Command> _skipCorrectCommand = new List<Command>() { Command.Clap, Command.Breath, Command.Clap}; //skipのコマンド
+        private readonly List<Command> _skipCorrectCommand = new List<Command>() { Command.Clap, Command.Breath, Command.Clap }; //skipのコマンド
         private bool _isStartBreath = false;
 
         [Inject]
@@ -87,8 +87,12 @@ namespace Shabon.Title
                     {
                         case TitleState.Start:
                             // Clapされればゲーム開始
-                            if (isClap) titleModel.StartGame();
-                            
+                            if (isClap)
+                            {
+                                SoundPlayerMono.Instance?.PlaySe(SeTypeEnum.Clap);
+                                titleModel.StartGame();
+                            }
+
                             break;
 
                         case TitleState.Language:
@@ -143,7 +147,7 @@ namespace Shabon.Title
                             {
                                 _skipInputCommand.Clear();
                             }
-                            
+
                             break;
 
                     }
