@@ -68,6 +68,7 @@ namespace Ranking
                 if (_currentLanguage == Language.Japanese)
                 {
                     SetLanguage(Language.English);
+                    targetIndex = _currentIndex;
                 }
                 else
                 {
