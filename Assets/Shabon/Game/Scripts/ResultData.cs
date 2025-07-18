@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 namespace Shabon.Game
 {
@@ -36,10 +37,6 @@ namespace Shabon.Game
         public static float FinalBreathStrengthSum { get; set; }
         public static float FinalCalorie { get; set; }
         public static float BossBattleTime { get; set; }
-
-        // ↓必ずStreamingAssetsに保存
-        private static readonly string PersistentPath = Application.dataPath + "/StreamingAssets/ResultData.json";
-        private static readonly string StreamingPath = Application.dataPath + "/StreamingAssets/ResultData.json";
 
         /// <summary>
         /// データを保存するメソッド（追記方式）
@@ -78,11 +75,11 @@ namespace Shabon.Game
 
             // 既存データを読み込む
             List<ResultDataModel> results = new();
-            if (File.Exists(PersistentPath))
+            if (File.Exists(GetPath()))
             {
                 try
                 {
-                    string json = File.ReadAllText(PersistentPath);
+                    string json = File.ReadAllText(GetPath());
                     if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
                     {
                         results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results ?? new List<ResultDataModel>();
@@ -90,7 +87,7 @@ namespace Shabon.Game
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
+                    UnityEngine.Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
                 }
             }
 
@@ -100,7 +97,7 @@ namespace Shabon.Game
                 var last = results[results.Count - 1];
                 if (IsSameResult(last, model))
                 {
-                    Debug.Log("同じリザルトデータのため保存しません");
+                    UnityEngine.Debug.Log("同じリザルトデータのため保存しません");
                     return;
                 }
             }
@@ -108,7 +105,7 @@ namespace Shabon.Game
             // ★同じデータがすでに存在する場合は追加しない（全件チェック）
             if (results.Exists(r => IsSameResult(r, model)))
             {
-                Debug.Log("既に同じデータが保存されているため追加しません");
+                UnityEngine.Debug.Log("既に同じデータが保存されているため追加しません");
                 return;
             }
 
@@ -120,20 +117,20 @@ namespace Shabon.Game
             int end = arrayJson.LastIndexOf(']');
             string onlyArray = arrayJson.Substring(start, end - start + 1);
 
-            var dir = Path.GetDirectoryName(PersistentPath);
+            var dir = Path.GetDirectoryName(GetPath());
             if (!Directory.Exists(dir))
             {
                 try { Directory.CreateDirectory(dir!); }
-                catch (System.Exception e) { Debug.LogWarning($"ディレクトリ作成失敗: {e}"); }
+                catch (System.Exception e) { UnityEngine.Debug.LogWarning($"ディレクトリ作成失敗: {e}"); }
             }
 
             try
             {
-                File.WriteAllText(PersistentPath, onlyArray);
+                File.WriteAllText(GetPath(), onlyArray);
             }
             catch (System.Exception e)
             {
-                Debug.LogWarning($"ResultData.jsonの書き込みに失敗: {e}");
+                UnityEngine.Debug.LogWarning($"ResultData.jsonの書き込みに失敗: {e}");
             }
         }
 
@@ -142,9 +139,8 @@ namespace Shabon.Game
         /// </summary>
         public static void LoadResults()
         {
-            string path = PersistentPath;
-            if (!File.Exists(path))
-                path = StreamingPath;
+            string path = GetPath();
+
             string json = File.Exists(path) ? File.ReadAllText(path) : "";
             if (string.IsNullOrWhiteSpace(json)) return;
             var results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
@@ -163,6 +159,25 @@ namespace Shabon.Game
             }
         }
 
+        // すべてのデータを取得する関数
+        public static IEnumerable<ResultDataModel> LoadAllResults()
+        {
+            try
+            {
+                string json = File.ReadAllText(GetPath());
+                if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
+                {
+                    return JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results ?? new List<ResultDataModel>();
+                }
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
+            }
+            return new List<ResultDataModel>();
+        }
+
+
         // ★追加: データ比較用
         private static bool IsSameResult(ResultDataModel a, ResultDataModel b)
         {
@@ -174,6 +189,19 @@ namespace Shabon.Game
                    Mathf.Approximately(a.FinalBreathTime, b.FinalBreathTime) &&
                    Mathf.Approximately(a.Calorie, b.Calorie) &&
                    Mathf.Approximately(a.BossBattleTime, b.BossBattleTime);
+        }
+
+        // パス取得
+        private static string GetPath()
+        {
+#if UNITY_EDITOR
+            return Path.Combine(Application.streamingAssetsPath, "ResultData.json");
+#else
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string appDir = Path.GetFullPath(Path.Combine(exePath, "../../../../")) + "ResultData.json"; // .jsonのパス
+
+            return appDir;
+#endif
         }
     }
 }

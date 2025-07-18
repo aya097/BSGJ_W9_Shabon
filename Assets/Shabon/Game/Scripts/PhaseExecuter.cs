@@ -264,6 +264,8 @@ namespace Shabon.Game
 
         void ITickable.Tick()
         {
+            _currentTime += Time.deltaTime;
+
             InvokeEvent();
 
             if (UnityEngine.Input.GetKeyDown(KeyCode.O))

@@ -158,6 +158,86 @@ MonoBehaviour:
     m_Localized: "\u3088\u308D\u3044\u3092\u8EAB\u306B\u307E\u3068\u3063\u305F\u30C9\u30FB\u30D0\u30D6\u30EB\u3002\r\n\u306A\u3093\u3068\u30AF\u30E9\u30C3\u30D7\u304C\u52B9\u304B\u306A\u3044\u305E\u3002\r\n\u606F\u3092\u5439\u3044\u3066\u3001\u3088\u308D\u3044\u3092\u5439\u304D\u98DB\u3070\u305B\uFF01"
     m_Metadata:
       m_Items: []
+  - m_Id: 12187132637470720
+    m_Localized: "\u30B9\u30B3\u30A2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053632
+    m_Localized: "\u6B8B\u3063\u305F\u6C5A\u308C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053633
+    m_Localized: "\u30DC\u30B9\u3092\u5012\u3057\u305F\u6642\u9593"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053634
+    m_Localized: "\u79D2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053635
+    m_Localized: "\u606F\u3092\u5439\u3044\u305F\u6642\u9593"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053636
+    m_Localized: "\u6D88\u8CBB\u30AB\u30ED\u30EA\u30FC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053637
+    m_Localized: "\u6C5A\u308C\u305F\u56DE\u6570"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053638
+    m_Localized: "\u56DE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053639
+    m_Localized: "\u30B3\u30F3\u30DC\u6570"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053640
+    m_Localized: "\u30B3\u30F3\u30DC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053641
+    m_Localized: "\u30AF\u30E9\u30C3\u30D7\u6570"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053642
+    m_Localized: "\u56DE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053645
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053646
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053647
+    m_Localized: kcal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053648
+    m_Localized: times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053649
+    m_Localized: Combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053650
+    m_Localized: Claps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053643
+    m_Localized: ' '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053644
+    m_Localized: ' '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
