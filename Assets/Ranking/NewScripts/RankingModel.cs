@@ -7,7 +7,6 @@ using System.Linq;
 using R3;
 using Shabon.Game;
 using Shabon.Title;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine.Localization.Settings;
 
 namespace Ranking

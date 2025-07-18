@@ -80,7 +80,7 @@ namespace Ranking
             else if (resultEnum == ResultEnum.Boss)
             {
                 // BossBattleTime 小さい順
-                var str = _rankingModel.ResultDataModels.OrderBy(r => r.BossBattleTime).Take(5).Select(r => r.BossBattleTime.ToString("F1"));
+                var str = _rankingModel.ResultDataModels.Where(r => r.BossBattleTime != -1).OrderBy(r => r.BossBattleTime).Take(5).Select(r => r.BossBattleTime.ToString("F1"));
                 return str;
             }
 

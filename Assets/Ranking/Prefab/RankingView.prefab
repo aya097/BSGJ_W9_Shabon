@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a71207f68b44f2c8f3d5d7ce42f253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultType: 0
+  viewObject: {fileID: 1220903014591760300}
   topText: {fileID: 6624490575353630461}
   resultTexts:
   - {fileID: 6668930222035603411}
@@ -1217,6 +1217,9 @@ MonoBehaviour:
   - {fileID: 5267579360916144255}
   - {fileID: 4722206309401337112}
   - {fileID: 8278402058967570972}
+  windowSpeed: 0.5
+  ease: 8
+  _resultType: 0
 --- !u!1 &3822519719733150577
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
+using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -25,22 +27,41 @@ namespace Ranking
     public class RankingViewMono : MonoBehaviour
     {
         // 表示するリザルトデータ
-        [SerializeField] private ResultEnum resultType = ResultEnum.None;
+        [SerializeField] private RectTransform viewObject = null!;
         [SerializeField] private LocalizeStringEvent topText = null!;
 
         [SerializeField] private List<TMP_Text> resultTexts = new List<TMP_Text>();
         [SerializeField] private List<LocalizeStringEvent> unitTexts = new List<LocalizeStringEvent>();
 
-        public ResultEnum ResultType => resultType;
+        [SerializeField] private float windowSpeed = 0.5f;
+        [SerializeField] Ease ease;
+
+        public ResultEnum _resultType;
         public int ResultCount => resultTexts.Count;
+
+        public void Open()
+        {
+            LMotion.Create(2000f, 0f, windowSpeed)
+                .WithEase(ease)
+                .BindToAnchoredPositionX(viewObject)
+                .AddTo(this);
+        }
+
+        public void Close()
+        {
+            LMotion.Create(0f, -2000f, windowSpeed)
+                .WithEase(ease)
+                .BindToAnchoredPositionX(viewObject)
+                .AddTo(this);
+        }
 
         public void SetResultType(ResultEnum type)
         {
-            resultType = type;
+            _resultType = type;
 
             var localizedString = new LocalizedString();
             localizedString.TableReference = "TextTable"; // テーブル名
-            localizedString.TableEntryReference = "result_" + resultType.ToString();   // エントリ名（キー）
+            localizedString.TableEntryReference = "result_" + _resultType.ToString();   // エントリ名（キー）
 
             topText.StringReference = localizedString;
             topText.RefreshString();
@@ -50,7 +71,7 @@ namespace Ranking
             {
                 var localizedStringUnit = new LocalizedString();
                 localizedStringUnit.TableReference = "TextTable"; // テーブル名
-                localizedStringUnit.TableEntryReference = "result_" + resultType.ToString() + "_unit";   // エントリ名（キー）
+                localizedStringUnit.TableEntryReference = "result_" + _resultType.ToString() + "_unit";   // エントリ名（キー）
 
                 unitText.StringReference = localizedStringUnit;
                 unitText.RefreshString();
