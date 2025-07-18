@@ -63,6 +63,14 @@ namespace Ranking
                 _rankingModel.UpdateIndex(targetIndex);
                 _isInverse = true;
             }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _rankingModel.SetLanguage(Shabon.Title.Language.Japanese);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _rankingModel.SetLanguage(Shabon.Title.Language.English);
+            }
         }
 
         private IEnumerable<string> GetRanking(ResultEnum resultEnum)
