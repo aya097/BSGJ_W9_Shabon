@@ -37,19 +37,30 @@ namespace Ranking
         [SerializeField] Ease ease;
 
         public ResultEnum _resultType;
+        public bool IsAvailable => _isAvailable;
         public int ResultCount => resultTexts.Count;
 
-        public void Open()
+        private bool _isAvailable = true;
+
+        public void Open(bool isInverse = false)
         {
-            LMotion.Create(2000f, 0f, windowSpeed)
+            float from = 2000f * (isInverse ? -1 : 1);
+            float to = 0f;
+            _isAvailable = false;
+            LMotion.Create(from, to, windowSpeed)
+                .WithOnComplete(() => _isAvailable = true)
                 .WithEase(ease)
                 .BindToAnchoredPositionX(viewObject)
                 .AddTo(this);
         }
 
-        public void Close()
+        public void Close(bool isInverse = false)
         {
-            LMotion.Create(0f, -2000f, windowSpeed)
+            float from = 0f;
+            float to = -2000f * (isInverse ? -1 : 1);
+            _isAvailable = false;
+            LMotion.Create(from, to, windowSpeed)
+                .WithOnComplete(() => _isAvailable = true)
                 .WithEase(ease)
                 .BindToAnchoredPositionX(viewObject)
                 .AddTo(this);

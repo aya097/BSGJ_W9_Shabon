@@ -14,6 +14,13 @@ namespace Ranking
         // View
         [SerializeField] private RankingViewSelectorMono rankingView = null!;
 
+
+        private bool _isInverse = false;
+        private void OnDestroy()
+        {
+            _rankingModel.Dispose();
+        }
+
         void Awake()
         {
             _rankingModel = new RankingModel();
@@ -27,9 +34,35 @@ namespace Ranking
                 .Subscribe(value =>
                 {
                     var texts = GetRanking(value);
-                    rankingView.SetTexts(GetRanking(value), value);
+                    rankingView.SetTexts(GetRanking(value), value, _isInverse);
+                    _isInverse = false;
                 })
                 .AddTo(this);
+
+        }
+
+        void Update()
+        {
+            if (rankingView.IsAvailable == false)
+            {
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                // 右キーで次のページへ
+                _rankingModel.UpdateIndex(_rankingModel.CurrentIndex + 1);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                // 左キーで前のページへ
+                int targetIndex = _rankingModel.CurrentIndex - 1;
+                if (targetIndex < 1)
+                {
+                    targetIndex = System.Enum.GetValues(typeof(ResultEnum)).Length - 1; // 最後のページへ
+                }
+                _rankingModel.UpdateIndex(targetIndex);
+                _isInverse = true;
+            }
         }
 
         private IEnumerable<string> GetRanking(ResultEnum resultEnum)

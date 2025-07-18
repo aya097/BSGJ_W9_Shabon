@@ -18,6 +18,7 @@ namespace Ranking
     {
         // 現在表示するリザルトデータの種類
         public ResultEnum CurrentResultType => GetResultEnum(_currentIndex);
+        public int CurrentIndex => _currentIndex;
         public IEnumerable<ResultDataModel> ResultDataModels => _resultDataModels;
         // リザルトデータを保管するリスト
         private IEnumerable<ResultDataModel> _resultDataModels = Enumerable.Empty<ResultDataModel>();
@@ -129,6 +130,19 @@ namespace Ranking
         private void UpdateData()
         {
             _resultDataModels = ResultData.LoadAllResults();
+        }
+
+        public void Dispose()
+        {
+            // すべての購読を解除
+            foreach (var disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
+            _disposables.Clear();
+
+            // 更新の購読を解除
+            _updateDisposable?.Dispose();
         }
     }
 }
