@@ -116,7 +116,10 @@ namespace Shabon.Game
 
             // ぼかしをかける
             filter.gameObject.SetActive(true);
-            shineEffect.gameObject.SetActive(true);
+            if (gameState == GameState.Win)
+            {
+                shineEffect.gameObject.SetActive(true);
+            }
             LMotion.Create(0.1f, 2f, filterTime)
                 .Bind(value =>
                 {

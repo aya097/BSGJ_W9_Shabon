@@ -37,7 +37,7 @@ public class DirtEffectCollectorMono : MonoBehaviour
 
     private void UpdateDirtEffects(IDirtValue dirtValue)
     {
-        int dirtNum = dirtValue.DirtNum - 2;    // 最初の2段階は無視 
+        int dirtNum = dirtValue.DirtNum;
         // 現在Activeな汚れエフェクトの数を取得
         int currentDirt = firstDirtEffects.Where(dirt => dirt.IsActive).Count();
         currentDirt += secondDirtEffects.Where(dirt => dirt.IsActive).Count();

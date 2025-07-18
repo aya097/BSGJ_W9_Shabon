@@ -91,7 +91,7 @@ namespace Shabon.Tutorial
                            bubbleViewMono.SetHighlight(HighLightType.Attack);
                            bubbleViewMono.PlayAttack(() =>
                             {
-                                _dirtValue.Increase(4);
+                                _dirtValue.Increase(2);
                                 DestroyBubble(bubbleMono);
                             });
                        }
