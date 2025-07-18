@@ -3,6 +3,8 @@
 using UnityEngine;
 using R3;
 using System;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Bubble
 {
@@ -16,6 +18,7 @@ namespace Shabon.Bubble
         [SerializeField] protected SpriteRenderer _ornamentSpriteRenderer = null!;
 
         private int _ornamentOriginalOrderInLayer;
+        private bool isBreathed = false;
 
         protected override bool EnableFloatMotion => false;
 
@@ -41,6 +44,19 @@ namespace Shabon.Bubble
             _spriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
             _ornamentSpriteRenderer.color = _originalColor - new Color(value, value, value, 0f);
 
+        }
+
+        public override void PlayBreath(IBubbleMono bubbleMono)
+        {
+            if (!isBreathed)
+            {
+                isBreathed = true;
+                LMotion.Shake.Create(0f, 10f, 0.1f)
+                    .WithOnComplete(() => isBreathed = false)
+                    .BindToEulerAnglesZ(_ornamentSpriteRenderer.gameObject.transform)
+                    .AddTo(this);
+
+            }
         }
 
         public override void PlayAttack(Action? callback = null)

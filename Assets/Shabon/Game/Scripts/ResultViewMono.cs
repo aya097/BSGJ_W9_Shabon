@@ -198,12 +198,19 @@ namespace Shabon.Game
             scoreText.text = $"{ResultData.FinalScore}";
             // scoreText.text = $"{_scoreValue.ScoreNum}";
             dirtText.text = $"{ResultData.FinalDirt}";
-            dirtDecreaseCountText.text = $"{ResultData.FinalDirtIncreaseCount}回";
-            bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";
-            comboText.text = $"{ResultData.FinalCombo}コンボ";
-            clapCountText.text = $"{ResultData.FinalClapCount}回";
-            breathTimeText.text = $"{ResultData.FinalBreathTime:0.0}秒";
-            calorieText.text = $"{ResultData.FinalCalorie:0.0} kcal";
+            dirtDecreaseCountText.text = $"{ResultData.FinalDirtIncreaseCount}";
+            if (ResultData.BossBattleTime < 0)
+            {
+                bossBattleTimeText.text = "-";
+            }
+            else
+            {
+                bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}";
+            }
+            comboText.text = $"{ResultData.FinalCombo}";
+            clapCountText.text = $"{ResultData.FinalClapCount}";
+            breathTimeText.text = $"{ResultData.FinalBreathTime:0.0}";
+            calorieText.text = $"{ResultData.FinalCalorie:0.0}";
         }
     }
 }
