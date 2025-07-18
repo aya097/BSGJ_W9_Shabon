@@ -1204,6 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resultType: 0
+  topText: {fileID: 6624490575353630461}
   resultTexts:
   - {fileID: 6668930222035603411}
   - {fileID: 1943152026169693303}
@@ -1216,7 +1217,6 @@ MonoBehaviour:
   - {fileID: 5267579360916144255}
   - {fileID: 4722206309401337112}
   - {fileID: 8278402058967570972}
-  - {fileID: 6624490575353630461}
 --- !u!1 &3822519719733150577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,7 +2121,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 500, y: 200}
-  m_SizeDelta: {x: 400, y: 200}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4011149394666142648
 CanvasRenderer:
@@ -2910,7 +2910,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 375}
-  m_SizeDelta: {x: 1000, y: 0}
+  m_SizeDelta: {x: 1400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4482065095824724598
 CanvasRenderer:

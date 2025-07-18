@@ -27,8 +27,7 @@ namespace Ranking
                 .Subscribe(value =>
                 {
                     var texts = GetRanking(value);
-                    Debug.Log($"RankingPresenterMono: {value} - {string.Join(", ", texts)}");
-                    rankingView.SetTexts(GetRanking(value));
+                    rankingView.SetTexts(GetRanking(value), value);
                 })
                 .AddTo(this);
         }
@@ -69,19 +68,19 @@ namespace Ranking
             else if (resultEnum == ResultEnum.Breath)
             {
                 // BreathTime 大きい順
-                var str = _rankingModel.ResultDataModels.OrderByDescending(r => r.FinalBreathTime).Take(5).Select(r => r.FinalBreathTime.ToString());
+                var str = _rankingModel.ResultDataModels.OrderByDescending(r => r.FinalBreathTime).Take(5).Select(r => r.FinalBreathTime.ToString("F1"));
                 return str;
             }
             else if (resultEnum == ResultEnum.Calorie)
             {
                 // Calorie 大きい順
-                var str = _rankingModel.ResultDataModels.OrderByDescending(r => r.Calorie).Take(5).Select(r => r.Calorie.ToString());
+                var str = _rankingModel.ResultDataModels.OrderByDescending(r => r.Calorie).Take(5).Select(r => r.Calorie.ToString("F1"));
                 return str;
             }
             else if (resultEnum == ResultEnum.Boss)
             {
                 // BossBattleTime 小さい順
-                var str = _rankingModel.ResultDataModels.OrderBy(r => r.BossBattleTime).Take(5).Select(r => r.BossBattleTime.ToString());
+                var str = _rankingModel.ResultDataModels.OrderBy(r => r.BossBattleTime).Take(5).Select(r => r.BossBattleTime.ToString("F1"));
                 return str;
             }
 

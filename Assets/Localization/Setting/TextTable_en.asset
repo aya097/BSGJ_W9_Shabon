@@ -172,6 +172,86 @@ MonoBehaviour:
       Blow away its armor with your breath!'
     m_Metadata:
       m_Items: []
+  - m_Id: 12187132637470720
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053632
+    m_Localized: Stains Remaining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053633
+    m_Localized: Boss Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053634
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053635
+    m_Localized: Blowing Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053636
+    m_Localized: Calories Burned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053637
+    m_Localized: Times got Dirty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053638
+    m_Localized: Times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053639
+    m_Localized: Combo Count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053640
+    m_Localized: Combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053641
+    m_Localized: Claps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053642
+    m_Localized: Claps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053645
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053646
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053647
+    m_Localized: kcal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053648
+    m_Localized: times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053649
+    m_Localized: Combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053650
+    m_Localized: Claps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053643
+    m_Localized: ' '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053644
+    m_Localized: ' '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

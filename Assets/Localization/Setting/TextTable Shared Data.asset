@@ -155,6 +155,86 @@ MonoBehaviour:
     m_Key: explanation_armor
     m_Metadata:
       m_Items: []
+  - m_Id: 12187132637470720
+    m_Key: result_Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053632
+    m_Key: result_Dirt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053633
+    m_Key: result_Boss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053634
+    m_Key: result_uinit_sec
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053635
+    m_Key: result_Breath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053636
+    m_Key: result_Calorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053637
+    m_Key: result_SumDirt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053638
+    m_Key: result_uinit_times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053639
+    m_Key: result_Combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053640
+    m_Key: result_uinit_combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053641
+    m_Key: result_Clap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053642
+    m_Key: result_uinit_clap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053643
+    m_Key: result_Score_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053644
+    m_Key: result_Dirt_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053645
+    m_Key: result_Boss_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053646
+    m_Key: result_Breath_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053647
+    m_Key: result_Calorie_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053648
+    m_Key: result_SumDirt_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053649
+    m_Key: result_Combo_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12187132650053650
+    m_Key: result_Clap_unit
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
