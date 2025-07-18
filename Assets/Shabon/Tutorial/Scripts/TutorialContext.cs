@@ -7,6 +7,7 @@ using Shabon.Breath;
 using Shabon.Bubble;
 using Shabon.Clap;
 using Shabon.Input;
+using Shabon.Ui;
 using UnityEngine;
 
 namespace Shabon.Tutorial
@@ -200,6 +201,7 @@ namespace Shabon.Tutorial
         private readonly IInputManager _inputManager = null!;
         private readonly ClapModel _clapModel = null!;
         private TutorialViewMono _tutorialViewMono = null!;
+        private ClapUiViewMono _clapUiViewMono = null!;
 
         private bool _ableClap = false;
 
@@ -208,13 +210,15 @@ namespace Shabon.Tutorial
             TutorialBubbleSpawner tutorialBubbleSpawner,
             BubbleCluster bubbleCluster,
             IInputManager inputManager,
-            ClapModel clapModel)
+            ClapModel clapModel,
+            ClapUiViewMono clapUiViewMono)
         {
             _tutorialViewMono = tutorialViewMono;
             _tutorialBubbleSpawner = tutorialBubbleSpawner;
             _bubbleCluster = bubbleCluster;
             _inputManager = inputManager;
             _clapModel = clapModel;
+            _clapUiViewMono = clapUiViewMono;
         }
         public void OnStart()
         {
@@ -241,6 +245,7 @@ namespace Shabon.Tutorial
                 .Subscribe(_ =>
                 {
                     _tutorialViewMono.SetText(TutorialText.prepare_hand);
+                    _clapUiViewMono.Open();
                     Debug.Log("Tutorial: 手をかまえて！！！");
                 });
             // いい感じの位置で停止
