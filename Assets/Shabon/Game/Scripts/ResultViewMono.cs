@@ -79,19 +79,6 @@ namespace Shabon.Game
         }
         public void Open(GameState gameState)
         {
-            // ★ここで保存
-            ResultData.SaveResults(
-                ResultData.FinalDirt,
-                ResultData.FinalScore,
-                ResultData.FinalCombo,
-                ResultData.FinalClapCount,
-                ResultData.FinalDirtIncreaseCount,
-                ResultData.FinalBreathTime,
-                ResultData.FinalBreathStrengthSum,
-                ResultData.BossBattleTime
-            );
-            Shabon.Score.RankingScore.SaveScore(ResultData.FinalScore);
-
             SetData();
 
             float filterTime = 0;

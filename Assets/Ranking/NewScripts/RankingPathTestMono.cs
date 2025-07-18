@@ -12,7 +12,13 @@ namespace Rnaking
 
         void Awake()
         {
-            // pathText.text = $"{ResultData.GetPath()}";
+            var results = ResultData.LoadAllResults();
+            string s = "";
+            foreach (var result in results)
+            {
+                s += $"Dirt: {result.FinalDirt}, Score: {result.FinalScore}, Combo: {result.FinalCombo}, ClapCount: {result.FinalClapCount}, BreathTime: {result.FinalBreathTime}, Calorie: {result.Calorie}";
+            }
+            pathText.text = s;
         }
     }
 }

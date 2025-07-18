@@ -159,6 +159,25 @@ namespace Shabon.Game
             }
         }
 
+        // すべてのデータを取得する関数
+        public static IEnumerable<ResultDataModel> LoadAllResults()
+        {
+            try
+            {
+                string json = File.ReadAllText(GetPath());
+                if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
+                {
+                    return JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results ?? new List<ResultDataModel>();
+                }
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
+            }
+            return new List<ResultDataModel>();
+        }
+
+
         // ★追加: データ比較用
         private static bool IsSameResult(ResultDataModel a, ResultDataModel b)
         {
