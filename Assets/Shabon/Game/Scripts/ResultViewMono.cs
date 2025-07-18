@@ -8,6 +8,8 @@ using LitMotion.Extensions;
 using R3;
 using System;
 using UnityEngine.VFX;
+using Shabon.Score;
+using VContainer;
 
 namespace Shabon.Game
 {
@@ -61,6 +63,13 @@ namespace Shabon.Game
         [Header("エフェクト")]
         [SerializeField] private VisualEffect shineEffect = null!;
 
+        private IScoreValue _scoreValue = null!;
+
+        [Inject]
+        void Initialized(IScoreValue scoreValue)
+        {
+            _scoreValue = scoreValue;
+        }
 
         void Awake()
         {
@@ -199,7 +208,8 @@ namespace Shabon.Game
             ResultData.LoadResults();
 
             // ResultDataからデータを取得してUIに表示
-            scoreText.text = $"{ResultData.FinalScore}";
+            // scoreText.text = $"{ResultData.FinalScore}";
+            scoreText.text = $"{_scoreValue.ScoreNum}";
             dirtText.text = $"{ResultData.FinalDirt}";
             dirtDecreaseCountText.text = $"{ResultData.FinalDirtIncreaseCount}回";
             bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";
