@@ -36,7 +36,8 @@ namespace Shabon.Bubble
             if (_isBack)
             {
                 _bubbleMover.MoveBackward(_basePosition);
-                if (Vector3.Distance(transform.position, _basePosition) < 0.001f)
+                // もとの位置より後ろにいったら終わり
+                if (transform.position.z >= _basePosition.z)
                     _isBack = false;
                 return;
             }
