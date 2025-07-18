@@ -20,7 +20,7 @@ MonoBehaviour:
       ratio: 4
     maxBabbleOnField: 30
     phaseLengthTime: 20
-    phaseDelayTime: 0
+    phaseDelayTime: 5
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 3
     spawningBubbles:
@@ -30,7 +30,7 @@ MonoBehaviour:
       ratio: 2
     maxBabbleOnField: 30
     phaseLengthTime: 30
-    phaseDelayTime: 0
+    phaseDelayTime: 5
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
@@ -42,7 +42,7 @@ MonoBehaviour:
       ratio: 1
     maxBabbleOnField: 30
     phaseLengthTime: 30
-    phaseDelayTime: 0
+    phaseDelayTime: 5
   - bubblesPerSpawn: 1
     spawnBubbleInterval: 2
     spawningBubbles:
