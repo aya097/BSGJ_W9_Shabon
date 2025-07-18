@@ -49,7 +49,7 @@ namespace Shabon.Bubble
             // _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Attack);
-            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+            Observable.Timer(TimeSpan.FromSeconds(0.8f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
@@ -64,7 +64,7 @@ namespace Shabon.Bubble
             if (!isDead)
             {
                 Play(BubbleAnimationEnum.Clap);
-                Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                Observable.Timer(TimeSpan.FromSeconds(0.51f))
                     .Subscribe(_ =>
                     {
                         Play(BubbleAnimationEnum.Idle);
@@ -87,7 +87,7 @@ namespace Shabon.Bubble
         {
             Play(BubbleAnimationEnum.Spawn);
             spawnEffect.SetActive(true);
-            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+            Observable.Timer(TimeSpan.FromSeconds(0.9f))
                 .Subscribe(_ =>
                 {
                     spawnEffect.SetActive(false);
@@ -105,6 +105,7 @@ namespace Shabon.Bubble
         {
             if (_currentAnimation != animation)
             {
+                Debug.Log("アニメーション変化!! : " + animation);
                 _currentAnimation = animation;
                 _bubbleAnimator.SetTrigger(animation.ToString());
                 Debug.Log(animation.ToString());
