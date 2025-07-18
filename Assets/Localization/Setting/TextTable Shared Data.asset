@@ -131,6 +131,30 @@ MonoBehaviour:
     m_Key: tutorial_thanks
     m_Metadata:
       m_Items: []
+  - m_Id: 11921094477864960
+    m_Key: explanation_normal_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642176
+    m_Key: explanation_quick_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642177
+    m_Key: explanation_armor_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642178
+    m_Key: explanation_normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642179
+    m_Key: explanation_quick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642180
+    m_Key: explanation_armor
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
