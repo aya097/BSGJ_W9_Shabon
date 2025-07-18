@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 namespace Shabon.Game
 {
@@ -90,7 +91,7 @@ namespace Shabon.Game
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
+                    UnityEngine.Debug.LogWarning($"ResultData.jsonの読み込みに失敗: {e}");
                 }
             }
 
@@ -100,7 +101,7 @@ namespace Shabon.Game
                 var last = results[results.Count - 1];
                 if (IsSameResult(last, model))
                 {
-                    Debug.Log("同じリザルトデータのため保存しません");
+                    UnityEngine.Debug.Log("同じリザルトデータのため保存しません");
                     return;
                 }
             }
@@ -108,7 +109,7 @@ namespace Shabon.Game
             // ★同じデータがすでに存在する場合は追加しない（全件チェック）
             if (results.Exists(r => IsSameResult(r, model)))
             {
-                Debug.Log("既に同じデータが保存されているため追加しません");
+                UnityEngine.Debug.Log("既に同じデータが保存されているため追加しません");
                 return;
             }
 
@@ -124,7 +125,7 @@ namespace Shabon.Game
             if (!Directory.Exists(dir))
             {
                 try { Directory.CreateDirectory(dir!); }
-                catch (System.Exception e) { Debug.LogWarning($"ディレクトリ作成失敗: {e}"); }
+                catch (System.Exception e) { UnityEngine.Debug.LogWarning($"ディレクトリ作成失敗: {e}"); }
             }
 
             try
@@ -133,7 +134,7 @@ namespace Shabon.Game
             }
             catch (System.Exception e)
             {
-                Debug.LogWarning($"ResultData.jsonの書き込みに失敗: {e}");
+                UnityEngine.Debug.LogWarning($"ResultData.jsonの書き込みに失敗: {e}");
             }
         }
 
@@ -174,6 +175,19 @@ namespace Shabon.Game
                    Mathf.Approximately(a.FinalBreathTime, b.FinalBreathTime) &&
                    Mathf.Approximately(a.Calorie, b.Calorie) &&
                    Mathf.Approximately(a.BossBattleTime, b.BossBattleTime);
+        }
+
+        // パス取得
+        public static string GetPath()
+        {
+#if UNITY_EDITOR
+            return Path.Combine(Application.streamingAssetsPath, "ResultData.json");
+#else
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string appDir = Path.GetFullPath(Path.Combine(exePath, "../../../../")) + "ResultData.json"; // .jsonのパス
+
+            return appDir;
+#endif
         }
     }
 }

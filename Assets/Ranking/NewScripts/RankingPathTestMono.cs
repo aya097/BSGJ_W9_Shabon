@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using Shabon.Game;
 using TMPro;
 using UnityEngine;
 
@@ -11,11 +12,7 @@ namespace Rnaking
 
         void Awake()
         {
-            string exePath = Process.GetCurrentProcess().MainModule.FileName;
-            string appDir = Path.GetFullPath(Path.Combine(exePath, "../../../")); // .appパス
-            string parentDir = Path.GetDirectoryName(appDir); // .app の親
-
-            pathText.text = $"アプリパス: {appDir}\n親ディレクトリ: {parentDir}";
+            pathText.text = $"{ResultData.GetPath()}";
         }
     }
 }
