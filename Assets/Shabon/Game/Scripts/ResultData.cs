@@ -45,10 +45,10 @@ namespace Shabon.Game
         /// データを保存するメソッド（追記方式）
         /// </summary>
         public static void SaveResults(
-            int dirt, int score, int combo, int clapCount = 0,
-            int dirtValueCountSum = 0,
-            float breathTime = 0, float breathStrengthSum = 0,
-            float bossBattleTime = 0
+            int dirt, int score, int combo, int clapCount,
+            int dirtValueCountSum,
+            float breathTime, float breathStrengthSum,
+            float bossBattleTime
         )
         {
             FinalDirt = dirt;

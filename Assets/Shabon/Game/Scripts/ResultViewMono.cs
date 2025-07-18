@@ -208,8 +208,8 @@ namespace Shabon.Game
             ResultData.LoadResults();
 
             // ResultDataからデータを取得してUIに表示
-            // scoreText.text = $"{ResultData.FinalScore}";
-            scoreText.text = $"{_scoreValue.ScoreNum}";
+            scoreText.text = $"{ResultData.FinalScore}";
+            // scoreText.text = $"{_scoreValue.ScoreNum}";
             dirtText.text = $"{ResultData.FinalDirt}";
             dirtDecreaseCountText.text = $"{ResultData.FinalDirtIncreaseCount}回";
             bossBattleTimeText.text = $"{ResultData.BossBattleTime:0.0}秒";

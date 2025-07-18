@@ -254,10 +254,11 @@ namespace Shabon.Game
         {
             ResultData.SaveResults(
                                 _dirtValue.DirtNum,
+                                _scoreValue.ScoreNum,
                                 _bubbleCombo.MaxNum,
                                 _clapModel.ClapCount,
                                 _dirtValue.IncreaseCount,
-                                (int)_breathModel.TotalBreathTime,
+                                _breathModel.TotalBreathTime,
                                 _breathModel.TotalBreathStrength,
                                 bossBattleTime
                             );
