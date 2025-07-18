@@ -111,7 +111,7 @@ namespace Shabon.Title
                             }
                             else
                             {
-                                _breathContinuousTime = 0;
+                                _breathContinuousTime -= Time.deltaTime;
                             }
                             selectLanguageViewMono.SetBreath(_breathContinuousTime);
                             // 1秒連続で吹いたら
