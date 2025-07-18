@@ -4,7 +4,7 @@ using Shabon.Game;
 using TMPro;
 using UnityEngine;
 
-namespace Rnaking
+namespace Ranking
 {
     public class RankingPathTestMono : MonoBehaviour
     {
