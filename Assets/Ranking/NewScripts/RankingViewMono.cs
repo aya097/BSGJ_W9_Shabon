@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 
 namespace Ranking
@@ -26,6 +27,7 @@ namespace Ranking
         [SerializeField] private ResultEnum resultType = ResultEnum.None;
 
         [SerializeField] private List<TMP_Text> resultTexts = new List<TMP_Text>();
+        [SerializeField] private List<LocalizeStringEvent> unitTexts = new List<LocalizeStringEvent>();
 
         public ResultEnum ResultType => resultType;
         public int ResultCount => resultTexts.Count;
