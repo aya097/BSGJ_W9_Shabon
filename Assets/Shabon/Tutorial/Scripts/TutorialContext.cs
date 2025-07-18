@@ -175,7 +175,7 @@ namespace Shabon.Tutorial
                 }
 
                 // 十分後ろに追いやれば
-                if (_bubbleCluster.Bubbles.ElementAt(0).Transform.position.z > 0.9f)
+                if (_bubbleCluster.Bubbles.ElementAt(0).Transform.position.z > 0.3f)
                 {
                     _ableBreath = false;
                     _tutorialViewMono.SetText(TutorialText.nice_blow);
@@ -230,14 +230,10 @@ namespace Shabon.Tutorial
 
 
             // 一定時間後にさっきのバブルも動かす
-            Observable.Timer(TimeSpan.FromSeconds(2f))
-                .Subscribe(_ =>
-                {
-                    _bubbleCluster.Bubbles.ElementAt(0).Resume();
-                });
             Observable.Timer(TimeSpan.FromSeconds(4f))
                 .Subscribe(_ =>
                 {
+                    _bubbleCluster.Bubbles.ElementAt(0).Resume();
                     Debug.Log("Tutorial: 引きつけて一気に倒してやろう！！");
                     _tutorialViewMono.SetText(TutorialText.lure_bubble);
                 });
