@@ -4295,6 +4295,7 @@ GameObject:
   - component: {fileID: 481152078}
   - component: {fileID: 481152077}
   - component: {fileID: 481152079}
+  - component: {fileID: 481152079}
   m_Layer: 5
   m_Name: BubbleName
   m_TagString: Untagged
@@ -7489,6 +7490,7 @@ GameObject:
   - component: {fileID: 836680032}
   - component: {fileID: 836680034}
   - component: {fileID: 836680033}
+  - component: {fileID: 836680035}
   - component: {fileID: 836680035}
   m_Layer: 5
   m_Name: Explanation
@@ -17919,6 +17921,7 @@ GameObject:
   - component: {fileID: 2107387243}
   - component: {fileID: 2107387245}
   - component: {fileID: 2107387244}
+  - component: {fileID: 2107387246}
   - component: {fileID: 2107387246}
   m_Layer: 5
   m_Name: BubbleName

@@ -64,4 +64,4 @@ MonoBehaviour:
         increasingDirtValue: 1
         bubbleScore: 1000
         requiredBreathTime: 2
-        breathResetInterval: 1
+        breathResetInterval: 3

@@ -11,7 +11,6 @@ using Shabon.Param;
 using Shabon.Score;
 using Shabon.Tutorial;
 using Shabon.Utility;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

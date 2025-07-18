@@ -67,13 +67,11 @@ namespace Shabon.Ui
             {
                 return;
             }
-            Time.timeScale = 0f;
             Observable.Timer(TimeSpan.FromSeconds(5f), UnityTimeProvider.UpdateIgnoreTimeScale)
                 .Subscribe(_ =>
                 {
                     quickBubble.SetActive(false);
                     armorBubble.SetActive(false);
-                    Time.timeScale = 1f;
                 });
         }
 

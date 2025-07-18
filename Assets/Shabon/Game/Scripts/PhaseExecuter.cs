@@ -57,7 +57,6 @@ namespace Shabon.Game
         private SoundToken? _normalBgmToken;
         private SoundToken? _bossBgmToken;
 
-        private bool _isResultSaved = false; // 既に保存したかどうか
 
         [Inject]
         public PhaseExecutor(
@@ -108,6 +107,7 @@ namespace Shabon.Game
                         _currentState = GameState.Game;
 
                         // 使用したデータを削除
+                        _scoreValue.Set(0);
                         _dirtValue.Reset();
                         _clapModel.Reset();
                         _breathModel.Reset();
@@ -125,14 +125,20 @@ namespace Shabon.Game
             // 現在のフェーズ
             _currentPhase = _gamePhases.CurrentPhaseNum;
 
+            // 休憩時間
+            Observable.Timer(TimeSpan.FromSeconds(_gamePhases.GetCurrentPhaseData().PhaseDelayTime))
+                .Subscribe(_ =>
+                {
+                    // 最初の敵生成
+                    SubscribeSpawnBubble();
+
+                    // フェーズの終了を設定
+                    SubscribeFinishPhase();
+                });
+
             // フェーズ更新時間を更新
             _phaseUpdatedTime = _currentTime;
 
-            // 最初の敵生成
-            SubscribeSpawnBubble();
-
-            // フェーズの終了を設定
-            SubscribeFinishPhase();
 
             // ゲームオーバー条件
             _disposables.Add(Observable.EveryValueChanged(_dirtValue, d => d.DirtNum)
@@ -206,78 +212,55 @@ namespace Shabon.Game
         void SubscribeFinishPhase()
         {
             double finishedTime = _currentTime + _gamePhases.GetCurrentPhaseData().PhaseLengthTime;
+            // フェーズの終了を登録
             _eventList.Add(new PhaseEvent(
                 finishedTime,
                 () =>
                 {
-
-
                     Debug.Log($"{finishedTime},{_gamePhases.CurrentPhaseNum}");
                     // 次のフェーズに
-
                     bool isEnd = _gamePhases.Proceed();
+                    // 敵がいなくなるのを待つ
                     Observable.EveryUpdate()
-                    .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })
-                    .Take(1)
+                    .SkipWhile(_ => { return _bubbleCluster.Bubbles.Any(); })   // バブルがいなくなるまで待機
+                    .Take(1)                                                    // 一度だけ実行
                     .Subscribe(_ =>
                     {
                         if (isEnd)
                         {
+                            // ボスバトル時間を計算
                             float bossBattleTime = 0f;
                             if (BossBattleStartTime > 0f)
                             {
                                 bossBattleTime = (float)(_currentTime - BossBattleStartTime);
                             }
+                            SaveData(bossBattleTime);
+                            // スコアを保存
+                            // RankingScore.SaveScore(_scoreValue.ScoreNum);
 
-                            SaveData(bossBattleTime); // ★ここで一度だけ保存
-
-                            // ★ランキングデータも生成
-                            string resultPath = System.IO.Path.Combine(Application.streamingAssetsPath, "ResultData.json");
-                            string rankingPath = System.IO.Path.Combine(Application.streamingAssetsPath, "RankingSceneData.json");
-                            RankingSceneDataBuilder.Generate(resultPath, rankingPath);
-
+                            // 勝った
                             _currentState = GameState.Win;
                         }
                         else
                         {
-                            StartPhase();
+                            StartPhase();   // 次のフェーズ
                         }
                     });
                 }
             ));
-
-            // ボスバブル撃破時のイベントを登録
-            _disposables.Add(
-                Observable.EveryUpdate()
-                    .Subscribe(_ =>
-                    {
-                        // ボスバブルが存在しない && BossBattleStartTimeがセットされている場合
-                        bool bossAlive = _bubbleCluster.Bubbles.Any(b => b is Shabon.Bubble.BossBubbleMono);
-                        if (!bossAlive && BossBattleStartTime > 0f)
-                        {
-                            float bossBattleTime = Time.time - BossBattleStartTime;
-                            SaveData(bossBattleTime);
-                        }
-                    })
-            );
         }
 
         private void SaveData(float bossBattleTime = -1)
         {
-            if (_isResultSaved) return; // ★すでに保存済みなら何もしない
-
             ResultData.SaveResults(
-                _dirtValue.DirtNum,
-                _scoreValue.ScoreNum,
-                _bubbleCombo.ComboNum,
-                _clapModel.ClapCount,
-                _dirtValue.IncreaseCount,
-                _breathModel.TotalBreathTime,
-                _breathModel.TotalBreathStrength,
-                bossBattleTime
-            );
-            RankingScore.SaveScore(_scoreValue.ScoreNum);
-            _isResultSaved = true; // ★保存済みにする
+                                _dirtValue.DirtNum,
+                                _bubbleCombo.MaxNum,
+                                _clapModel.ClapCount,
+                                _dirtValue.IncreaseCount,
+                                (int)_breathModel.TotalBreathTime,
+                                _breathModel.TotalBreathStrength,
+                                bossBattleTime
+                            );
         }
 
         void ITickable.Tick()
