@@ -458,5 +458,25 @@
             "FinalBreathTime": 0.0,
             "Calorie": 0.45000001788139346,
             "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 8,
+            "FinalScore": 5400,
+            "FinalCombo": 3,
+            "FinalClapCount": 3,
+            "DirtValueCountSum": 8,
+            "FinalBreathTime": 2.3111751079559328,
+            "Calorie": 0.5270391702651978,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 9,
+            "FinalScore": 5400,
+            "FinalCombo": 3,
+            "FinalClapCount": 3,
+            "DirtValueCountSum": 9,
+            "FinalBreathTime": 2.3111751079559328,
+            "Calorie": 0.5270391702651978,
+            "BossBattleTime": -1.0
         }
     ]

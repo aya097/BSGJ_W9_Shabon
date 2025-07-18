@@ -168,6 +168,9 @@ namespace Shabon.Game
         // 敵を生成するイベントを登録
         void SubscribeSpawnBubble()
         {
+            // ゲームが終了してたらおわり
+            if (_currentState != GameState.Game) return;
+
             // 次の生成時間
             double nextTime = _currentTime + _gamePhases.GetCurrentPhaseData().SpawnBubbleInterval;
 
@@ -216,6 +219,8 @@ namespace Shabon.Game
                 finishedTime,
                 () =>
                 {
+                    // ゲームが終了してたら終わり
+                    if (_currentState != GameState.Game) return;
                     // 次のフェーズに
                     bool isEnd = _gamePhases.Proceed();
                     // 敵がいなくなるのを待つ
