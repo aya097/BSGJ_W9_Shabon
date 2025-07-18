@@ -19,6 +19,7 @@ namespace Ranking
     {
         // 現在表示するリザルトデータの種類
         public ResultEnum CurrentResultType => GetResultEnum(_currentIndex);
+        public IEnumerable<ResultDataModel> ResultDataModels => _resultDataModels;
         // リザルトデータを保管するリスト
         private IEnumerable<ResultDataModel> _resultDataModels = Enumerable.Empty<ResultDataModel>();
         // リザルトデータを更新する頻度
