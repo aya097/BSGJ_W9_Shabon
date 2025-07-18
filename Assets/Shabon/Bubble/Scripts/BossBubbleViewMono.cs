@@ -16,6 +16,7 @@ namespace Shabon.Bubble
         [Header("装飾品関係")]
         [SerializeField] protected Animator _bubbleOrnamentAnimator = null!;
         [SerializeField] protected SpriteRenderer _ornamentSpriteRenderer = null!;
+        [SerializeField] protected SpriteRenderer _attackEffect = null!;
 
         private int _ornamentOriginalOrderInLayer;
         private bool isBreathed = false;
@@ -65,10 +66,12 @@ namespace Shabon.Bubble
             // _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Attack);
+            _attackEffect.gameObject.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(0.8f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
+                    _attackEffect.gameObject.SetActive(false);
                     callback?.Invoke();
                 }).AddTo(this);
         }
