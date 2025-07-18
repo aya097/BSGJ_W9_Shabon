@@ -78,5 +78,245 @@
             "FinalBreathTime": 22.644752502441408,
             "Calorie": 2.8500001430511476,
             "BossBattleTime": 0.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 0.0,
+            "Calorie": 0.0,
+            "BossBattleTime": 0.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 1.3592443466186524,
+            "Calorie": 0.04530814662575722,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 1.3592443466186524,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 7,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 1,
+            "DirtValueCountSum": 7,
+            "FinalBreathTime": 6.912221908569336,
+            "Calorie": 0.3804073929786682,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 7,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 1,
+            "DirtValueCountSum": 7,
+            "FinalBreathTime": 6.912221908569336,
+            "Calorie": 0.15000000596046449,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 2400,
+            "FinalCombo": 3,
+            "FinalClapCount": 1,
+            "DirtValueCountSum": 1,
+            "FinalBreathTime": 0.4925791323184967,
+            "Calorie": 0.16641931235790254,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 2400,
+            "FinalCombo": 3,
+            "FinalClapCount": 1,
+            "DirtValueCountSum": 1,
+            "FinalBreathTime": 0.4925791323184967,
+            "Calorie": 0.15000000596046449,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 7,
+            "FinalScore": 40000,
+            "FinalCombo": 7,
+            "FinalClapCount": 10,
+            "DirtValueCountSum": 22,
+            "FinalBreathTime": 26.07620620727539,
+            "Calorie": 2.293611764907837,
+            "BossBattleTime": 198.30587768554688
+        },
+        {
+            "FinalDirt": 7,
+            "FinalScore": 40000,
+            "FinalCombo": 7,
+            "FinalClapCount": 10,
+            "DirtValueCountSum": 22,
+            "FinalBreathTime": 26.07620620727539,
+            "Calorie": 1.5,
+            "BossBattleTime": 198.30587768554688
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 48200,
+            "FinalCombo": 7,
+            "FinalClapCount": 17,
+            "DirtValueCountSum": 12,
+            "FinalBreathTime": 28.365829467773439,
+            "Calorie": 3.4871835708618166,
+            "BossBattleTime": 213.777587890625
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 48200,
+            "FinalCombo": 7,
+            "FinalClapCount": 17,
+            "DirtValueCountSum": 12,
+            "FinalBreathTime": 28.365829467773439,
+            "Calorie": 2.5500001907348635,
+            "BossBattleTime": 213.777587890625
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 15.233745574951172,
+            "Calorie": 0.5077915191650391,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 15.233745574951172,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 15.087726593017579,
+            "Calorie": 0.5029242038726807,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 0,
+            "FinalCombo": 0,
+            "FinalClapCount": 0,
+            "DirtValueCountSum": 0,
+            "FinalBreathTime": 15.087726593017579,
+            "Calorie": 0.0,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 42150,
+            "FinalCombo": 6,
+            "FinalClapCount": 13,
+            "DirtValueCountSum": 18,
+            "FinalBreathTime": 16.426759719848634,
+            "Calorie": 2.4737393856048586,
+            "BossBattleTime": 113.727294921875
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 42150,
+            "FinalCombo": 6,
+            "FinalClapCount": 13,
+            "DirtValueCountSum": 18,
+            "FinalBreathTime": 16.426759719848634,
+            "Calorie": 1.9500000476837159,
+            "BossBattleTime": 113.727294921875
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 50050,
+            "FinalCombo": 7,
+            "FinalClapCount": 15,
+            "DirtValueCountSum": 25,
+            "FinalBreathTime": 40.253387451171878,
+            "Calorie": 3.451995611190796,
+            "BossBattleTime": 170.4466094970703
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 50050,
+            "FinalCombo": 7,
+            "FinalClapCount": 15,
+            "DirtValueCountSum": 25,
+            "FinalBreathTime": 40.253387451171878,
+            "Calorie": 2.25,
+            "BossBattleTime": 170.4466094970703
+        },
+        {
+            "FinalDirt": 10,
+            "FinalScore": 17150,
+            "FinalCombo": 3,
+            "FinalClapCount": 10,
+            "DirtValueCountSum": 16,
+            "FinalBreathTime": 16.648231506347658,
+            "Calorie": 2.054941177368164,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 10,
+            "FinalScore": 17150,
+            "FinalCombo": 3,
+            "FinalClapCount": 10,
+            "DirtValueCountSum": 16,
+            "FinalBreathTime": 16.648231506347658,
+            "Calorie": 1.5,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 11,
+            "FinalScore": 17150,
+            "FinalCombo": 3,
+            "FinalClapCount": 10,
+            "DirtValueCountSum": 17,
+            "FinalBreathTime": 16.648231506347658,
+            "Calorie": 2.054941177368164,
+            "BossBattleTime": -1.0
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 42800,
+            "FinalCombo": 4,
+            "FinalClapCount": 14,
+            "DirtValueCountSum": 12,
+            "FinalBreathTime": 34.24629211425781,
+            "Calorie": 3.160191059112549,
+            "BossBattleTime": 103.04615783691406
+        },
+        {
+            "FinalDirt": 0,
+            "FinalScore": 42800,
+            "FinalCombo": 4,
+            "FinalClapCount": 14,
+            "DirtValueCountSum": 12,
+            "FinalBreathTime": 34.24629211425781,
+            "Calorie": 2.1000001430511476,
+            "BossBattleTime": 103.04615783691406
         }
     ]
