@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Shabon/Title/Scenes/TitleScene.unity
     guid: db7bec66c27754e908eec589ed1fe842
-  - enabled: 0
+  - enabled: 1
     path: Assets/Shabon/Game/Scenes/GameScene.unity
     guid: e31089e52d1164383b0f57b7e0524f84
   - enabled: 1

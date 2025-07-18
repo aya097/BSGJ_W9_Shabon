@@ -3,6 +3,8 @@
 using UnityEngine;
 using R3;
 using System;
+using LitMotion;
+using LitMotion.Extensions;
 
 namespace Shabon.Bubble
 {
@@ -14,8 +16,10 @@ namespace Shabon.Bubble
         [Header("装飾品関係")]
         [SerializeField] protected Animator _bubbleOrnamentAnimator = null!;
         [SerializeField] protected SpriteRenderer _ornamentSpriteRenderer = null!;
+        [SerializeField] protected SpriteRenderer _attackEffect = null!;
 
         private int _ornamentOriginalOrderInLayer;
+        private bool isBreathed = false;
 
         protected override bool EnableFloatMotion => false;
 
@@ -43,16 +47,31 @@ namespace Shabon.Bubble
 
         }
 
+        public override void PlayBreath(IBubbleMono bubbleMono)
+        {
+            if (!isBreathed)
+            {
+                isBreathed = true;
+                LMotion.Shake.Create(0f, 10f, 0.1f)
+                    .WithOnComplete(() => isBreathed = false)
+                    .BindToEulerAnglesZ(_ornamentSpriteRenderer.gameObject.transform)
+                    .AddTo(this);
+
+            }
+        }
+
         public override void PlayAttack(Action? callback = null)
         {
             // Breathをリセット
             // _breathDisposable?.Dispose();
 
             Play(BubbleAnimationEnum.Attack);
+            _attackEffect.gameObject.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(0.8f))
                 .Subscribe(_ =>
                 {
                     Play(BubbleAnimationEnum.Idle);
+                    _attackEffect.gameObject.SetActive(false);
                     callback?.Invoke();
                 }).AddTo(this);
         }

@@ -8,6 +8,7 @@ using Shabon.Breath;
 using Shabon.Bubble;
 using Shabon.Clap;
 using Shabon.Input;
+using Shabon.Ui;
 using VContainer;
 using VContainer.Unity;
 
@@ -38,15 +39,17 @@ namespace Shabon.Tutorial
             BreathModel breathModel,
             BreathGetterViewMono breathGetterViewMono,
             ClapModel clapModel,
-            TutorialViewMono tutorialViewMono)
+            TutorialViewMono tutorialViewMono,
+            ClapUiViewMono clapUiViewMono)
         {
 
             _isInTutorial = false;
 
             // チュートリアル生成
+            clapUiViewMono.Close();
             tutorialContexts.Add(new FirstSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager));
             tutorialContexts.Add(new BreathSecondSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, breathModel, breathGetterViewMono));
-            tutorialContexts.Add(new ClapThirdSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, clapModel));
+            tutorialContexts.Add(new ClapThirdSpawn(tutorialViewMono, bubbleSpawner, bubbleCluster, inputManager, clapModel, clapUiViewMono));
 
         }
 

@@ -76,7 +76,7 @@ namespace Shabon.Bubble
         {
             bubbleSetter.OnBreath += (arg) =>
             {
-
+                bubbleView.PlayBreath(bubbleMono);
             };
         }
 
