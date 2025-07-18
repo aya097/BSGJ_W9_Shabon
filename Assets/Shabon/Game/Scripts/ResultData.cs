@@ -38,10 +38,6 @@ namespace Shabon.Game
         public static float FinalCalorie { get; set; }
         public static float BossBattleTime { get; set; }
 
-        // ↓必ずStreamingAssetsに保存
-        private static readonly string PersistentPath = Application.dataPath + "/StreamingAssets/ResultData.json";
-        private static readonly string StreamingPath = Application.dataPath + "/StreamingAssets/ResultData.json";
-
         /// <summary>
         /// データを保存するメソッド（追記方式）
         /// </summary>
@@ -79,11 +75,11 @@ namespace Shabon.Game
 
             // 既存データを読み込む
             List<ResultDataModel> results = new();
-            if (File.Exists(PersistentPath))
+            if (File.Exists(GetPath()))
             {
                 try
                 {
-                    string json = File.ReadAllText(PersistentPath);
+                    string json = File.ReadAllText(GetPath());
                     if (!string.IsNullOrWhiteSpace(json) && json.Trim() != "[]")
                     {
                         results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results ?? new List<ResultDataModel>();
@@ -121,7 +117,7 @@ namespace Shabon.Game
             int end = arrayJson.LastIndexOf(']');
             string onlyArray = arrayJson.Substring(start, end - start + 1);
 
-            var dir = Path.GetDirectoryName(PersistentPath);
+            var dir = Path.GetDirectoryName(GetPath());
             if (!Directory.Exists(dir))
             {
                 try { Directory.CreateDirectory(dir!); }
@@ -130,7 +126,7 @@ namespace Shabon.Game
 
             try
             {
-                File.WriteAllText(PersistentPath, onlyArray);
+                File.WriteAllText(GetPath(), onlyArray);
             }
             catch (System.Exception e)
             {
@@ -143,9 +139,8 @@ namespace Shabon.Game
         /// </summary>
         public static void LoadResults()
         {
-            string path = PersistentPath;
-            if (!File.Exists(path))
-                path = StreamingPath;
+            string path = GetPath();
+
             string json = File.Exists(path) ? File.ReadAllText(path) : "";
             if (string.IsNullOrWhiteSpace(json)) return;
             var results = JsonUtility.FromJson<ResultDataList>("{\"Results\":" + json + "}").Results;
@@ -178,7 +173,7 @@ namespace Shabon.Game
         }
 
         // パス取得
-        public static string GetPath()
+        private static string GetPath()
         {
 #if UNITY_EDITOR
             return Path.Combine(Application.streamingAssetsPath, "ResultData.json");

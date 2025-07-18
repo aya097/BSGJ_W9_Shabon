@@ -12,7 +12,7 @@ namespace Rnaking
 
         void Awake()
         {
-            pathText.text = $"{ResultData.GetPath()}";
+            // pathText.text = $"{ResultData.GetPath()}";
         }
     }
 }
