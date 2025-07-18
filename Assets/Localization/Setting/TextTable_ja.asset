@@ -134,6 +134,43 @@ MonoBehaviour:
     m_Localized: "\u30D0\u30F3\uFF01\uFF01\uFF01"
     m_Metadata:
       m_Items: []
+  - m_Id: 11921094477864960
+    m_Localized: Muck Bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642176
+    m_Localized: Lil Muck Bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642177
+    m_Localized: Armored Muck Bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642178
+    m_Localized: 'A dirty bubble.
+
+      When it bursts, it scatters filth and soils
+      the mansion.
+
+      Purify and defeat it with magic hands!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642179
+    m_Localized: 'A bubble two sizes smaller than a Dirt Bubble.
+
+      Be careful
+      as it''s very quick.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11921094494642180
+    m_Localized: 'A Dirt Bubble wearing armor.
+
+      Clapping doesn''t work on
+      it!
+
+      Blow away its armor with your breath!'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
