@@ -50,7 +50,7 @@ namespace Shabon.Game
         private double _currentTime;    // 現在の時間
         private double _phaseUpdatedTime;   // フェーズが更新された時間
         private int _bubbleCount;   // バブルの生成数
-        public static float BossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
+        private float _bossBattleStartTime = 0f; // ボスバブルの戦いが始まった時間
 
         private List<PhaseEvent> _eventList = new();
         private List<IDisposable> _disposables = new();
@@ -181,7 +181,6 @@ namespace Shabon.Game
                 nextTime,
                 () =>
                 {
-                    Debug.Log($"{nextTime},バブルがスポーン");
                     _bubbleCount++;
                     // 一度の生成数だけバブルを生成
                     for (int i = 0; i < _gamePhases.GetCurrentPhaseData().BubblesPerSpawn; i++)
@@ -193,9 +192,9 @@ namespace Shabon.Game
                             BubbleType bubbleType = SelectSpawningBubble(_gamePhases.GetCurrentPhaseData().SpawningBubbles);
 
                             // ボスバブルが初めて出現したタイミングで_bossBattleStartTimeをセット
-                            if (bubbleType == BubbleType.Boss && BossBattleStartTime == 0f)
+                            if (bubbleType == BubbleType.Boss && _bossBattleStartTime == 0f)
                             {
-                                BossBattleStartTime = Time.time;
+                                _bossBattleStartTime = (float)_currentTime;
                             }
 
                             _bubbleSpawner.Spawn(bubbleType);
@@ -217,7 +216,6 @@ namespace Shabon.Game
                 finishedTime,
                 () =>
                 {
-                    Debug.Log($"{finishedTime},{_gamePhases.CurrentPhaseNum}");
                     // 次のフェーズに
                     bool isEnd = _gamePhases.Proceed();
                     // 敵がいなくなるのを待つ
@@ -230,11 +228,11 @@ namespace Shabon.Game
                         {
                             // ボスバトル時間を計算
                             float bossBattleTime = 0f;
-                            if (BossBattleStartTime > 0f)
+                            if (_bossBattleStartTime > 0f)
                             {
-                                bossBattleTime = (float)(_currentTime - BossBattleStartTime);
+                                bossBattleTime = (float)(_currentTime - _bossBattleStartTime);
                             }
-                            SaveData(bossBattleTime);
+                            SaveData(bossBattleTime * 0.5f);
                             // スコアを保存
                             // RankingScore.SaveScore(_scoreValue.ScoreNum);
 
@@ -266,8 +264,6 @@ namespace Shabon.Game
 
         void ITickable.Tick()
         {
-            _currentTime += Time.deltaTime; // 現在の時間を更新
-
             InvokeEvent();
 
             if (UnityEngine.Input.GetKeyDown(KeyCode.O))

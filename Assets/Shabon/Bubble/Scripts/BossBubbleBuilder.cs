@@ -102,8 +102,6 @@ namespace Shabon.Bubble
                     if (isBossDown)
                     {
                         // ボス撃破時
-                        float bossBattleTime = Time.time - PhaseExecutor.BossBattleStartTime;
-                        ResultData.BossBattleTime = bossBattleTime;
                         bubbleDeath.InvokeDeath(BubbleDeathType.Clap);
                         foreach (IBubbleMono bubble in _bubbleCluster.Bubbles)
                         {
