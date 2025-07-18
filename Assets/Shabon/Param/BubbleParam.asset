@@ -27,7 +27,7 @@ MonoBehaviour:
         bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
         bubbleSpawnedArea: 0
         forwardVelocity: 0.3
-        zoneWaitingTime: 2
+        zoneWaitingTime: 0.1
         increasingDirtValue: 1
         bubbleScore: 500
     - rid: 7383347596459508406
@@ -37,7 +37,7 @@ MonoBehaviour:
         bubblePrefab: {fileID: 4326300383599858278, guid: a3e81eecb52e14a5a8fc91db8fae1176, type: 3}
         bubbleSpawnedArea: 0
         forwardVelocity: 0.5
-        zoneWaitingTime: 2
+        zoneWaitingTime: 0.1
         increasingDirtValue: 1
         bubbleScore: 750
     - rid: 7383347597461684939
@@ -60,7 +60,7 @@ MonoBehaviour:
         bubblePrefab: {fileID: -4593445064888892722, guid: 0afc96797dca2c041aea38182f4a5a7c, type: 3}
         bubbleSpawnedArea: 0
         forwardVelocity: 0.15
-        zoneWaitingTime: 2
+        zoneWaitingTime: 0.1
         increasingDirtValue: 1
         bubbleScore: 1000
         requiredBreathTime: 2
