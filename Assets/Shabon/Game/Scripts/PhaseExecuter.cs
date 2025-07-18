@@ -272,10 +272,12 @@ namespace Shabon.Game
 
             if (UnityEngine.Input.GetKeyDown(KeyCode.O))
             {
+                SaveData();
                 _currentState = GameState.Lose;
             }
             if (UnityEngine.Input.GetKeyDown(KeyCode.C))
             {
+                SaveData();
                 _currentState = GameState.Win;
             }
         }
