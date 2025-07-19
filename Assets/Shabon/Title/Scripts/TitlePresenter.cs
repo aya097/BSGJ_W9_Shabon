@@ -18,20 +18,10 @@ namespace Shabon.Title
     /// </summary>
     public class TitlePresenter : IInitializable, IDisposable
     {
-        // skipコマンド用
-        private enum Command
-        {
-            Clap,
-            Breath
-        }
-
         private List<IDisposable> _disposables = new();
 
         // ブレスした時間
         private float _breathContinuousTime = 0f;
-        private List<Command> _skipInputCommand = new List<Command>();
-        private readonly List<Command> _skipCorrectCommand = new List<Command>() { Command.Clap, Command.Breath, Command.Clap }; //skipのコマンド
-        private bool _isStartBreath = false;
 
         [Inject]
         public TitlePresenter(
@@ -121,36 +111,6 @@ namespace Shabon.Title
                                 titleModel.DecideLanguage();
                             }
                             break;
-
-                        case TitleState.Prologue:
-                            // breathの入力
-                            if (!_isStartBreath && breath > 0)
-                            {
-                                _isStartBreath = true;
-                            }
-                            else if (_isStartBreath && breath == 0)
-                            {
-                                _skipInputCommand.Add(Command.Breath);
-                                _isStartBreath = false;
-                            }
-
-                            // clapの入力
-                            if (isClap) _skipInputCommand.Add(Command.Clap);
-
-                            // パターンマッチング
-                            if (_skipInputCommand.SequenceEqual(_skipCorrectCommand.Take(_skipInputCommand.Count)))
-                            {
-                                // 全て一致すればスキップ
-                                if (_skipInputCommand.Count == _skipCorrectCommand.Count)
-                                    titleViewMono.ProloguePlayableDirector.Stop();
-                            }
-                            else
-                            {
-                                _skipInputCommand.Clear();
-                            }
-
-                            break;
-
                     }
                 })
             );
