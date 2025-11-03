@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Google Sheets Service
   m_EditorClassIdentifier: 
   m_ApiKey: 
-  m_ClientId: 60026928108-bhvn5tlmq96al125rob3k4gr4qh2gm1v.apps.googleusercontent.com
-  m_ClientSecret: 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
+  m_ClientId: 
+  m_ClientSecret: 
   m_AuthenticationType: 1
   m_ApplicationName: BSGJ_W9_Shabon
   m_NewSheetProperties:
